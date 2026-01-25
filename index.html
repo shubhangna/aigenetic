@@ -139,6 +139,7 @@
   <!-- React & ReactDOM -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="config.js"></script>
   
   <!-- Babel Standalone for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -148,7 +149,9 @@
     
     function AIgeneticLanding() {
       const [form, setForm] = useState({ name: '', business: '', phone: '', city: '', time: '' });
-      const [activeTab, setActiveTab] = useState('monthly');
+      const phoneLink = `tel:${CONFIG.company.phoneDial}`;
+      const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
+      const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=Hi!%20I'm%20interested%20in%20${CONFIG.company.name}`;
       
       function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -156,11 +159,11 @@
       
       function submitForm(e) {
         e.preventDefault();
-        const subject = encodeURIComponent('AIgenetic - Request Demo');
+        const subject = encodeURIComponent(`${CONFIG.company.name} - Request Demo`);
         const body = encodeURIComponent(
           `Name: ${form.name}\\nBusiness: ${form.business}\\nPhone: ${form.phone}\\nCity: ${form.city}\\nPreferred Demo Time: ${form.time}`
         );
-        window.location.href = `mailto:hello@aigenetic.in?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${CONFIG.company.email}?subject=${subject}&body=${body}`;
       }
       
       return (
@@ -173,20 +176,20 @@
                   AI
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">AIgenetic</div>
-                  <div className="text-xs text-slate-500">India-focused AI voice assistants</div>
+                  <div className="font-semibold text-slate-900">{CONFIG.company.name}</div>
+                  <div className="text-xs text-slate-500">{CONFIG.company.tagline}</div>
                 </div>
               </div>
               <div className="hidden md:flex items-center gap-6 text-sm">
                 <a href="#how-it-works" className="text-slate-600 hover:text-indigo-600">How It Works</a>
                 <a href="#use-cases" className="text-slate-600 hover:text-indigo-600">Use Cases</a>
                 <a href="#pricing" className="text-slate-600 hover:text-indigo-600">Pricing</a>
-                <a href="tel:+919000000000" className="px-4 py-2 rounded-lg border border-slate-200 hover:border-indigo-600 hover:text-indigo-600">📞 Call</a>
-                <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">💬 WhatsApp</a>
+                <a href={phoneLink} className="px-4 py-2 rounded-lg border border-slate-200 hover:border-indigo-600 hover:text-indigo-600">📞 Call</a>
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">💬 WhatsApp</a>
               </div>
               <div className="md:hidden flex gap-2">
-                <a href="tel:+919000000000" className="px-3 py-2 rounded-lg border border-slate-200 text-sm">📞</a>
-                <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-lg bg-green-600 text-white text-sm">💬</a>
+                <a href={phoneLink} className="px-3 py-2 rounded-lg border border-slate-200 text-sm">📞</a>
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-lg bg-green-600 text-white text-sm">💬</a>
               </div>
             </div>
           </header>
@@ -201,51 +204,41 @@
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                   </span>
-                  Live AI Assistants Handling Calls Now
+                  {CONFIG.hero.badge}
                 </div>
                 
                 <h1 className="text-5xl font-extrabold leading-tight mb-6 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-                  Your AI Phone Assistant for 24×7 Customer Calls
+                  {CONFIG.hero.heading}
                 </h1>
                 
                 <p className="text-lg text-slate-600 mb-8">
-                  Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically for your business—in Indian languages.
+                  {CONFIG.hero.subheading}
                 </p>
                 
                 <div className="flex flex-wrap gap-4 mb-8">
-                  <a href="tel:+919000000000" className="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg">
-                    📞 Book Free Demo
+                  <a href={phoneLink} className="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg">
+                    {CONFIG.hero.ctaPrimary}
                   </a>
-                  <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-lg border-2 border-green-600 text-green-600 hover:bg-green-50 font-semibold">
-                    💬 WhatsApp Us
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-lg border-2 border-green-600 text-green-600 hover:bg-green-50 font-semibold">
+                    {CONFIG.hero.ctaSecondary}
                   </a>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold text-lg">✓</span>
-                    <div className="text-sm"><strong>No setup fees</strong><br/><span className="text-slate-500">Get started immediately</span></div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold text-lg">✓</span>
-                    <div className="text-sm"><strong>31+ Languages</strong><br/><span className="text-slate-500">Understands local accents</span></div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold text-lg">✓</span>
-                    <div className="text-sm"><strong>Works 24/7</strong><br/><span className="text-slate-500">Never miss a call</span></div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold text-lg">✓</span>
-                    <div className="text-sm"><strong>Pay per use</strong><br/><span className="text-slate-500">Affordable pricing</span></div>
-                  </div>
+                  {CONFIG.hero.keyFeatures.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold text-lg">✓</span>
+                      <div className="text-sm"><strong>{feature.title}</strong><br/><span className="text-slate-500">{feature.subtitle}</span></div>
+                    </div>
+                  ))}
                 </div>
                 
                 <div className="p-4 rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">🎉</span>
                     <div className="text-sm">
-                      <div className="font-semibold text-amber-900">Trusted by 100+ Indian Businesses</div>
-                      <div className="text-amber-700">Clinics, Salons, Real Estate, and more</div>
+                      <div className="font-semibold text-amber-900">{CONFIG.hero.trust.title}</div>
+                      <div className="text-amber-700">{CONFIG.hero.trust.subtitle}</div>
                     </div>
                   </div>
                 </div>
@@ -313,13 +306,7 @@
                 <div className="hidden lg:block absolute top-16 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200"></div>
                 
                 <div className="grid md:grid-cols-5 gap-6">
-                  {[
-                    { icon: '📞', step: '1', title: 'Customer Calls', desc: 'Customer dials your business number', color: 'from-blue-500 to-indigo-500' },
-                    { icon: '🤖', step: '2', title: 'AI Answers', desc: 'AI voice assistant answers instantly', color: 'from-indigo-500 to-purple-500' },
-                    { icon: '🧠', step: '3', title: 'Understands Intent', desc: "AI understands the customer's request in their language", color: 'from-purple-500 to-pink-500' },
-                    { icon: '📅', step: '4', title: 'Takes Action', desc: 'Books appointment or answers queries', color: 'from-pink-500 to-rose-500' },
-                    { icon: '✅', step: '5', title: 'Confirms', desc: 'Confirms booking and ends call', color: 'from-rose-500 to-red-500' }
-                  ].map((item, i) => (
+                  {CONFIG.howItWorks.map((item, i) => (
                     <div key={i} className="relative">
                       <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-all h-full relative z-10">
                         <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br ${item.color} text-white font-bold text-xl mb-4`}>
@@ -356,12 +343,7 @@
               </div>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {[
-                  { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500' },
-                  { icon: '💇', title: 'Salons & Spas', desc: 'Service bookings, offers, cancellations', features: ['Service bookings', 'Package promotions', 'Membership renewals'], gradient: 'from-pink-500 to-rose-500' },
-                  { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500' },
-                  { icon: '🏫', title: 'Offices & Schools', desc: 'Enquiry handling, information desk', features: ['Admission inquiries', 'Information desk', 'Parent communication'], gradient: 'from-purple-500 to-indigo-500' }
-                ].map((useCase, i) => (
+                {CONFIG.useCases.map((useCase, i) => (
                   <div key={i} className="group p-6 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
                     <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${useCase.gradient} text-white text-2xl mb-4 group-hover:scale-110 transition-transform`}>
                       {useCase.icon}
@@ -393,12 +375,7 @@
               </div>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                  { icon: '🛠️', title: 'Fully Managed', desc: 'We handle everything from setup to maintenance', gradient: 'from-blue-500 to-indigo-500' },
-                  { icon: '🗣️', title: '31+ Languages', desc: 'Understands major Indian languages and accents', gradient: 'from-green-500 to-emerald-500' },
-                  { icon: '⏱️', title: 'Works 24/7', desc: 'Never miss a call, even on holidays', gradient: 'from-purple-500 to-pink-500' },
-                  { icon: '💸', title: 'Affordable', desc: 'Pay-per-use pricing for small businesses', gradient: 'from-orange-500 to-red-500' }
-                ].map((usp, i) => (
+                {CONFIG.usps.map((usp, i) => (
                   <div key={i} className="group p-6 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
                     <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${usp.gradient} text-white text-2xl mb-3 group-hover:scale-110 transition-transform`}>
                       {usp.icon}
@@ -418,11 +395,7 @@
               </div>
               
               <div className="grid md:grid-cols-3 gap-6 mb-12">
-                {[
-                  { quote: "AIgenetic has been a game-changer. We don't miss appointments anymore, and patients love the 24/7 booking facility.", name: "Dr. Priya Sharma", role: "Skin Clinic, Mumbai" },
-                  { quote: "The bot handles Hindi and Marathi perfectly. Our booking rate increased by 40% in just 2 months!", name: "Rahul Desai", role: "Salon Owner, Pune" },
-                  { quote: "Best investment we made. Saves us ₹25,000/month compared to hiring a receptionist. Plus it never takes a day off!", name: "Anjali Reddy", role: "Real Estate Agency, Bangalore" }
-                ].map((testimonial, i) => (
+                {CONFIG.testimonials.map((testimonial, i) => (
                   <div key={i} className="p-6 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-lg transition-shadow">
                     <div className="flex gap-1 mb-3">
                       {[...Array(5)].map((_, j) => (
@@ -444,12 +417,7 @@
               </div>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {[
-                  { number: '10,000+', label: 'Calls Handled', color: 'from-blue-50 to-indigo-50 border-blue-100 text-indigo-600' },
-                  { number: '95%', label: 'Booking Success', color: 'from-green-50 to-emerald-50 border-green-100 text-green-600' },
-                  { number: '2 min', label: 'Avg Call Duration', color: 'from-purple-50 to-pink-50 border-purple-100 text-purple-600' },
-                  { number: '100+', label: 'Happy Businesses', color: 'from-orange-50 to-amber-50 border-orange-100 text-orange-600' }
-                ].map((stat, i) => (
+                {CONFIG.stats.map((stat, i) => (
                   <div key={i} className={`text-center p-6 rounded-xl bg-gradient-to-br ${stat.color} border`}>
                     <div className={`text-3xl font-bold`}>{stat.number}</div>
                     <div className="text-sm text-slate-600 mt-1">{stat.label}</div>
@@ -466,60 +434,7 @@
               </div>
               
               <div className="grid lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
-                {[
-                  {
-                    name: 'Starter',
-                    price: '₹5,000',
-                    period: '/month',
-                    usage: '+ ₹8-10 per call minute',
-                    features: [
-                      'One-time setup (₹10,000)',
-                      'Dedicated phone number',
-                      'AI voice agent configured',
-                      'Appointment booking',
-                      'Basic analytics',
-                      'Email support'
-                    ],
-                    cta: 'Get Started',
-                    href: 'tel:+919000000000',
-                    highlighted: false
-                  },
-                  {
-                    name: 'Professional',
-                    price: '₹12,000',
-                    period: '/month',
-                    usage: '+ ₹7-9 per call minute',
-                    badge: 'Most Popular',
-                    features: [
-                      'Everything in Starter',
-                      'Outbound calling campaigns',
-                      'Advanced analytics',
-                      'Custom conversation flows',
-                      'Priority WhatsApp support',
-                      'Monthly optimization calls'
-                    ],
-                    cta: 'Get Started',
-                    href: 'tel:+919000000000',
-                    highlighted: true
-                  },
-                  {
-                    name: 'Enterprise',
-                    price: 'Custom',
-                    period: '',
-                    usage: 'Volume-based pricing',
-                    features: [
-                      'Everything in Professional',
-                      'Multiple phone numbers',
-                      'API access & integrations',
-                      'White-label option',
-                      'Dedicated account manager',
-                      '24/7 priority support'
-                    ],
-                    cta: 'Contact Sales',
-                    href: 'https://wa.me/919000000000',
-                    highlighted: false
-                  }
-                ].map((plan, i) => (
+                {CONFIG.pricing.map((plan, i) => (
                   <div key={i} className={`p-6 rounded-2xl border-2 ${plan.highlighted ? 'border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-xl scale-105' : 'border-slate-200 bg-white shadow-sm'} relative`}>
                     {plan.badge && (
                       <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold">
@@ -537,7 +452,7 @@
                         </li>
                       ))}
                     </ul>
-                    <a href={plan.href} target={plan.href.startsWith('https') ? '_blank' : undefined} rel={plan.href.startsWith('https') ? 'noopener noreferrer' : undefined} className={`block w-full text-center px-4 py-3 rounded-lg font-semibold transition-colors ${plan.highlighted ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg' : 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50'}`}>
+                    <a href={plan.name === 'Enterprise' ? whatsappLink : phoneLink} target={plan.name === 'Enterprise' ? '_blank' : undefined} rel={plan.name === 'Enterprise' ? 'noopener noreferrer' : undefined} className={`block w-full text-center px-4 py-3 rounded-lg font-semibold transition-colors ${plan.highlighted ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg' : 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50'}`}>
                       {plan.cta}
                     </a>
                   </div>
@@ -548,9 +463,9 @@
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">💡</span>
                   <div>
-                    <div className="font-semibold text-amber-900 mb-1">Need help choosing?</div>
-                    <div className="text-sm text-amber-800 mb-3">Book a free demo and we'll recommend the best plan based on your monthly call volume. Most businesses save 60-70% compared to hiring a receptionist.</div>
-                    <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700">
+                    <div className="font-semibold text-amber-900 mb-1">{CONFIG.ctaMessages.pricingHelp.title}</div>
+                    <div className="text-sm text-amber-800 mb-3">{CONFIG.ctaMessages.pricingHelp.description}</div>
+                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700">
                       💬 Chat on WhatsApp
                     </a>
                   </div>
@@ -561,8 +476,8 @@
             {/* Contact Form */}
             <section id="demo" className="mb-20">
               <div className="text-center max-w-2xl mx-auto mb-12">
-                <h2 className="text-3xl font-bold mb-4">Get Your AI Phone Assistant Live in 48-72 Hours 🚀</h2>
-                <p className="text-lg text-slate-600">Tell us about your business and we'll set up a personalized demo</p>
+                <h2 className="text-3xl font-bold mb-4">{CONFIG.ctaMessages.demoForm.heading}</h2>
+                <p className="text-lg text-slate-600">{CONFIG.ctaMessages.demoForm.subheading}</p>
               </div>
               
               <div className="max-w-2xl mx-auto">
@@ -595,16 +510,16 @@
                       📧 Request Demo via Email
                     </button>
                     <span className="text-slate-500 text-sm">or</span>
-                    <a href="tel:+919000000000" className="w-full sm:w-auto px-6 py-3 rounded-lg border-2 border-indigo-600 text-indigo-600 font-semibold hover:bg-indigo-50 whitespace-nowrap">
+                    <a href={phoneLink} className="w-full sm:w-auto px-6 py-3 rounded-lg border-2 border-indigo-600 text-indigo-600 font-semibold hover:bg-indigo-50 whitespace-nowrap">
                       📞 Call Now
                     </a>
-                    <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 whitespace-nowrap">
+                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 whitespace-nowrap">
                       💬 WhatsApp
                     </a>
                   </div>
                   
                   <div className="mt-4 text-center text-sm text-slate-600">
-                    We'll respond within 2 hours during business hours
+                    {CONFIG.ctaMessages.demoForm.responseTime}
                   </div>
                 </form>
               </div>
@@ -621,19 +536,19 @@
                       AI
                     </div>
                     <div>
-                      <div className="font-bold text-lg">AIgenetic</div>
-                      <div className="text-sm text-slate-600">India-focused AI Voice Solutions</div>
+                      <div className="font-bold text-lg">{CONFIG.company.name}</div>
+                      <div className="text-sm text-slate-600">{CONFIG.company.tagline}</div>
                     </div>
                   </div>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                    AIgenetic (OPC) Pvt Ltd provides fully managed AI-powered phone assistants for Indian SMEs. 
+                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs. 
                     We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.
                   </p>
                   <div className="flex gap-3">
-                    <a href="tel:+919000000000" className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">
+                    <a href={phoneLink} className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">
                       📞 Call
                     </a>
-                    <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700">
+                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700">
                       💬 WhatsApp
                     </a>
                   </div>
@@ -654,26 +569,26 @@
                   <ul className="space-y-2 text-sm text-slate-600">
                     <li className="flex items-start gap-2">
                       <span>📧</span>
-                      <a href="mailto:hello@aigenetic.in" className="hover:text-indigo-600">hello@aigenetic.in</a>
+                      <a href={`mailto:${CONFIG.company.email}`} className="hover:text-indigo-600">{CONFIG.company.email}</a>
                     </li>
                     <li className="flex items-start gap-2">
                       <span>📞</span>
-                      <a href="tel:+919000000000" className="hover:text-indigo-600">+91 90000 00000</a>
+                      <a href={phoneLink} className="hover:text-indigo-600">{CONFIG.company.phoneDisplay}</a>
                     </li>
                     <li className="flex items-start gap-2">
                       <span>💬</span>
-                      <a href="https://wa.me/919000000000" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">WhatsApp Support</a>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600">WhatsApp Support</a>
                     </li>
                     <li className="flex items-start gap-2">
                       <span>🏢</span>
-                      <span>Mumbai, India</span>
+                      <span>{CONFIG.company.location}</span>
                     </li>
                   </ul>
                 </div>
               </div>
               
               <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
-                <div>© 2026 AIgenetic (OPC) Pvt Ltd. All rights reserved.</div>
+                <div>© 2026 {CONFIG.company.legalName}. All rights reserved.</div>
                 <div className="flex gap-6">
                   <a href="#" className="hover:text-indigo-600">Privacy Policy</a>
                   <a href="#" className="hover:text-indigo-600">Terms of Service</a>
@@ -704,14 +619,14 @@
           
           {/* Floating Action Buttons */}
           <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
-            <a href="https://wa.me/919000000000?text=Hi!%20I'm%20interested%20in%20AIgenetic" 
+            <a href={whatsappLinkWithText} 
                target="_blank" 
                rel="noopener noreferrer"
                className="flex items-center justify-center w-14 h-14 rounded-full bg-green-600 text-white shadow-lg hover:bg-green-700 hover:scale-110 transition-all"
                title="WhatsApp us">
               <span className="text-2xl">💬</span>
             </a>
-            <a href="tel:+919000000000" 
+            <a href={phoneLink} 
                className="flex items-center justify-center w-14 h-14 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 hover:scale-110 transition-all"
                title="Call us">
               <span className="text-2xl">📞</span>
