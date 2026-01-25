@@ -92,6 +92,7 @@
       const phoneLink = `tel:${CONFIG.company.phoneDial}`;
       const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
       const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
+      const featureIcons = ['⚡', '🌐', '⏰', '💰'];
 
       const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -176,7 +177,7 @@
                 <div className="grid grid-cols-2 gap-4">
                   {CONFIG.hero.keyFeatures.map((feature, idx) => (
                     <div key={feature.title + idx} className="flex items-center gap-3 p-4 rounded-xl glass-effect hover-lift">
-                      <span className="text-3xl">✓</span>
+                      <span className="text-3xl">{featureIcons[idx] || '✓'}</span>
                       <div>
                         <div className="font-bold text-slate-900">{feature.title}</div>
                         <div className="text-sm text-slate-600">{feature.subtitle}</div>
@@ -565,7 +566,7 @@
                 </div>
                 <div className="flex items-center gap-2">
                   <span>🏆</span>
-                  <span>ISO Certified</span>
+                  <span>Soon to be ISO Certified</span>
                 </div>
               </div>
             </div>

@@ -1,10 +1,10 @@
 window.CONFIG = {
   company: {
-    name: 'AIgenetic #$',
+    name: 'AIgenetic',
     legalName: 'AIgenetic (OPC) Pvt Ltd',
     tagline: 'India-focused AI voice assistants',
     description: 'AI-powered phone assistants for Indian SMEs',
-    location: 'Pune, India',
+    location: 'Rajiv Gandhi Infotech Park, Pune, India',
     email: 'connect@aigenetic.in',
     phoneDisplay: '+91 88263 23693',
     phoneDial: '+91 8826323693',
