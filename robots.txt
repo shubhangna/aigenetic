@@ -1,0 +1,24 @@
+# robots.txt for AIgenetic
+# This file tells search engine crawlers which pages to crawl and index
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://aigenetic.in/sitemap.xml
+
+# Crawl-delay (optional - prevents overloading server)
+# Uncomment if you experience crawling issues
+# Crawl-delay: 10
+
+# Block specific user agents (if needed)
+# Example: Block bad bots
+# User-agent: BadBot
+# Disallow: /
+
+# Common disallows (uncomment if you have these directories)
+# User-agent: *
+# Disallow: /cgi-bin/
+# Disallow: /tmp/
+# Disallow: /private/
