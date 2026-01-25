@@ -4,11 +4,11 @@ window.CONFIG = {
     legalName: 'AIgenetic (OPC) Pvt Ltd',
     tagline: 'India-focused AI voice assistants',
     description: 'AI-powered phone assistants for Indian SMEs',
-    location: 'Mumbai, India',
-    email: 'hello@aigenetic.in',
-    phoneDisplay: '+91 90000 00000',
-    phoneDial: '+919000000000',
-    whatsappNumber: '919000000000'
+    location: 'Pune, India',
+    email: 'connect@aigenetic.in',
+    phoneDisplay: '+91 88263 23693',
+    phoneDial: '+918826323693',
+    whatsappNumber: '918826323693'
   },
   hero: {
     badge: 'Live AI Assistants Handling Calls Now',
