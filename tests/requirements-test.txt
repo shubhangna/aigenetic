@@ -1,0 +1,7 @@
+# Test dependencies for AIgenetic website testing
+
+# Playwright for E2E browser testing
+playwright>=1.40.0
+
+# To install Playwright browsers, run:
+# python -m playwright install chromium

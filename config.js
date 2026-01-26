@@ -7,8 +7,8 @@ window.CONFIG = {
     location: 'Rajiv Gandhi Infotech Park, Pune, India',
     email: 'connect@aigenetic.in',
     phoneDisplay: '+91 88263 23693',
-    phoneDial: '+91 8826323693',
-    whatsappNumber: '91 8826323693'
+    phoneDial: '+918826323693',
+    whatsappNumber: '918826323693'
   },
   hero: {
     badge: 'Live AI Assistants Handling Calls Now',

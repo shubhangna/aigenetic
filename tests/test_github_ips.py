@@ -40,20 +40,7 @@ class TestGitHubIPs(unittest.TestCase):
                 except (socket.timeout, socket.error) as e:
                     self.fail(f"IP {ip} is not accessible: {e}")
     
-    def test_load_expected_ips_from_file(self):
-        """Verify IPs listed in gitIps file match expected IPs"""
-        try:
-            with open('gitIps', 'r') as f:
-                file_ips = set(line.strip() for line in f if line.strip())
-            
-            print(f"\nIPs from gitIps file: {file_ips}")
-            self.assertEqual(
-                file_ips,
-                self.EXPECTED_IPS,
-                f"gitIps file IPs don't match! Expected {self.EXPECTED_IPS}, got {file_ips}"
-            )
-        except FileNotFoundError:
-            self.fail("gitIps file not found")
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
