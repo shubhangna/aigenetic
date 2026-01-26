@@ -11,8 +11,8 @@ window.CONFIG = {
     whatsappNumber: '918826323693'
   },
   hero: {
-    badge: 'Live AI Assistants Handling Calls Now',
-    heading: 'Your AI Phone Assistant for 24×7 Customer Calls',
+    badge: 'Live AI Assistants Handling Calls Now [V 1.19 Live]',
+    heading: 'The Voice of Your Business',
     subheading: 'Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically for your business—in Indian languages.',
     ctaPrimary: '📞 Book Free Demo',
     ctaSecondary: '💬 WhatsApp Us',
