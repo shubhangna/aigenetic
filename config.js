@@ -21,7 +21,7 @@ window.CONFIG = {
       subtitle: 'Clinics, Salons, Real Estate, and more'
     },
     keyFeatures: [
-      { title: 'No setup fees', subtitle: 'Get started immediately' },
+      { title: 'Quick setup', subtitle: 'Get started in 48-72 hours' },
       { title: '31+ Languages', subtitle: 'Understands local accents' },
       { title: 'Works 24/7', subtitle: 'Never miss a call' },
       { title: 'Pay per use', subtitle: 'Affordable pricing' }
