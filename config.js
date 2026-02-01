@@ -57,12 +57,17 @@ window.CONFIG = {
     { number: '2 min', label: 'Avg Call Duration', color: 'from-purple-50 to-pink-50 border-purple-100 text-purple-600' },
     { number: '100+', label: 'Happy Businesses', color: 'from-orange-50 to-amber-50 border-orange-100 text-orange-600' }
   ],
+  pricingMeta: {
+    setupFeeINR: 10000,
+    perCallINR: 4
+  },
   pricing: [
     {
-      name: 'Starter',
-      price: '₹5,000',
+      name: 'Flex',
+      price: '₹4,999',
       period: '/month',
-      usage: '+ ₹8-10 per call minute',
+      usage: '+ ₹4 per call',
+      perCallINR: 4,
       features: [
         'One-time setup (₹10,000)',
         'Dedicated phone number',
@@ -75,13 +80,14 @@ window.CONFIG = {
       highlighted: false
     },
     {
-      name: 'Professional',
-      price: '₹12,000',
+      name: 'Pro',
+      price: '₹9,999',
       period: '/month',
-      usage: '+ ₹7-9 per call minute',
+      usage: '+ ₹4 per call',
+      perCallINR: 4,
       badge: 'Most Popular',
       features: [
-        'Everything in Starter',
+        'Everything in Flex',
         'Outbound calling campaigns',
         'Advanced analytics',
         'Custom conversation flows',
@@ -95,9 +101,9 @@ window.CONFIG = {
       name: 'Enterprise',
       price: 'Custom',
       period: '',
-      usage: 'Volume-based pricing',
+      usage: 'Volume-based per-call pricing',
       features: [
-        'Everything in Professional',
+        'Everything in Pro',
         'Multiple phone numbers',
         'API access & integrations',
         'White-label option',
