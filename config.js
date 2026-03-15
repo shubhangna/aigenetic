@@ -40,6 +40,49 @@ window.CONFIG = {
     { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500' },
     { icon: '🏫', title: 'Offices & Schools', desc: 'Enquiry handling, information desk', features: ['Admission inquiries', 'Information desk', 'Parent communication'], gradient: 'from-purple-500 to-indigo-500' }
   ],
+  audioShowcase: {
+    label: 'Audio Demos',
+    title: 'Hear Our AI Agents in Action',
+    subtitle: 'Listen to real-world scenarios across industries with natural, contextual responses.'
+  },
+  audioDemos: [
+    {
+      category: 'Healthcare',
+      title: 'Healthcare Support',
+      desc: 'AI agent handling patient inquiries and support',
+      file: 'mp3/HealthCare-onboarding_cEIUBM4Y (1).mp3'
+    },
+    {
+      category: 'E-commerce',
+      title: 'E-commerce Support',
+      desc: 'AI-powered customer service for online stores',
+      file: 'mp3/Ecom-customer-support_IRqJbynE.mp3'
+    },
+    {
+      category: 'BFSI',
+      title: 'Payment Reminders',
+      desc: 'Automated payment reminder calls',
+      file: 'mp3/BFSI-reminder_dztcIGvN.mp3'
+    },
+    {
+      category: 'EdTech',
+      title: 'Lead Qualification',
+      desc: 'Edtech lead qualification',
+      file: 'mp3/Edtech-lead-qualification_KTkZSGKj.mp3'
+    },
+    {
+      category: 'HR Tech',
+      title: 'Recruitment',
+      desc: 'AI-powered candidate screening and recruitment',
+      file: 'mp3/recruitment_eczAKBnf.mp3'
+    },
+    {
+      category: 'Hospitality',
+      title: 'Hospitality Front Desk',
+      desc: 'AI agent handling front desk inquiries and support',
+      file: 'mp3/hospitality-front-desk_CVZtKlFn.mp3'
+    }
+  ],
   usps: [
     { icon: '🛠️', title: 'Fully Managed', desc: 'We handle everything from setup to maintenance', gradient: 'from-blue-500 to-indigo-500' },
     { icon: '🗣️', title: '31+ Languages', desc: 'Understands major Indian languages and accents', gradient: 'from-green-500 to-emerald-500' },

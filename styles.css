@@ -31,6 +31,75 @@ body {
   scroll-behavior: smooth;
 }
 
+.audio-showcase {
+  background: radial-gradient(circle at top, #1b1a23 0%, #0b0a10 55%, #09090d 100%);
+  color: #f8fafc;
+}
+
+.audio-showcase .section-label {
+  color: rgba(248, 250, 252, 0.6);
+}
+
+.audio-showcase-title {
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  letter-spacing: -1.5px;
+}
+
+.audio-card {
+  background: rgba(15, 14, 22, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 18px 40px rgba(6, 6, 10, 0.4);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.audio-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(248, 250, 252, 0.4);
+  box-shadow: 0 24px 60px rgba(3, 3, 7, 0.55);
+}
+
+.audio-pill {
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: rgba(226, 232, 240, 0.8);
+}
+
+.audio-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 48px;
+}
+
+.audio-wave span {
+  width: 5px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.9), rgba(59, 130, 246, 0.85));
+  opacity: 0.75;
+}
+
+.audio-wave.wave-active span {
+  animation: audioWave 1.4s ease-in-out infinite;
+}
+
+.audio-play {
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+.audio-time {
+  color: rgba(226, 232, 240, 0.6);
+}
+
+@keyframes audioWave {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
