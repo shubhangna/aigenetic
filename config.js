@@ -6,9 +6,9 @@ window.CONFIG = {
     description: 'AI-powered phone assistants for Indian SMEs',
     location: 'Rajiv Gandhi Infotech Park, Pune, India',
     email: 'connect@aigenetic.in',
-    phoneDisplay: '+91 88263 23693',
-    phoneDial: '+918826323693',
-    whatsappNumber: '918826323693'
+    phoneDisplay: '+91 742849 7033',
+    phoneDial: '+9174284970333',
+    whatsappNumber: '917428497033'
   },
   hero: {
     badge: 'Live AI Assistants Handling Calls Now [V 1.19 Live]',
