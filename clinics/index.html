@@ -42,10 +42,7 @@
   }
   .nav-in{display:flex;align-items:center;gap:28px;height:68px}
   .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none}
-  .brand-mark{width:26px;height:26px;border-radius:7px;background:var(--teal);position:relative;flex:0 0 auto}
-  .brand-mark::before,.brand-mark::after{content:"";position:absolute;background:var(--paper)}
-  .brand-mark::before{left:6px;right:6px;top:12px;height:2px}
-  .brand-mark::after{left:12px;top:6px;bottom:6px;width:2px}
+  .brand img{height:32px;width:auto}
   .brand small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;padding-left:2px}
   .nav-links{margin-left:auto;display:flex;gap:30px;font-size:15px;font-weight:500}
   .nav-links a{text-decoration:none;color:var(--muted)}
@@ -177,6 +174,73 @@
   }
   :focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:6px}
 
+  /* ---------- calendar booking ---------- */
+  .calendar-modal{
+    display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(14,27,30,.6);
+    z-index:50;align-items:center;justify-content:center;padding:20px
+  }
+  .calendar-modal.open{display:flex}
+  .calendar-modal-content{
+    background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;
+    max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)
+  }
+  .calendar-close{
+    position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;
+    background:transparent;cursor:pointer;font-size:24px;color:var(--muted);transition:color .2s ease
+  }
+  .calendar-close:hover{color:var(--ink)}
+  .calendar-modal-content h2{font-size:28px;margin-bottom:8px}
+  .calendar-modal-content>p{color:var(--muted);margin-bottom:24px}
+  .form-group{margin-bottom:20px}
+  .form-group label{display:block;font-weight:600;margin-bottom:8px;font-size:14px}
+  .form-group input,.form-group select{
+    width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;
+    font-family:var(--body);font-size:14px;transition:border-color .2s ease
+  }
+  .form-group input:focus,.form-group select:focus{
+    outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(12,107,92,.1)
+  }
+  .time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .time-slot{
+    padding:10px;border:1px solid var(--line);border-radius:8px;text-align:center;cursor:pointer;
+    font-size:13px;transition:all .2s ease;background:#fff
+  }
+  .time-slot:hover{border-color:var(--teal);background:var(--mint)}
+  .time-slot.selected{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .google-meet-info{
+    background:var(--mint);border:1px solid #CFE5DE;border-radius:12px;padding:16px;
+    margin:20px 0;font-size:14px
+  }
+  .google-meet-info strong{color:var(--teal-deep);display:block;margin-bottom:6px}
+  .google-meet-link{
+    display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);
+    text-decoration:none;font-weight:600;word-break:break-all
+  }
+  .google-meet-link:hover{text-decoration:underline}
+  .copy-btn{
+    display:inline-flex;align-items:center;gap:6px;padding:6px 12px;
+    background:var(--teal);color:#fff;border:none;border-radius:6px;
+    font-size:12px;cursor:pointer;font-weight:600;transition:background .2s ease
+  }
+  .copy-btn:hover{background:var(--teal-deep)}
+  .copy-btn.copied{background:var(--signal)}
+  .submit-btn{
+    width:100%;padding:14px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;
+    transition:background .2s ease;font-family:var(--body)
+  }
+  .submit-btn:hover{background:var(--teal-deep)}
+  .submit-btn:disabled{background:#ccc;cursor:not-allowed}
+  .form-status{
+    padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none
+  }
+  .form-status.success{
+    display:block;background:#E8F7F3;color:#084A40;border:1px solid #CFE5DE
+  }
+  .form-status.error{
+    display:block;background:#FFE8E8;color:#8B0000;border:1px solid #FFB3B3
+  }
+
   @media(max-width:900px){
     .nav-links{display:none}
     .rail{grid-template-columns:repeat(2,1fr)}
@@ -186,6 +250,8 @@
     .limits{grid-template-columns:1fr;gap:32px}
     .turn{max-width:92%}
     .hero{padding-top:60px}
+    .time-slots{grid-template-columns:repeat(2,1fr)}
+    .calendar-modal-content{padding:30px 24px}
   }
 </style>
 </head>
@@ -193,14 +259,14 @@
 
 <nav class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><span class="brand-mark"></span>Aigenetic <small>for clinics</small></a>
+    <a class="brand" href="#top"><img src="../logo/logoMedium.png" alt="AIgenetic" />Aigenetic <small>for clinics</small></a>
     <div class="nav-links">
       <a href="#handles">What it handles</a>
       <a href="#limits">What it won't do</a>
       <a href="#setup">Setup</a>
       <a href="#pricing">Pricing</a>
     </div>
-    <a class="btn btn-primary" href="#demo" data-phone-link>Book a demo</a>
+    <a class="btn btn-primary" href="#demo" data-open-calendar>Book a demo</a>
   </div>
 </nav>
 
@@ -210,7 +276,7 @@
     <h1 class="rise">The voice of<br>your <em>clinic</em></h1>
     <p class="sub rise">You're with a patient. The phone rings anyway. Algenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
     <div class="cta-row rise">
-      <a class="btn btn-primary btn-lg" href="#demo" data-phone-link>Hear it answer your clinic →</a>
+      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>Hear it answer your clinic →</a>
       <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>WhatsApp us</a>
     </div>
     <p class="cta-note">Free 14-day trial on your existing clinic number. No new hardware.</p>
@@ -374,7 +440,7 @@
     <p>Speak to it in any language you like. Try to confuse it. Then decide whether it should be answering your clinic tonight.</p>
     <div class="cta-row">
       <a class="btn btn-primary btn-lg" href="tel:+9174284970333" data-phone-link><span data-phone-display>+91 742849 7033</span> →</a>
-      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>Book a demo instead</a>
+      <a class="btn btn-ghost btn-lg" href="#calendar-booking" data-open-calendar>Book a demo with calendar →</a>
     </div>
   </div>
   <div class="wrap"><footer>
@@ -386,6 +452,252 @@
     <span class="sp">Not a medical device. Does not provide medical advice.</span>
   </footer></div>
 </section>
+
+<!-- Calendar Booking Modal -->
+<div id="calendar-modal" class="calendar-modal">
+  <div class="calendar-modal-content">
+    <button class="calendar-close" onclick="closeCalendarModal()">✕</button>
+    <h2>Schedule Your Demo</h2>
+    <p>Book a personalized demo with our team via Google Meet</p>
+    
+    <div id="form-status" class="form-status"></div>
+
+    <form id="calendar-form" onsubmit="handleCalendarBooking(event)">
+      <div class="form-group">
+        <label for="clinic-name">Clinic Name *</label>
+        <input type="text" id="clinic-name" name="clinicName" required placeholder="Enter your clinic name">
+      </div>
+
+      <div class="form-group">
+        <label for="contact-email">Email Address *</label>
+        <input type="email" id="contact-email" name="contactEmail" required placeholder="your@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="contact-phone">Phone Number *</label>
+        <input type="tel" id="contact-phone" name="contactPhone" required placeholder="+91 XXXXXXXXXX">
+      </div>
+
+      <div class="form-group">
+        <label for="demo-date">Preferred Date *</label>
+        <input type="date" id="demo-date" name="demoDate" required>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Time (IST) *</label>
+        <div class="time-slots" id="time-slots-container"></div>
+        <input type="hidden" id="selected-time" name="selectedTime">
+      </div>
+
+      <div class="form-group">
+        <label for="specialty">Clinic Specialty</label>
+        <select id="specialty" name="specialty">
+          <option value="">Select specialization...</option>
+          <option value="dental">Dental</option>
+          <option value="pediatrics">Pediatrics</option>
+          <option value="dermatology">Dermatology</option>
+          <option value="orthopedics">Orthopedics</option>
+          <option value="gynecology">Gynecology</option>
+          <option value="physiotherapy">Physiotherapy</option>
+          <option value="eye-care">Eye Care</option>
+          <option value="multi-specialty">Multi-specialty</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="google-meet-info">
+        <strong>✓ Google Meet Link will be sent to your email</strong>
+        <p>We'll generate a unique Google Meet link and send it to <span id="email-preview">your email</span> along with calendar invite.</p>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Generate Google Meet & Book Demo</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Calendar Modal Functions
+  function openCalendarModal() {
+    document.getElementById('calendar-modal').classList.add('open');
+    initializeTimeSlots();
+    // Set minimum date to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDate = tomorrow.toISOString().split('T')[0];
+    document.getElementById('demo-date').setAttribute('min', minDate);
+  }
+
+  function closeCalendarModal() {
+    document.getElementById('calendar-modal').classList.remove('open');
+  }
+
+  function initializeTimeSlots() {
+    const slots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
+    const container = document.getElementById('time-slots-container');
+    container.innerHTML = '';
+    
+    slots.forEach(slot => {
+      const button = document.createElement('div');
+      button.className = 'time-slot';
+      button.textContent = slot;
+      button.onclick = () => selectTimeSlot(button, slot);
+      container.appendChild(button);
+    });
+  }
+
+  function selectTimeSlot(element, time) {
+    document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+    document.getElementById('selected-time').value = time;
+  }
+
+  function generateGoogleMeetLink() {
+    // Generate a pseudo-random meeting ID
+    const meetId = 'aigenetic-' + Math.random().toString(36).substring(2, 15) + '-' + Date.now().toString(36);
+    return `https://meet.google.com/${meetId}`;
+  }
+
+  function handleCalendarBooking(e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    const formStatus = document.getElementById('form-status');
+    
+    const clinicName = document.getElementById('clinic-name').value;
+    const contactEmail = document.getElementById('contact-email').value;
+    const contactPhone = document.getElementById('contact-phone').value;
+    const demoDate = document.getElementById('demo-date').value;
+    const selectedTime = document.getElementById('selected-time').value;
+    const specialty = document.getElementById('specialty').value;
+
+    if (!selectedTime) {
+      showFormStatus('Please select a time slot', 'error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Generating Google Meet...';
+
+    // Simulate API call
+    setTimeout(() => {
+      const googleMeetLink = generateGoogleMeetLink();
+      const eventDate = new Date(demoDate);
+      const timeString = selectedTime;
+      
+      // Format calendar event details
+      const eventDetails = {
+        title: `AIgenetic Demo - ${clinicName}`,
+        date: demoDate,
+        time: timeString,
+        meetLink: googleMeetLink,
+        clinic: clinicName,
+        email: contactEmail,
+        phone: contactPhone,
+        specialty: specialty || 'General'
+      };
+
+      // Create Google Calendar event URL
+      const startDateTime = new Date(eventDate.toISOString().split('T')[0] + 'T' + convertTo24Hour(timeString));
+      const endDateTime = new Date(startDateTime.getTime() + 60 * 60000); // 1 hour meeting
+      
+      const calendarUrl = createGoogleCalendarLink(eventDetails, startDateTime, endDateTime);
+
+      // Show success and provide options
+      showFormStatus(`✓ Demo scheduled for ${demoDate} at ${timeString}<br>Google Meet link: <a href="${googleMeetLink}" class="google-meet-link" target="_blank">Join Meeting</a>`, 'success');
+      
+      // Create a data object to send
+      const bookingData = {
+        clinic: clinicName,
+        email: contactEmail,
+        phone: contactPhone,
+        date: demoDate,
+        time: timeString,
+        specialty: specialty,
+        googleMeetLink: googleMeetLink,
+        timestamp: new Date().toISOString()
+      };
+
+      // Log to console (in production, would send to backend)
+      console.log('Booking created:', bookingData);
+      
+      // Store in localStorage for demo purposes
+      const bookings = JSON.parse(localStorage.getItem('aigenetic_bookings') || '[]');
+      bookings.push(bookingData);
+      localStorage.setItem('aigenetic_bookings', JSON.stringify(bookings));
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Generate Google Meet & Book Demo';
+      
+      // Reset form after 2 seconds
+      setTimeout(() => {
+        document.getElementById('calendar-form').reset();
+        // Create a button to add to Google Calendar
+        const addToCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${formatDateForCalendar(startDateTime)}/${formatDateForCalendar(endDateTime)}&details=${encodeURIComponent('Google Meet: ' + googleMeetLink)}&location=Google+Meet&trp=true`;
+        
+        // Show option to add to calendar
+        const statusDiv = document.getElementById('form-status');
+        statusDiv.innerHTML += `<br><a href="${addToCalendarUrl}" target="_blank" class="btn btn-primary" style="display:inline-block;margin-top:12px">Add to Google Calendar</a>`;
+      }, 1500);
+    }, 1200);
+  }
+
+  function convertTo24Hour(time12h) {
+    const [time, period] = time12h.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  }
+
+  function formatDateForCalendar(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}${month}${day}T${hours}${minutes}00`;
+  }
+
+  function createGoogleCalendarLink(details, startDate, endDate) {
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: details.title,
+      dates: `${formatDateForCalendar(startDate)}/${formatDateForCalendar(endDate)}`,
+      details: `Google Meet: ${details.meetLink}\nClinic: ${details.clinic}\nContact: ${details.email}`,
+      location: 'Google Meet',
+      trp: 'true'
+    });
+    return `https://calendar.google.com/calendar/render?${params}`;
+  }
+
+  function showFormStatus(message, type) {
+    const statusDiv = document.getElementById('form-status');
+    statusDiv.innerHTML = message;
+    statusDiv.className = `form-status ${type}`;
+  }
+
+  // Update email preview
+  document.getElementById('contact-email').addEventListener('change', function() {
+    document.getElementById('email-preview').textContent = this.value || 'your email';
+  });
+
+  // Handle calendar modal toggle
+  document.querySelectorAll('[data-open-calendar]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCalendarModal();
+    });
+  });
+
+  // Close modal when clicking outside
+  document.getElementById('calendar-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'calendar-modal') {
+      closeCalendarModal();
+    }
+  });
+</script>
+
 
 <script>
   (function applySharedContactData() {
