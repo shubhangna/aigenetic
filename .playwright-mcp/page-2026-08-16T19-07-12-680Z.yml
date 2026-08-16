@@ -1,0 +1,468 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]:
+        - img "AIgenetic" [ref=f1e7]
+        - generic [ref=f1e8]: AIgenetic
+      - navigation [ref=f1e9]:
+        - link "Features" [ref=f1e10] [cursor=pointer]:
+          - /url: "#features"
+        - link "Use Cases" [ref=f1e11] [cursor=pointer]:
+          - /url: "#use-cases"
+        - link "Pricing" [ref=f1e12] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Book Demo" [ref=f1e13] [cursor=pointer]:
+          - /url: tel:+9174284970333
+  - generic [ref=f1e16]:
+    - generic [ref=f1e17]: Live AI Assistants Handling Calls Now [V 1.19 Live]
+    - heading "The Voice of Your Business" [level=1] [ref=f1e21]
+    - paragraph [ref=f1e22]: Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically for your business—in Indian languages.
+    - generic [ref=f1e23]:
+      - link "📞 Book Free Demo →" [active] [ref=f1e24] [cursor=pointer]:
+        - /url: tel:+9174284970333
+        - text: 📞 Book Free Demo
+        - generic [ref=f1e25]: →
+      - link "💬 WhatsApp Us" [ref=f1e26] [cursor=pointer]:
+        - /url: https://wa.me/917428497033
+    - generic [ref=f1e27]:
+      - generic [ref=f1e28]:
+        - generic [ref=f1e29]: ⚡
+        - generic [ref=f1e30]: Quick setup
+        - generic [ref=f1e31]: Get started in 48-72 hours
+      - generic [ref=f1e32]:
+        - generic [ref=f1e33]: 🌐
+        - generic [ref=f1e34]: 31+ Languages
+        - generic [ref=f1e35]: Understands local accents
+      - generic [ref=f1e36]:
+        - generic [ref=f1e37]: ⏰
+        - generic [ref=f1e38]: Works 24/7
+        - generic [ref=f1e39]: Never miss a call
+      - generic [ref=f1e40]:
+        - generic [ref=f1e41]: 💰
+        - generic [ref=f1e42]: Pay per use
+        - generic [ref=f1e43]: Affordable pricing
+  - generic [ref=f1e46]:
+    - generic [ref=f1e47]:
+      - generic [ref=f1e48]: 10,000+
+      - generic [ref=f1e49]: Calls Handled
+    - generic [ref=f1e50]:
+      - generic [ref=f1e51]: 95%
+      - generic [ref=f1e52]: Booking Success
+    - generic [ref=f1e53]:
+      - generic [ref=f1e54]: 2 min
+      - generic [ref=f1e55]: Avg Call Duration
+    - generic [ref=f1e56]:
+      - generic [ref=f1e57]: 100+
+      - generic [ref=f1e58]: Happy Businesses
+  - generic [ref=f1e60]:
+    - generic [ref=f1e61]:
+      - generic [ref=f1e62]: How It Works
+      - heading "A simple, reliable flow" [level=2] [ref=f1e63]
+      - paragraph [ref=f1e64]: that handles every customer call with precision
+    - generic [ref=f1e65]:
+      - generic [ref=f1e66]:
+        - generic [ref=f1e67]: 📞
+        - generic [ref=f1e68]: Step 1
+        - generic [ref=f1e69]: Customer Calls
+        - generic [ref=f1e70]: Customer dials your business number
+      - generic [ref=f1e71]:
+        - generic [ref=f1e72]: 🤖
+        - generic [ref=f1e73]: Step 2
+        - generic [ref=f1e74]: AI Answers
+        - generic [ref=f1e75]: AI voice assistant answers instantly
+      - generic [ref=f1e76]:
+        - generic [ref=f1e77]: 🧠
+        - generic [ref=f1e78]: Step 3
+        - generic [ref=f1e79]: Understands Intent
+        - generic [ref=f1e80]: AI understands the customer's request in their language
+      - generic [ref=f1e81]:
+        - generic [ref=f1e82]: 📅
+        - generic [ref=f1e83]: Step 4
+        - generic [ref=f1e84]: Takes Action
+        - generic [ref=f1e85]: Books appointment or answers queries
+      - generic [ref=f1e86]:
+        - generic [ref=f1e87]: ✅
+        - generic [ref=f1e88]: Step 5
+        - generic [ref=f1e89]: Confirms
+        - generic [ref=f1e90]: Confirms booking and ends call
+  - generic [ref=f1e92]:
+    - generic [ref=f1e93]:
+      - generic [ref=f1e94]: Use Cases
+      - heading "Perfect for Any Business" [level=2] [ref=f1e95]
+      - paragraph [ref=f1e96]: Trusted by Indian SMEs across industries
+    - generic [ref=f1e97]:
+      - generic [ref=f1e98]:
+        - generic [ref=f1e99]: 🏥
+        - heading "Clinics & Doctors" [level=3] [ref=f1e101]
+        - paragraph [ref=f1e102]: Appointment booking, rescheduling, follow-ups
+        - list [ref=f1e103]:
+          - listitem [ref=f1e104]:
+            - generic [ref=f1e105]: ✓
+            - generic [ref=f1e106]: 24/7 booking
+          - listitem [ref=f1e107]:
+            - generic [ref=f1e108]: ✓
+            - generic [ref=f1e109]: Patient reminders
+          - listitem [ref=f1e110]:
+            - generic [ref=f1e111]: ✓
+            - generic [ref=f1e112]: Prescription follow-ups
+      - generic [ref=f1e113]:
+        - generic [ref=f1e114]: 💇
+        - heading "Salons & Spas" [level=3] [ref=f1e116]
+        - paragraph [ref=f1e117]: Service bookings, offers, cancellations
+        - list [ref=f1e118]:
+          - listitem [ref=f1e119]:
+            - generic [ref=f1e120]: ✓
+            - generic [ref=f1e121]: Service bookings
+          - listitem [ref=f1e122]:
+            - generic [ref=f1e123]: ✓
+            - generic [ref=f1e124]: Package promotions
+          - listitem [ref=f1e125]:
+            - generic [ref=f1e126]: ✓
+            - generic [ref=f1e127]: Membership renewals
+      - generic [ref=f1e128]:
+        - generic [ref=f1e129]: 🏢
+        - heading "Real Estate" [level=3] [ref=f1e131]
+        - paragraph [ref=f1e132]: Site visit scheduling, lead capture
+        - list [ref=f1e133]:
+          - listitem [ref=f1e134]:
+            - generic [ref=f1e135]: ✓
+            - generic [ref=f1e136]: Site visit booking
+          - listitem [ref=f1e137]:
+            - generic [ref=f1e138]: ✓
+            - generic [ref=f1e139]: Lead qualification
+          - listitem [ref=f1e140]:
+            - generic [ref=f1e141]: ✓
+            - generic [ref=f1e142]: Property inquiries
+      - generic [ref=f1e143]:
+        - generic [ref=f1e144]: 🏫
+        - heading "Offices & Schools" [level=3] [ref=f1e146]
+        - paragraph [ref=f1e147]: Enquiry handling, information desk
+        - list [ref=f1e148]:
+          - listitem [ref=f1e149]:
+            - generic [ref=f1e150]: ✓
+            - generic [ref=f1e151]: Admission inquiries
+          - listitem [ref=f1e152]:
+            - generic [ref=f1e153]: ✓
+            - generic [ref=f1e154]: Information desk
+          - listitem [ref=f1e155]:
+            - generic [ref=f1e156]: ✓
+            - generic [ref=f1e157]: Parent communication
+  - generic [ref=f1e159]:
+    - generic [ref=f1e160]:
+      - generic [ref=f1e161]: Audio Demos
+      - heading "Hear Our AI Agents in Action" [level=2] [ref=f1e162]
+      - paragraph [ref=f1e163]: Listen to real-world scenarios across industries with natural, contextual responses.
+    - generic [ref=f1e164]:
+      - generic [ref=f1e165]:
+        - generic [ref=f1e166]:
+          - generic [ref=f1e167]:
+            - generic [ref=f1e168]: Healthcare
+            - heading "Healthcare Support" [level=3] [ref=f1e169]
+            - paragraph [ref=f1e170]: AI agent handling patient inquiries and support
+          - button "Play Healthcare Support" [ref=f1e171] [cursor=pointer]: Play
+        - generic [ref=f1e195]:
+          - generic [ref=f1e196]: 0:00
+          - generic [ref=f1e197]: 6:29
+      - generic [ref=f1e198]:
+        - generic [ref=f1e199]:
+          - generic [ref=f1e200]:
+            - generic [ref=f1e201]: E-commerce
+            - heading "E-commerce Support" [level=3] [ref=f1e202]
+            - paragraph [ref=f1e203]: AI-powered customer service for online stores
+          - button "Play E-commerce Support" [ref=f1e204] [cursor=pointer]: Play
+        - generic [ref=f1e228]:
+          - generic [ref=f1e229]: 0:00
+          - generic [ref=f1e230]: 2:25
+      - generic [ref=f1e231]:
+        - generic [ref=f1e232]:
+          - generic [ref=f1e233]:
+            - generic [ref=f1e234]: BFSI
+            - heading "Payment Reminders" [level=3] [ref=f1e235]
+            - paragraph [ref=f1e236]: Automated payment reminder calls
+          - button "Play Payment Reminders" [ref=f1e237] [cursor=pointer]: Play
+        - generic [ref=f1e261]:
+          - generic [ref=f1e262]: 0:00
+          - generic [ref=f1e263]: 1:04
+      - generic [ref=f1e264]:
+        - generic [ref=f1e265]:
+          - generic [ref=f1e266]:
+            - generic [ref=f1e267]: EdTech
+            - heading "Lead Qualification" [level=3] [ref=f1e268]
+            - paragraph [ref=f1e269]: Edtech lead qualification
+          - button "Play Lead Qualification" [ref=f1e270] [cursor=pointer]: Play
+        - generic [ref=f1e294]:
+          - generic [ref=f1e295]: 0:00
+          - generic [ref=f1e296]: 2:38
+      - generic [ref=f1e297]:
+        - generic [ref=f1e298]:
+          - generic [ref=f1e299]:
+            - generic [ref=f1e300]: HR Tech
+            - heading "Recruitment" [level=3] [ref=f1e301]
+            - paragraph [ref=f1e302]: AI-powered candidate screening and recruitment
+          - button "Play Recruitment" [ref=f1e303] [cursor=pointer]: Play
+        - generic [ref=f1e327]:
+          - generic [ref=f1e328]: 0:00
+          - generic [ref=f1e329]: 3:56
+      - generic [ref=f1e330]:
+        - generic [ref=f1e331]:
+          - generic [ref=f1e332]:
+            - generic [ref=f1e333]: Hospitality
+            - heading "Hospitality Front Desk" [level=3] [ref=f1e334]
+            - paragraph [ref=f1e335]: AI agent handling front desk inquiries and support
+          - button "Play Hospitality Front Desk" [ref=f1e336] [cursor=pointer]: Play
+        - generic [ref=f1e360]:
+          - generic [ref=f1e361]: 0:00
+          - generic [ref=f1e362]: 4:25
+  - generic [ref=f1e364]:
+    - generic [ref=f1e365]:
+      - generic [ref=f1e366]: Why Choose Us
+      - heading "Why Choose AIgenetic" [level=2] [ref=f1e367]
+      - paragraph [ref=f1e368]: Fully managed AI phone service designed for Indian businesses
+    - generic [ref=f1e369]:
+      - generic [ref=f1e370]:
+        - generic [ref=f1e371]: 🛠️
+        - generic [ref=f1e372]: Fully Managed
+        - generic [ref=f1e373]: We handle everything from setup to maintenance
+      - generic [ref=f1e374]:
+        - generic [ref=f1e375]: 🗣️
+        - generic [ref=f1e376]: 31+ Languages
+        - generic [ref=f1e377]: Understands major Indian languages and accents
+      - generic [ref=f1e378]:
+        - generic [ref=f1e379]: ⏱️
+        - generic [ref=f1e380]: Works 24/7
+        - generic [ref=f1e381]: Never miss a call, even on holidays
+      - generic [ref=f1e382]:
+        - generic [ref=f1e383]: 💸
+        - generic [ref=f1e384]: Affordable
+        - generic [ref=f1e385]: Pay-per-use pricing for small businesses
+  - generic [ref=f1e387]:
+    - generic [ref=f1e388]:
+      - generic [ref=f1e389]: Testimonials
+      - heading "Trusted by 100+ Businesses" [level=2] [ref=f1e390]
+      - paragraph [ref=f1e391]: See how AIgenetic is transforming customer communication
+    - generic [ref=f1e392]:
+      - generic [ref=f1e393]:
+        - generic [ref=f1e394]:
+          - generic [ref=f1e395]: ★
+          - generic [ref=f1e396]: ★
+          - generic [ref=f1e397]: ★
+          - generic [ref=f1e398]: ★
+          - generic [ref=f1e399]: ★
+        - paragraph [ref=f1e400]: "\"AIgenetic has been a game-changer. We don't miss appointments anymore, and patients love the 24/7 booking facility.\""
+        - generic [ref=f1e401]:
+          - generic [ref=f1e402]: D
+          - generic [ref=f1e403]:
+            - generic [ref=f1e404]: Dr. Priya Sharma
+            - generic [ref=f1e405]: Skin Clinic, Mumbai
+      - generic [ref=f1e406]:
+        - generic [ref=f1e407]:
+          - generic [ref=f1e408]: ★
+          - generic [ref=f1e409]: ★
+          - generic [ref=f1e410]: ★
+          - generic [ref=f1e411]: ★
+          - generic [ref=f1e412]: ★
+        - paragraph [ref=f1e413]: "\"The bot handles Hindi and Marathi perfectly. Our booking rate increased by 40% in just 2 months!\""
+        - generic [ref=f1e414]:
+          - generic [ref=f1e415]: R
+          - generic [ref=f1e416]:
+            - generic [ref=f1e417]: Rahul Desai
+            - generic [ref=f1e418]: Salon Owner, Pune
+      - generic [ref=f1e419]:
+        - generic [ref=f1e420]:
+          - generic [ref=f1e421]: ★
+          - generic [ref=f1e422]: ★
+          - generic [ref=f1e423]: ★
+          - generic [ref=f1e424]: ★
+          - generic [ref=f1e425]: ★
+        - paragraph [ref=f1e426]: "\"Best investment we made. Saves us ₹25,000/month compared to hiring a receptionist. Plus it never takes a day off!\""
+        - generic [ref=f1e427]:
+          - generic [ref=f1e428]: A
+          - generic [ref=f1e429]:
+            - generic [ref=f1e430]: Anjali Reddy
+            - generic [ref=f1e431]: Real Estate Agency, Bangalore
+  - generic [ref=f1e433]:
+    - generic [ref=f1e434]:
+      - generic [ref=f1e435]: Pricing
+      - heading "Simple Pricing" [level=2] [ref=f1e436]
+      - paragraph [ref=f1e437]: No hidden fees. Pay only for what you use.
+    - generic [ref=f1e438]:
+      - generic [ref=f1e439]:
+        - generic [ref=f1e440]: Flex
+        - generic [ref=f1e441]: ₹4,999/month
+        - generic [ref=f1e442]: + ₹4 per call
+        - list [ref=f1e443]:
+          - listitem [ref=f1e444]:
+            - generic [ref=f1e445]: ✓
+            - generic [ref=f1e446]: One-time setup (₹10,000)
+          - listitem [ref=f1e447]:
+            - generic [ref=f1e448]: ✓
+            - generic [ref=f1e449]: Dedicated phone number
+          - listitem [ref=f1e450]:
+            - generic [ref=f1e451]: ✓
+            - generic [ref=f1e452]: AI voice agent configured
+          - listitem [ref=f1e453]:
+            - generic [ref=f1e454]: ✓
+            - generic [ref=f1e455]: Appointment booking
+          - listitem [ref=f1e456]:
+            - generic [ref=f1e457]: ✓
+            - generic [ref=f1e458]: Basic analytics
+          - listitem [ref=f1e459]:
+            - generic [ref=f1e460]: ✓
+            - generic [ref=f1e461]: Email support
+        - link "Get Started" [ref=f1e462] [cursor=pointer]:
+          - /url: tel:+9174284970333
+      - generic [ref=f1e463]:
+        - generic [ref=f1e464]: Most Popular
+        - generic [ref=f1e465]: Pro
+        - generic [ref=f1e466]: ₹9,999/month
+        - generic [ref=f1e467]: + ₹4 per call
+        - list [ref=f1e468]:
+          - listitem [ref=f1e469]:
+            - generic [ref=f1e470]: ✓
+            - generic [ref=f1e471]: Everything in Flex
+          - listitem [ref=f1e472]:
+            - generic [ref=f1e473]: ✓
+            - generic [ref=f1e474]: Outbound calling campaigns
+          - listitem [ref=f1e475]:
+            - generic [ref=f1e476]: ✓
+            - generic [ref=f1e477]: Advanced analytics
+          - listitem [ref=f1e478]:
+            - generic [ref=f1e479]: ✓
+            - generic [ref=f1e480]: Custom conversation flows
+          - listitem [ref=f1e481]:
+            - generic [ref=f1e482]: ✓
+            - generic [ref=f1e483]: Priority WhatsApp support
+          - listitem [ref=f1e484]:
+            - generic [ref=f1e485]: ✓
+            - generic [ref=f1e486]: Monthly optimization calls
+        - link "Get Started" [ref=f1e487] [cursor=pointer]:
+          - /url: tel:+9174284970333
+      - generic [ref=f1e488]:
+        - generic [ref=f1e489]: Enterprise
+        - generic [ref=f1e490]: Custom
+        - generic [ref=f1e491]: Volume-based per-call pricing
+        - list [ref=f1e492]:
+          - listitem [ref=f1e493]:
+            - generic [ref=f1e494]: ✓
+            - generic [ref=f1e495]: Everything in Pro
+          - listitem [ref=f1e496]:
+            - generic [ref=f1e497]: ✓
+            - generic [ref=f1e498]: Multiple phone numbers
+          - listitem [ref=f1e499]:
+            - generic [ref=f1e500]: ✓
+            - generic [ref=f1e501]: API access & integrations
+          - listitem [ref=f1e502]:
+            - generic [ref=f1e503]: ✓
+            - generic [ref=f1e504]: White-label option
+          - listitem [ref=f1e505]:
+            - generic [ref=f1e506]: ✓
+            - generic [ref=f1e507]: Dedicated account manager
+          - listitem [ref=f1e508]:
+            - generic [ref=f1e509]: ✓
+            - generic [ref=f1e510]: 24/7 priority support
+        - link "Contact Sales" [ref=f1e511] [cursor=pointer]:
+          - /url: https://wa.me/917428497033
+    - generic [ref=f1e513]:
+      - generic [ref=f1e514]:
+        - generic [ref=f1e515]: Estimate Your Monthly Cost
+        - generic [ref=f1e516]: Enter your expected number of calls in a month.
+      - generic [ref=f1e517]:
+        - generic [ref=f1e518]:
+          - slider [ref=f1e519]: "200"
+          - spinbutton [ref=f1e520]: "200"
+          - generic [ref=f1e521]: calls/month
+        - generic [ref=f1e522]:
+          - generic [ref=f1e523]:
+            - generic [ref=f1e524]: Flex
+            - generic [ref=f1e525]: ₹5,799
+            - generic [ref=f1e526]: per month
+          - generic [ref=f1e527]:
+            - generic [ref=f1e528]: Pro
+            - generic [ref=f1e529]: ₹10,799
+            - generic [ref=f1e530]: per month
+    - generic [ref=f1e533]:
+      - generic [ref=f1e534]: 💡
+      - generic [ref=f1e535]:
+        - generic [ref=f1e536]: Need help choosing?
+        - generic [ref=f1e537]: Book a free demo and we'll recommend the best plan based on your monthly call volume. Most businesses save 60-70% compared to hiring a receptionist.
+        - link "Chat on WhatsApp" [ref=f1e538] [cursor=pointer]:
+          - /url: https://wa.me/917428497033
+  - generic [ref=f1e540]:
+    - generic [ref=f1e541]:
+      - generic [ref=f1e542]: Get Started
+      - heading "Get Your AI Phone Assistant Live in 48-72 Hours 🚀" [level=2] [ref=f1e543]
+      - paragraph [ref=f1e544]: Tell us about your business and we'll set up a personalized demo
+    - generic [ref=f1e546]:
+      - generic [ref=f1e547]:
+        - generic [ref=f1e548]:
+          - generic [ref=f1e549]: Your Name *
+          - textbox "Enter your name" [ref=f1e550]
+        - generic [ref=f1e551]:
+          - generic [ref=f1e552]: Business Name *
+          - textbox "Your business name" [ref=f1e553]
+        - generic [ref=f1e554]:
+          - generic [ref=f1e555]: Phone Number *
+          - textbox "+91 742849 7033" [ref=f1e556]
+        - generic [ref=f1e557]:
+          - generic [ref=f1e558]: City
+          - textbox "Your city" [ref=f1e559]
+        - generic [ref=f1e560]:
+          - generic [ref=f1e561]: Preferred Demo Time
+          - textbox "e.g., Tomorrow 3 PM" [ref=f1e562]
+      - generic [ref=f1e563]:
+        - button "Request Demo" [ref=f1e564] [cursor=pointer]
+        - generic [ref=f1e565]: or
+        - link "📞 Call Now" [ref=f1e566] [cursor=pointer]:
+          - /url: tel:+9174284970333
+      - generic [ref=f1e567]: We'll respond within 2 hours during business hours
+  - contentinfo [ref=f1e568]:
+    - generic [ref=f1e569]:
+      - generic [ref=f1e570]:
+        - generic [ref=f1e571]:
+          - generic [ref=f1e572]:
+            - img "AIgenetic" [ref=f1e573]
+            - generic [ref=f1e574]:
+              - generic [ref=f1e575]: AIgenetic
+              - generic [ref=f1e576]: India-focused AI voice assistants
+          - paragraph [ref=f1e577]: AIgenetic (OPC) Pvt Ltd provides fully managed AI-powered phone assistants for Indian SMEs. We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.
+        - generic [ref=f1e578]:
+          - heading "Quick Links" [level=4] [ref=f1e579]
+          - list [ref=f1e580]:
+            - listitem [ref=f1e581]:
+              - link "Home" [ref=f1e582] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f1e583]:
+              - link "How It Works" [ref=f1e584] [cursor=pointer]:
+                - /url: "#features"
+            - listitem [ref=f1e585]:
+              - link "Pricing" [ref=f1e586] [cursor=pointer]:
+                - /url: "#pricing"
+            - listitem [ref=f1e587]:
+              - link "Book Demo" [ref=f1e588] [cursor=pointer]:
+                - /url: "#demo"
+        - generic [ref=f1e589]:
+          - heading "Contact" [level=4] [ref=f1e590]
+          - list [ref=f1e591]:
+            - listitem [ref=f1e592]:
+              - link "connect@aigenetic.in" [ref=f1e593] [cursor=pointer]:
+                - /url: mailto:connect@aigenetic.in
+            - listitem [ref=f1e594]:
+              - link "+91 742849 7033" [ref=f1e595] [cursor=pointer]:
+                - /url: tel:+9174284970333
+            - listitem [ref=f1e596]:
+              - link "WhatsApp Support" [ref=f1e597] [cursor=pointer]:
+                - /url: https://wa.me/917428497033
+      - generic [ref=f1e598]:
+        - generic [ref=f1e599]: © 2026 AIgenetic (OPC) Pvt Ltd. All rights reserved.
+        - generic [ref=f1e600]:
+          - link "Privacy Policy" [ref=f1e601] [cursor=pointer]:
+            - /url: privacy-policy.html
+          - link "Terms of Service" [ref=f1e602] [cursor=pointer]:
+            - /url: terms-of-service.html
+          - link "Refund Policy" [ref=f1e603] [cursor=pointer]:
+            - /url: refund-policy.html
+  - generic [ref=f1e604]:
+    - link "💬" [ref=f1e605] [cursor=pointer]:
+      - /url: https://wa.me/917428497033?text=Hi!%20I'm%20interested%20in%20AIgenetic
+    - link "📞" [ref=f1e607] [cursor=pointer]:
+      - /url: tel:+9174284970333
