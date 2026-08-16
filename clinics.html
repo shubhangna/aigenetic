@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Algenetic for Clinics — the voice of your clinic</title>
+<script src="../config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -192,14 +193,14 @@
 
 <nav class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><span class="brand-mark"></span>Algenetic <small>for clinics</small></a>
+    <a class="brand" href="#top"><span class="brand-mark"></span>Aigenetic <small>for clinics</small></a>
     <div class="nav-links">
       <a href="#handles">What it handles</a>
       <a href="#limits">What it won't do</a>
       <a href="#setup">Setup</a>
       <a href="#pricing">Pricing</a>
     </div>
-    <a class="btn btn-primary" href="#demo">Book a demo</a>
+    <a class="btn btn-primary" href="#demo" data-phone-link>Book a demo</a>
   </div>
 </nav>
 
@@ -209,8 +210,8 @@
     <h1 class="rise">The voice of<br>your <em>clinic</em></h1>
     <p class="sub rise">You're with a patient. The phone rings anyway. Algenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
     <div class="cta-row rise">
-      <a class="btn btn-primary btn-lg" href="#demo">Hear it answer your clinic →</a>
-      <a class="btn btn-ghost btn-lg" href="#demo">WhatsApp us</a>
+      <a class="btn btn-primary btn-lg" href="#demo" data-phone-link>Hear it answer your clinic →</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>WhatsApp us</a>
     </div>
     <p class="cta-note">Free 14-day trial on your existing clinic number. No new hardware.</p>
 
@@ -251,7 +252,7 @@
           <span>Follow-up · Dr. Rao · OPD 2</span>
         </div>
         <div class="synced">→ written to Practo Ray<span>WhatsApp confirmation delivered 21:49</span></div>
-        <a class="btn btn-ghost" href="#demo" style="margin-left:auto">Play the audio</a>
+        <a class="btn btn-ghost" href="#demo" style="margin-left:auto" data-whatsapp-link>Play the audio</a>
       </div>
     </div>
   </div>
@@ -372,12 +373,14 @@
     <h2>Call our demo line and<br>book a fake appointment</h2>
     <p>Speak to it in any language you like. Try to confuse it. Then decide whether it should be answering your clinic tonight.</p>
     <div class="cta-row">
-      <a class="btn btn-primary btn-lg" href="tel:+919000000000">Call +91 90000 00000 →</a>
-      <a class="btn btn-ghost btn-lg" href="#demo">Book a demo instead</a>
+      <a class="btn btn-primary btn-lg" href="tel:+9174284970333" data-phone-link><span data-phone-display>+91 742849 7033</span> →</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>Book a demo instead</a>
     </div>
   </div>
   <div class="wrap"><footer>
-    <span>Algenetic for Clinics</span>
+    <span>Aigenetic for Clinics</span>
+    <span>·</span>
+    <span><a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a></span>
     <span>·</span>
     <span>Patient data stays in India. Recordings deleted on your schedule.</span>
     <span class="sp">Not a medical device. Does not provide medical advice.</span>
@@ -385,6 +388,34 @@
 </section>
 
 <script>
+  (function applySharedContactData() {
+    const company = (window.CONFIG && window.CONFIG.company) || {
+      phoneDisplay: '+91 742849 7033',
+      phoneDial: '+9174284970333',
+      whatsappNumber: '917428497033',
+      email: 'connect@aigenetic.in'
+    };
+
+    document.querySelectorAll('[data-phone-display]').forEach((el) => {
+      el.textContent = company.phoneDisplay;
+    });
+
+    document.querySelectorAll('[data-phone-link]').forEach((el) => {
+      el.href = `tel:${company.phoneDial}`;
+      el.setAttribute('aria-label', `Call ${company.phoneDisplay}`);
+    });
+
+    document.querySelectorAll('[data-whatsapp-link]').forEach((el) => {
+      el.href = `https://wa.me/${company.whatsappNumber}`;
+      el.setAttribute('aria-label', 'Chat on WhatsApp');
+    });
+
+    document.querySelectorAll('[data-email-link]').forEach((el) => {
+      el.href = `mailto:${company.email}`;
+      el.textContent = company.email;
+    });
+  })();
+
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
   },{threshold:.12});
