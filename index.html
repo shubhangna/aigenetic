@@ -45,12 +45,14 @@
     }
 
     :root {
-      --primary: #0a0a0a;
-      --secondary: #fafafa;
-      --accent: #2563eb;
-      --text-primary: #171717;
-      --text-secondary: #737373;
-      --border: #e5e5e5;
+      --primary: #0E1B1E;
+      --secondary: #FAFAF7;
+      --accent: #0C6B5C;
+      --accent-deep: #084A40;
+      --mint: #E9F3F0;
+      --text-primary: #0E1B1E;
+      --text-secondary: #546567;
+      --border: #E3E5E0;
     }
 
     body {
@@ -60,14 +62,14 @@
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #0a0a0a, #262626);
+      background: linear-gradient(135deg, #0E1B1E, #0C6B5C);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
+
     .accent-gradient {
-      background: linear-gradient(135deg, #2563eb, #1e40af);
+      background: linear-gradient(135deg, #0C6B5C, #084A40);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -214,7 +216,7 @@
                 <a href="#features" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
                 <a href="#use-cases" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
                 <a href="#pricing" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
-                <a href={phoneLink} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#262626'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>Book Demo</a>
+                <a href={phoneLink} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>Book Demo</a>
               </nav>
 
               <div className="md:hidden flex gap-2">
@@ -229,7 +231,7 @@
               <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2" style={{background: 'var(--accent)'}}></span>
                   </span>
                   {CONFIG.hero.badge}
@@ -244,7 +246,7 @@
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4 pt-6">
-                  <a href={phoneLink} className="group px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                  <a href={phoneLink} className="group px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
                     {CONFIG.hero.ctaPrimary}
                     <span className="transition-transform">→</span>
                   </a>
@@ -254,6 +256,13 @@
                   <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
                     📅 Schedule Demo
                   </a>
+                  <LiveVoiceCallButton
+                    label="🎙️ Live Call to Voice Assistant"
+                    className="px-10 py-4 rounded-lg font-medium text-lg transition-all"
+                    style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)', cursor: 'pointer'}}
+                    onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}}
+                    onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}
+                  />
                 </div>
 
                 <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
@@ -441,7 +450,7 @@
                       rel={plan.name === 'Enterprise' ? 'noopener noreferrer' : undefined}
                       className="block w-full text-center px-6 py-4 rounded-lg font-medium transition-all"
                       style={plan.highlighted ? {background: 'var(--primary)', color: 'white'} : {background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}}
-                      onMouseEnter={(e) => plan.highlighted ? e.currentTarget.style.background = '#262626' : e.currentTarget.style.borderColor = 'var(--text-primary)'}
+                      onMouseEnter={(e) => plan.highlighted ? e.currentTarget.style.background = '#084A40' : e.currentTarget.style.borderColor = 'var(--text-primary)'}
                       onMouseLeave={(e) => plan.highlighted ? e.currentTarget.style.background = 'var(--primary)' : e.currentTarget.style.borderColor = 'var(--border)'}
                     >
                       {plan.cta}
@@ -513,7 +522,7 @@
                   </div>
 
                   <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-                    <button type="submit" className="w-full sm:flex-1 px-8 py-4 rounded-lg font-medium transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    <button type="submit" className="w-full sm:flex-1 px-8 py-4 rounded-lg font-medium transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
                       Request Demo
                     </button>
                     <span className="text-sm" style={{color: 'var(--text-secondary)'}}>or</span>
@@ -589,11 +598,31 @@
             <a href={whatsappLinkWithText} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: '#10b981'}} title="WhatsApp us" onMouseEnter={(e) => {e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'scale(1)'}}>
               <span className="text-2xl">💬</span>
             </a>
-            <a href={phoneLink} className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: 'var(--primary)'}} title="Call us" onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'scale(1)'}}>
+            <a href={phoneLink} className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: 'var(--primary)'}} title="Call us" onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'scale(1)'}}>
               <span className="text-2xl">📞</span>
             </a>
           </div>
         </div>
+      );
+    }
+
+    function LiveVoiceCallButton({ label, className, style, onMouseEnter, onMouseLeave }) {
+      const [text, setText] = useState(label);
+      const timeoutRef = React.useRef(null);
+
+      const handleClick = () => {
+        if (timeoutRef.current) return;
+        setText('Call to voice assistant coming soon');
+        timeoutRef.current = setTimeout(() => {
+          setText(label);
+          timeoutRef.current = null;
+        }, 1000);
+      };
+
+      return (
+        <button type="button" onClick={handleClick} className={className} style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+          {text}
+        </button>
       );
     }
 

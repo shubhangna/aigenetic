@@ -4,6 +4,7 @@ Tests website functionality, content, and user interactions.
 """
 
 import re
+import os
 import unittest
 from playwright.sync_api import sync_playwright, expect
 
@@ -11,7 +12,7 @@ from playwright.sync_api import sync_playwright, expect
 class TestWebsiteE2E(unittest.TestCase):
     """End-to-end test suite for aigenetic.in website"""
     
-    BASE_URL = 'https://aigenetic.in'
+    BASE_URL = os.environ.get('BASE_URL', 'http://localhost:8989')
     
     @classmethod
     def setUpClass(cls):
@@ -47,8 +48,9 @@ class TestWebsiteE2E(unittest.TestCase):
         self.page.goto(self.BASE_URL)
         
         # Check for main h1 heading in hero section
-        hero_heading = self.page.locator("h1.text-5xl.lg\\:text-6xl.font-black").first
+        hero_heading = self.page.locator("h1.hero-title").first
         expect(hero_heading).to_be_visible()
+        expect(hero_heading).to_contain_text("The Voice of Your Business")
         print("✓ Hero section with main heading is visible")
         
         # Check for subheading text
@@ -60,8 +62,8 @@ class TestWebsiteE2E(unittest.TestCase):
         """Verify 'How It Works' features section is present"""
         self.page.goto(self.BASE_URL)
         
-        features_heading = self.page.get_by_role("heading", name="How It Works")
-        expect(features_heading).to_be_visible()
+        features_label = self.page.locator("#features .section-label", has_text="How It Works")
+        expect(features_label).to_be_visible()
         print("✓ 'How It Works' section is visible")
         
         # Verify key feature steps are present
@@ -90,7 +92,7 @@ class TestWebsiteE2E(unittest.TestCase):
         """Verify pricing section has pricing cards"""
         self.page.goto(self.BASE_URL)
         
-        pricing_heading = self.page.get_by_role("heading", name="Simple Pricing That Scales")
+        pricing_heading = self.page.get_by_role("heading", name="Simple Pricing")
         expect(pricing_heading).to_be_visible()
         print("✓ Pricing section heading is visible")
         
@@ -187,7 +189,7 @@ class TestWebsiteE2E(unittest.TestCase):
         """Verify testimonials section exists"""
         self.page.goto(self.BASE_URL)
         
-        testimonials_heading = self.page.get_by_role("heading", name="Trusted by 100+ Indian Businesses")
+        testimonials_heading = self.page.get_by_role("heading", name="Trusted by 100+ Businesses")
         expect(testimonials_heading).to_be_visible()
         print("✓ Testimonials section is visible")
         

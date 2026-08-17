@@ -50,7 +50,7 @@
   .btn{
     display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;
     font-size:15px;padding:12px 22px;border-radius:999px;text-decoration:none;border:1px solid transparent;
-    transition:transform .15s ease, background .15s ease;
+    transition:transform .15s ease, background .15s ease;cursor:pointer;
   }
   .btn:hover{transform:translateY(-1px)}
   .btn-primary{background:var(--ink);color:var(--paper)}
@@ -281,6 +281,7 @@
     <div class="cta-row rise">
       <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
       <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>💬 WhatsApp Us</a>
+      <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>🎙️ Live Call to Voice Assistant</button>
     </div>
     <p class="cta-note">Free 14-day trial on your existing clinic number. No new hardware.</p>
 
@@ -493,6 +494,20 @@
     if (e.target.id === 'calendar-modal') {
       closeCalendarModal();
     }
+  });
+
+  // "Live Call to Voice Assistant" buttons — flash a coming-soon message, then reset
+  document.querySelectorAll('[data-live-voice-call]').forEach(btn => {
+    const originalText = btn.textContent;
+    btn.addEventListener('click', () => {
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = '1';
+      btn.textContent = 'Call to voice assistant coming soon';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        delete btn.dataset.busy;
+      }, 1000);
+    });
   });
 </script>
 
