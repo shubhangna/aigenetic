@@ -14,7 +14,7 @@ window.CONFIG = {
     badge: 'Live AI Assistants Handling Calls Now [V 1.19 Live]',
     heading: 'The Voice of Your Business',
     subheading: 'Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically for your business—in Indian languages.',
-    ctaPrimary: '📞 Book Free Demo',
+    ctaPrimary: '📞 Call Now',
     ctaSecondary: '💬 WhatsApp Us',
     trust: {
       title: 'Trusted by 100+ Indian Businesses',

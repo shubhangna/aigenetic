@@ -216,7 +216,7 @@
                 <a href="#features" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
                 <a href="#use-cases" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
                 <a href="#pricing" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
-                <a href={phoneLink} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>Book Demo</a>
+                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>📅 Book Demo</a>
               </nav>
 
               <div className="md:hidden flex gap-2">
@@ -562,7 +562,7 @@
                     <li><a href="#" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Home</a></li>
                     <li><a href="#features" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>How It Works</a></li>
                     <li><a href="#pricing" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Pricing</a></li>
-                    <li><a href="#demo" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Book Demo</a></li>
+                    <li><a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Book Demo</a></li>
                   </ul>
                 </div>
 
