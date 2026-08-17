@@ -183,24 +183,10 @@
     const { useState, useEffect } = React;
 
     function App() {
-      const [form, setForm] = useState({ name: '', business: '', phone: '', city: '', time: '' });
       const phoneLink = `tel:${CONFIG.company.phoneDial}`;
       const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
       const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
       const featureIcons = ['⚡', '🌐', '⏰', '💰'];
-
-      const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-      };
-
-      const submitForm = (e) => {
-        e.preventDefault();
-        const subject = encodeURIComponent(`${CONFIG.company.name} - Request Demo`);
-        const body = encodeURIComponent(
-          `Name: ${form.name}\nBusiness: ${form.business}\nPhone: ${form.phone}\nCity: ${form.city}\nPreferred Demo Time: ${form.time}`
-        );
-        window.location.href = `mailto:${CONFIG.company.email}?subject=${subject}&body=${body}`;
-      };
 
       return (
         <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
@@ -459,17 +445,6 @@
                 ))}
               </div>
 
-              {/* Estimator */}
-              <div className="max-w-4xl mx-auto mb-16">
-                <div className="minimal-card p-10 rounded-2xl">
-                  <div className="mb-8">
-                    <div className="font-semibold text-xl mb-2" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>Estimate Your Monthly Cost</div>
-                    <div className="text-sm" style={{color: 'var(--text-secondary)'}}>Enter your expected number of calls in a month.</div>
-                  </div>
-                  <Estimator />
-                </div>
-              </div>
-
               <div className="max-w-4xl mx-auto">
                 <div className="minimal-card p-8 rounded-2xl">
                   <div className="flex items-start gap-4">
@@ -483,58 +458,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Demo Form */}
-          <section id="demo" className="py-32 section-divide" style={{background: 'white'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <div className="section-label mb-6">Get Started</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{CONFIG.ctaMessages.demoForm.heading}</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.demoForm.subheading}</p>
-              </div>
-
-              <div className="max-w-2xl mx-auto">
-                <form onSubmit={submitForm} className="minimal-card p-10 rounded-2xl">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Your Name *</label>
-                      <input required name="name" value={form.name} onChange={handleChange} placeholder="Enter your name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Business Name *</label>
-                      <input required name="business" value={form.business} onChange={handleChange} placeholder="Your business name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Phone Number *</label>
-                      <input required name="phone" value={form.phone} onChange={handleChange} placeholder={CONFIG.company.phoneDisplay} className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>City</label>
-                      <input name="city" value={form.city} onChange={handleChange} placeholder="Your city" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Preferred Demo Time</label>
-                      <input name="time" value={form.time} onChange={handleChange} placeholder="e.g., Tomorrow 3 PM" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
-                    </div>
-                  </div>
-
-                  <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-                    <button type="submit" className="w-full sm:flex-1 px-8 py-4 rounded-lg font-medium transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
-                      Request Demo
-                    </button>
-                    <span className="text-sm" style={{color: 'var(--text-secondary)'}}>or</span>
-                    <a href={phoneLink} className="w-full sm:w-auto px-8 py-4 rounded-lg font-medium transition-all whitespace-nowrap" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
-                      📞 Call Now
-                    </a>
-                  </div>
-
-                  <div className="mt-6 text-center text-sm" style={{color: 'var(--text-secondary)'}}>
-                    {CONFIG.ctaMessages.demoForm.responseTime}
-                  </div>
-                </form>
               </div>
             </div>
           </section>
@@ -623,34 +546,6 @@
         <button type="button" onClick={handleClick} className={className} style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {text}
         </button>
-      );
-    }
-
-    function Estimator() {
-      const [calls, setCalls] = React.useState(200);
-      const plans = CONFIG.pricing.filter(p => p.name === 'Flex' || p.name === 'Pro');
-      const estimate = (baseStr, perCall) => {
-        const base = parseInt(baseStr.replace(/[^0-9]/g, ''), 10) || 0;
-        const rate = (perCall ?? CONFIG.pricingMeta?.perCallINR) || 0;
-        return base + calls * rate;
-      };
-      return (
-        <div className="space-y-8">
-          <div className="flex items-center gap-4">
-            <input type="range" min="0" max="5000" step="50" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value,10))} className="flex-1" style={{accentColor: 'var(--primary)'}} />
-            <input type="number" min="0" max="20000" step="10" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value||'0',10))} className="w-28 p-3 rounded-lg text-center font-semibold outline-none" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} />
-            <span className="text-sm whitespace-nowrap" style={{color: 'var(--text-secondary)'}}>calls/month</span>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {plans.map((p)=> (
-              <div key={p.name} className="p-6 rounded-xl" style={{background: 'var(--secondary)', border: '1px solid var(--border)'}}>
-                <div className="text-xs font-semibold mb-2" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{p.name}</div>
-                <div className="text-4xl font-semibold" style={{letterSpacing: '-1px', color: 'var(--primary)'}}>₹{estimate(p.price, p.perCallINR).toLocaleString()}</div>
-                <div className="text-xs mt-1" style={{color: 'var(--text-secondary)'}}>per month</div>
-              </div>
-            ))}
-          </div>
-        </div>
       );
     }
 

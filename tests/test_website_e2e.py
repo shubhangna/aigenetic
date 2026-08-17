@@ -3,7 +3,6 @@ End-to-end tests for aigenetic.in website using Playwright.
 Tests website functionality, content, and user interactions.
 """
 
-import re
 import os
 import unittest
 from playwright.sync_api import sync_playwright, expect
@@ -29,23 +28,33 @@ class TestWebsiteE2E(unittest.TestCase):
         cls.context.close()
         cls.browser.close()
         cls.playwright.stop()
+
+    def goto_base_url(self):
+        """Navigate to the configured site without waiting on slow third-party assets."""
+        response = self.page.goto(
+            self.BASE_URL,
+            wait_until="domcontentloaded",
+            timeout=45000,
+        )
+        self.page.locator("h1.hero-title").wait_for(state="visible", timeout=15000)
+        return response
     
     def test_01_website_loads_successfully(self):
         """Verify website loads without errors"""
-        response = self.page.goto(self.BASE_URL)
+        response = self.goto_base_url()
         self.assertEqual(response.status, 200, "Website should load with 200 status")
         print(f"✓ Website loaded successfully (Status: {response.status})")
     
     def test_02_page_title_contains_aigenetic(self):
         """Verify page title includes AIgenetic branding"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         title = self.page.title()
         self.assertIn("AIgenetic", title, "Page title should contain 'AIgenetic'")
         print(f"✓ Page title verified: {title}")
     
     def test_03_hero_section_visible(self):
         """Verify hero section with main heading is present"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         # Check for main h1 heading in hero section
         hero_heading = self.page.locator("h1.hero-title").first
@@ -60,7 +69,7 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_04_features_section_exists(self):
         """Verify 'How It Works' features section is present"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         features_label = self.page.locator("#features .section-label", has_text="How It Works")
         expect(features_label).to_be_visible()
@@ -75,7 +84,7 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_05_use_cases_section_present(self):
         """Verify use cases section with industry examples"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         use_cases_heading = self.page.get_by_role("heading", name="Perfect for Any Business")
         expect(use_cases_heading).to_be_visible()
@@ -90,7 +99,7 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_06_pricing_section_with_cards(self):
         """Verify pricing section has pricing cards"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         pricing_heading = self.page.get_by_role("heading", name="Simple Pricing")
         expect(pricing_heading).to_be_visible()
@@ -108,41 +117,39 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_07_cta_buttons_present_and_functional(self):
         """Verify CTA buttons exist with correct links"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         # Check Call CTA
-        call_button = self.page.get_by_role("link", name="📞 Book Free Demo").first
+        call_button = self.page.locator('a[href^="tel:"]:visible').first
         expect(call_button).to_be_visible()
         call_href = call_button.get_attribute("href")
         self.assertTrue(call_href.startswith("tel:"), "Call button should have tel: link")
         print(f"✓ Call CTA button is present with link: {call_href}")
         
         # Check WhatsApp CTA
-        whatsapp_button = self.page.get_by_role("link", name="💬 WhatsApp Us").first
+        whatsapp_button = self.page.locator('a[href^="https://wa.me/"]:visible').first
         expect(whatsapp_button).to_be_visible()
         whatsapp_href = whatsapp_button.get_attribute("href")
         self.assertTrue(whatsapp_href.startswith("https://wa.me/"), "WhatsApp button should have wa.me link")
         print(f"✓ WhatsApp CTA button is present with link: {whatsapp_href}")
     
-    def test_08_demo_form_exists(self):
-        """Verify demo request form is present"""
-        self.page.goto(self.BASE_URL)
-        
-        form_heading = self.page.get_by_role("heading", name="Get Your AI Phone Assistant Live in 48-72 Hours")
-        expect(form_heading).to_be_visible()
-        print("✓ Demo form section is visible")
-        
-        # Check form fields
-        name_input = self.page.get_by_placeholder("Enter your name")
-        business_input = self.page.get_by_placeholder("Your business name")
-        
-        expect(name_input).to_be_visible()
-        expect(business_input).to_be_visible()
-        print("✓ Demo form inputs are present")
+    def test_08_schedule_demo_modal_exists(self):
+        """Verify schedule demo entry point opens the booking modal"""
+        self.goto_base_url()
+
+        schedule_demo = self.page.locator('a[href="#"]', has_text="Schedule Demo").first
+        expect(schedule_demo).to_be_visible()
+        schedule_demo.click()
+
+        modal_heading = self.page.locator("#calendar-modal-main h2", has_text="Schedule Your Demo")
+        expect(modal_heading).to_be_visible()
+        calendar_frame = self.page.locator("#calendar-modal-main iframe")
+        expect(calendar_frame).to_be_visible()
+        print("Schedule demo modal is visible")
     
     def test_09_footer_present_with_links(self):
         """Verify footer section with company info and links"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         # Scroll to footer
         self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
@@ -162,7 +169,7 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_10_no_critical_console_errors(self):
         """Verify no critical JavaScript errors in console"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         # Collect console messages
         errors = []
@@ -176,7 +183,7 @@ class TestWebsiteE2E(unittest.TestCase):
                 warnings.append(msg.text)
         
         self.page.on("console", handle_console)
-        self.page.reload()
+        self.page.reload(wait_until="domcontentloaded", timeout=45000)
         
         # Only fail on critical errors (not favicon or CDN warnings)
         critical_errors = [e for e in errors if 'favicon' not in e.lower()]
@@ -187,7 +194,7 @@ class TestWebsiteE2E(unittest.TestCase):
     
     def test_11_testimonials_section_visible(self):
         """Verify testimonials section exists"""
-        self.page.goto(self.BASE_URL)
+        self.goto_base_url()
         
         testimonials_heading = self.page.get_by_role("heading", name="Trusted by 100+ Businesses")
         expect(testimonials_heading).to_be_visible()

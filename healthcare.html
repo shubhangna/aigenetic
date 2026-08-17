@@ -322,7 +322,10 @@
           <span>Follow-up · Dr. Rao · OPD 2</span>
         </div>
         <div class="synced">→ written to Practo Ray<span>WhatsApp confirmation delivered 21:49</span></div>
-        <a class="btn btn-ghost" href="#demo" style="margin-left:auto" data-whatsapp-link>Play the audio</a>
+        <button type="button" class="btn btn-ghost" style="margin-left:auto" data-play-audio="mp3/HealthCare-onboarding_cEIUBM4Y%20(1).mp3">
+          <span data-play-icon>▶</span> Play the audio
+        </button>
+        <audio data-audio-player preload="none"></audio>
       </div>
     </div>
   </div>
@@ -494,6 +497,28 @@
     if (e.target.id === 'calendar-modal') {
       closeCalendarModal();
     }
+  });
+
+  // "Play the audio" button — toggles play/pause on the paired <audio> element
+  document.querySelectorAll('[data-play-audio]').forEach(btn => {
+    const src = btn.getAttribute('data-play-audio');
+    const audio = btn.parentElement.querySelector('[data-audio-player]');
+    const icon = btn.querySelector('[data-play-icon]');
+    if (!audio) return;
+    audio.src = src;
+
+    const setIcon = (playing) => { if (icon) icon.textContent = playing ? '⏸' : '▶'; };
+
+    btn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+    audio.addEventListener('play', () => setIcon(true));
+    audio.addEventListener('pause', () => setIcon(false));
+    audio.addEventListener('ended', () => setIcon(false));
   });
 
   // "Live Call to Voice Assistant" buttons — flash a coming-soon message, then reset

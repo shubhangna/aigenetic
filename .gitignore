@@ -2,3 +2,4 @@
 ./.venv
 .playwright-mcp
 tests/reports/
+tests/__pycache__/*

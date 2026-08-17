@@ -101,21 +101,21 @@ window.CONFIG = {
     { number: '100+', label: 'Happy Businesses', color: 'from-orange-50 to-amber-50 border-orange-100 text-orange-600' }
   ],
   pricingMeta: {
-    setupFeeINR: 10000,
     perCallINR: 4
   },
   pricing: [
     {
       name: 'Flex',
-      price: '₹4,999',
+      price: '₹2,999',
       period: '/month',
-      usage: '+ ₹4 per call',
+      usage: '500 calls included, then ₹4/call',
+      includedCalls: 500,
       perCallINR: 4,
       features: [
-        'One-time setup (₹10,000)',
         'Dedicated phone number',
         'AI voice agent configured',
-        'Appointment booking',
+        '500 answered calls included',
+        'Appointment booking & rescheduling',
         'Basic analytics',
         'Email support'
       ],
@@ -124,18 +124,19 @@ window.CONFIG = {
     },
     {
       name: 'Pro',
-      price: '₹9,999',
+      price: '₹7,999',
       period: '/month',
-      usage: '+ ₹4 per call',
+      usage: '1,500 calls included, then ₹4/call',
+      includedCalls: 1500,
       perCallINR: 4,
       badge: 'Most Popular',
       features: [
         'Everything in Flex',
         'Outbound calling campaigns',
+        '1,500 answered calls included',
         'Advanced analytics',
         'Custom conversation flows',
-        'Priority WhatsApp support',
-        'Monthly optimization calls'
+        'Priority WhatsApp support'
       ],
       cta: 'Get Started',
       highlighted: true
@@ -161,11 +162,6 @@ window.CONFIG = {
     pricingHelp: {
       title: 'Need help choosing?',
       description: "Book a free demo and we'll recommend the best plan based on your monthly call volume. Most businesses save 60-70% compared to hiring a receptionist."
-    },
-    demoForm: {
-      heading: 'Get Your AI Phone Assistant Live in 48-72 Hours 🚀',
-      subheading: "Tell us about your business and we'll set up a personalized demo",
-      responseTime: "We'll respond within 2 hours during business hours"
     }
   }
 };

@@ -21,6 +21,13 @@ _HTML_REPORT_STARTED_AT = None
 
 def pytest_addoption(parser):
     parser.addoption(
+        "--site",
+        action="store",
+        default="local",
+        choices=("local", "remote"),
+        help="Website target: local uses http://localhost:8989, remote uses https://aigenetic.in.",
+    )
+    parser.addoption(
         "--html-report",
         action="store",
         default="tests/reports/latest.html",
@@ -38,6 +45,13 @@ def pytest_configure(config):
     global _HTML_REPORT_RESULTS, _HTML_REPORT_STARTED_AT
     _HTML_REPORT_RESULTS = []
     _HTML_REPORT_STARTED_AT = datetime.now()
+
+    if "BASE_URL" not in os.environ:
+        site_urls = {
+            "local": "http://localhost:8989",
+            "remote": "https://aigenetic.in",
+        }
+        os.environ["BASE_URL"] = site_urls[config.getoption("--site")]
 
 
 def pytest_runtest_logreport(report):
@@ -74,6 +88,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
             started_at=started_at,
             finished_at=finished_at,
             exitstatus=exitstatus,
+            base_url=os.environ.get("BASE_URL", ""),
             totals=totals,
             results=results,
         ),
@@ -96,7 +111,7 @@ def _open_report(report_path: Path):
         print(f"Could not open HTML report automatically: {exc}")
 
 
-def _render_report(started_at, finished_at, exitstatus, totals, results):
+def _render_report(started_at, finished_at, exitstatus, base_url, totals, results):
     status = "Passed" if exitstatus == 0 else "Failed"
     duration = (finished_at - started_at).total_seconds()
     rows = "\n".join(_render_result_row(item) for item in results)
@@ -232,7 +247,7 @@ def _render_report(started_at, finished_at, exitstatus, totals, results):
     <header>
       <div>
         <h1>AIgenetic Test Report</h1>
-        <div class="muted">Started {escape(started_at.strftime("%Y-%m-%d %H:%M:%S"))} · Finished {escape(finished_at.strftime("%Y-%m-%d %H:%M:%S"))}</div>
+        <div class="muted">Target {escape(base_url)} · Started {escape(started_at.strftime("%Y-%m-%d %H:%M:%S"))} · Finished {escape(finished_at.strftime("%Y-%m-%d %H:%M:%S"))}</div>
       </div>
       <div class="status {escape(status.lower())}">{escape(status)}</div>
     </header>
