@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="AIgenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
+  <meta name="keywords" content="AI phone assistant, voice agent India, appointment booking, SME automation, Indian languages">
+  <meta name="author" content="AIgenetic (OPC) Pvt Ltd">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AIgenetic - Your AI Phone Assistant for 24×7 Customer Calls">
+  <meta property="og:description" content="Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically.">
+  <meta property="og:url" content="https://aigenetic.in">
+  
+  <title>AIgenetic - Your AI Phone Assistant for 24×7 Customer Calls</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+  <link rel="apple-touch-icon" href="/logo/logoMedium.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.tailwind = window.tailwind || {};
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0a0a0a;
+      --secondary: #fafafa;
+      --accent: #2563eb;
+      --text-primary: #171717;
+      --text-secondary: #737373;
+      --border: #e5e5e5;
+    }
+
+    body {
+      background: var(--secondary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+      color: var(--text-primary);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #0a0a0a, #262626);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .accent-gradient {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hover-rise {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-rise:hover {
+      transform: translateY(-8px);
+    }
+    
+    .line-accent {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .line-accent::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .minimal-card {
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .minimal-card:hover {
+      border-color: var(--text-primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .section-divide {
+      position: relative;
+    }
+    
+    .section-divide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 600;
+      letter-spacing: -3px;
+      line-height: 1.1;
+    }
+
+    .feature-icon-box {
+      width: 56px;
+      height: 56px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+  </style>
+</head>
+<body class="antialiased text-slate-900 custom-scrollbar">
+    
+  <div id="root"></div>
+  
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="config.js"></script>
+  
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [form, setForm] = useState({ name: '', business: '', phone: '', city: '', time: '' });
+      const phoneLink = `tel:${CONFIG.company.phoneDial}`;
+      const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
+      const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
+      const featureIcons = ['⚡', '🌐', '⏰', '💰'];
+
+      const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      };
+
+      const submitForm = (e) => {
+        e.preventDefault();
+        const subject = encodeURIComponent(`${CONFIG.company.name} - Request Demo`);
+        const body = encodeURIComponent(
+          `Name: ${form.name}\nBusiness: ${form.business}\nPhone: ${form.phone}\nCity: ${form.city}\nPreferred Demo Time: ${form.time}`
+        );
+        window.location.href = `mailto:${CONFIG.company.email}?subject=${subject}&body=${body}`;
+      };
+
+      return (
+        <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
+          {/* Header */}
+          <header id="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md" style={{background: 'rgba(250, 250, 250, 0.8)', borderBottom: '1px solid var(--border)'}}>
+            <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img src="logo/logoMedium.png" alt={CONFIG.company.name} className="h-10 w-auto" />
+                <div className="font-semibold text-lg" style={{letterSpacing: '-0.5px', color: 'var(--primary)'}}>{CONFIG.company.name}</div>
+              </div>
+
+              <nav className="hidden md:flex items-center gap-12">
+                <a href="#features" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
+                <a href="#use-cases" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
+                <a href="#pricing" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
+                <a href={phoneLink} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#262626'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>Book Demo</a>
+              </nav>
+
+              <div className="md:hidden flex gap-2">
+                <a href={phoneLink} className="px-4 py-2 rounded-lg text-sm font-semibold" style={{background: 'var(--primary)', color: 'white'}}>📞</a>
+              </div>
+            </div>
+          </header>
+
+          {/* Hero */}
+          <section className="relative min-h-screen flex items-center justify-center pt-20" style={{background: 'var(--secondary)'}}>
+            <div className="relative max-w-7xl mx-auto px-8 py-32 text-center">
+              <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2" style={{background: 'var(--accent)'}}></span>
+                  </span>
+                  {CONFIG.hero.badge}
+                </div>
+
+                <h1 className="hero-title" style={{color: 'var(--primary)'}}>
+                  {CONFIG.hero.heading}
+                </h1>
+
+                <p className="text-xl leading-relaxed max-w-3xl mx-auto" style={{color: 'var(--text-secondary)'}}>
+                  {CONFIG.hero.subheading}
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-4 pt-6">
+                  <a href={phoneLink} className="group px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    {CONFIG.hero.ctaPrimary}
+                    <span className="transition-transform">→</span>
+                  </a>
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    {CONFIG.hero.ctaSecondary}
+                  </a>
+                  <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    📅 Schedule Demo
+                  </a>
+                </div>
+
+                <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                  {CONFIG.hero.keyFeatures.map((feature, idx) => (
+                    <div key={feature.title + idx} className="text-center">
+                      <div className="text-3xl mb-3">{featureIcons[idx] || '✓'}</div>
+                      <div className="font-semibold text-sm mb-1" style={{color: 'var(--text-primary)'}}>{feature.title}</div>
+                      <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{feature.subtitle}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Stats */}
+          <section className="py-24" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="grid md:grid-cols-4 gap-12">
+                {CONFIG.stats.map((stat, idx) => (
+                  <div key={stat.label + idx} className="text-center">
+                    <div className="text-6xl font-semibold mb-3" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{stat.number}</div>
+                    <div className="text-sm font-medium" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* How It Works */}
+          <section id="features" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">How It Works</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>A simple, reliable flow</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>that handles every customer call with precision</p>
+              </div>
+
+              <div className="grid md:grid-cols-5 gap-8">
+                {CONFIG.howItWorks.map((item, idx) => (
+                  <div key={item.title + idx} className="text-center">
+                    <div className="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-2xl text-4xl" style={{background: 'white', border: '1px solid var(--border)'}}>
+                      {item.icon}
+                    </div>
+                    <div className="text-xs font-semibold mb-3" style={{color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1.5px'}}>Step {item.step}</div>
+                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{item.title}</div>
+                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Use Cases */}
+          <section id="use-cases" className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Use Cases</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Perfect for Any Business</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Trusted by Indian SMEs across industries</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {CONFIG.useCases.map((useCase, idx) => (
+                  <div key={useCase.title + idx} className="minimal-card p-8 rounded-2xl hover-rise">
+                    <div className="feature-icon-box mb-6">
+                      <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
+                    <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
+                    <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
+                      {useCase.features.map((feature, jdx) => (
+                        <li key={feature + jdx} className="flex items-start gap-2">
+                          <span style={{color: 'var(--primary)'}}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Audio Showcase */}
+          <section id="audio-demos" className="py-32 section-divide audio-showcase">
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-4xl mx-auto mb-20">
+                <div className="section-label mb-6">{CONFIG.audioShowcase.label}</div>
+                <h2 className="text-5xl font-semibold mb-6 audio-showcase-title">{CONFIG.audioShowcase.title}</h2>
+                <p className="text-lg" style={{color: 'rgba(226, 232, 240, 0.75)'}}>{CONFIG.audioShowcase.subtitle}</p>
+              </div>
+
+              <AudioShowcase />
+            </div>
+          </section>
+
+          {/* Why / USPs */}
+          <section className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Why Choose Us</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Why Choose {CONFIG.company.name}</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Fully managed AI phone service designed for Indian businesses</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {CONFIG.usps.map((usp, idx) => (
+                  <div key={usp.title + idx} className="text-center">
+                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl text-3xl mb-6" style={{background: 'white', border: '1px solid var(--border)'}}>
+                      {usp.icon}
+                    </div>
+                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{usp.title}</div>
+                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{usp.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials */}
+          <section className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Testimonials</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Trusted by 100+ Businesses</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>See how {CONFIG.company.name} is transforming customer communication</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {CONFIG.testimonials.map((testimonial, idx) => (
+                  <div key={testimonial.name + idx} className="minimal-card p-8 rounded-2xl hover-rise">
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, jdx) => (
+                        <span key={jdx} className="text-yellow-400 text-lg">★</span>
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-8" style={{color: 'var(--text-secondary)'}}>"{testimonial.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg" style={{background: 'var(--primary)'}}>
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm" style={{color: 'var(--text-primary)'}}>{testimonial.name}</div>
+                        <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{testimonial.role}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing */}
+          <section id="pricing" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Pricing</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Simple Pricing</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>No hidden fees. Pay only for what you use.</p>
+              </div>
+
+              <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+                {CONFIG.pricing.map((plan, idx) => (
+                  <div key={plan.name + idx} className={`relative minimal-card p-10 rounded-2xl ${plan.highlighted ? 'hover-rise' : ''}`} style={plan.highlighted ? {borderColor: 'var(--primary)', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'} : {}}>
+                    {plan.badge && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold" style={{background: 'var(--primary)', color: 'white'}}>
+                        {plan.badge}
+                      </div>
+                    )}
+                    <div className="text-sm font-semibold mb-3" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{plan.name}</div>
+                    <div className="text-6xl font-semibold mb-2" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{plan.price}<span className="text-lg font-normal" style={{color: 'var(--text-secondary)'}}>{plan.period}</span></div>
+                    <div className="text-sm mb-10" style={{color: 'var(--text-secondary)'}}>{plan.usage}</div>
+                    <ul className="space-y-4 mb-10">
+                      {plan.features.map((feature, jdx) => (
+                        <li key={feature + jdx} className="flex items-start gap-3 text-sm" style={{color: 'var(--text-secondary)'}}>
+                          <span style={{color: 'var(--primary)'}}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={plan.name === 'Enterprise' ? whatsappLink : phoneLink}
+                      target={plan.name === 'Enterprise' ? '_blank' : undefined}
+                      rel={plan.name === 'Enterprise' ? 'noopener noreferrer' : undefined}
+                      className="block w-full text-center px-6 py-4 rounded-lg font-medium transition-all"
+                      style={plan.highlighted ? {background: 'var(--primary)', color: 'white'} : {background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}}
+                      onMouseEnter={(e) => plan.highlighted ? e.currentTarget.style.background = '#262626' : e.currentTarget.style.borderColor = 'var(--text-primary)'}
+                      onMouseLeave={(e) => plan.highlighted ? e.currentTarget.style.background = 'var(--primary)' : e.currentTarget.style.borderColor = 'var(--border)'}
+                    >
+                      {plan.cta}
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              {/* Estimator */}
+              <div className="max-w-4xl mx-auto mb-16">
+                <div className="minimal-card p-10 rounded-2xl">
+                  <div className="mb-8">
+                    <div className="font-semibold text-xl mb-2" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>Estimate Your Monthly Cost</div>
+                    <div className="text-sm" style={{color: 'var(--text-secondary)'}}>Enter your expected number of calls in a month.</div>
+                  </div>
+                  <Estimator />
+                </div>
+              </div>
+
+              <div className="max-w-4xl mx-auto">
+                <div className="minimal-card p-8 rounded-2xl">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">💡</span>
+                    <div>
+                      <div className="font-semibold mb-2" style={{color: 'var(--text-primary)'}}>{CONFIG.ctaMessages.pricingHelp.title}</div>
+                      <div className="text-sm mb-4" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.pricingHelp.description}</div>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all" style={{background: '#10b981', color: 'white'}} onMouseEnter={(e) => e.currentTarget.style.background = '#059669'} onMouseLeave={(e) => e.currentTarget.style.background = '#10b981'}>
+                        Chat on WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Demo Form */}
+          <section id="demo" className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="section-label mb-6">Get Started</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{CONFIG.ctaMessages.demoForm.heading}</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.demoForm.subheading}</p>
+              </div>
+
+              <div className="max-w-2xl mx-auto">
+                <form onSubmit={submitForm} className="minimal-card p-10 rounded-2xl">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Your Name *</label>
+                      <input required name="name" value={form.name} onChange={handleChange} placeholder="Enter your name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Business Name *</label>
+                      <input required name="business" value={form.business} onChange={handleChange} placeholder="Your business name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Phone Number *</label>
+                      <input required name="phone" value={form.phone} onChange={handleChange} placeholder={CONFIG.company.phoneDisplay} className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>City</label>
+                      <input name="city" value={form.city} onChange={handleChange} placeholder="Your city" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Preferred Demo Time</label>
+                      <input name="time" value={form.time} onChange={handleChange} placeholder="e.g., Tomorrow 3 PM" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+                    <button type="submit" className="w-full sm:flex-1 px-8 py-4 rounded-lg font-medium transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                      Request Demo
+                    </button>
+                    <span className="text-sm" style={{color: 'var(--text-secondary)'}}>or</span>
+                    <a href={phoneLink} className="w-full sm:w-auto px-8 py-4 rounded-lg font-medium transition-all whitespace-nowrap" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                      📞 Call Now
+                    </a>
+                  </div>
+
+                  <div className="mt-6 text-center text-sm" style={{color: 'var(--text-secondary)'}}>
+                    {CONFIG.ctaMessages.demoForm.responseTime}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer style={{background: 'var(--primary)', color: 'white', padding: '4rem 2rem 2rem'}}>
+            <div className="max-w-7xl mx-auto">
+              <div className="grid md:grid-cols-4 gap-12 mb-12">
+                <div className="md:col-span-2">
+                  <div className="flex items-center gap-3 mb-6">
+                    <img src="logo/logo.png" alt={CONFIG.company.name} className="h-12 w-auto" style={{filter: 'brightness(0) invert(1)'}} />
+                    <div>
+                      <div className="font-semibold text-lg">{CONFIG.company.name}</div>
+                      <div className="text-sm opacity-70">{CONFIG.company.tagline}</div>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed max-w-md" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs. We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-6 text-base">Quick Links</h4>
+                  <ul className="space-y-3 text-sm">
+                    <li><a href="#" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Home</a></li>
+                    <li><a href="#features" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>How It Works</a></li>
+                    <li><a href="#pricing" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Pricing</a></li>
+                    <li><a href="#demo" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Book Demo</a></li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-6 text-base">Contact</h4>
+                  <ul className="space-y-3 text-sm">
+                    <li>
+                      <a href={`mailto:${CONFIG.company.email}`} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.email}</a>
+                    </li>
+                    <li>
+                      <a href={phoneLink} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.phoneDisplay}</a>
+                    </li>
+                    <li>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>WhatsApp Support</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style={{borderTop: '1px solid rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.5)'}}>
+                <div>© 2026 {CONFIG.company.legalName}. All rights reserved.</div>
+                <div className="flex gap-8">
+                  <a href="privacy-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Privacy Policy</a>
+                  <a href="terms-of-service.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Terms of Service</a>
+                  <a href="refund-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Refund Policy</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+          {/* Floating Action Buttons */}
+          <div className="fixed bottom-8 right-8 flex flex-col gap-3 z-50">
+            <a href={whatsappLinkWithText} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: '#10b981'}} title="WhatsApp us" onMouseEnter={(e) => {e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'scale(1)'}}>
+              <span className="text-2xl">💬</span>
+            </a>
+            <a href={phoneLink} className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: 'var(--primary)'}} title="Call us" onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'scale(1)'}}>
+              <span className="text-2xl">📞</span>
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    function Estimator() {
+      const [calls, setCalls] = React.useState(200);
+      const plans = CONFIG.pricing.filter(p => p.name === 'Flex' || p.name === 'Pro');
+      const estimate = (baseStr, perCall) => {
+        const base = parseInt(baseStr.replace(/[^0-9]/g, ''), 10) || 0;
+        const rate = (perCall ?? CONFIG.pricingMeta?.perCallINR) || 0;
+        return base + calls * rate;
+      };
+      return (
+        <div className="space-y-8">
+          <div className="flex items-center gap-4">
+            <input type="range" min="0" max="5000" step="50" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value,10))} className="flex-1" style={{accentColor: 'var(--primary)'}} />
+            <input type="number" min="0" max="20000" step="10" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value||'0',10))} className="w-28 p-3 rounded-lg text-center font-semibold outline-none" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} />
+            <span className="text-sm whitespace-nowrap" style={{color: 'var(--text-secondary)'}}>calls/month</span>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {plans.map((p)=> (
+              <div key={p.name} className="p-6 rounded-xl" style={{background: 'var(--secondary)', border: '1px solid var(--border)'}}>
+                <div className="text-xs font-semibold mb-2" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{p.name}</div>
+                <div className="text-4xl font-semibold" style={{letterSpacing: '-1px', color: 'var(--primary)'}}>₹{estimate(p.price, p.perCallINR).toLocaleString()}</div>
+                <div className="text-xs mt-1" style={{color: 'var(--text-secondary)'}}>per month</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function AudioShowcase() {
+      const audioRefs = React.useRef([]);
+      const [playingIndex, setPlayingIndex] = React.useState(null);
+      const [timeData, setTimeData] = React.useState(
+        CONFIG.audioDemos.map(() => ({ current: 0, duration: 0 }))
+      );
+      const waveBase = [6, 14, 10, 18, 12, 20, 8, 16, 11, 22, 9, 17, 13, 19, 7, 15, 10, 18, 12, 20, 9, 16];
+
+      const formatTime = (timeValue) => {
+        if (!timeValue || Number.isNaN(timeValue)) return '0:00';
+        const minutes = Math.floor(timeValue / 60);
+        const seconds = Math.floor(timeValue % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+      };
+
+      const getWaveHeights = (index) =>
+        waveBase.map((height, i) => height + ((index + i) % 4));
+
+      const togglePlay = (index) => {
+        const audio = audioRefs.current[index];
+        if (!audio) return;
+        if (playingIndex !== null && playingIndex !== index) {
+          const activeAudio = audioRefs.current[playingIndex];
+          if (activeAudio) activeAudio.pause();
+        }
+        if (audio.paused) {
+          audio.play();
+          setPlayingIndex(index);
+        } else {
+          audio.pause();
+          setPlayingIndex(null);
+        }
+      };
+
+      const updateTime = (index) => {
+        const audio = audioRefs.current[index];
+        if (!audio) return;
+        setTimeData((prev) => {
+          const next = [...prev];
+          next[index] = { current: audio.currentTime, duration: audio.duration || 0 };
+          return next;
+        });
+      };
+
+      const handleEnded = (index) => {
+        setPlayingIndex((prev) => (prev === index ? null : prev));
+      };
+
+      return (
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {CONFIG.audioDemos.map((demo, index) => (
+            <div key={demo.title + index} className="audio-card p-8 rounded-2xl flex flex-col gap-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="audio-pill text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full inline-flex">
+                    {demo.category}
+                  </div>
+                  <h3 className="text-xl font-semibold mt-4" style={{color: '#f8fafc'}}>{demo.title}</h3>
+                  <p className="text-sm mt-2" style={{color: 'rgba(226, 232, 240, 0.7)'}}>{demo.desc}</p>
+                </div>
+                <button
+                  type="button"
+                  className="audio-play w-12 h-12 rounded-full flex items-center justify-center text-white text-xs font-semibold"
+                  onClick={() => togglePlay(index)}
+                  aria-label={playingIndex === index ? `Pause ${demo.title}` : `Play ${demo.title}`}
+                >
+                  {playingIndex === index ? 'Pause' : 'Play'}
+                </button>
+              </div>
+
+              <div className={`audio-wave ${playingIndex === index ? 'wave-active' : ''}`}>
+                {getWaveHeights(index).map((height, waveIndex) => (
+                  <span
+                    key={`${demo.title}-wave-${waveIndex}`}
+                    style={{
+                      height: `${height}px`,
+                      animationDelay: `${waveIndex * 0.08}s`
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between text-xs audio-time">
+                <span>{formatTime(timeData[index].current)}</span>
+                <span>{formatTime(timeData[index].duration)}</span>
+              </div>
+
+              <audio
+                ref={(el) => { audioRefs.current[index] = el; }}
+                src={encodeURI(demo.file)}
+                preload="metadata"
+                onTimeUpdate={() => updateTime(index)}
+                onLoadedMetadata={() => updateTime(index)}
+                onEnded={() => handleEnded(index)}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+
+  <!-- Calendar Booking Modal for Main Site -->
+  <div id="calendar-modal-main" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)">
+      <button onclick="closeCalendarModalMain()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
+      <h2 style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
+      <p style="color:var(--text-secondary);margin-bottom:24px">Book a personalized demo with our team via Google Meet</p>
+      
+      <div id="form-status-main" style="padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none"></div>
+
+      <form id="calendar-form-main" onsubmit="handleCalendarBookingMain(event)">
+        <div style="margin-bottom:20px">
+          <label for="business-name-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Name *</label>
+          <input type="text" id="business-name-main" name="businessName" required placeholder="Enter your business name" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;transition:border-color .2s ease">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="contact-email-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Email Address *</label>
+          <input type="email" id="contact-email-main" name="contactEmail" required placeholder="your@email.com" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="contact-phone-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Phone Number *</label>
+          <input type="tel" id="contact-phone-main" name="contactPhone" required placeholder="+91 XXXXXXXXXX" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="demo-date-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Date *</label>
+          <input type="date" id="demo-date-main" name="demoDate" required style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Time (IST) *</label>
+          <div id="time-slots-main" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"></div>
+          <input type="hidden" id="selected-time-main" name="selectedTime">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="business-type-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Type</label>
+          <select id="business-type-main" name="businessType" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+            <option value="">Select business type...</option>
+            <option value="clinic">Clinic / Healthcare</option>
+            <option value="salon">Salon / Spa</option>
+            <option value="realestate">Real Estate</option>
+            <option value="education">Education / School</option>
+            <option value="hospitality">Hospitality / Hotel</option>
+            <option value="retail">Retail / E-commerce</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div style="background:#f0f9ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px;margin:20px 0;font-size:14px">
+          <strong style="color:#1e40af;display:block;margin-bottom:6px">✓ Google Meet Link will be sent to your email</strong>
+          <p>We'll generate a unique Google Meet link and send it to <span id="email-preview-main">your email</span> along with calendar invite.</p>
+        </div>
+
+        <button type="submit" id="submit-btn-main" style="width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background .2s ease;font-family:inherit">Generate Google Meet & Book Demo</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    window.GOOGLE_CALENDAR_CONFIG = window.GOOGLE_CALENDAR_CONFIG || {
+      endpoint: '',
+      calendarId: '',
+      defaultEventTitle: 'AIgenetic Demo'
+    };
+
+    // Calendar Modal Functions for Main Site
+    function openCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'flex';
+      initializeTimeSlotsMain();
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const minDate = tomorrow.toISOString().split('T')[0];
+      document.getElementById('demo-date-main').setAttribute('min', minDate);
+    }
+
+    function closeCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'none';
+    }
+
+    function initializeTimeSlotsMain() {
+      const slots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
+      const container = document.getElementById('time-slots-main');
+      container.innerHTML = '';
+      
+      slots.forEach(slot => {
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:10px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:13px;transition:all .2s ease;background:#fff';
+        div.textContent = slot;
+        div.onclick = () => selectTimeSlotMain(div, slot);
+        container.appendChild(div);
+      });
+    }
+
+    function selectTimeSlotMain(element, time) {
+      document.querySelectorAll('#time-slots-main div').forEach(el => {
+        el.style.background = '#fff';
+        el.style.color = 'var(--text-primary)';
+        el.style.borderColor = 'var(--border)';
+      });
+      element.style.background = 'var(--primary)';
+      element.style.color = '#fff';
+      element.style.borderColor = 'var(--primary)';
+      document.getElementById('selected-time-main').value = time;
+    }
+
+    function buildGoogleCalendarApiPayload() {
+      const businessName = document.getElementById('business-name-main').value.trim();
+      const contactEmail = document.getElementById('contact-email-main').value.trim();
+      const contactPhone = document.getElementById('contact-phone-main').value.trim();
+      const demoDate = document.getElementById('demo-date-main').value;
+      const selectedTime = document.getElementById('selected-time-main').value;
+      const businessType = document.getElementById('business-type-main').value;
+
+      return {
+        businessName,
+        contactEmail,
+        contactPhone,
+        demoDate,
+        selectedTime,
+        businessType,
+        calendarId: window.GOOGLE_CALENDAR_CONFIG.calendarId || '',
+        source: 'aigenetic-main-site'
+      };
+    }
+
+    async function handleCalendarBookingMain(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn-main');
+
+      const businessName = document.getElementById('business-name-main').value.trim();
+      const contactEmail = document.getElementById('contact-email-main').value.trim();
+      const contactPhone = document.getElementById('contact-phone-main').value.trim();
+      const demoDate = document.getElementById('demo-date-main').value;
+      const selectedTime = document.getElementById('selected-time-main').value;
+      const businessType = document.getElementById('business-type-main').value;
+
+      if (!businessName || !contactEmail || !contactPhone || !demoDate || !selectedTime) {
+        showFormStatusMain('Please fill in all required fields and select a time slot.', 'error');
+        return;
+      }
+
+      const endpoint = window.GOOGLE_CALENDAR_CONFIG?.endpoint;
+      if (!endpoint) {
+        showFormStatusMain('Google Calendar integration is not configured yet. Add your backend endpoint and OAuth/Service Account credentials to enable live invites.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Google invite...';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(buildGoogleCalendarApiPayload())
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(result?.message || 'Unable to create Google Calendar invite right now.');
+        }
+
+        const googleMeetLink = result.meetLink || result.googleMeetLink || '';
+        const calendarUrl = result.calendarUrl || '';
+        const eventTitle = result.eventTitle || `AIgenetic Demo - ${businessName}`;
+
+        const successHtml = [
+          `✓ Demo scheduled for ${demoDate} at ${selectedTime}`,
+          googleMeetLink ? `<br>Google Meet link: <a href="${googleMeetLink}" style="color:var(--accent);text-decoration:none;font-weight:600" target="_blank">Join Meeting</a>` : '',
+          calendarUrl ? `<br><a href="${calendarUrl}" target="_blank" style="display:inline-block;margin-top:12px;padding:10px 20px;background:var(--primary);color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Add to Google Calendar</a>` : ''
+        ].join('');
+
+        showFormStatusMain(successHtml, 'success');
+
+        const bookingData = {
+          business: businessName,
+          email: contactEmail,
+          phone: contactPhone,
+          date: demoDate,
+          time: selectedTime,
+          type: businessType,
+          googleMeetLink: googleMeetLink,
+          calendarUrl: calendarUrl,
+          timestamp: new Date().toISOString()
+        };
+
+        const bookings = JSON.parse(localStorage.getItem('aigenetic_bookings_main') || '[]');
+        bookings.push(bookingData);
+        localStorage.setItem('aigenetic_bookings_main', JSON.stringify(bookings));
+
+        document.getElementById('calendar-form-main').reset();
+      } catch (error) {
+        showFormStatusMain(error.message || 'Something went wrong while creating the invite.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Generate Google Meet & Book Demo';
+      }
+    }
+
+    function showFormStatusMain(message, type) {
+      const statusDiv = document.getElementById('form-status-main');
+      statusDiv.innerHTML = message;
+      statusDiv.style.display = 'block';
+      if (type === 'success') {
+        statusDiv.style.background = '#E8F7F3';
+        statusDiv.style.color = '#084A40';
+        statusDiv.style.border = '1px solid #CFE5DE';
+      } else {
+        statusDiv.style.background = '#FFE8E8';
+        statusDiv.style.color = '#8B0000';
+        statusDiv.style.border = '1px solid #FFB3B3';
+      }
+    }
+
+    document.getElementById('contact-email-main').addEventListener('change', function() {
+      document.getElementById('email-preview-main').textContent = this.value || 'your email';
+    });
+
+    document.getElementById('calendar-modal-main').addEventListener('click', (e) => {
+      if (e.target.id === 'calendar-modal-main') {
+        closeCalendarModalMain();
+      }
+    });
+
+    // Set up calendar modal triggers
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('[data-open-calendar]')) {
+        e.preventDefault();
+        openCalendarModalMain();
+      }
+    });
+  </script>
+</body>
+</html>
