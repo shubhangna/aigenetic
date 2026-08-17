@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -731,223 +731,26 @@
 
   <!-- Calendar Booking Modal for Main Site -->
   <div id="calendar-modal-main" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
-    <div style="background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)">
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);position:relative">
       <button onclick="closeCalendarModalMain()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
       <h2 style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
-      <p style="color:var(--text-secondary);margin-bottom:24px">Book a personalized demo with our team via Google Meet</p>
-      
-      <div id="form-status-main" style="padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none"></div>
+      <p style="color:var(--text-secondary);margin-bottom:24px">Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
 
-      <form id="calendar-form-main" onsubmit="handleCalendarBookingMain(event)">
-        <div style="margin-bottom:20px">
-          <label for="business-name-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Name *</label>
-          <input type="text" id="business-name-main" name="businessName" required placeholder="Enter your business name" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;transition:border-color .2s ease">
-        </div>
-
-        <div style="margin-bottom:20px">
-          <label for="contact-email-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Email Address *</label>
-          <input type="email" id="contact-email-main" name="contactEmail" required placeholder="your@email.com" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
-        </div>
-
-        <div style="margin-bottom:20px">
-          <label for="contact-phone-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Phone Number *</label>
-          <input type="tel" id="contact-phone-main" name="contactPhone" required placeholder="+91 XXXXXXXXXX" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
-        </div>
-
-        <div style="margin-bottom:20px">
-          <label for="demo-date-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Date *</label>
-          <input type="date" id="demo-date-main" name="demoDate" required style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
-        </div>
-
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Time (IST) *</label>
-          <div id="time-slots-main" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"></div>
-          <input type="hidden" id="selected-time-main" name="selectedTime">
-        </div>
-
-        <div style="margin-bottom:20px">
-          <label for="business-type-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Type</label>
-          <select id="business-type-main" name="businessType" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
-            <option value="">Select business type...</option>
-            <option value="clinic">Clinic / Healthcare</option>
-            <option value="salon">Salon / Spa</option>
-            <option value="realestate">Real Estate</option>
-            <option value="education">Education / School</option>
-            <option value="hospitality">Hospitality / Hotel</option>
-            <option value="retail">Retail / E-commerce</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div style="background:#f0f9ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px;margin:20px 0;font-size:14px">
-          <strong style="color:#1e40af;display:block;margin-bottom:6px">✓ Google Meet Link will be sent to your email</strong>
-          <p>We'll generate a unique Google Meet link and send it to <span id="email-preview-main">your email</span> along with calendar invite.</p>
-        </div>
-
-        <button type="submit" id="submit-btn-main" style="width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background .2s ease;font-family:inherit">Generate Google Meet & Book Demo</button>
-      </form>
+      <!-- Google Calendar Appointment Scheduling begin -->
+      <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+      <!-- end Google Calendar Appointment Scheduling -->
     </div>
   </div>
 
   <script>
-    window.GOOGLE_CALENDAR_CONFIG = window.GOOGLE_CALENDAR_CONFIG || {
-      endpoint: '',
-      calendarId: '',
-      defaultEventTitle: 'AIgenetic Demo'
-    };
-
     // Calendar Modal Functions for Main Site
     function openCalendarModalMain() {
       document.getElementById('calendar-modal-main').style.display = 'flex';
-      initializeTimeSlotsMain();
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const minDate = tomorrow.toISOString().split('T')[0];
-      document.getElementById('demo-date-main').setAttribute('min', minDate);
     }
 
     function closeCalendarModalMain() {
       document.getElementById('calendar-modal-main').style.display = 'none';
     }
-
-    function initializeTimeSlotsMain() {
-      const slots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
-      const container = document.getElementById('time-slots-main');
-      container.innerHTML = '';
-      
-      slots.forEach(slot => {
-        const div = document.createElement('div');
-        div.style.cssText = 'padding:10px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:13px;transition:all .2s ease;background:#fff';
-        div.textContent = slot;
-        div.onclick = () => selectTimeSlotMain(div, slot);
-        container.appendChild(div);
-      });
-    }
-
-    function selectTimeSlotMain(element, time) {
-      document.querySelectorAll('#time-slots-main div').forEach(el => {
-        el.style.background = '#fff';
-        el.style.color = 'var(--text-primary)';
-        el.style.borderColor = 'var(--border)';
-      });
-      element.style.background = 'var(--primary)';
-      element.style.color = '#fff';
-      element.style.borderColor = 'var(--primary)';
-      document.getElementById('selected-time-main').value = time;
-    }
-
-    function buildGoogleCalendarApiPayload() {
-      const businessName = document.getElementById('business-name-main').value.trim();
-      const contactEmail = document.getElementById('contact-email-main').value.trim();
-      const contactPhone = document.getElementById('contact-phone-main').value.trim();
-      const demoDate = document.getElementById('demo-date-main').value;
-      const selectedTime = document.getElementById('selected-time-main').value;
-      const businessType = document.getElementById('business-type-main').value;
-
-      return {
-        businessName,
-        contactEmail,
-        contactPhone,
-        demoDate,
-        selectedTime,
-        businessType,
-        calendarId: window.GOOGLE_CALENDAR_CONFIG.calendarId || '',
-        source: 'aigenetic-main-site'
-      };
-    }
-
-    async function handleCalendarBookingMain(e) {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submit-btn-main');
-
-      const businessName = document.getElementById('business-name-main').value.trim();
-      const contactEmail = document.getElementById('contact-email-main').value.trim();
-      const contactPhone = document.getElementById('contact-phone-main').value.trim();
-      const demoDate = document.getElementById('demo-date-main').value;
-      const selectedTime = document.getElementById('selected-time-main').value;
-      const businessType = document.getElementById('business-type-main').value;
-
-      if (!businessName || !contactEmail || !contactPhone || !demoDate || !selectedTime) {
-        showFormStatusMain('Please fill in all required fields and select a time slot.', 'error');
-        return;
-      }
-
-      const endpoint = window.GOOGLE_CALENDAR_CONFIG?.endpoint;
-      if (!endpoint) {
-        showFormStatusMain('Google Calendar integration is not configured yet. Add your backend endpoint and OAuth/Service Account credentials to enable live invites.', 'error');
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Creating Google invite...';
-
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(buildGoogleCalendarApiPayload())
-        });
-
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          throw new Error(result?.message || 'Unable to create Google Calendar invite right now.');
-        }
-
-        const googleMeetLink = result.meetLink || result.googleMeetLink || '';
-        const calendarUrl = result.calendarUrl || '';
-        const eventTitle = result.eventTitle || `AIgenetic Demo - ${businessName}`;
-
-        const successHtml = [
-          `✓ Demo scheduled for ${demoDate} at ${selectedTime}`,
-          googleMeetLink ? `<br>Google Meet link: <a href="${googleMeetLink}" style="color:var(--accent);text-decoration:none;font-weight:600" target="_blank">Join Meeting</a>` : '',
-          calendarUrl ? `<br><a href="${calendarUrl}" target="_blank" style="display:inline-block;margin-top:12px;padding:10px 20px;background:var(--primary);color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Add to Google Calendar</a>` : ''
-        ].join('');
-
-        showFormStatusMain(successHtml, 'success');
-
-        const bookingData = {
-          business: businessName,
-          email: contactEmail,
-          phone: contactPhone,
-          date: demoDate,
-          time: selectedTime,
-          type: businessType,
-          googleMeetLink: googleMeetLink,
-          calendarUrl: calendarUrl,
-          timestamp: new Date().toISOString()
-        };
-
-        const bookings = JSON.parse(localStorage.getItem('aigenetic_bookings_main') || '[]');
-        bookings.push(bookingData);
-        localStorage.setItem('aigenetic_bookings_main', JSON.stringify(bookings));
-
-        document.getElementById('calendar-form-main').reset();
-      } catch (error) {
-        showFormStatusMain(error.message || 'Something went wrong while creating the invite.', 'error');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Generate Google Meet & Book Demo';
-      }
-    }
-
-    function showFormStatusMain(message, type) {
-      const statusDiv = document.getElementById('form-status-main');
-      statusDiv.innerHTML = message;
-      statusDiv.style.display = 'block';
-      if (type === 'success') {
-        statusDiv.style.background = '#E8F7F3';
-        statusDiv.style.color = '#084A40';
-        statusDiv.style.border = '1px solid #CFE5DE';
-      } else {
-        statusDiv.style.background = '#FFE8E8';
-        statusDiv.style.color = '#8B0000';
-        statusDiv.style.border = '1px solid #FFB3B3';
-      }
-    }
-
-    document.getElementById('contact-email-main').addEventListener('change', function() {
-      document.getElementById('email-preview-main').textContent = this.value || 'your email';
-    });
 
     document.getElementById('calendar-modal-main').addEventListener('click', (e) => {
       if (e.target.id === 'calendar-modal-main') {

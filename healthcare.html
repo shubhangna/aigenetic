@@ -8,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Google Calendar Appointment Scheduling -->
-<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 <style>
   :root{
     --ink:#0E1B1E;
@@ -184,7 +181,7 @@
   }
   .calendar-modal.open{display:flex}
   .calendar-modal-content{
-    background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;
+    background:#fff;border-radius:20px;padding:32px;max-width:680px;width:100%;
     max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)
   }
   .calendar-close{
@@ -467,19 +464,9 @@
     <h2>Schedule Your Demo</h2>
     <p>Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
 
-    <script>
-      (function() {
-        var target = document.currentScript;
-        window.addEventListener('load', function() {
-          calendar.schedulingButton.load({
-            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true',
-            color: '#039BE5',
-            label: 'Book an appointment',
-            target,
-          });
-        });
-      })();
-    </script>
+    <!-- Google Calendar Appointment Scheduling begin -->
+    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+    <!-- end Google Calendar Appointment Scheduling -->
   </div>
 </div>
 
