@@ -1,548 +1,967 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Algenetic for Clinics — the voice of your clinic</title>
-<script src="config.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Google Calendar Appointment Scheduling -->
-<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-<style>
-  :root{
-    --ink:#0E1B1E;
-    --paper:#FAFAF7;
-    --teal:#0C6B5C;
-    --teal-deep:#084A40;
-    --mint:#E9F3F0;
-    --signal:#17B37F;
-    --line:#E3E5E0;
-    --muted:#546567;
-    --display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
-    --body:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-    --wrap:1120px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--body);font-size:17px;line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
-  a{color:inherit}
-  h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.03em;line-height:1.02;font-weight:800}
-  p{margin:0}
-
-  /* ---------- nav ---------- */
-  .nav{
-    position:sticky;top:0;z-index:40;background:rgba(250,250,247,.86);
-    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
-  }
-  .nav-in{display:flex;align-items:center;gap:28px;height:68px}
-  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none}
-  .brand img{height:32px;width:auto}
-  .brand small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;padding-left:2px}
-  .nav-links{margin-left:auto;display:flex;gap:30px;font-size:15px;font-weight:500}
-  .nav-links a{text-decoration:none;color:var(--muted)}
-  .nav-links a:hover{color:var(--ink)}
-  .btn{
-    display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:600;
-    font-size:15px;padding:12px 22px;border-radius:999px;text-decoration:none;border:1px solid transparent;
-    transition:transform .15s ease, background .15s ease;
-  }
-  .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:var(--ink);color:var(--paper)}
-  .btn-primary:hover{background:var(--teal-deep)}
-  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);background:#fff}
-  .btn-ghost:hover{border-color:var(--teal)}
-  .btn-lg{font-size:17px;padding:16px 30px}
-
-  /* ---------- hero ---------- */
-  .hero{padding:96px 0 0;text-align:center}
-  .badge{
-    display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
-    border-radius:999px;padding:8px 18px;font-size:13.5px;color:var(--muted);font-weight:500;
-  }
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 rgba(23,179,127,.55);animation:pulse 2.2s infinite}
-  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(23,179,127,0)}100%{box-shadow:0 0 0 0 rgba(23,179,127,0)}}
-  h1{font-size:clamp(44px,7.4vw,88px);margin:26px 0 0}
-  h1 em{font-style:normal;color:var(--teal);position:relative;white-space:nowrap}
-  h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.09em;background:var(--mint);z-index:-1}
-  .sub{max-width:640px;margin:24px auto 0;font-size:19px;color:var(--muted)}
-  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
-  .cta-note{margin-top:14px;font-size:13.5px;color:var(--muted)}
-
-  .rail{display:grid;grid-template-columns:repeat(4,1fr);margin:64px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .rail div{padding:22px 18px;text-align:left;border-right:1px solid var(--line)}
-  .rail div:last-child{border-right:0}
-  .rail b{display:block;font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.01em}
-  .rail span{font-size:13.5px;color:var(--muted)}
-
-  /* ---------- signature: call sheet ---------- */
-  .callsheet-sec{padding:76px 0 90px}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:500}
-  .sheet{
-    margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;
-    box-shadow:0 24px 60px -40px rgba(14,27,30,.45);
-  }
-  .sheet-head{
-    display:flex;flex-wrap:wrap;gap:8px 26px;align-items:center;padding:16px 24px;
-    background:var(--ink);color:#D9E4E2;font-family:var(--mono);font-size:12.5px;
-  }
-  .sheet-head b{color:#fff;font-weight:500}
-  .sheet-head .tag{margin-left:auto;color:#8FE3C6}
-  .thread{padding:26px 24px;display:flex;flex-direction:column;gap:16px}
-  .turn{max-width:76%;padding:12px 16px;border-radius:14px;font-size:15.5px}
-  .turn .who{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-  .turn .gloss{display:block;margin-top:5px;font-size:13px;color:var(--muted)}
-  .caller{background:#F4F5F2;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
-  .agent{background:var(--mint);border:1px solid #CFE5DE;align-self:flex-end;border-bottom-right-radius:4px}
-  .agent .who{color:var(--teal-deep)}
-  .sheet-foot{border-top:1px dashed var(--line);padding:20px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:#FCFDFC}
-  .slotcard{border:1px solid var(--teal);border-radius:12px;padding:12px 18px;background:#fff}
-  .slotcard b{font-family:var(--display);font-size:17px;display:block}
-  .slotcard span{font-size:13.5px;color:var(--muted)}
-  .synced{font-family:var(--mono);font-size:12.5px;color:var(--teal-deep)}
-  .synced span{display:block;color:var(--muted)}
-
-  /* ---------- generic section ---------- */
-  section{scroll-margin-top:80px}
-  .band{padding:88px 0;border-top:1px solid var(--line)}
-  .band.tint{background:#fff}
-  .head{max-width:660px}
-  .head h2{font-size:clamp(30px,4.2vw,46px);margin-top:12px}
-  .head p{margin-top:16px;color:var(--muted);font-size:18px}
-
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:44px}
-  .cell{background:var(--paper);padding:28px 24px}
-  .band.tint .cell{background:#fff}
-  .cell h3{font-size:19px;font-weight:700}
-  .cell p{margin-top:8px;color:var(--muted);font-size:15.5px}
-  .quote{display:block;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--teal-deep);border-left:2px solid var(--teal);padding-left:12px}
-
-  /* ---------- limits ---------- */
-  .limits{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
-  .limit-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-  .limit-list li{padding:20px 0 20px 40px;border-bottom:1px solid var(--line);position:relative}
-  .limit-list li::before{
-    content:"";position:absolute;left:6px;top:26px;width:16px;height:2px;background:var(--ink);
-  }
-  .limit-list b{font-family:var(--display);font-size:17px;font-weight:700}
-  .limit-list span{display:block;color:var(--muted);font-size:15px;margin-top:4px}
-  .escalate{background:var(--ink);color:#E6EFED;border-radius:16px;padding:30px}
-  .escalate h3{color:#fff;font-size:21px}
-  .escalate p{margin-top:12px;font-size:15.5px;color:#B6C7C4}
-  .escalate .line{margin-top:20px;font-family:var(--mono);font-size:13px;color:#8FE3C6;border-top:1px solid #24383B;padding-top:16px}
-
-  /* ---------- integrations + specialties ---------- */
-  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
-  .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;font-size:15px;font-weight:500}
-  .chip.on{background:var(--mint);border-color:#CFE5DE;color:var(--teal-deep)}
-
-  /* ---------- pricing ---------- */
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
-  .plan{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 26px;display:flex;flex-direction:column}
-  .plan.feature{border-color:var(--teal);box-shadow:0 20px 50px -38px rgba(12,107,92,.7)}
-  .plan .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .plan .price{font-family:var(--display);font-size:38px;font-weight:800;letter-spacing:-.03em;margin-top:14px}
-  .plan .price s{font-size:15px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0}
-  .plan ul{list-style:none;margin:20px 0 26px;padding:0;font-size:15.5px;color:var(--muted)}
-  .plan li{padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--line)}
-  .plan li:first-child{border-top:0}
-  .plan li::before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;border-radius:50%;border:2px solid var(--teal)}
-  .plan .btn{margin-top:auto;justify-content:center}
-
-  /* ---------- close ---------- */
-  .close{text-align:center;padding:100px 0}
-  .close h2{font-size:clamp(32px,5vw,56px)}
-  .close p{margin:18px auto 0;max-width:520px;color:var(--muted);font-size:18px}
-  footer{border-top:1px solid var(--line);padding:34px 0;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  footer .sp{margin-left:auto}
-
-  /* ---------- motion ---------- */
-  .rise{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards}
-  .rise:nth-child(2){animation-delay:.06s}
-  @keyframes rise{to{opacity:1;transform:none}}
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-  .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    .rise,.reveal{animation:none!important;opacity:1!important;transform:none!important;transition:none}
-    .dot{animation:none}
-    html{scroll-behavior:auto}
-  }
-  :focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:6px}
-
-  /* ---------- calendar booking ---------- */
-  .calendar-modal{
-    display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(14,27,30,.6);
-    z-index:50;align-items:center;justify-content:center;padding:20px
-  }
-  .calendar-modal.open{display:flex}
-  .calendar-modal-content{
-    background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;
-    max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)
-  }
-  .calendar-close{
-    position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;
-    background:transparent;cursor:pointer;font-size:24px;color:var(--muted);transition:color .2s ease
-  }
-  .calendar-close:hover{color:var(--ink)}
-  .calendar-modal-content h2{font-size:28px;margin-bottom:8px}
-  .calendar-modal-content>p{color:var(--muted);margin-bottom:24px}
-  .form-group{margin-bottom:20px}
-  .form-group label{display:block;font-weight:600;margin-bottom:8px;font-size:14px}
-  .form-group input,.form-group select{
-    width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;
-    font-family:var(--body);font-size:14px;transition:border-color .2s ease
-  }
-  .form-group input:focus,.form-group select:focus{
-    outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(12,107,92,.1)
-  }
-  .time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-  .time-slot{
-    padding:10px;border:1px solid var(--line);border-radius:8px;text-align:center;cursor:pointer;
-    font-size:13px;transition:all .2s ease;background:#fff
-  }
-  .time-slot:hover{border-color:var(--teal);background:var(--mint)}
-  .time-slot.selected{background:var(--teal);color:#fff;border-color:var(--teal)}
-  .google-meet-info{
-    background:var(--mint);border:1px solid #CFE5DE;border-radius:12px;padding:16px;
-    margin:20px 0;font-size:14px
-  }
-  .google-meet-info strong{color:var(--teal-deep);display:block;margin-bottom:6px}
-  .google-meet-link{
-    display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);
-    text-decoration:none;font-weight:600;word-break:break-all
-  }
-  .google-meet-link:hover{text-decoration:underline}
-  .copy-btn{
-    display:inline-flex;align-items:center;gap:6px;padding:6px 12px;
-    background:var(--teal);color:#fff;border:none;border-radius:6px;
-    font-size:12px;cursor:pointer;font-weight:600;transition:background .2s ease
-  }
-  .copy-btn:hover{background:var(--teal-deep)}
-  .copy-btn.copied{background:var(--signal)}
-  .submit-btn{
-    width:100%;padding:14px;background:var(--ink);color:#fff;border:none;
-    border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;
-    transition:background .2s ease;font-family:var(--body)
-  }
-  .submit-btn:hover{background:var(--teal-deep)}
-  .submit-btn:disabled{background:#ccc;cursor:not-allowed}
-  .form-status{
-    padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none
-  }
-  .form-status.success{
-    display:block;background:#E8F7F3;color:#084A40;border:1px solid #CFE5DE
-  }
-  .form-status.error{
-    display:block;background:#FFE8E8;color:#8B0000;border:1px solid #FFB3B3
-  }
-
-  @media(max-width:900px){
-    .nav-links{display:none}
-    .rail{grid-template-columns:repeat(2,1fr)}
-    .rail div:nth-child(2){border-right:0}
-    .rail div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-    .grid3,.plans{grid-template-columns:1fr}
-    .limits{grid-template-columns:1fr;gap:32px}
-    .turn{max-width:92%}
-    .hero{padding-top:60px}
-    .time-slots{grid-template-columns:repeat(2,1fr)}
-    .calendar-modal-content{padding:30px 24px}
-  }
-</style>
-</head>
-<body>
-
-<nav class="nav">
-  <div class="wrap nav-in">
-    <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="AIgenetic" />Aigenetic <small>for clinics</small></a>
-    <div class="nav-links">
-      <a href="#handles">What it handles</a>
-      <a href="#limits">What it won't do</a>
-      <a href="#setup">Setup</a>
-      <a href="#pricing">Pricing</a>
-    </div>
-    <div style="display:flex;gap:12px;margin-left:auto">
-      <a class="btn btn-ghost" href="#demo" data-phone-link style="font-size:14px;padding:10px 18px">📞 Call</a>
-      <a class="btn btn-primary" href="#calendar-booking" data-open-calendar style="font-size:14px;padding:10px 18px">Book Demo</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero" id="top">
-  <div class="wrap">
-    <span class="badge rise"><span class="dot"></span> Answering for 240+ clinics right now · v1.19</span>
-    <h1 class="rise">The voice of<br>your <em>clinic</em></h1>
-    <p class="sub rise">You're with a patient. The phone rings anyway. Algenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
-    <div class="cta-row rise">
-      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
-      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>💬 WhatsApp Us</a>
-    </div>
-    <p class="cta-note">Free 14-day trial on your existing clinic number. No new hardware.</p>
-
-    <div class="rail">
-      <div><b>Live in 48–72 hours</b><span>We forward your current number</span></div>
-      <div><b>31+ Indian languages</b><span>Switches mid-call if the caller does</span></div>
-      <div><b>Answers at 2 AM</b><span>Sunday, holidays, OPD hours</span></div>
-      <div><b>Priced per call</b><span>Not per receptionist seat</span></div>
-    </div>
-  </div>
-</header>
-
-<section class="callsheet-sec">
-  <div class="wrap reveal">
-    <span class="eyebrow">Call log · last night · 21:47</span>
-    <div class="sheet">
-      <div class="sheet-head">
-        <span>+91 98••• ••412</span>
-        <span>Language detected: <b>हिन्दी / English</b></span>
-        <span>Duration <b>1:12</b></span>
-        <span class="tag">● Handled by assistant</span>
-      </div>
-      <div class="thread">
-        <div class="turn caller"><span class="who">Caller</span>Hello, doctor sahab se appointment lena tha. Kal mil sakta hai?
-          <span class="gloss">I need an appointment with the doctor. Is tomorrow possible?</span></div>
-        <div class="turn agent"><span class="who">Algenetic</span>Ji bilkul. Dr. Rao kal 10 se 1 aur shaam 5 se 8 baithte hain. Aapko subah ka time theek rahega?
-          <span class="gloss">Of course. Dr. Rao sits 10–1 and 5–8 tomorrow. Would morning suit you?</span></div>
-        <div class="turn caller"><span class="who">Caller</span>Subah 11 baje ke aas paas. Naam Sunita Sharma.</div>
-        <div class="turn agent"><span class="who">Algenetic</span>11:30 khaali hai. Sunita ji, pehli baar aa rahi hain ya follow-up hai?
-          <span class="gloss">11:30 is free. Is this a first visit or a follow-up?</span></div>
-        <div class="turn caller"><span class="who">Caller</span>Follow-up. Pichle mahine dikhaya tha.</div>
-        <div class="turn agent"><span class="who">Algenetic</span>Ho gaya. 11:30 par aa jaayiye, purchi WhatsApp par bhej di hai. Follow-up ki fees ₹300 hai.
-          <span class="gloss">Done. Come at 11:30 — the slip is on WhatsApp. Follow-up fee is ₹300.</span></div>
-      </div>
-      <div class="sheet-foot">
-        <div class="slotcard">
-          <b>Sunita Sharma · 11:30 AM</b>
-          <span>Follow-up · Dr. Rao · OPD 2</span>
-        </div>
-        <div class="synced">→ written to Practo Ray<span>WhatsApp confirmation delivered 21:49</span></div>
-        <a class="btn btn-ghost" href="#demo" style="margin-left:auto" data-whatsapp-link>Play the audio</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band tint" id="handles">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">The 90% of calls that aren't clinical</span>
-      <h2>Most calls to a clinic are logistics</h2>
-      <p>Your receptionist spends the day answering the same nine questions. Algenetic takes them all, in the caller's language, and leaves you the ones that need a human.</p>
-    </div>
-    <div class="grid3 reveal">
-      <div class="cell"><h3>Books the slot</h3><p>Checks live availability per doctor and per room, offers the next two options, confirms in one turn.</p><span class="quote">"Kal shaam ka koi time hai?"</span></div>
-      <div class="cell"><h3>Reschedules and cancels</h3><p>Frees the slot instantly and offers it to your waitlist before anyone else calls.</p><span class="quote">"Aaj nahi aa paaunga, agle hafte kar dijiye."</span></div>
-      <div class="cell"><h3>Quotes fees and timings</h3><p>Consultation, follow-up window, which days you do procedures, whether you're at the hospital that morning.</p><span class="quote">"Root canal ka kitna charge hai?"</span></div>
-      <div class="cell"><h3>Gives directions</h3><p>Landmark-based, the way people actually navigate. Drops a pin on WhatsApp.</p><span class="quote">"Clinic metro station se kitna door hai?"</span></div>
-      <div class="cell"><h3>Reports and readiness</h3><p>Tells the caller whether their report is ready for pickup — status only, never the contents.</p><span class="quote">"Blood test ki report aa gayi kya?"</span></div>
-      <div class="cell"><h3>Screens the reps</h3><p>Pharma and equipment reps get your visiting policy instead of your morning.</p><span class="quote">"Sir se 5 minute mil sakte hain?"</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="limits">
-  <div class="wrap limits">
-    <div class="reveal">
-      <span class="eyebrow">Hard limits, set by us, not by prompt</span>
-      <h2 style="font-size:clamp(30px,4.2vw,44px);margin-top:12px">What it will never do</h2>
-      <p style="margin-top:16px;color:var(--muted);font-size:18px">Your name is on the board outside. These three refusals are built into the product and cannot be turned on, by you or by us.</p>
-      <ul class="limit-list">
-        <li><b>No diagnosis, no advice</b><span>Symptoms are logged for you and the caller is offered the earliest slot. Nothing more.</span></li>
-        <li><b>No medicine names, no dosages</b><span>Not even repeats of what you prescribed last visit. Refills go to you.</span></li>
-        <li><b>No results read over the phone</b><span>"Ready for collection" is the whole answer. Values stay in the file.</span></li>
-      </ul>
-    </div>
-    <div class="escalate reveal">
-      <h3>And one thing it always does</h3>
-      <p>If a caller describes chest pain, breathlessness, heavy bleeding, a seizure, or an unresponsive patient, the assistant stops booking mid-sentence, reads out the nearest emergency number, and rings your on-duty mobile until someone picks up.</p>
-      <p class="line">ESCALATION · 04:12 · caller reported chest pain<br>→ 108 read aloud · Dr. Rao paged · call transferred in 9s</p>
-    </div>
-  </div>
-</section>
-
-<section class="band tint" id="setup">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">Setup</span>
-      <h2>Keep your number. Keep your register.</h2>
-      <p>We forward your existing clinic line and write bookings into whatever you already use. If that's a diary and a WhatsApp group, that works too — we'll send the day's list at 8 AM.</p>
-    </div>
-    <div class="chips reveal">
-      <span class="chip on">Practo Ray</span><span class="chip on">HealthPlix</span><span class="chip on">Bajaj Health</span>
-      <span class="chip on">DocPulse</span><span class="chip on">Google Calendar</span><span class="chip on">WhatsApp Business</span>
-      <span class="chip">Excel / Sheets</span><span class="chip">Paper register + daily list</span>
-    </div>
-    <div class="head reveal" style="margin-top:64px">
-      <span class="eyebrow">Tuned per specialty</span>
-      <h2 style="font-size:clamp(26px,3.4vw,36px)">The questions differ by board</h2>
-      <p>A dental clinic gets asked about procedure cost. A paediatrician gets asked about vaccine due dates. Each build ships with the script for yours.</p>
-    </div>
-    <div class="chips reveal">
-      <span class="chip">Dental</span><span class="chip">Paediatrics</span><span class="chip">Dermatology</span>
-      <span class="chip">Orthopaedics</span><span class="chip">Gynaecology</span><span class="chip">Physiotherapy</span>
-      <span class="chip">Eye care</span><span class="chip">Diagnostic labs</span><span class="chip">Multi-speciality</span>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="pricing">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow">Pricing</span>
-      <h2>Cheaper than the calls you're missing</h2>
-      <p>An average clinic misses 6 to 11 calls a day during OPD. At a ₹500 consultation, that's the plan paid for by the second week.</p>
-    </div>
-    <div class="plans reveal">
-      <div class="plan">
-        <span class="kicker">Solo practice</span>
-        <div class="price">₹2,999<s> /month</s></div>
-        <ul>
-          <li>One doctor, one number</li>
-          <li>300 answered calls included</li>
-          <li>Booking, rescheduling, fees, directions</li>
-          <li>WhatsApp confirmations</li>
-        </ul>
-        <a class="btn btn-ghost" href="#calendar-booking" data-open-calendar>Book Trial Demo</a>
-      </div>
-      <div class="plan feature">
-        <span class="kicker">Multi-doctor clinic · most chosen</span>
-        <div class="price">₹7,999<s> /month</s></div>
-        <ul>
-          <li>Up to 6 doctors and 3 rooms</li>
-          <li>1,500 answered calls included</li>
-          <li>Practice-software sync, both ways</li>
-          <li>Waitlist fill on cancellation</li>
-          <li>Emergency escalation to on-duty mobile</li>
-        </ul>
-        <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Start Free Trial</a>
-      </div>
-      <div class="plan">
-        <span class="kicker">Hospital or chain</span>
-        <div class="price">Let's talk</div>
-        <ul>
-          <li>Multiple branches and departments</li>
-          <li>Routing by specialty and shift</li>
-          <li>Call recordings, retention on your terms</li>
-          <li>Named onboarding engineer</li>
-        </ul>
-        <a class="btn btn-ghost" href="#demo" data-whatsapp-link>Contact Sales</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="close" id="demo">
-  <div class="wrap reveal">
-    <span class="eyebrow">Schedule a Demo</span>
-    <h2>Book a personalized demo<br>via Google Meet</h2>
-    <p>Our team will walk you through how Algenetic works for your clinic, answer questions, and help you get started.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Schedule via Calendar →</a>
-      <a class="btn btn-ghost btn-lg" href="tel:+9174284970333" data-phone-link>📞 Call Now</a>
-    </div>
-    <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
-  </div>
-  <div class="wrap"><footer>
-    <span>Aigenetic for Clinics</span>
-    <span>·</span>
-    <span><a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a></span>
-    <span>·</span>
-    <span>Patient data stays in India. Recordings deleted on your schedule.</span>
-    <span class="sp">Not a medical device. Does not provide medical advice.</span>
-  </footer></div>
-</section>
-
-<!-- Calendar Booking Modal -->
-<div id="calendar-modal" class="calendar-modal">
-  <div class="calendar-modal-content">
-    <button class="calendar-close" onclick="closeCalendarModal()">✕</button>
-    <h2>Schedule Your Demo</h2>
-    <p>Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
-
-    <script>
-      (function() {
-        var target = document.currentScript;
-        window.addEventListener('load', function() {
-          calendar.schedulingButton.load({
-            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true',
-            color: '#039BE5',
-            label: 'Book an appointment',
-            target,
-          });
-        });
-      })();
-    </script>
-  </div>
-</div>
-
-<script>
-  // Calendar Modal Functions
-  function openCalendarModal() {
-    document.getElementById('calendar-modal').classList.add('open');
-  }
-
-  function closeCalendarModal() {
-    document.getElementById('calendar-modal').classList.remove('open');
-  }
-
-  // Handle calendar modal toggle
-  document.querySelectorAll('[data-open-calendar]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      openCalendarModal();
-    });
-  });
-
-  // Close modal when clicking outside
-  document.getElementById('calendar-modal').addEventListener('click', (e) => {
-    if (e.target.id === 'calendar-modal') {
-      closeCalendarModal();
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="AIgenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
+  <meta name="keywords" content="AI phone assistant, voice agent India, appointment booking, SME automation, Indian languages">
+  <meta name="author" content="AIgenetic (OPC) Pvt Ltd">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AIgenetic - Your AI Phone Assistant for 24×7 Customer Calls">
+  <meta property="og:description" content="Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically.">
+  <meta property="og:url" content="https://aigenetic.in">
+  
+  <title>AIgenetic - Your AI Phone Assistant for 24×7 Customer Calls</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/logo/logo.png">
+  <link rel="apple-touch-icon" href="/logo/logoMedium.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.tailwind = window.tailwind || {};
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  });
-</script>
 
+    :root {
+      --primary: #0a0a0a;
+      --secondary: #fafafa;
+      --accent: #2563eb;
+      --text-primary: #171717;
+      --text-secondary: #737373;
+      --border: #e5e5e5;
+    }
 
-<script>
-  (function applySharedContactData() {
-    const company = (window.CONFIG && window.CONFIG.company) || {
-      phoneDisplay: '+91 742849 7033',
-      phoneDial: '+9174284970333',
-      whatsappNumber: '917428497033',
-      email: 'connect@aigenetic.in'
+    body {
+      background: var(--secondary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+      color: var(--text-primary);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #0a0a0a, #262626);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .accent-gradient {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hover-rise {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-rise:hover {
+      transform: translateY(-8px);
+    }
+    
+    .line-accent {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .line-accent::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .minimal-card {
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .minimal-card:hover {
+      border-color: var(--text-primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .section-divide {
+      position: relative;
+    }
+    
+    .section-divide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 600;
+      letter-spacing: -3px;
+      line-height: 1.1;
+    }
+
+    .feature-icon-box {
+      width: 56px;
+      height: 56px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+  </style>
+</head>
+<body class="antialiased text-slate-900 custom-scrollbar">
+    
+  <div id="root"></div>
+  
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="config.js"></script>
+  
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [form, setForm] = useState({ name: '', business: '', phone: '', city: '', time: '' });
+      const phoneLink = `tel:${CONFIG.company.phoneDial}`;
+      const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
+      const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
+      const featureIcons = ['⚡', '🌐', '⏰', '💰'];
+
+      const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      };
+
+      const submitForm = (e) => {
+        e.preventDefault();
+        const subject = encodeURIComponent(`${CONFIG.company.name} - Request Demo`);
+        const body = encodeURIComponent(
+          `Name: ${form.name}\nBusiness: ${form.business}\nPhone: ${form.phone}\nCity: ${form.city}\nPreferred Demo Time: ${form.time}`
+        );
+        window.location.href = `mailto:${CONFIG.company.email}?subject=${subject}&body=${body}`;
+      };
+
+      return (
+        <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
+          {/* Header */}
+          <header id="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md" style={{background: 'rgba(250, 250, 250, 0.8)', borderBottom: '1px solid var(--border)'}}>
+            <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img src="logo/logoMedium.png" alt={CONFIG.company.name} className="h-10 w-auto" />
+                <div className="font-semibold text-lg" style={{letterSpacing: '-0.5px', color: 'var(--primary)'}}>{CONFIG.company.name}</div>
+              </div>
+
+              <nav className="hidden md:flex items-center gap-12">
+                <a href="#features" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
+                <a href="#use-cases" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
+                <a href="#pricing" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
+                <a href={phoneLink} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#262626'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>Book Demo</a>
+              </nav>
+
+              <div className="md:hidden flex gap-2">
+                <a href={phoneLink} className="px-4 py-2 rounded-lg text-sm font-semibold" style={{background: 'var(--primary)', color: 'white'}}>📞</a>
+              </div>
+            </div>
+          </header>
+
+          {/* Hero */}
+          <section className="relative min-h-screen flex items-center justify-center pt-20" style={{background: 'var(--secondary)'}}>
+            <div className="relative max-w-7xl mx-auto px-8 py-32 text-center">
+              <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2" style={{background: 'var(--accent)'}}></span>
+                  </span>
+                  {CONFIG.hero.badge}
+                </div>
+
+                <h1 className="hero-title" style={{color: 'var(--primary)'}}>
+                  {CONFIG.hero.heading}
+                </h1>
+
+                <p className="text-xl leading-relaxed max-w-3xl mx-auto" style={{color: 'var(--text-secondary)'}}>
+                  {CONFIG.hero.subheading}
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-4 pt-6">
+                  <a href={phoneLink} className="group px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    {CONFIG.hero.ctaPrimary}
+                    <span className="transition-transform">→</span>
+                  </a>
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    {CONFIG.hero.ctaSecondary}
+                  </a>
+                  <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                    📅 Schedule Demo
+                  </a>
+                </div>
+
+                <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                  {CONFIG.hero.keyFeatures.map((feature, idx) => (
+                    <div key={feature.title + idx} className="text-center">
+                      <div className="text-3xl mb-3">{featureIcons[idx] || '✓'}</div>
+                      <div className="font-semibold text-sm mb-1" style={{color: 'var(--text-primary)'}}>{feature.title}</div>
+                      <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{feature.subtitle}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Stats */}
+          <section className="py-24" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="grid md:grid-cols-4 gap-12">
+                {CONFIG.stats.map((stat, idx) => (
+                  <div key={stat.label + idx} className="text-center">
+                    <div className="text-6xl font-semibold mb-3" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{stat.number}</div>
+                    <div className="text-sm font-medium" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* How It Works */}
+          <section id="features" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">How It Works</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>A simple, reliable flow</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>that handles every customer call with precision</p>
+              </div>
+
+              <div className="grid md:grid-cols-5 gap-8">
+                {CONFIG.howItWorks.map((item, idx) => (
+                  <div key={item.title + idx} className="text-center">
+                    <div className="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-2xl text-4xl" style={{background: 'white', border: '1px solid var(--border)'}}>
+                      {item.icon}
+                    </div>
+                    <div className="text-xs font-semibold mb-3" style={{color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1.5px'}}>Step {item.step}</div>
+                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{item.title}</div>
+                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Use Cases */}
+          <section id="use-cases" className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Use Cases</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Perfect for Any Business</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Trusted by Indian SMEs across industries</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {CONFIG.useCases.map((useCase, idx) => (
+                  <div key={useCase.title + idx} className="minimal-card p-8 rounded-2xl hover-rise">
+                    <div className="feature-icon-box mb-6">
+                      <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
+                    <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
+                    <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
+                      {useCase.features.map((feature, jdx) => (
+                        <li key={feature + jdx} className="flex items-start gap-2">
+                          <span style={{color: 'var(--primary)'}}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Audio Showcase */}
+          <section id="audio-demos" className="py-32 section-divide audio-showcase">
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-4xl mx-auto mb-20">
+                <div className="section-label mb-6">{CONFIG.audioShowcase.label}</div>
+                <h2 className="text-5xl font-semibold mb-6 audio-showcase-title">{CONFIG.audioShowcase.title}</h2>
+                <p className="text-lg" style={{color: 'rgba(226, 232, 240, 0.75)'}}>{CONFIG.audioShowcase.subtitle}</p>
+              </div>
+
+              <AudioShowcase />
+            </div>
+          </section>
+
+          {/* Why / USPs */}
+          <section className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Why Choose Us</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Why Choose {CONFIG.company.name}</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Fully managed AI phone service designed for Indian businesses</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {CONFIG.usps.map((usp, idx) => (
+                  <div key={usp.title + idx} className="text-center">
+                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl text-3xl mb-6" style={{background: 'white', border: '1px solid var(--border)'}}>
+                      {usp.icon}
+                    </div>
+                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{usp.title}</div>
+                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{usp.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials */}
+          <section className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Testimonials</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Trusted by 100+ Businesses</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>See how {CONFIG.company.name} is transforming customer communication</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {CONFIG.testimonials.map((testimonial, idx) => (
+                  <div key={testimonial.name + idx} className="minimal-card p-8 rounded-2xl hover-rise">
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, jdx) => (
+                        <span key={jdx} className="text-yellow-400 text-lg">★</span>
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-8" style={{color: 'var(--text-secondary)'}}>"{testimonial.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg" style={{background: 'var(--primary)'}}>
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm" style={{color: 'var(--text-primary)'}}>{testimonial.name}</div>
+                        <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{testimonial.role}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing */}
+          <section id="pricing" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="section-label mb-6">Pricing</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Simple Pricing</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>No hidden fees. Pay only for what you use.</p>
+              </div>
+
+              <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+                {CONFIG.pricing.map((plan, idx) => (
+                  <div key={plan.name + idx} className={`relative minimal-card p-10 rounded-2xl ${plan.highlighted ? 'hover-rise' : ''}`} style={plan.highlighted ? {borderColor: 'var(--primary)', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'} : {}}>
+                    {plan.badge && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold" style={{background: 'var(--primary)', color: 'white'}}>
+                        {plan.badge}
+                      </div>
+                    )}
+                    <div className="text-sm font-semibold mb-3" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{plan.name}</div>
+                    <div className="text-6xl font-semibold mb-2" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{plan.price}<span className="text-lg font-normal" style={{color: 'var(--text-secondary)'}}>{plan.period}</span></div>
+                    <div className="text-sm mb-10" style={{color: 'var(--text-secondary)'}}>{plan.usage}</div>
+                    <ul className="space-y-4 mb-10">
+                      {plan.features.map((feature, jdx) => (
+                        <li key={feature + jdx} className="flex items-start gap-3 text-sm" style={{color: 'var(--text-secondary)'}}>
+                          <span style={{color: 'var(--primary)'}}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={plan.name === 'Enterprise' ? whatsappLink : phoneLink}
+                      target={plan.name === 'Enterprise' ? '_blank' : undefined}
+                      rel={plan.name === 'Enterprise' ? 'noopener noreferrer' : undefined}
+                      className="block w-full text-center px-6 py-4 rounded-lg font-medium transition-all"
+                      style={plan.highlighted ? {background: 'var(--primary)', color: 'white'} : {background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}}
+                      onMouseEnter={(e) => plan.highlighted ? e.currentTarget.style.background = '#262626' : e.currentTarget.style.borderColor = 'var(--text-primary)'}
+                      onMouseLeave={(e) => plan.highlighted ? e.currentTarget.style.background = 'var(--primary)' : e.currentTarget.style.borderColor = 'var(--border)'}
+                    >
+                      {plan.cta}
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              {/* Estimator */}
+              <div className="max-w-4xl mx-auto mb-16">
+                <div className="minimal-card p-10 rounded-2xl">
+                  <div className="mb-8">
+                    <div className="font-semibold text-xl mb-2" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>Estimate Your Monthly Cost</div>
+                    <div className="text-sm" style={{color: 'var(--text-secondary)'}}>Enter your expected number of calls in a month.</div>
+                  </div>
+                  <Estimator />
+                </div>
+              </div>
+
+              <div className="max-w-4xl mx-auto">
+                <div className="minimal-card p-8 rounded-2xl">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">💡</span>
+                    <div>
+                      <div className="font-semibold mb-2" style={{color: 'var(--text-primary)'}}>{CONFIG.ctaMessages.pricingHelp.title}</div>
+                      <div className="text-sm mb-4" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.pricingHelp.description}</div>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all" style={{background: '#10b981', color: 'white'}} onMouseEnter={(e) => e.currentTarget.style.background = '#059669'} onMouseLeave={(e) => e.currentTarget.style.background = '#10b981'}>
+                        Chat on WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Demo Form */}
+          <section id="demo" className="py-32 section-divide" style={{background: 'white'}}>
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="section-label mb-6">Get Started</div>
+                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{CONFIG.ctaMessages.demoForm.heading}</h2>
+                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.demoForm.subheading}</p>
+              </div>
+
+              <div className="max-w-2xl mx-auto">
+                <form onSubmit={submitForm} className="minimal-card p-10 rounded-2xl">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Your Name *</label>
+                      <input required name="name" value={form.name} onChange={handleChange} placeholder="Enter your name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Business Name *</label>
+                      <input required name="business" value={form.business} onChange={handleChange} placeholder="Your business name" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Phone Number *</label>
+                      <input required name="phone" value={form.phone} onChange={handleChange} placeholder={CONFIG.company.phoneDisplay} className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>City</label>
+                      <input name="city" value={form.city} onChange={handleChange} placeholder="Your city" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-primary)'}}>Preferred Demo Time</label>
+                      <input name="time" value={form.time} onChange={handleChange} placeholder="e.g., Tomorrow 3 PM" className="w-full p-4 rounded-lg outline-none transition-all" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onFocus={(e) => e.target.style.borderColor = 'var(--primary)'} onBlur={(e) => e.target.style.borderColor = 'var(--border)'} />
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+                    <button type="submit" className="w-full sm:flex-1 px-8 py-4 rounded-lg font-medium transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                      Request Demo
+                    </button>
+                    <span className="text-sm" style={{color: 'var(--text-secondary)'}}>or</span>
+                    <a href={phoneLink} className="w-full sm:w-auto px-8 py-4 rounded-lg font-medium transition-all whitespace-nowrap" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+                      📞 Call Now
+                    </a>
+                  </div>
+
+                  <div className="mt-6 text-center text-sm" style={{color: 'var(--text-secondary)'}}>
+                    {CONFIG.ctaMessages.demoForm.responseTime}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer style={{background: 'var(--primary)', color: 'white', padding: '4rem 2rem 2rem'}}>
+            <div className="max-w-7xl mx-auto">
+              <div className="grid md:grid-cols-4 gap-12 mb-12">
+                <div className="md:col-span-2">
+                  <div className="flex items-center gap-3 mb-6">
+                    <img src="logo/logo.png" alt={CONFIG.company.name} className="h-12 w-auto" style={{filter: 'brightness(0) invert(1)'}} />
+                    <div>
+                      <div className="font-semibold text-lg">{CONFIG.company.name}</div>
+                      <div className="text-sm opacity-70">{CONFIG.company.tagline}</div>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed max-w-md" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
+                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs. We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-6 text-base">Quick Links</h4>
+                  <ul className="space-y-3 text-sm">
+                    <li><a href="#" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Home</a></li>
+                    <li><a href="#features" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>How It Works</a></li>
+                    <li><a href="#pricing" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Pricing</a></li>
+                    <li><a href="#demo" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Book Demo</a></li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-6 text-base">Contact</h4>
+                  <ul className="space-y-3 text-sm">
+                    <li>
+                      <a href={`mailto:${CONFIG.company.email}`} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.email}</a>
+                    </li>
+                    <li>
+                      <a href={phoneLink} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.phoneDisplay}</a>
+                    </li>
+                    <li>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>WhatsApp Support</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style={{borderTop: '1px solid rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.5)'}}>
+                <div>© 2026 {CONFIG.company.legalName}. All rights reserved.</div>
+                <div className="flex gap-8">
+                  <a href="privacy-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Privacy Policy</a>
+                  <a href="terms-of-service.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Terms of Service</a>
+                  <a href="refund-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Refund Policy</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+          {/* Floating Action Buttons */}
+          <div className="fixed bottom-8 right-8 flex flex-col gap-3 z-50">
+            <a href={whatsappLinkWithText} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: '#10b981'}} title="WhatsApp us" onMouseEnter={(e) => {e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'scale(1)'}}>
+              <span className="text-2xl">💬</span>
+            </a>
+            <a href={phoneLink} className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: 'var(--primary)'}} title="Call us" onMouseEnter={(e) => {e.currentTarget.style.background = '#262626'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'scale(1)'}}>
+              <span className="text-2xl">📞</span>
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    function Estimator() {
+      const [calls, setCalls] = React.useState(200);
+      const plans = CONFIG.pricing.filter(p => p.name === 'Flex' || p.name === 'Pro');
+      const estimate = (baseStr, perCall) => {
+        const base = parseInt(baseStr.replace(/[^0-9]/g, ''), 10) || 0;
+        const rate = (perCall ?? CONFIG.pricingMeta?.perCallINR) || 0;
+        return base + calls * rate;
+      };
+      return (
+        <div className="space-y-8">
+          <div className="flex items-center gap-4">
+            <input type="range" min="0" max="5000" step="50" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value,10))} className="flex-1" style={{accentColor: 'var(--primary)'}} />
+            <input type="number" min="0" max="20000" step="10" value={calls} onChange={(e)=>setCalls(parseInt(e.target.value||'0',10))} className="w-28 p-3 rounded-lg text-center font-semibold outline-none" style={{border: '1px solid var(--border)', color: 'var(--text-primary)'}} />
+            <span className="text-sm whitespace-nowrap" style={{color: 'var(--text-secondary)'}}>calls/month</span>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {plans.map((p)=> (
+              <div key={p.name} className="p-6 rounded-xl" style={{background: 'var(--secondary)', border: '1px solid var(--border)'}}>
+                <div className="text-xs font-semibold mb-2" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{p.name}</div>
+                <div className="text-4xl font-semibold" style={{letterSpacing: '-1px', color: 'var(--primary)'}}>₹{estimate(p.price, p.perCallINR).toLocaleString()}</div>
+                <div className="text-xs mt-1" style={{color: 'var(--text-secondary)'}}>per month</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function AudioShowcase() {
+      const audioRefs = React.useRef([]);
+      const [playingIndex, setPlayingIndex] = React.useState(null);
+      const [timeData, setTimeData] = React.useState(
+        CONFIG.audioDemos.map(() => ({ current: 0, duration: 0 }))
+      );
+      const waveBase = [6, 14, 10, 18, 12, 20, 8, 16, 11, 22, 9, 17, 13, 19, 7, 15, 10, 18, 12, 20, 9, 16];
+
+      const formatTime = (timeValue) => {
+        if (!timeValue || Number.isNaN(timeValue)) return '0:00';
+        const minutes = Math.floor(timeValue / 60);
+        const seconds = Math.floor(timeValue % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+      };
+
+      const getWaveHeights = (index) =>
+        waveBase.map((height, i) => height + ((index + i) % 4));
+
+      const togglePlay = (index) => {
+        const audio = audioRefs.current[index];
+        if (!audio) return;
+        if (playingIndex !== null && playingIndex !== index) {
+          const activeAudio = audioRefs.current[playingIndex];
+          if (activeAudio) activeAudio.pause();
+        }
+        if (audio.paused) {
+          audio.play();
+          setPlayingIndex(index);
+        } else {
+          audio.pause();
+          setPlayingIndex(null);
+        }
+      };
+
+      const updateTime = (index) => {
+        const audio = audioRefs.current[index];
+        if (!audio) return;
+        setTimeData((prev) => {
+          const next = [...prev];
+          next[index] = { current: audio.currentTime, duration: audio.duration || 0 };
+          return next;
+        });
+      };
+
+      const handleEnded = (index) => {
+        setPlayingIndex((prev) => (prev === index ? null : prev));
+      };
+
+      return (
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {CONFIG.audioDemos.map((demo, index) => (
+            <div key={demo.title + index} className="audio-card p-8 rounded-2xl flex flex-col gap-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="audio-pill text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full inline-flex">
+                    {demo.category}
+                  </div>
+                  <h3 className="text-xl font-semibold mt-4" style={{color: '#f8fafc'}}>{demo.title}</h3>
+                  <p className="text-sm mt-2" style={{color: 'rgba(226, 232, 240, 0.7)'}}>{demo.desc}</p>
+                </div>
+                <button
+                  type="button"
+                  className="audio-play w-12 h-12 rounded-full flex items-center justify-center text-white text-xs font-semibold"
+                  onClick={() => togglePlay(index)}
+                  aria-label={playingIndex === index ? `Pause ${demo.title}` : `Play ${demo.title}`}
+                >
+                  {playingIndex === index ? 'Pause' : 'Play'}
+                </button>
+              </div>
+
+              <div className={`audio-wave ${playingIndex === index ? 'wave-active' : ''}`}>
+                {getWaveHeights(index).map((height, waveIndex) => (
+                  <span
+                    key={`${demo.title}-wave-${waveIndex}`}
+                    style={{
+                      height: `${height}px`,
+                      animationDelay: `${waveIndex * 0.08}s`
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between text-xs audio-time">
+                <span>{formatTime(timeData[index].current)}</span>
+                <span>{formatTime(timeData[index].duration)}</span>
+              </div>
+
+              <audio
+                ref={(el) => { audioRefs.current[index] = el; }}
+                src={encodeURI(demo.file)}
+                preload="metadata"
+                onTimeUpdate={() => updateTime(index)}
+                onLoadedMetadata={() => updateTime(index)}
+                onEnded={() => handleEnded(index)}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+
+  <!-- Calendar Booking Modal for Main Site -->
+  <div id="calendar-modal-main" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:20px;padding:40px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)">
+      <button onclick="closeCalendarModalMain()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
+      <h2 style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
+      <p style="color:var(--text-secondary);margin-bottom:24px">Book a personalized demo with our team via Google Meet</p>
+      
+      <div id="form-status-main" style="padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none"></div>
+
+      <form id="calendar-form-main" onsubmit="handleCalendarBookingMain(event)">
+        <div style="margin-bottom:20px">
+          <label for="business-name-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Name *</label>
+          <input type="text" id="business-name-main" name="businessName" required placeholder="Enter your business name" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;transition:border-color .2s ease">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="contact-email-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Email Address *</label>
+          <input type="email" id="contact-email-main" name="contactEmail" required placeholder="your@email.com" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="contact-phone-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Phone Number *</label>
+          <input type="tel" id="contact-phone-main" name="contactPhone" required placeholder="+91 XXXXXXXXXX" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="demo-date-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Date *</label>
+          <input type="date" id="demo-date-main" name="demoDate" required style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Preferred Time (IST) *</label>
+          <div id="time-slots-main" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"></div>
+          <input type="hidden" id="selected-time-main" name="selectedTime">
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label for="business-type-main" style="display:block;font-weight:600;margin-bottom:8px;font-size:14px">Business Type</label>
+          <select id="business-type-main" name="businessType" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px">
+            <option value="">Select business type...</option>
+            <option value="clinic">Clinic / Healthcare</option>
+            <option value="salon">Salon / Spa</option>
+            <option value="realestate">Real Estate</option>
+            <option value="education">Education / School</option>
+            <option value="hospitality">Hospitality / Hotel</option>
+            <option value="retail">Retail / E-commerce</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div style="background:#f0f9ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px;margin:20px 0;font-size:14px">
+          <strong style="color:#1e40af;display:block;margin-bottom:6px">✓ Google Meet Link will be sent to your email</strong>
+          <p>We'll generate a unique Google Meet link and send it to <span id="email-preview-main">your email</span> along with calendar invite.</p>
+        </div>
+
+        <button type="submit" id="submit-btn-main" style="width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background .2s ease;font-family:inherit">Generate Google Meet & Book Demo</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    window.GOOGLE_CALENDAR_CONFIG = window.GOOGLE_CALENDAR_CONFIG || {
+      endpoint: '',
+      calendarId: '',
+      defaultEventTitle: 'AIgenetic Demo'
     };
 
-    document.querySelectorAll('[data-phone-display]').forEach((el) => {
-      el.textContent = company.phoneDisplay;
+    // Calendar Modal Functions for Main Site
+    function openCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'flex';
+      initializeTimeSlotsMain();
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const minDate = tomorrow.toISOString().split('T')[0];
+      document.getElementById('demo-date-main').setAttribute('min', minDate);
+    }
+
+    function closeCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'none';
+    }
+
+    function initializeTimeSlotsMain() {
+      const slots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
+      const container = document.getElementById('time-slots-main');
+      container.innerHTML = '';
+      
+      slots.forEach(slot => {
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:10px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:13px;transition:all .2s ease;background:#fff';
+        div.textContent = slot;
+        div.onclick = () => selectTimeSlotMain(div, slot);
+        container.appendChild(div);
+      });
+    }
+
+    function selectTimeSlotMain(element, time) {
+      document.querySelectorAll('#time-slots-main div').forEach(el => {
+        el.style.background = '#fff';
+        el.style.color = 'var(--text-primary)';
+        el.style.borderColor = 'var(--border)';
+      });
+      element.style.background = 'var(--primary)';
+      element.style.color = '#fff';
+      element.style.borderColor = 'var(--primary)';
+      document.getElementById('selected-time-main').value = time;
+    }
+
+    function buildGoogleCalendarApiPayload() {
+      const businessName = document.getElementById('business-name-main').value.trim();
+      const contactEmail = document.getElementById('contact-email-main').value.trim();
+      const contactPhone = document.getElementById('contact-phone-main').value.trim();
+      const demoDate = document.getElementById('demo-date-main').value;
+      const selectedTime = document.getElementById('selected-time-main').value;
+      const businessType = document.getElementById('business-type-main').value;
+
+      return {
+        businessName,
+        contactEmail,
+        contactPhone,
+        demoDate,
+        selectedTime,
+        businessType,
+        calendarId: window.GOOGLE_CALENDAR_CONFIG.calendarId || '',
+        source: 'aigenetic-main-site'
+      };
+    }
+
+    async function handleCalendarBookingMain(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn-main');
+
+      const businessName = document.getElementById('business-name-main').value.trim();
+      const contactEmail = document.getElementById('contact-email-main').value.trim();
+      const contactPhone = document.getElementById('contact-phone-main').value.trim();
+      const demoDate = document.getElementById('demo-date-main').value;
+      const selectedTime = document.getElementById('selected-time-main').value;
+      const businessType = document.getElementById('business-type-main').value;
+
+      if (!businessName || !contactEmail || !contactPhone || !demoDate || !selectedTime) {
+        showFormStatusMain('Please fill in all required fields and select a time slot.', 'error');
+        return;
+      }
+
+      const endpoint = window.GOOGLE_CALENDAR_CONFIG?.endpoint;
+      if (!endpoint) {
+        showFormStatusMain('Google Calendar integration is not configured yet. Add your backend endpoint and OAuth/Service Account credentials to enable live invites.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Google invite...';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(buildGoogleCalendarApiPayload())
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(result?.message || 'Unable to create Google Calendar invite right now.');
+        }
+
+        const googleMeetLink = result.meetLink || result.googleMeetLink || '';
+        const calendarUrl = result.calendarUrl || '';
+        const eventTitle = result.eventTitle || `AIgenetic Demo - ${businessName}`;
+
+        const successHtml = [
+          `✓ Demo scheduled for ${demoDate} at ${selectedTime}`,
+          googleMeetLink ? `<br>Google Meet link: <a href="${googleMeetLink}" style="color:var(--accent);text-decoration:none;font-weight:600" target="_blank">Join Meeting</a>` : '',
+          calendarUrl ? `<br><a href="${calendarUrl}" target="_blank" style="display:inline-block;margin-top:12px;padding:10px 20px;background:var(--primary);color:#fff;border-radius:6px;text-decoration:none;font-weight:600">Add to Google Calendar</a>` : ''
+        ].join('');
+
+        showFormStatusMain(successHtml, 'success');
+
+        const bookingData = {
+          business: businessName,
+          email: contactEmail,
+          phone: contactPhone,
+          date: demoDate,
+          time: selectedTime,
+          type: businessType,
+          googleMeetLink: googleMeetLink,
+          calendarUrl: calendarUrl,
+          timestamp: new Date().toISOString()
+        };
+
+        const bookings = JSON.parse(localStorage.getItem('aigenetic_bookings_main') || '[]');
+        bookings.push(bookingData);
+        localStorage.setItem('aigenetic_bookings_main', JSON.stringify(bookings));
+
+        document.getElementById('calendar-form-main').reset();
+      } catch (error) {
+        showFormStatusMain(error.message || 'Something went wrong while creating the invite.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Generate Google Meet & Book Demo';
+      }
+    }
+
+    function showFormStatusMain(message, type) {
+      const statusDiv = document.getElementById('form-status-main');
+      statusDiv.innerHTML = message;
+      statusDiv.style.display = 'block';
+      if (type === 'success') {
+        statusDiv.style.background = '#E8F7F3';
+        statusDiv.style.color = '#084A40';
+        statusDiv.style.border = '1px solid #CFE5DE';
+      } else {
+        statusDiv.style.background = '#FFE8E8';
+        statusDiv.style.color = '#8B0000';
+        statusDiv.style.border = '1px solid #FFB3B3';
+      }
+    }
+
+    document.getElementById('contact-email-main').addEventListener('change', function() {
+      document.getElementById('email-preview-main').textContent = this.value || 'your email';
     });
 
-    document.querySelectorAll('[data-phone-link]').forEach((el) => {
-      el.href = `tel:${company.phoneDial}`;
-      el.setAttribute('aria-label', `Call ${company.phoneDisplay}`);
+    document.getElementById('calendar-modal-main').addEventListener('click', (e) => {
+      if (e.target.id === 'calendar-modal-main') {
+        closeCalendarModalMain();
+      }
     });
 
-    document.querySelectorAll('[data-whatsapp-link]').forEach((el) => {
-      el.href = `https://wa.me/${company.whatsappNumber}`;
-      el.setAttribute('aria-label', 'Chat on WhatsApp');
+    // Set up calendar modal triggers
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('[data-open-calendar]')) {
+        e.preventDefault();
+        openCalendarModalMain();
+      }
     });
-
-    document.querySelectorAll('[data-email-link]').forEach((el) => {
-      el.href = `mailto:${company.email}`;
-      el.textContent = company.email;
-    });
-  })();
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+  </script>
 </body>
 </html>
