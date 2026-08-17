@@ -7,7 +7,7 @@ window.CONFIG = {
     location: 'Rajiv Gandhi Infotech Park, Pune, India',
     email: 'connect@aigenetic.in',
     phoneDisplay: '+91 742849 7033',
-    phoneDial: '+9174284970333',
+    phoneDial: '+917428497033',
     whatsappNumber: '917428497033'
   },
   hero: {
