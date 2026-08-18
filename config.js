@@ -1,6 +1,6 @@
 window.CONFIG = {
   company: {
-    name: 'AIgenetic',
+    name: 'Aigenetic',
     legalName: 'AIgenetic (OPC) Pvt Ltd',
     tagline: 'India-focused AI voice assistants',
     description: 'AI-powered phone assistants for Indian SMEs',

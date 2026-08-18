@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
   <!-- SEO Meta Tags -->
-  <meta name="description" content="AIgenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
+  <meta name="description" content="Aigenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
   <meta name="keywords" content="AI phone assistant, voice agent India, appointment booking, SME automation, Indian languages">
-  <meta name="author" content="AIgenetic (OPC) Pvt Ltd">
+  <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
   
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="AIgenetic - Your AI Phone Assistant for 24×7 Customer Calls">
-  <meta property="og:description" content="Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically.">
+  <meta property="og:title" content="Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls">
+  <meta property="og:description" content="Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically.">
   <meta property="og:url" content="https://aigenetic.in">
   
   <title>Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls</title>
@@ -191,28 +191,28 @@
       return (
         <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
           {/* Header */}
-          <header id="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md" style={{background: 'rgba(250, 250, 250, 0.8)', borderBottom: '1px solid var(--border)'}}>
-            <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img src="logo/logoMedium.png" alt={CONFIG.company.name} className="h-10 w-auto" />
-                <div style={{fontFamily: "'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif", fontWeight: 800, fontSize: '19px', letterSpacing: '-0.02em', color: 'var(--primary)'}}>{CONFIG.company.name}</div>
+          <header id="header" className="sticky top-0 z-40" style={{background: 'rgba(250, 250, 247, 0.86)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border)'}}>
+            <div className="max-w-7xl mx-auto px-8 flex items-center" style={{height: '68px', gap: '28px'}}>
+              <div className="flex items-center" style={{gap: '10px'}}>
+                <img src="logo/logoMedium.png" alt={CONFIG.company.name} style={{height: '32px', width: 'auto'}} />
+                <div style={{fontFamily: "'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif", fontWeight: 800, fontSize: '19px', letterSpacing: '-0.02em', color: 'var(--primary)'}}>{CONFIG.company.name} <span style={{fontWeight: 500, fontSize: '13px', color: 'var(--text-secondary)'}}>for your Business</span></div>
               </div>
 
-              <nav className="hidden md:flex items-center gap-12">
-                <a href="#features" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
-                <a href="#use-cases" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
-                <a href="#pricing" className="text-sm font-medium transition-colors" style={{color: 'var(--text-secondary)'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
-                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-6 py-2.5 rounded-lg font-medium text-sm transition-all" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>📅 Book Demo</a>
+              <nav className="hidden md:flex items-center" style={{gap: '30px', fontSize: '15px', fontWeight: 500}}>
+                <a href="#features" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
+                <a href="#use-cases" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
+                <a href="#pricing" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
               </nav>
 
-              <div className="md:hidden flex gap-2">
-                <a href={phoneLink} className="px-4 py-2 rounded-lg text-sm font-semibold" style={{background: 'var(--primary)', color: 'white'}}>📞</a>
+              <div className="flex items-center" style={{marginLeft: 'auto', gap: '12px'}}>
+                <a href={phoneLink} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', color: 'var(--primary)', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.borderColor = 'var(--primary)'}} onMouseLeave={(e) => {e.target.style.borderColor = 'var(--border)'}}>📞 Call</a>
+                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'var(--primary)', color: 'white', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>📅 Book Demo</a>
               </div>
             </div>
           </header>
 
           {/* Hero */}
-          <section className="relative min-h-screen flex items-center justify-center pt-20" style={{background: 'var(--secondary)'}}>
+          <section className="relative min-h-screen flex items-center justify-center" style={{background: 'var(--secondary)'}}>
             <div className="relative max-w-7xl mx-auto px-8 py-32 text-center">
               <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
