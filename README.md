@@ -1,2 +1,0 @@
-# aigenetic
-telephone bot
