@@ -49,7 +49,7 @@ class TestWebsiteE2E(unittest.TestCase):
         """Verify page title includes AIgenetic branding"""
         self.goto_base_url()
         title = self.page.title()
-        self.assertIn("AIgenetic", title, "Page title should contain 'AIgenetic'")
+        self.assertIn("Aigenetic", title, "Page title should contain 'Aigenetic'")
         print(f"✓ Page title verified: {title}")
     
     def test_03_hero_section_visible(self):

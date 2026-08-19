@@ -312,23 +312,32 @@
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {CONFIG.useCases.map((useCase, idx) => (
-                  <div key={useCase.title + idx} className="minimal-card p-8 rounded-2xl hover-rise">
-                    <div className="feature-icon-box mb-6">
-                      <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
-                    <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
-                    <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
-                      {useCase.features.map((feature, jdx) => (
-                        <li key={feature + jdx} className="flex items-start gap-2">
-                          <span style={{color: 'var(--primary)'}}>✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                {CONFIG.useCases.map((useCase, idx) => {
+                  const CardTag = useCase.link ? 'a' : 'div';
+                  const cardProps = useCase.link
+                    ? {href: useCase.link, className: 'minimal-card p-8 rounded-2xl hover-rise block', style: {textDecoration: 'none'}, 'aria-label': `${useCase.title} — see the clinic-focused page`}
+                    : {className: 'minimal-card p-8 rounded-2xl hover-rise'};
+                  return (
+                    <CardTag key={useCase.title + idx} {...cardProps}>
+                      <div className="feature-icon-box mb-6">
+                        <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
+                      </div>
+                      <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
+                      <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
+                      <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
+                        {useCase.features.map((feature, jdx) => (
+                          <li key={feature + jdx} className="flex items-start gap-2">
+                            <span style={{color: 'var(--primary)'}}>✓</span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {useCase.link && (
+                        <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>Explore for clinics →</div>
+                      )}
+                    </CardTag>
+                  );
+                })}
               </div>
             </div>
           </section>

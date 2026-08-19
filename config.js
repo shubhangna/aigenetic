@@ -35,7 +35,7 @@ window.CONFIG = {
     { icon: '✅', step: '5', title: 'Confirms', desc: 'Confirms booking and ends call', color: 'from-rose-500 to-red-500' }
   ],
   useCases: [
-    { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500' },
+    { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500', link: '/healthcare.html' },
     { icon: '💇', title: 'Salons & Spas', desc: 'Service bookings, offers, cancellations', features: ['Service bookings', 'Package promotions', 'Membership renewals'], gradient: 'from-pink-500 to-rose-500' },
     { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500' },
     { icon: '🏫', title: 'Offices & Schools', desc: 'Enquiry handling, information desk', features: ['Admission inquiries', 'Information desk', 'Parent communication'], gradient: 'from-purple-500 to-indigo-500' }

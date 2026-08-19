@@ -1,4 +1,7 @@
 # CLAUDE.md
+Always ensure the site name is consistent with caps sensitivity Aigenetic
+Verify logos are consistent as per logo folder
+Always ensure if any change is made on UI or look and feel on main site the same should be implimented on /healthcare.html and viseversa to maintain consistency
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
