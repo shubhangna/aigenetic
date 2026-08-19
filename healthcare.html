@@ -185,11 +185,22 @@
   .plan .btn{margin-top:auto;justify-content:center}
 
   /* ---------- close ---------- */
-  .close{text-align:center;padding:100px 0}
+  .close{text-align:center;padding:100px 0 60px}
   .close h2{font-size:clamp(32px,5vw,56px)}
   .close p{margin:18px auto 0;max-width:520px;color:var(--muted);font-size:18px}
-  footer{border-top:1px solid var(--line);padding:34px 0;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  footer .sp{margin-left:auto}
+
+  /* ---------- site footer ---------- */
+  .site-footer{border-top:1px solid var(--line);background:var(--mint);padding:56px 0 28px}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+  .footer-brand .brand{margin-bottom:0}
+  .footer-brand p{margin-top:14px;color:var(--muted);font-size:14px;max-width:320px;line-height:1.6}
+  .footer-col h5{font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-deep);margin:0 0 14px;font-weight:700}
+  .footer-col a{display:block;color:var(--muted);font-size:14px;text-decoration:none;margin-bottom:10px}
+  .footer-col a:hover{color:var(--ink)}
+  .footer-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;font-size:13px;color:var(--muted)}
+  .footer-bottom .sp{margin-left:auto;text-align:right}
+  @media (max-width:820px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px 24px}.footer-brand{grid-column:1/-1}}
+  @media (max-width:560px){.footer-grid{grid-template-columns:1fr}.footer-bottom .sp{margin-left:0;text-align:left}}
 
   /* ---------- motion ---------- */
   .rise{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards}
@@ -493,15 +504,47 @@
     </div>
     <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
   </div>
-  <div class="wrap"><footer>
-    <span>Aigenetic for Clinics</span>
-    <span>·</span>
-    <span><a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a></span>
-    <span>·</span>
-    <span>Patient data stays in India. Recordings deleted on your schedule.</span>
-    <span class="sp">Not a medical device. Does not provide medical advice.</span>
-  </footer></div>
 </section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for clinics</small></a>
+        <p>An AI phone assistant built for Indian clinics — answers calls, books and reschedules appointments, and follows up with patients in their own language, 24/7.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="#top">Home</a>
+        <a href="#handles">What it handles</a>
+        <a href="#limits">What it won't do</a>
+        <a href="#setup">Setup</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#demo">Book a Demo</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a>
+        <a href="tel:+9174284970333" data-phone-link><span data-phone-display>+91 742849 7033</span></a>
+        <a href="#" data-whatsapp-link>WhatsApp Support</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="refund-policy.html">Refund Policy</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 AIgenetic (OPC) Pvt Ltd. All rights reserved.</span>
+      <span class="sp">Patient data stays in India, deleted on your schedule. Not a medical device — does not provide medical advice.</span>
+    </div>
+  </div>
+</footer>
 
 <!-- Calendar Booking Modal -->
 <div id="calendar-modal" class="calendar-modal">
