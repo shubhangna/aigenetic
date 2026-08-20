@@ -18,7 +18,8 @@ class TestWebsiteE2E(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up Playwright browser for all tests"""
-        headless = os.environ.get('HEADED', 'true') not in ('1', 'true', 'True')
+        # Headed by default so you can watch the browser; set HEADLESS=1 to run headless (e.g. in CI).
+        headless = os.environ.get('HEADLESS', '').strip().lower() in ('1', 'true', 'yes')
         cls.playwright = sync_playwright().start()
         cls.browser = cls.playwright.chromium.launch(headless=headless)
         cls.context = cls.browser.new_context()
