@@ -2,5 +2,5 @@
 ./.venv
 .playwright-mcp
 tests/reports/
-tests/__pycache__/*
-tests/__pycache__/*
+**/__pycache__/
+*.py[cod]
