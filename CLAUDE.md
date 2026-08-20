@@ -10,7 +10,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Static marketing site for Aigenetic, an AI voice-assistant product for Indian SMEs. Served as a GitHub Pages
 site on the custom domain `aigenetic.in` (see `CNAME`). No backend, no build pipeline — plain HTML/CSS/JS
 files deployed as-is.
+Intent is to keep all child pages like healthcare.html and the main page index.html always in sync in terms of look and feel and theme, as much as possible header and footer
 
+Always keep looking for issues while implimenting and accessing the site either local or live and add any issues found in the CODED-Thers/TODO.md 
+
+Always use CLAUDE_Result.html with minimal coding only clean minimal
+Over write this report or update as needed, keep a log of all done things on what has already been done [4 words per activity ]
 ## Codebase shape
 
 - `index.html` — the main landing page. A single-page React 18 app loaded via UMD `<script>` tags and
