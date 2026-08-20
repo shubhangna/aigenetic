@@ -16,6 +16,8 @@ Always keep looking for issues while implimenting and accessing the site either 
 
 Always use CLAUDE_Result.html with minimal coding only clean minimal
 Over write this report or update as needed, keep a log of all done things on what has already been done [4 words per activity ]
+
+If any todo item is done move it to Done section at the bottom with Comment - claude moved at the end
 ## Codebase shape
 
 - `index.html` — the main landing page. A single-page React 18 app loaded via UMD `<script>` tags and

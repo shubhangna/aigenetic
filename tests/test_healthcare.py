@@ -28,42 +28,10 @@ class TestHealthcarePage(WebsiteTestCase):
 
         company = page.evaluate("() => window.CONFIG.company")
 
-        with self.subTest("phone CTA calls the configured number without breaking the page"):
-            phone = page.locator("a[data-phone-link]:visible").first
-            expect(phone).to_be_visible()
-            expected_tel = f"tel:{company['phoneDial']}"
-            self.assertEqual(phone.get_attribute("href"), expected_tel)
-            phone.click()
-            # tel: is an unsupported scheme for the browser tab itself, so the
-            # click must not navigate the SPA away or throw.
-            self.assertIn("healthcare.html", page.url)
-
         with self.subTest("email CTA is addressed to the configured inbox"):
             email = page.locator("a[data-email-link]:visible").first
             expect(email).to_be_visible()
             self.assertEqual(email.get_attribute("href"), f"mailto:{company['email']}")
-
-        with self.subTest("every demo entry point opens the real booking calendar"):
-            demo_links = page.locator("[data-open-calendar]:visible")
-            self.assertGreaterEqual(demo_links.count(), 4)
-            for index in range(demo_links.count()):
-                trigger = demo_links.nth(index)
-                trigger.click()
-
-                modal = page.locator("#calendar-modal")
-                expect(modal).to_be_visible()
-                booking_iframe = modal.locator("iframe")
-                expect(booking_iframe).to_be_visible()
-                self.assertTrue(
-                    (booking_iframe.get_attribute("src") or "").startswith(
-                        "https://calendar.google.com/calendar/appointments/schedules/"
-                    ),
-                    "Book Demo should open the real Google Calendar booking page",
-                )
-
-                close_button = modal.locator("button").first
-                close_button.click()
-                expect(modal).not_to_be_visible()
 
         with self.subTest("audio player has a real source and toggles playback"):
             player = page.locator("[data-call-player]")
@@ -87,9 +55,9 @@ class TestHealthcarePage(WebsiteTestCase):
             expect(page.get_by_role("link", name="Refund Policy")).to_be_visible()
 
         with self.subTest("whatsapp CTA opens a chat to the configured number"):
-            # Unlike the calendar CTAs, WhatsApp links have no JS handler and no
-            # target="_blank" — clicking one really navigates the tab away, so
-            # this must run last and the page is restored straight after.
+            # WhatsApp links have no JS handler and no target="_blank" -- clicking
+            # one really navigates the tab away, so the page is restored via
+            # open_healthcare_page() straight after regardless of what runs next.
             whatsapp = page.locator("a[data-whatsapp-link]:visible").first
             expect(whatsapp).to_be_visible()
             expected_wa_url = f"https://wa.me/{company['whatsappNumber']}"
@@ -106,6 +74,38 @@ class TestHealthcarePage(WebsiteTestCase):
         with self.subTest("no critical console errors after a fresh load"):
             page.reload(wait_until="domcontentloaded", timeout=45000)
             self.assert_no_console_errors()
+
+        with self.subTest("every demo entry point opens the real booking calendar"):
+            demo_links = page.locator("[data-open-calendar]:visible")
+            self.assertGreaterEqual(demo_links.count(), 4)
+            for index in range(demo_links.count()):
+                trigger = demo_links.nth(index)
+                trigger.click()
+
+                modal = page.locator("#calendar-modal")
+                expect(modal).to_be_visible()
+                booking_iframe = modal.locator("iframe")
+                expect(booking_iframe).to_be_visible()
+                self.assertTrue(
+                    (booking_iframe.get_attribute("src") or "").startswith(
+                        "https://calendar.google.com/calendar/appointments/schedules/"
+                    ),
+                    "Book Demo should open the real Google Calendar booking page",
+                )
+
+                close_button = modal.locator("button").first
+                close_button.click()
+                expect(modal).not_to_be_visible()
+
+        with self.subTest("phone CTA calls the configured number without breaking the page"):
+            phone = page.locator("a[data-phone-link]:visible").first
+            expect(phone).to_be_visible()
+            expected_tel = f"tel:{company['phoneDial']}"
+            self.assertEqual(phone.get_attribute("href"), expected_tel)
+            phone.click()
+            # tel: is an unsupported scheme for the browser tab itself, so the
+            # click must not navigate the SPA away or throw.
+            self.assertIn("healthcare.html", page.url)
 
 
 if __name__ == "__main__":

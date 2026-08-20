@@ -38,8 +38,20 @@ class WebsiteTestCase(unittest.TestCase):
     def tearDown(self):
         self.page.close()
 
+    # Console errors known to originate from third-party embeds (not our code)
+    # rather than a real defect on the page.
+    IGNORED_CONSOLE_ERRORS = (
+        "favicon",
+        # Google's reCAPTCHA, loaded inside the Google Calendar booking iframe,
+        # logs this when third-party storage access is denied in headless
+        # Chromium. It's Google's own iframe content, not an Aigenetic bug.
+        "requeststorageaccess",
+    )
+
     def _collect_console_error(self, message):
-        if message.type == "error" and "favicon" not in message.text.lower():
+        if message.type == "error" and not any(
+            ignored in message.text.lower() for ignored in self.IGNORED_CONSOLE_ERRORS
+        ):
             self.console_errors.append(message.text)
 
     def page_url(self, relative_path=""):

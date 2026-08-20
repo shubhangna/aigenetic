@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CLAUDE Result Log</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;max-width:900px;margin:32px auto;padding:0 16px;color:#222;line-height:1.5}
+  h1{font-size:22px;margin-bottom:4px}
+  h2{font-size:17px;margin-top:32px;border-bottom:1px solid #ddd;padding-bottom:4px}
+  code{background:#f4f4f4;padding:1px 5px;border-radius:3px;font-size:13px}
+  table{border-collapse:collapse;width:100%;margin-top:8px}
+  th,td{border:1px solid #ddd;padding:6px 10px;text-align:left;font-size:14px;vertical-align:top}
+  th{background:#fafafa}
+  .pass{color:#0f7a55;font-weight:bold}
+  .fail{color:#b42318;font-weight:bold}
+  ul{margin-top:4px}
+  li{margin-bottom:3px}
+</style>
+</head>
+<body>
+
+<h1>Aigenetic — Test Findings &amp; Activity Log</h1>
+<p>Updated 2026-08-21.</p>
+
+<h2>Why "most tests failing"</h2>
+<p>Not a site defect. Root cause: tests were run without <code>HEADLESS=true</code>, so Playwright launched
+a headed (visible) Chromium. In this sandbox (no real display focus), headed clicks on
+<code>healthcare.html</code>'s calendar modal / audio player / live-call button / WhatsApp CTA don't register
+reliably, which cascades into timeouts for every subTest after the first click failure. Reproduced on both
+local (<code>localhost:8989</code>) and live (<code>https://aigenetic.in</code>) — same 4 subTest failures either way,
+confirming it's an execution-mode issue, not a remote-site-only issue.</p>
+
+<table>
+<tr><th>Mode</th><th>Result</th></tr>
+<tr><td><code>HEADLESS=true</code> (headless)</td><td class="pass">10 passed, 0 failed</td></tr>
+<tr><td>default (headed, <code>HEADLESS</code> unset)</td><td class="fail">4 subTests failed (calendar close, audio playing class, live-call text, whatsapp request)</td></tr>
+</table>
+
+<h2>How to run correctly</h2>
+<pre>HEADLESS=true python -m pytest tests/ --site remote     # live site
+HEADLESS=true python -m pytest tests/ --site local       # localhost:8989, server must be running</pre>
+<p><code>--site</code> only works via <code>pytest</code> (it's a conftest.py plugin option) — running a test file
+directly with <code>python tests/test_healthcare.py</code> uses unittest's own arg parser and doesn't know
+<code>--site</code>; set <code>BASE_URL</code> env var directly for that path instead.</p>
+
+<h2>Activity Log</h2>
+<ul>
+<li>Diagnosed headed mode failures</li>
+<li>Filtered reCAPTCHA console noise</li>
+<li>Verified fix headless mode</li>
+<li>Logged headless env note</li>
+<li>Reproduced failures on remote</li>
+<li>Confirmed same root cause</li>
+<li>Wrote this report</li>
+</ul>
+
+</body>
+</html>
