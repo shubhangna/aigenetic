@@ -1,5 +1,5 @@
         # 1. Navigate to https://aigenetic.in
-        # 2. Verify page title contains "AIgenetic"
+        # 2. Verify page title contains "Aigenetic"
         # 3. Check Hero section with "Never Miss A Customer Call" text is visible
         # 4. Verify Features section exists and has content
         # 5. Verify Pricing section with pricing cards is present

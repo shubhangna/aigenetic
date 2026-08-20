@@ -1,4 +1,4 @@
-# Test dependencies for AIgenetic website testing
+# Test dependencies for Aigenetic website testing
 
 # Playwright for E2E browser testing
 playwright>=1.40.0

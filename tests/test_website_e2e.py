@@ -11,13 +11,16 @@ from playwright.sync_api import sync_playwright, expect
 class TestWebsiteE2E(unittest.TestCase):
     """End-to-end test suite for aigenetic.in website"""
     
-    BASE_URL = os.environ.get('BASE_URL', 'http://localhost:8989')
+    BASE_URL =os.environ.get('BASE_URL', 'http://localhost:8989')
+        
+    # os.environ.get('BASE_URL', 'http://aigenetic.in')
     
     @classmethod
     def setUpClass(cls):
         """Set up Playwright browser for all tests"""
+        headless = os.environ.get('HEADED', 'true') not in ('1', 'true', 'True')
         cls.playwright = sync_playwright().start()
-        cls.browser = cls.playwright.chromium.launch(headless=True)
+        cls.browser = cls.playwright.chromium.launch(headless=headless)
         cls.context = cls.browser.new_context()
         cls.page = cls.context.new_page()
     
@@ -46,7 +49,7 @@ class TestWebsiteE2E(unittest.TestCase):
         print(f"✓ Website loaded successfully (Status: {response.status})")
     
     def test_02_page_title_contains_aigenetic(self):
-        """Verify page title includes AIgenetic branding"""
+        """Verify page title includes Aigenetic branding"""
         self.goto_base_url()
         title = self.page.title()
         self.assertIn("Aigenetic", title, "Page title should contain 'Aigenetic'")

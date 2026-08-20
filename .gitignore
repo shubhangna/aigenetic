@@ -3,3 +3,4 @@
 .playwright-mcp
 tests/reports/
 tests/__pycache__/*
+tests/__pycache__/*

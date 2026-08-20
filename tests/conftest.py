@@ -121,7 +121,7 @@ def _render_report(started_at, finished_at, exitstatus, base_url, totals, result
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AIgenetic Test Report</title>
+  <title>Aigenetic Test Report</title>
   <style>
     :root {{
       --bg: #f7f8f6;
@@ -246,7 +246,7 @@ def _render_report(started_at, finished_at, exitstatus, base_url, totals, result
   <main>
     <header>
       <div>
-        <h1>AIgenetic Test Report</h1>
+        <h1>Aigenetic Test Report</h1>
         <div class="muted">Target {escape(base_url)} · Started {escape(started_at.strftime("%Y-%m-%d %H:%M:%S"))} · Finished {escape(finished_at.strftime("%Y-%m-%d %H:%M:%S"))}</div>
       </div>
       <div class="status {escape(status.lower())}">{escape(status)}</div>

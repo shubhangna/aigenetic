@@ -1,4 +1,4 @@
-# robots.txt for AIgenetic
+# robots.txt for Aigenetic
 # This file tells search engine crawlers which pages to crawl and index
 
 # Allow all search engines to crawl the entire site

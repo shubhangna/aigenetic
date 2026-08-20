@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project purpose
 
-Static marketing site for AIgenetic, an AI voice-assistant product for Indian SMEs. Served as a GitHub Pages
+Static marketing site for Aigenetic, an AI voice-assistant product for Indian SMEs. Served as a GitHub Pages
 site on the custom domain `aigenetic.in` (see `CNAME`). No backend, no build pipeline — plain HTML/CSS/JS
 files deployed as-is.
 

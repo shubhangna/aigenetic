@@ -1,7 +1,7 @@
 window.CONFIG = {
   company: {
     name: 'Aigenetic',
-    legalName: 'AIgenetic (OPC) Pvt Ltd',
+    legalName: 'Aigenetic (OPC) Pvt Ltd',
     tagline: 'India-focused AI voice assistants',
     description: 'AI-powered phone assistants for Indian SMEs',
     location: 'Rajiv Gandhi Infotech Park, Pune, India',
@@ -13,7 +13,7 @@ window.CONFIG = {
   hero: {
     badge: 'Live AI Assistants Handling Calls Now [V 1.19 Live]',
     heading: 'The Voice of Your Business',
-    subheading: 'Never miss a customer call again. AIgenetic answers, understands, and books appointments automatically for your business—in Indian languages.',
+    subheading: 'Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically for your business—in Indian languages.',
     ctaPrimary: '📞 Call Now',
     ctaSecondary: '💬 WhatsApp Us',
     trust: {
@@ -90,7 +90,7 @@ window.CONFIG = {
     { icon: '💸', title: 'Affordable', desc: 'Pay-per-use pricing for small businesses', gradient: 'from-orange-500 to-red-500' }
   ],
   testimonials: [
-    { quote: "AIgenetic has been a game-changer. We don't miss appointments anymore, and patients love the 24/7 booking facility.", name: 'Dr. Priya Sharma', role: 'Skin Clinic, Mumbai' },
+    { quote: "Aigenetic has been a game-changer. We don't miss appointments anymore, and patients love the 24/7 booking facility.", name: 'Dr. Priya Sharma', role: 'Skin Clinic, Mumbai' },
     { quote: 'The bot handles Hindi and Marathi perfectly. Our booking rate increased by 40% in just 2 months!', name: 'Rahul Desai', role: 'Salon Owner, Pune' },
     { quote: 'Best investment we made. Saves us ₹25,000/month compared to hiring a receptionist. Plus it never takes a day off!', name: 'Anjali Reddy', role: 'Real Estate Agency, Bangalore' }
   ],
