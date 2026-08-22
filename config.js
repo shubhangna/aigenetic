@@ -101,20 +101,20 @@ window.CONFIG = {
     { number: '100+', label: 'Happy Businesses', color: 'from-orange-50 to-amber-50 border-orange-100 text-orange-600' }
   ],
   pricingMeta: {
-    perCallINR: 4
+    perMinuteINR: 6
   },
   pricing: [
     {
       name: 'Flex',
       price: '₹2,999',
       period: '/month',
-      usage: '500 calls included, then ₹4/call',
-      includedCalls: 500,
-      perCallINR: 4,
+      usage: '500 call minutes included, then ₹6/minute',
+      includedMinutes: 500,
+      perMinuteINR: 6,
       features: [
         'Dedicated phone number',
         'AI voice agent configured',
-        '500 answered calls included',
+        '500 call minutes included',
         'Appointment booking & rescheduling',
         'Basic analytics',
         'Email support'
@@ -126,14 +126,14 @@ window.CONFIG = {
       name: 'Pro',
       price: '₹7,999',
       period: '/month',
-      usage: '1,500 calls included, then ₹4/call',
-      includedCalls: 1500,
-      perCallINR: 4,
+      usage: '1,500 call minutes included, then ₹6/minute',
+      includedMinutes: 1500,
+      perMinuteINR: 6,
       badge: 'Most Popular',
       features: [
         'Everything in Flex',
         'Outbound calling campaigns',
-        '1,500 answered calls included',
+        '1,500 call minutes included',
         'Advanced analytics',
         'Custom conversation flows',
         'Priority WhatsApp support'
@@ -145,7 +145,7 @@ window.CONFIG = {
       name: 'Enterprise',
       price: 'Custom',
       period: '',
-      usage: 'Volume-based per-call pricing',
+      usage: 'Volume-based per-minute pricing',
       features: [
         'Everything in Pro',
         'Multiple phone numbers',
