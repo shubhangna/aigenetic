@@ -1,0 +1,371 @@
+<!--
+  vertical-page.template.html
+  ============================
+  Skeleton for a new vertical/child landing page (the same role healthcare.html
+  plays today). Vanilla HTML/CSS/JS, matching root CLAUDE.md's rule that child
+  pages are NOT React/JSX — only index.html is.
+
+  HOW TO USE (manual, no build step — this is a copy/replace template, not a
+  templating engine):
+    1. Copy this file to the repo root as <verticalName>.html (e.g. realestate.html).
+    2. Add a `pages.<verticalName>` object to newSite/template.json with the
+       exact same shape as `pages.healthcare` (copy it and rewrite the copy).
+    3. Replace every {{token}} below with the matching value from
+       brand.* / theme.clinicalTeal.* / pages.<verticalName>.* in template.json.
+       {{#each list}} ... {{/each}} marks a block to repeat once per array item —
+       expand it by hand for each entry (there is no runtime loop here).
+    4. Point asset paths at the real files: copy this page's audio/images into
+       newSite/assets/pages/<verticalName>/ (or newSite/assets/common/ if
+       shared), then when you deploy the generated HTML to the repo root, copy
+       those files to root-relative paths (e.g. mp3/..., logo/...) exactly like
+       healthcare.html and index.html do today — GitHub Pages serves flat from
+       repo root, it does not know about newSite/.
+    5. Reuse the shared header/footer markup AS-IS from healthcare.html/index.html
+       wherever this page needs the same nav/footer pattern — the whole point of
+       this template system is to keep every child page visually identical to
+       healthcare.html and to index.html's header/footer, per root CLAUDE.md.
+    6. Run the test suite (tests/test_website_e2e.py) against the new page before
+       shipping, and update sitemap.xml + config.js useCases[].link if this
+       vertical should be linked from the main page's Use Cases grid.
+
+  This file itself is never deployed directly — it lives only in newSite/.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{page.seo.title}}</title>
+
+<!-- SEO Meta Tags — fill these in even if the healthcare.html source page skipped them (see pages.healthcare.seo.note in template.json) -->
+<meta name="description" content="{{page.seo.description}}">
+<meta name="keywords" content="{{page.seo.keywords}}">
+<meta name="author" content="{{brand.company.legalName}}">
+<meta name="theme-color" content="{{theme.clinicalTeal.cssVariables.--ink}}">
+<link rel="canonical" href="{{page.seo.canonical}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{brand.company.name}}">
+<meta property="og:title" content="{{page.seo.ogTitle}}">
+<meta property="og:description" content="{{page.seo.ogDescription}}">
+<meta property="og:url" content="{{meta.domain}}/{{verticalName}}.html">
+<meta property="og:image" content="{{page.seo.ogImage}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{page.seo.ogTitle}}">
+<meta name="twitter:description" content="{{page.seo.ogDescription}}">
+<meta name="twitter:image" content="{{page.seo.ogImage}}">
+
+<!-- Favicon (common assets — identical on every page) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/logo/logo.png">
+<link rel="apple-touch-icon" href="/logo/logoMedium.png">
+
+<script src="config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{theme.clinicalTeal.googleFonts}}" rel="stylesheet">
+<style>
+  /*
+    Theme tokens below come straight from theme.clinicalTeal.cssVariables in
+    template.json. If you ever restyle one child page, restyle this block
+    everywhere it's duplicated (root CLAUDE.md main/child sync rule) — or
+    better, factor it into a single shared stylesheet.
+  */
+  :root{
+    --ink:{{theme.clinicalTeal.cssVariables.--ink}};
+    --paper:{{theme.clinicalTeal.cssVariables.--paper}};
+    --teal:{{theme.clinicalTeal.cssVariables.--teal}};
+    --teal-deep:{{theme.clinicalTeal.cssVariables.--teal-deep}};
+    --mint:{{theme.clinicalTeal.cssVariables.--mint}};
+    --signal:{{theme.clinicalTeal.cssVariables.--signal}};
+    --line:{{theme.clinicalTeal.cssVariables.--line}};
+    --muted:{{theme.clinicalTeal.cssVariables.--muted}};
+    --display:{{theme.clinicalTeal.fonts.display}};
+    --body:{{theme.clinicalTeal.fonts.body}};
+    --mono:{{theme.clinicalTeal.fonts.mono}};
+    --wrap:{{theme.clinicalTeal.cssVariables.--wrap}};
+  }
+  /* ... copy the FULL <style> block from healthcare.html verbatim below this
+     line (nav/hero/callsheet/band/grid3/limits/chips/plans/close/footer/
+     calendar-modal/motion rules) — it is theme-driven and page-structure
+     driven, not copy-driven, so it is intentionally not re-typed here. Keep
+     it byte-for-byte identical to healthcare.html unless this vertical
+     deliberately needs a new section type, in which case add the new CSS
+     alongside the existing rules rather than replacing them. */
+</style>
+</head>
+<body>
+
+<!-- Nav: the .nav-toggle + .nav-panel pair is the shared mobile pattern
+     (see page.nav.$mobilePattern in template.json). Keep both — below 900px
+     the .nav-links row is hidden and the panel is the only way to reach the
+     sections; below 680px the two inline CTAs hide too and live only there.
+     The id="site-nav" is what the sticky-shadow script toggles .scrolled on. -->
+<nav class="nav" id="site-nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="{{brand.company.name}}" />{{brand.company.name}} <small>{{page.nav.brandSuffix}}</small></a>
+    <div class="nav-links">
+      {{#each page.nav.links}}
+      <a href="{{href}}">{{label}}</a>
+      {{/each}}
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#demo" data-phone-link>{{page.nav.ctaCall.label}}</a>
+      <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>{{page.nav.ctaBookDemo.label}}</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </div>
+  <div class="nav-panel" id="nav-panel">
+    <div class="wrap">
+      {{#each page.nav.links}}
+      <a href="{{href}}">{{label}}</a>
+      {{/each}}
+      <div class="panel-cta">
+        <a class="btn btn-ghost" href="#demo" data-phone-link>{{page.nav.ctaCall.label}}</a>
+        <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>{{page.nav.ctaBookDemo.label}}</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="badge rise"><span class="dot"></span> {{page.hero.badge}}</span>
+    <h1 class="rise">{{{page.hero.headingRawHtml}}}</h1>
+    <p class="sub rise">{{page.hero.subheading}}</p>
+    <div class="cta-row rise">
+      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>{{page.hero.ctaPrimary.label}}</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>{{page.hero.ctaSecondary.label}}</a>
+      <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>{{page.hero.ctaTertiary.label}}</button>
+    </div>
+    <p class="cta-note">{{page.hero.ctaNote}}</p>
+
+    <div class="rail">
+      {{#each page.hero.statRail}}
+      <div><b>{{title}}</b><span>{{subtitle}}</span></div>
+      {{/each}}
+    </div>
+  </div>
+</header>
+
+<!-- Signature "call sheet" section: swap this whole block's content for
+     whatever concrete artifact best demonstrates THIS vertical handling a
+     real interaction (a call transcript is the healthcare pattern; a
+     realestate page might show a site-visit booking thread instead).
+     Keep the visual container (.callsheet-grid / .sheet / .thread / .turn /
+     .slotcard / .synced / .voice-sample) so the look stays consistent across
+     verticals: the sheet and the voice-sample card sit side by side above
+     1040px (the sample card sticky beside the scrolling transcript) and stack
+     below it. .reveal goes on each card, not on the shared .wrap, so the two
+     columns animate in independently. -->
+<section class="callsheet-sec">
+  <div class="wrap">
+    <span class="eyebrow reveal">{{page.signatureCallSheet.eyebrow}}</span>
+    <div class="callsheet-grid">
+    <div class="sheet reveal">
+      <div class="sheet-head">
+        <span>{{page.signatureCallSheet.callMeta.phoneMasked}}</span>
+        <span>Language detected: <b>{{page.signatureCallSheet.callMeta.language}}</b></span>
+        <span>Duration <b>{{page.signatureCallSheet.callMeta.duration}}</b></span>
+        <span class="tag">{{page.signatureCallSheet.callMeta.tag}}</span>
+      </div>
+      <div class="thread">
+        {{#each page.signatureCallSheet.thread}}
+        <div class="turn {{#if speaker=='caller'}}caller{{else}}agent{{/if}}">
+          <span class="who">{{#if speaker=='caller'}}Caller{{else}}{{brand.company.name}}{{/if}}</span>{{text}}
+          {{#if gloss}}<span class="gloss">{{gloss}}</span>{{/if}}
+        </div>
+        {{/each}}
+      </div>
+      <div class="sheet-foot">
+        <div class="slotcard">
+          <b>{{page.signatureCallSheet.slotcard.name}}</b>
+          <span>{{page.signatureCallSheet.slotcard.meta}}</span>
+        </div>
+        <div class="synced">{{page.signatureCallSheet.synced.system}}<span>{{page.signatureCallSheet.synced.confirmation}}</span></div>
+      </div>
+    </div>
+
+    <div class="voice-sample reveal">
+      <div class="voice-sample-head">
+        <b>{{page.voiceSample.title}}</b>
+        <span>{{page.voiceSample.subtitle}}</span>
+      </div>
+      <div class="call-player" data-call-player>
+        <button type="button" class="play-btn" data-play-audio="{{page.voiceSample.assetPathAtDeployTime}}" aria-label="Play a sample of the assistant's voice">
+          <span data-play-icon>▶</span>
+        </button>
+        <div class="waveform" data-waveform aria-hidden="true"></div>
+        <span class="player-time"><span data-time-current>0:00</span> / <span data-time-total>0:00</span></span>
+        <audio data-audio-player preload="metadata"></audio>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="band tint" id="handles">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">{{page.callTypesGrid.eyebrow}}</span>
+      <h2>{{page.callTypesGrid.heading}}</h2>
+      <p>{{page.callTypesGrid.subheading}}</p>
+    </div>
+    <!-- .stagger on the grid fades the cells in one after another; .idx is the
+         mono running number (01, 02, …) and the quote is pinned to the card
+         foot by .quote{margin-top:auto}, so quotes line up across a row. -->
+    <div class="grid3 reveal stagger">
+      {{#each page.callTypesGrid.cells}}
+      <div class="cell"><span class="idx">{{paddedIndex}}</span><h3>{{title}}</h3><p>{{desc}}</p><span class="quote">"{{quote}}"</span></div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="wrap limits">
+    <div class="reveal">
+      <span class="eyebrow">{{page.limits.eyebrow}}</span>
+      <h2 style="font-size:clamp(30px,4.2vw,44px);margin-top:12px">{{page.limits.heading}}</h2>
+      <p style="margin-top:16px;color:var(--muted);font-size:18px">{{page.limits.subheading}}</p>
+      <ul class="limit-list">
+        {{#each page.limits.items}}
+        <li><b>{{title}}</b><span>{{desc}}</span></li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="escalate reveal">
+      <h3>{{page.limits.escalation.heading}}</h3>
+      <p>{{page.limits.escalation.desc}}</p>
+      <p class="line">{{page.limits.escalation.logLine}}</p>
+    </div>
+  </div>
+</section>
+
+<section class="band tint" id="setup">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">{{page.setup.eyebrow}}</span>
+      <h2>{{page.setup.heading}}</h2>
+      <p>{{page.setup.subheading}}</p>
+    </div>
+    <div class="chips reveal">
+      {{#each page.setup.integrations}}
+      <span class="chip {{#if active}}on{{/if}}">{{label}}</span>
+      {{/each}}
+    </div>
+    <div class="head reveal" style="margin-top:64px">
+      <span class="eyebrow">{{page.setup.specialtyBlock.eyebrow}}</span>
+      <h2 style="font-size:clamp(26px,3.4vw,36px)">{{page.setup.specialtyBlock.heading}}</h2>
+      <p>{{page.setup.specialtyBlock.subheading}}</p>
+    </div>
+    <div class="chips reveal">
+      {{#each page.setup.specialtyBlock.chips}}
+      <span class="chip">{{this}}</span>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<section class="band" id="pricing">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">{{page.pricingSection.eyebrow}}</span>
+      <h2>{{page.pricingSection.heading}}</h2>
+      <p>{{page.pricingSection.subheading}}</p>
+    </div>
+    <div class="plans reveal">
+      {{#each page.pricingSection.plans}}
+      <div class="plan {{#if featured}}feature{{/if}}">
+        <span class="kicker">{{kicker}}</span>
+        <div class="price">{{price}}<s> {{period}}</s></div>
+        <ul>
+          {{#each features}}<li>{{this}}</li>{{/each}}
+        </ul>
+        <a class="btn btn-{{ctaStyle}}" href="#calendar-booking" data-open-calendar>{{cta}}</a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- Closing CTA: the dark rounded panel is .close-in inside .close — keep both
+     elements, the section supplies the page background and the inner div the
+     ink panel, glow and inverted button colours. -->
+<section class="close" id="demo">
+  <div class="wrap">
+    <div class="close-in reveal">
+      <span class="eyebrow">{{page.demoCta.eyebrow}}</span>
+      <h2>{{{page.demoCta.heading}}}</h2>
+      <p>{{page.demoCta.subheading}}</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>{{page.demoCta.ctaPrimary.label}}</a>
+        <a class="btn btn-ghost btn-lg" href="tel:{{brand.company.phoneDial}}" data-phone-link>{{page.demoCta.ctaSecondary.label}}</a>
+      </div>
+      <p class="cta-note">{{page.demoCta.note}}</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="{{brand.company.name}}" />{{brand.company.name}} <small>{{page.footer.brandSuffix}}</small></a>
+        <p>{{page.footer.description}}</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        {{#each page.footer.quickLinks}}
+        <a href="{{href}}">{{label}}</a>
+        {{/each}}
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:{{brand.company.email}}" data-email-link>{{brand.company.email}}</a>
+        <a href="tel:{{brand.company.phoneDial}}" data-phone-link><span data-phone-display>{{brand.company.phoneDisplay}}</span></a>
+        <a href="#" data-whatsapp-link>WhatsApp Support</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Legal</h5>
+        {{#each page.footer.legalLinks}}
+        <a href="{{href}}">{{label}}</a>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>{{page.footer.copyright}}</span>
+      <span class="sp">{{page.footer.disclaimer}}</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Calendar Booking Modal -->
+<div id="calendar-modal" class="calendar-modal">
+  <div class="calendar-modal-content">
+    <button class="calendar-close" onclick="closeCalendarModal()">✕</button>
+    <h2>{{page.calendarModal.heading}}</h2>
+    <p>{{page.calendarModal.subheading}}</p>
+    <iframe src="{{brand.integrations.googleCalendarSchedulingUrl}}" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+  </div>
+</div>
+
+<!--
+  Behavioral JS below (calendar modal open/close + Escape/backdrop close and
+  body scroll lock, sticky-nav .scrolled toggle, hamburger .nav-panel toggle,
+  waveform generation, audio play/pause + running time, live-voice-call teaser
+  button, shared data-phone-link/data-whatsapp-link/data-email-link binding,
+  scroll-reveal IntersectionObserver) is IDENTICAL across every page in this template
+  family. Copy it byte-for-byte from healthcare.html's two trailing
+  <script> blocks rather than retyping it here — it contains no page copy,
+  only behavior, so there is nothing for template.json to parameterize.
+-->
+<script>/* copy healthcare.html's inline <script> blocks here verbatim */</script>
+
+</body>
+</html>

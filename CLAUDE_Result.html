@@ -20,7 +20,52 @@
 <body>
 
 <h1>Aigenetic — Test Findings &amp; Activity Log</h1>
-<p>Updated 2026-08-21.</p>
+<p>Updated 2026-08-23.</p>
+
+<h2>healthcare.html rebuilt from the newSite template</h2>
+<p>Regenerated <code>healthcare.html</code> from <code>newSite/template.json</code> +
+<code>newSite/templates/vertical-page.template.html</code>. <strong>Zero copy changes</strong> — every
+heading, transcript line, chip, plan and footer string is identical to what
+<code>pages.healthcare</code> holds; only presentation changed. Brand hexes in
+<code>theme.clinicalTeal</code> are untouched (<code>--ink</code>/<code>--teal</code>/<code>--mint</code> etc.);
+the new look is built from derived surface + motion tokens layered on top.</p>
+
+<table>
+<tr><th>Area</th><th>What changed</th></tr>
+<tr><td>Head</td><td>Added description, keywords, author, theme-color, canonical, Open Graph and Twitter-card tags (the gap tracked in TODO.md)</td></tr>
+<tr><td>Nav</td><td>Sticky bar that gains its border/shadow only after scroll; hamburger + slide-down panel below 900px (links previously just disappeared)</td></tr>
+<tr><td>Hero</td><td>Masked grid and ambient radial wash, refined highlight behind "clinic", stat rail rendered as four hover-lift cards</td></tr>
+<tr><td>Call sheet</td><td>Transcript and voice-sample player side by side, sample card sticky beside the scrolling thread; stacks below 1040px</td></tr>
+<tr><td>Sections</td><td>Rounded card grid with mono index numbers and bottom-aligned caller quotes; dark escalation panel with terminal-style log block; dark rounded closing CTA panel</td></tr>
+<tr><td>Motion</td><td><code>.reveal</code> / <code>.stagger</code> entrances with a full <code>prefers-reduced-motion</code> opt-out</td></tr>
+<tr><td>Fixes</td><td>Player time no longer overlaps the waveform; modal close button now has a positioning context; orphaned mobile CSS rules moved back inside their media query</td></tr>
+</table>
+
+<p>Behavior is unchanged and still copied verbatim between pages: calendar modal, waveform
+generation, audio player, live-call teaser, <code>data-*-link</code> binding, IntersectionObserver.
+Every <code>data-</code> hook the suite relies on is intact.</p>
+
+<table>
+<tr><th>Check (21 assertions, Playwright, local server)</th><th>Result</th></tr>
+<tr><td>Every assertion in <code>tests/test_healthcare.py</code>, replayed</td><td class="pass">pass</td></tr>
+<tr><td>Console errors after a fresh load</td><td class="pass">none</td></tr>
+<tr><td>390px: no horizontal scroll, hamburger opens panel</td><td class="pass">pass</td></tr>
+<tr><td>All 5 <code>data-open-calendar</code> triggers open and close the real Google booking iframe</td><td class="pass">pass</td></tr>
+</table>
+
+<p><strong>Outstanding:</strong> root CLAUDE.md requires main/child look-and-feel parity, so
+<code>index.html</code> still needs the same treatment in its Tailwind/JSX form — logged in
+<code>CODED-Thers/TODO.md</code>.</p>
+
+<h2>newSite/ template extraction</h2>
+<p>Built <code>newSite/</code>: a content+asset template system extracted from <code>index.html</code>,
+<code>healthcare.html</code> and <code>config.js</code>, for generating future vertical pages (e.g.
+<code>realestate.html</code>) without losing any existing copy or specs. Contains
+<code>template.json</code> (brand data + two theme token sets + full <code>pages.healthcare</code> schema
+instance), <code>assets/common/</code> and <code>assets/pages/&lt;page&gt;/</code> (logos, favicon, 6 audio demos,
+reorganized by usage), <code>templates/vertical-page.template.html</code> (annotated skeleton), and its
+own <code>newSite/CLAUDE.md</code> instructing future edits to keep pages in sync automatically.
+Nothing in the live site was modified — pure non-destructive extraction.</p>
 
 <h2>Why "most tests failing"</h2>
 <p>Not a site defect. Root cause: tests were run without <code>HEADLESS=true</code>, so Playwright launched
@@ -52,6 +97,32 @@ directly with <code>python tests/test_healthcare.py</code> uses unittest's own a
 <li>Reproduced failures on remote</li>
 <li>Confirmed same root cause</li>
 <li>Wrote this report</li>
+<li>Explored full site structure</li>
+<li>Read config.js, both pages</li>
+<li>Asked scope/asset/theme/skeleton questions</li>
+<li>Created newSite folder tree</li>
+<li>Copied logos, audio by usage</li>
+<li>Wrote full template.json</li>
+<li>Wrote vertical-page HTML skeleton</li>
+<li>Wrote newSite/CLAUDE.md instructions</li>
+<li>Logged two gaps found</li>
+<li>Rebuilt healthcare.html from template</li>
+<li>Added full SEO meta block</li>
+<li>Built sticky nav scroll state</li>
+<li>Added mobile hamburger nav panel</li>
+<li>Redesigned hero stat rail</li>
+<li>Paired call sheet, voice player</li>
+<li>Restyled call-type card grid</li>
+<li>Darkened escalation and closing panels</li>
+<li>Added reveal stagger motion</li>
+<li>Honoured prefers-reduced-motion fully</li>
+<li>Fixed player time overlap</li>
+<li>Fixed modal close positioning</li>
+<li>Fixed orphaned mobile CSS</li>
+<li>Replayed full healthcare test suite</li>
+<li>Verified desktop tablet mobile renders</li>
+<li>Synced template.json and skeleton</li>
+<li>Logged index.html resync TODO</li>
 </ul>
 
 </body>
