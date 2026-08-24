@@ -179,9 +179,9 @@
       <button role="tab" data-scen="missed" aria-selected="false"><span class="step">4</span>Couldn't connect</button>
     </div>
     <div class="langs" aria-label="Language">
-      <button data-lang="all" aria-pressed="true">All</button>
+      <button data-lang="all" aria-pressed="false">All</button>
       <button data-lang="hinglish" aria-pressed="false">Hinglish</button>
-      <button data-lang="english" aria-pressed="false">English</button>
+      <button data-lang="english" aria-pressed="true">English</button>
       <button data-lang="hindi" aria-pressed="false">हिंदी</button>
     </div>
   </div>
@@ -621,7 +621,7 @@ function dateFor(lang){
 
 const $ = s => document.querySelector(s);
 const grid = $("#grid");
-let scen = "first", lang = "all", current = [];
+let scen = "first", lang = "english", current = [];
 
 function valFor(key, cardLang){
   if(key === "Date") return dateFor(cardLang);
