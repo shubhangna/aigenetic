@@ -102,9 +102,20 @@ template as the shared source of truth. That means:
 
 ## Known gaps carried over from the source pages (fix opportunistically)
 
-- The "Real Estate" card in the main page's Use Cases grid
-  (`brand.useCasesSection.cards[2]`) has no `link` yet because
-  `realestate.html` doesn't exist. Add one when it's built.
+- `realestate.html` has no voice-sample audio player — there's no
+  real-estate-specific demo clip in `mp3/` yet (only Healthcare/Ecommerce/
+  BFSI/EdTech/HRTech/Hospitality exist), and playing a mismatched clip under
+  a "Hear the assistant" banner would misrepresent what a caller would
+  actually hear. See `assets.audio.pages.realestate.note` in `template.json`
+  and the matching `CODED-Thers/TODO.md` entry. Once a real clip is recorded,
+  add it under `assets/common/audio/` + `assets/pages/realestate/audio/` and
+  restore the two-column `.callsheet-grid` + sticky voice-sample layout
+  (currently a single centered `.sheet-solo` column instead).
+- `realestate.html`'s CRM/portal chips (Zoho, Sell.Do, LeadSquared, 99acres,
+  MagicBricks, Housing.com) are deliberately **not** marked `.chip.on` —
+  they aren't verified live integrations, only illustrative examples of
+  "attach whatever you use." Don't mark one active without confirming it's
+  genuinely built first (see `pages.realestate.setup.integrationsHonestyNote`).
 - `theme.default` and `theme.clinicalTeal` use the same ink/teal/mint hues
   under different variable names and slightly different implementations
   (Tailwind CDN vs. hand-rolled CSS). They aren't formally unified into one
@@ -125,3 +136,10 @@ template as the shared source of truth. That means:
   `template.json` for exactly what changed on each page. index.html's mobile
   menu is a **new fix**, not a resync — it previously had no mobile nav at
   all (links just vanished under `hidden md:flex`).
+- ~~The "Real Estate" Use Cases card had no `link`~~ — fixed 2026-08-24:
+  `realestate.html` built (the second `pages.*` instance, proving the
+  template pattern out beyond healthcare), `config.js`'s Real Estate card now
+  links to it with its own `linkCtaLabel`, and a real bug was fixed alongside
+  it — `index.html` had hardcoded the literal text "Explore for clinics →"
+  for *any* linked Use Cases card, which would have wrongly shown clinic
+  copy on the Real Estate card too. See `pages.realestate.$builtNote`.

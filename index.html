@@ -524,7 +524,7 @@
                 {CONFIG.useCases.map((useCase, idx) => {
                   const CardTag = useCase.link ? 'a' : 'div';
                   const cardProps = useCase.link
-                    ? {href: useCase.link, className: 'minimal-card p-8 rounded-2xl hover-rise block', style: {textDecoration: 'none'}, 'aria-label': `${useCase.title} — see the clinic-focused page`}
+                    ? {href: useCase.link, className: 'minimal-card p-8 rounded-2xl hover-rise block', style: {textDecoration: 'none'}, 'aria-label': `${useCase.title} — see the dedicated page`}
                     : {className: 'minimal-card p-8 rounded-2xl hover-rise'};
                   return (
                     <CardTag key={useCase.title + idx} {...cardProps}>
@@ -543,7 +543,7 @@
                         ))}
                       </ul>
                       {useCase.link && (
-                        <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>Explore for clinics →</div>
+                        <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>{useCase.linkCtaLabel || 'Explore →'}</div>
                       )}
                     </CardTag>
                   );

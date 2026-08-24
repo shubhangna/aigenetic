@@ -3,10 +3,19 @@
 - Add animation like husky voice
 - Add languages as a list somewhere on the site
 - Policy pages quote ₹4,999-₹9,999 monthly range, actual plans are ₹2,999/₹7,999
-- Real Estate use-case card on main page has no link (no realestate.html yet)
+- realestate.html has no voice-sample audio player — no real-estate demo clip exists
+  in mp3/ yet; record one (site-visit/price-enquiry call), add under mp3/ +
+  newSite/assets/, then restore the two-column callsheet-grid + sticky player layout
+- realestate.html's CRM/portal chips (Zoho, Sell.Do, LeadSquared, 99acres, MagicBricks,
+  Housing.com) are intentionally NOT marked active — confirm real integrations before
+  marking any of them .chip.on (see newSite/template.json integrationsHonestyNote)
 
 - Test add: verification of popup
 - Tests need HEADLESS=true env var in this sandbox (headed mode flaky/slow, no display)
+- tests/test_healthcare.py's whatsapp-request and console-error subtests are flaky when
+  run alongside other test files (both pass alone) — one is a network-timing race, the
+  other is a stray Google CSP report-only warning from the calendar iframe; neither
+  reproduces in isolation, likely cross-test browser-context contention, not a site defect
 
 # Done
 
@@ -30,3 +39,14 @@
   healthcare.html's old bug — main page had zero mobile nav from the start) — claude moved at the end
 - Test add: mobile-width run for both pages (hamburger opens panel, no horizontal
   scroll at 390px) — tests/test_mobile_nav.py — claude moved at the end
+- Real Estate use-case card on main page has no link (no realestate.html yet) —
+  claude moved at the end
+- index.html hardcoded "Explore for clinics →" on any linked Use Cases card,
+  which would have wrongly labeled the new Real Estate card too — claude moved at the end
+- Built realestate.html (developer/builder vertical page), linked from config.js's
+  Real Estate use-case card, added to sitemap.xml along with healthcare.html (which
+  was missing too), full test coverage in tests/test_realestate.py +
+  tests/test_mobile_nav.py — claude moved at the end
+- Removed stray "[V 1.19 Live]" / "· v1.19" version tags from hero badges in
+  config.js, healthcare.html, realestate.html and newSite/template.json — claude
+  moved at the end
