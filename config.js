@@ -11,7 +11,7 @@ window.CONFIG = {
     whatsappNumber: '917428497033'
   },
   hero: {
-    badge: 'Live AI Assistants Handling Calls Now [V 1.19 Live]',
+    badge: 'Live AI Assistants Handling Calls Now',
     heading: 'The Voice of Your Business',
     subheading: 'Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically for your business—in Indian languages.',
     ctaPrimary: '📞 Call Now',
@@ -35,9 +35,9 @@ window.CONFIG = {
     { icon: '✅', step: '5', title: 'Confirms', desc: 'Confirms booking and ends call', color: 'from-rose-500 to-red-500' }
   ],
   useCases: [
-    { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500', link: '/healthcare.html' },
+    { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500', link: '/healthcare.html', linkCtaLabel: 'Explore for clinics →' },
     { icon: '💇', title: 'Salons & Spas', desc: 'Service bookings, offers, cancellations', features: ['Service bookings', 'Package promotions', 'Membership renewals'], gradient: 'from-pink-500 to-rose-500' },
-    { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500' },
+    { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500', link: '/realestate.html', linkCtaLabel: 'Explore for developers →' },
     { icon: '🏫', title: 'Offices & Schools', desc: 'Enquiry handling, information desk', features: ['Admission inquiries', 'Information desk', 'Parent communication'], gradient: 'from-purple-500 to-indigo-500' }
   ],
   audioShowcase: {

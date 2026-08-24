@@ -22,6 +22,53 @@
 <h1>Aigenetic — Test Findings &amp; Activity Log</h1>
 <p>Updated 2026-08-24.</p>
 
+<h2>realestate.html built — new developer/builder vertical page</h2>
+<p>Researched the domain first (Indian property-enquiry response stats, real CRM/portal
+names, RERA disclosure rules), drafted candidate copy, then asked 4 pivotal questions
+before writing anything: target segment, hero headline, pricing tiers, and whether to
+claim specific CRM integrations as "active." Built <code>realestate.html</code> from
+<code>newSite/template.json</code>'s <code>pages.healthcare</code> pattern (second proof
+of the template system), styled identically to healthcare.html (same CSS/JS, copied
+verbatim per the template's own instructions).</p>
+
+<table>
+<tr><th>Decision</th><th>Answer</th></tr>
+<tr><td>Segment</td><td>Builders/developers selling new projects (not brokers, despite config.js's broker-flavored hint)</td></tr>
+<tr><td>Hero headline</td><td>"The voice of your listings" — kept the healthcare.html-family pattern, subheading adapted to sample-flat/possession-date context</td></tr>
+<tr><td>Pricing</td><td>Same ₹2,999 / ₹7,999 / Custom ladder as healthcare.html, tier names renamed to Single project / Multi-project developer / Developer group</td></tr>
+<tr><td>Integrations</td><td>Zoho, Sell.Do, LeadSquared, 99acres, MagicBricks, Housing.com shown as plain "attach whatever you use" chips — NOT marked active/on. Only Google Calendar + WhatsApp Business get the checkmark, since those are genuinely wired into this codebase already</td></tr>
+</table>
+
+<p><strong>Content grounded in real research</strong> (search results in the conversation,
+not fabricated): ~42% of Indian property enquiries reach a live call; 62% arrive outside
+business hours; RERA disclosure rules shaped the "what it will never do" section (no
+guaranteed-return promises, no invented possession dates, no undisclosed RERA numbers)
+and the escalation rule (hot lead ready to pay token today — the real-estate-correct
+equivalent of healthcare.html's medical emergency escalation, not a copy of it).</p>
+
+<p><strong>Honest omission:</strong> no real-estate-specific demo audio clip exists in
+<code>mp3/</code> — the 6 existing clips are Healthcare/Ecommerce/BFSI/EdTech/HRTech/
+Hospitality. Rather than play a mismatched clip under a "Hear the assistant" banner,
+realestate.html ships without that player (single-column call-sheet transcript instead
+of healthcare's two-column sheet+player layout). Logged in TODO.md to record a real one.</p>
+
+<p><strong>Bug found and fixed while linking it in:</strong> index.html hardcoded the
+literal text "Explore for clinics →" on <em>any</em> linked Use Cases card — so simply
+adding a Real Estate link would have wrongly shown clinic copy on that card too. Fixed
+to read <code>useCase.linkCtaLabel</code> per-card instead (config.js now sets it for
+both Clinics and Real Estate).</p>
+
+<table>
+<tr><th>Check (Playwright, local server, headless)</th><th>Result</th></tr>
+<tr><td>New <code>tests/test_realestate.py</code> (mirrors test_healthcare.py: content, pricing, calendar modal x&ge;4 triggers, phone/email CTAs, console errors)</td><td class="pass">pass</td></tr>
+<tr><td>New mobile-nav coverage for realestate.html in <code>tests/test_mobile_nav.py</code></td><td class="pass">pass</td></tr>
+<tr><td>Regression test: Real Estate card links to <code>/realestate.html</code> with its own label, not "Explore for clinics"</td><td class="pass">pass</td></tr>
+<tr><td>Full existing suite (index, healthcare, mobile nav) replayed after the config.js/index.html link fix</td><td class="pass">all pass</td></tr>
+</table>
+
+<p>Also added <code>healthcare.html</code> to <code>sitemap.xml</code> alongside the new
+<code>realestate.html</code> entry — it had never been listed there at all.</p>
+
 <h2>index.html resynced to healthcare.html's redesign</h2>
 <p>Brought <code>index.html</code> to look-and-feel parity with healthcare.html's redesign, in its
 own React/Tailwind/JSX idiom (not a port of healthcare's vanilla CSS/JS). <strong>Zero copy
@@ -178,6 +225,23 @@ directly with <code>python tests/test_healthcare.py</code> uses unittest's own a
 <li>Reran full suite, all pass</li>
 <li>Synced template.json design notes</li>
 <li>Moved resolved TODO items done</li>
+<li>Researched Indian property lead stats</li>
+<li>Researched real estate CRMs, RERA rules</li>
+<li>Drafted candidate headline, content options</li>
+<li>Asked 4 pivotal questions first</li>
+<li>Built realestate.html from template</li>
+<li>Wrote developer-context call transcript</li>
+<li>Wrote RERA-grounded hard limits</li>
+<li>Added hot-lead escalation rule</li>
+<li>Framed CRM chips as attach-any</li>
+<li>Linked Real Estate card, config.js</li>
+<li>Fixed hardcoded clinics-only label</li>
+<li>Added healthcare, realestate to sitemap</li>
+<li>Wrote realestate Playwright test suite</li>
+<li>Extended mobile nav test coverage</li>
+<li>Ran full suite, fifteen passing</li>
+<li>Documented pages.realestate in template.json</li>
+<li>Removed version tag badges everywhere</li>
 </ul>
 
 </body>

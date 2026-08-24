@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aigenetic for Clinics — the voice of your clinic</title>
+<title>Aigenetic for Real Estate Developers — the voice of your listings</title>
 
 <!-- SEO -->
-<meta name="description" content="Aigenetic is an AI phone assistant for Indian clinics. It answers every call, books and reschedules appointments, quotes fees and sends WhatsApp confirmations — in 31+ Indian languages, 24/7.">
-<meta name="keywords" content="AI receptionist for clinics, clinic appointment booking, AI phone assistant India, Practo Ray integration, missed clinic calls">
+<meta name="description" content="Aigenetic is an AI phone assistant for Indian real estate developers. It answers every enquiry, shares price and possession details, and books site visits — in 31+ Indian languages, 24/7.">
+<meta name="keywords" content="AI receptionist for real estate, property enquiry call handling, AI phone assistant India, real estate CRM integration, missed property leads, RERA possession date">
 <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
 <meta name="theme-color" content="#0E1B1E">
-<link rel="canonical" href="https://aigenetic.in/healthcare.html">
+<link rel="canonical" href="https://aigenetic.in/realestate.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aigenetic">
-<meta property="og:title" content="Aigenetic for Clinics — the voice of your clinic">
-<meta property="og:description" content="You're with a patient. The phone rings anyway. Aigenetic picks up on the second ring, books the slot, and sends the confirmation on WhatsApp — in 31+ Indian languages.">
-<meta property="og:url" content="https://aigenetic.in/healthcare.html">
+<meta property="og:title" content="Aigenetic for Real Estate Developers — the voice of your listings">
+<meta property="og:description" content="You're walking a buyer through the sample flat. The phone rings anyway. Aigenetic shares the price, the possession date, and books the next site visit — in 31+ Indian languages.">
+<meta property="og:url" content="https://aigenetic.in/realestate.html">
 <meta property="og:image" content="https://aigenetic.in/logo/logoMedium.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Aigenetic for Clinics — the voice of your clinic">
-<meta name="twitter:description" content="An AI phone assistant for Indian clinics. Books, reschedules, confirms — 24/7, in 31+ Indian languages.">
+<meta name="twitter:title" content="Aigenetic for Real Estate Developers — the voice of your listings">
+<meta name="twitter:description" content="An AI phone assistant for Indian developers. Answers, qualifies, books site visits — 24/7, in 31+ Indian languages.">
 <meta name="twitter:image" content="https://aigenetic.in/logo/logoMedium.png">
 
 <!-- Favicon -->
@@ -37,6 +37,7 @@
      Brand hexes are shared with index.html's theme.default
      (--ink/--teal/--mint == --primary/--accent/--mint). If any of
      these change here, change them there too (root CLAUDE.md sync).
+     Byte-for-byte the same design system as healthcare.html.
      ============================================================ */
   :root{
     --ink:#0E1B1E;
@@ -73,7 +74,6 @@
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     overflow-x:hidden;
   }
-  /* ambient wash — sits behind everything, costs nothing */
   body::before{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
     background:
@@ -200,7 +200,7 @@
     text-transform:uppercase;color:var(--teal);font-weight:500;
   }
   .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.55}
-  .callsheet-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:26px;align-items:start;margin-top:22px}
+  .sheet-solo{max-width:680px;margin:22px auto 0}
   .sheet{
     background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
     box-shadow:var(--sh-2);
@@ -233,31 +233,6 @@
   .slotcard span{font-size:13.5px;color:var(--muted)}
   .synced{font-family:var(--mono);font-size:12.5px;color:var(--teal-deep);margin-left:auto;text-align:right}
   .synced span{display:block;color:var(--muted);margin-top:3px}
-
-  .voice-sample{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
-    box-shadow:var(--sh-2);position:sticky;top:96px;
-  }
-  .voice-sample-head{padding:24px 24px 0}
-  .voice-sample-head b{display:block;font-family:var(--display);font-size:20px;font-weight:800;letter-spacing:-.025em}
-  .voice-sample-head span{display:block;margin-top:7px;font-size:14px;color:var(--muted);line-height:1.55}
-  .call-player{display:flex;align-items:center;gap:14px;padding:22px 24px 24px}
-  .call-player .play-btn{
-    flex:0 0 auto;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
-    background:var(--ink);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
-    transition:transform .18s var(--ease),background .2s var(--ease),box-shadow .25s var(--ease);
-    box-shadow:0 12px 26px -14px rgba(14,27,30,.9);
-  }
-  .call-player .play-btn:hover{transform:scale(1.07);background:var(--teal-deep)}
-  .call-player.playing .play-btn{background:var(--teal-deep);box-shadow:0 0 0 6px rgba(23,179,127,.14)}
-  .waveform{flex:1 1 auto;min-width:0;overflow:hidden;display:flex;align-items:center;gap:2.5px;height:38px}
-  .waveform span{
-    flex:1 1 auto;min-width:2px;max-width:4px;border-radius:2px;background:#CFE5DE;
-    transform-origin:center;transition:background .25s var(--ease);
-  }
-  .call-player.playing .waveform span{background:var(--teal-deep);animation-name:wave-bounce;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
-  @keyframes wave-bounce{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-  .player-time{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
 
   /* ---------- generic section ---------- */
   section{scroll-margin-top:88px}
@@ -431,16 +406,12 @@
   .calendar-modal-content iframe{display:block;width:100%;height:600px;max-height:calc(100dvh - 220px);border-radius:14px}
 
   /* ---------- responsive ---------- */
-  @media(max-width:1040px){
-    .callsheet-grid{grid-template-columns:1fr}
-    .voice-sample{position:static}
-    .grid3{grid-template-columns:repeat(2,1fr)}
-  }
   @media(max-width:900px){
     .nav-links{display:none}
     .nav-toggle{display:flex}
     .nav-cta{margin-left:auto}
     .rail{grid-template-columns:repeat(2,1fr)}
+    .grid3{grid-template-columns:repeat(2,1fr)}
     .plans{grid-template-columns:1fr}
     .limits{grid-template-columns:1fr;gap:36px}
     .turn{max-width:94%}
@@ -457,10 +428,6 @@
     .nav-cta>.btn{display:none}
     .grid3{grid-template-columns:1fr}
     .rail{grid-template-columns:1fr}
-    .call-player{flex-wrap:wrap;gap:12px 14px}
-    .player-time{margin-left:auto}
-    .waveform{order:3;flex:1 0 100%;height:32px}
-    .synced{margin-left:0;text-align:left}
     .cta-row .btn{width:100%}
     .calendar-modal{align-items:flex-start;padding:12px}
     .calendar-modal-content{padding:26px 18px 18px;border-radius:16px;max-height:calc(100dvh - 24px)}
@@ -483,7 +450,7 @@
 
 <nav class="nav" id="site-nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for clinics</small></a>
+    <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for developers</small></a>
     <div class="nav-links">
       <a href="#handles">What it handles</a>
       <a href="#limits">What it won't do</a>
@@ -514,69 +481,54 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <span class="badge rise"><span class="dot"></span> Answering for 240+ clinics right now</span>
-    <h1 class="rise">The voice of<br>your <em>clinic</em></h1>
-    <p class="sub rise">You're with a patient. The phone rings anyway. Aigenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
+    <span class="badge rise"><span class="dot"></span> Answering for 120+ developer sales teams right now</span>
+    <h1 class="rise">The voice of<br>your <em>listings</em></h1>
+    <p class="sub rise">You're walking a buyer through the sample flat. The phone rings anyway. Aigenetic picks up on the second ring, shares the price, the floor plan and the possession date, and books the next site visit — in Hindi, Marathi, Tamil and 28 more.</p>
     <div class="cta-row rise">
       <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
       <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>💬 WhatsApp Us</a>
       <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>🎙️ Live Call to Voice Assistant</button>
     </div>
-    <p class="cta-note rise">Free 14-day trial on your existing clinic number. No new hardware.</p>
+    <p class="cta-note rise">Free 14-day trial on your existing sales-office number. No new hardware.</p>
 
     <div class="rail reveal stagger">
       <div><b>Live in 48–72 hours</b><span>We forward your current number</span></div>
       <div><b>31+ Indian languages</b><span>Switches mid-call if the caller does</span></div>
-      <div><b>Answers at 2 AM</b><span>Sunday, holidays, OPD hours</span></div>
-      <div><b>Priced per minute</b><span>Not per receptionist seat</span></div>
+      <div><b>Answers at 9 PM</b><span>Weekends and the hours buyers actually call</span></div>
+      <div><b>Priced per minute</b><span>Not per site-office seat</span></div>
     </div>
   </div>
 </header>
 
 <section class="callsheet-sec">
   <div class="wrap">
-    <span class="eyebrow reveal">Call log · last night · 21:47</span>
-    <div class="callsheet-grid">
-      <div class="sheet reveal">
+    <span class="eyebrow reveal">Call log · last night · 20:52</span>
+    <div class="sheet-solo reveal">
+      <div class="sheet">
         <div class="sheet-head">
-          <span>+91 98••• ••412</span>
+          <span>+91 98••• ••771</span>
           <span>Language detected: <b>हिन्दी / English</b></span>
-          <span>Duration <b>1:12</b></span>
+          <span>Duration <b>1:24</b></span>
           <span class="tag">● Handled by assistant</span>
         </div>
         <div class="thread">
-          <div class="turn caller"><span class="who">Caller</span>Hello, doctor sahab se appointment lena tha. Kal mil sakta hai?
-            <span class="gloss">I need an appointment with the doctor. Is tomorrow possible?</span></div>
-          <div class="turn agent"><span class="who">Aigenetic</span>Ji bilkul. Dr. Rao kal 10 se 1 aur shaam 5 se 8 baithte hain. Aapko subah ka time theek rahega?
-            <span class="gloss">Of course. Dr. Rao sits 10–1 and 5–8 tomorrow. Would morning suit you?</span></div>
-          <div class="turn caller"><span class="who">Caller</span>Subah 11 baje ke aas paas. Naam Sunita Sharma.</div>
-          <div class="turn agent"><span class="who">Aigenetic</span>11:30 khaali hai. Sunita ji, pehli baar aa rahi hain ya follow-up hai?
-            <span class="gloss">11:30 is free. Is this a first visit or a follow-up?</span></div>
-          <div class="turn caller"><span class="who">Caller</span>Follow-up. Pichle mahine dikhaya tha.</div>
-          <div class="turn agent"><span class="who">Aigenetic</span>Ho gaya. 11:30 par aa jaayiye, purchi WhatsApp par bhej di hai. Follow-up ki fees ₹300 hai.
-            <span class="gloss">Done. Come at 11:30 — the slip is on WhatsApp. Follow-up fee is ₹300.</span></div>
+          <div class="turn caller"><span class="who">Caller</span>Hi, aapke Skyline Residency mein 2BHK ka rate kya hai?
+            <span class="gloss">Hi, what's the rate for a 2BHK at Skyline Residency?</span></div>
+          <div class="turn agent"><span class="who">Aigenetic</span>Namaste! 2BHK ₹78 lakh se shuru hai, carpet area 685 sq ft, Tower B mein. RERA number bhi bhej sakta hoon.
+            <span class="gloss">Hello! 2BHK starts at ₹78 lakh, 685 sq ft carpet area, in Tower B. I can send you the RERA number too.</span></div>
+          <div class="turn caller"><span class="who">Caller</span>Possession kab milega? Naam Rohit Verma.</div>
+          <div class="turn agent"><span class="who">Aigenetic</span>RERA ke hisaab se December 2027, Tower B. Rohit ji, site visit karke sample flat dikha sakte hain — weekend theek rahega?
+            <span class="gloss">As per RERA, December 2027, Tower B. Rohit, we can show you the sample flat on a site visit — would the weekend work?</span></div>
+          <div class="turn caller"><span class="who">Caller</span>Haan, Shanivar subah theek hai.</div>
+          <div class="turn agent"><span class="who">Aigenetic</span>Ho gaya. Shanivar 11 baje confirm — sample flat details aur brochure WhatsApp par bhej diya hai.
+            <span class="gloss">Done. Confirmed for Saturday 11 AM — the sample flat details and brochure are on WhatsApp.</span></div>
         </div>
         <div class="sheet-foot">
           <div class="slotcard">
-            <b>Sunita Sharma · 11:30 AM</b>
-            <span>Follow-up · Dr. Rao · OPD 2</span>
+            <b>Rohit Verma · Sat 11:00 AM</b>
+            <span>Skyline Residency · Tower B · Sample flat visit</span>
           </div>
-          <div class="synced">→ written to Practo Ray<span>WhatsApp confirmation delivered 21:49</span></div>
-        </div>
-      </div>
-
-      <div class="voice-sample reveal">
-        <div class="voice-sample-head">
-          <b>Hear the assistant</b>
-          <span>A quick sample clip so you can hear how Aigenetic's voice sounds and talks with callers</span>
-        </div>
-        <div class="call-player" data-call-player>
-          <button type="button" class="play-btn" data-play-audio="mp3/HealthCare-onboarding_cEIUBM4Y%20(1).mp3" aria-label="Play a sample of the assistant's voice">
-            <span data-play-icon>▶</span>
-          </button>
-          <div class="waveform" data-waveform aria-hidden="true"></div>
-          <span class="player-time"><span data-time-current>0:00</span> / <span data-time-total>0:00</span></span>
-          <audio data-audio-player preload="metadata"></audio>
+          <div class="synced">→ written to your CRM<span>WhatsApp brochure delivered 20:55</span></div>
         </div>
       </div>
     </div>
@@ -586,17 +538,17 @@
 <section class="band tint" id="handles">
   <div class="wrap">
     <div class="head reveal">
-      <span class="eyebrow">The 90% of calls that aren't clinical</span>
-      <h2>Most calls to a clinic are logistics</h2>
-      <p>Your receptionist spends the day answering the same nine questions. Aigenetic takes them all, in the caller's language, and leaves you the ones that need a human.</p>
+      <span class="eyebrow">The calls a sales desk shouldn't have to answer twice</span>
+      <h2>Most enquiries ask the same six questions</h2>
+      <p>Your sales team spends the day repeating price, possession date and directions. Aigenetic takes every one of those, in the caller's language, and leaves you the ones that need a human — a real negotiation, a real site visit.</p>
     </div>
     <div class="grid3 reveal stagger">
-      <div class="cell"><span class="idx">01</span><h3>Books the slot</h3><p>Checks live availability per doctor and per room, offers the next two options, confirms in one turn.</p><span class="quote">"Kal shaam ka koi time hai?"</span></div>
-      <div class="cell"><span class="idx">02</span><h3>Reschedules and cancels</h3><p>Frees the slot instantly and offers it to your waitlist before anyone else calls.</p><span class="quote">"Aaj nahi aa paaunga, agle hafte kar dijiye."</span></div>
-      <div class="cell"><span class="idx">03</span><h3>Quotes fees and timings</h3><p>Consultation, follow-up window, which days you do procedures, whether you're at the hospital that morning.</p><span class="quote">"Root canal ka kitna charge hai?"</span></div>
-      <div class="cell"><span class="idx">04</span><h3>Gives directions</h3><p>Landmark-based, the way people actually navigate. Drops a pin on WhatsApp.</p><span class="quote">"Clinic metro station se kitna door hai?"</span></div>
-      <div class="cell"><span class="idx">05</span><h3>Reports and readiness</h3><p>Tells the caller whether their report is ready for pickup — status only, never the contents.</p><span class="quote">"Blood test ki report aa gayi kya?"</span></div>
-      <div class="cell"><span class="idx">06</span><h3>Screens the reps</h3><p>Pharma and equipment reps get your visiting policy instead of your morning.</p><span class="quote">"Sir se 5 minute mil sakte hain?"</span></div>
+      <div class="cell"><span class="idx">01</span><h3>Books the site visit</h3><p>Checks live slots at the sample flat, offers the next two options, confirms in one turn.</p><span class="quote">"Weekend mein visit ho sakti hai kya?"</span></div>
+      <div class="cell"><span class="idx">02</span><h3>Shares price &amp; floor plan</h3><p>Carpet area, price per sq ft, tower and floor availability, payment plan.</p><span class="quote">"2BHK ka rate kya hai?"</span></div>
+      <div class="cell"><span class="idx">03</span><h3>Confirms possession &amp; RERA status</h3><p>Reads the registered possession date and RERA number exactly as filed — nothing promised beyond it.</p><span class="quote">"RERA number aur possession date bhej sakte ho?"</span></div>
+      <div class="cell"><span class="idx">04</span><h3>Qualifies the lead</h3><p>Budget, loan status, timeline — before your sales team spends an hour on the call.</p><span class="quote">"Loan pre-approved hai, kab visit kar sakte hain?"</span></div>
+      <div class="cell"><span class="idx">05</span><h3>Gives directions &amp; landmarks</h3><p>Landmark-based directions to the site office, drops a pin on WhatsApp.</p><span class="quote">"Site office ka location kya hai?"</span></div>
+      <div class="cell"><span class="idx">06</span><h3>Screens channel partners</h3><p>Other brokers and channel partners get your co-broking policy instead of your sales team's day.</p><span class="quote">"Co-broking available hai kya?"</span></div>
     </div>
   </div>
 </section>
@@ -606,18 +558,18 @@
     <div class="reveal">
       <span class="eyebrow">Hard limits, set by us, not by prompt</span>
       <h2 style="font-size:clamp(30px,4.2vw,44px);margin-top:14px">What it will never do</h2>
-      <p style="margin-top:18px;color:var(--muted);font-size:18px">Your name is on the board outside. These three refusals are built into the product and cannot be turned on, by you or by us.</p>
+      <p style="margin-top:18px;color:var(--muted);font-size:18px">RERA holds you responsible for every claim made to a buyer. These three refusals are built into the product and cannot be turned on, by you or by us.</p>
       <ul class="limit-list">
-        <li><b>No diagnosis, no advice</b><span>Symptoms are logged for you and the caller is offered the earliest slot. Nothing more.</span></li>
-        <li><b>No medicine names, no dosages</b><span>Not even repeats of what you prescribed last visit. Refills go to you.</span></li>
-        <li><b>No results read over the phone</b><span>"Ready for collection" is the whole answer. Values stay in the file.</span></li>
+        <li><b>No price negotiated on the call</b><span>Shares the listed price and standard payment plans only. Final negotiation goes to your sales team.</span></li>
+        <li><b>No guaranteed returns or rental yield promised</b><span>Never promises appreciation, rental yield, or "guaranteed" returns — RERA prohibits it, and so do we.</span></li>
+        <li><b>No possession date beyond what's filed</b><span>Reads only the RERA-registered timeline. Never invents an earlier date to close a call.</span></li>
       </ul>
     </div>
     <div class="escalate reveal">
       <h3>And one thing it always does</h3>
-      <p>If a caller describes chest pain, breathlessness, heavy bleeding, a seizure, or an unresponsive patient, the assistant stops booking mid-sentence, reads out the nearest emergency number, and rings your on-duty mobile until someone picks up.</p>
-      <p class="line">ESCALATION · 04:12 · caller reported chest pain
-→ 108 read aloud · Dr. Rao paged · call transferred in 9s</p>
+      <p>If a caller says they're ready to book — token amount, today — the assistant stops qualifying mid-sentence and rings your sales lead's mobile until someone picks up. The hottest lead in real estate is the one that's ready right now.</p>
+      <p class="line">ESCALATION · 19:04 · caller ready to pay token amount
+→ Sales lead paged · call transferred in 11s</p>
     </div>
   </div>
 </section>
@@ -626,23 +578,23 @@
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow">Setup</span>
-      <h2>Keep your number. Keep your register.</h2>
-      <p>We forward your existing clinic line and write bookings into whatever you already use. If that's a diary and a WhatsApp group, that works too — we'll send the day's list at 8 AM.</p>
+      <h2>Keep your number. Keep your CRM.</h2>
+      <p>We forward your existing sales-office line and write every lead into whatever you already run. Point us at Zoho, Sell.Do, LeadSquared, or a shared spreadsheet — we configure the sync. Calendar and WhatsApp are wired in from day one.</p>
     </div>
     <div class="chips reveal">
-      <span class="chip on">Practo Ray</span><span class="chip on">HealthPlix</span><span class="chip on">Bajaj Health</span>
-      <span class="chip on">DocPulse</span><span class="chip on">Google Calendar</span><span class="chip on">WhatsApp Business</span>
-      <span class="chip">Excel / Sheets</span><span class="chip">Paper register + daily list</span>
+      <span class="chip on">Google Calendar</span><span class="chip on">WhatsApp Business</span>
+      <span class="chip">Zoho CRM</span><span class="chip">Sell.Do</span><span class="chip">LeadSquared</span>
+      <span class="chip">99acres</span><span class="chip">MagicBricks</span><span class="chip">Housing.com</span>
+      <span class="chip">Excel / Sheets</span>
     </div>
-    <div class="head reveal" style="margin-top:72px">
-      <span class="eyebrow">Tuned per specialty</span>
-      <h2 style="font-size:clamp(26px,3.4vw,38px)">The questions differ by board</h2>
-      <p>A dental clinic gets asked about procedure cost. A paediatrician gets asked about vaccine due dates. Each build ships with the script for yours.</p>
+    <div class="head reveal" style="margin-top:64px">
+      <span class="eyebrow">Tuned per project type</span>
+      <h2 style="font-size:clamp(26px,3.4vw,36px)">The questions differ by project</h2>
+      <p>A luxury villa buyer asks about amenities and club membership. An affordable-housing buyer asks about loan subsidy eligibility. Each build ships with the script for yours.</p>
     </div>
     <div class="chips reveal">
-      <span class="chip">Dental</span><span class="chip">Paediatrics</span><span class="chip">Dermatology</span>
-      <span class="chip">Orthopaedics</span><span class="chip">Gynaecology</span><span class="chip">Physiotherapy</span>
-      <span class="chip">Eye care</span><span class="chip">Diagnostic labs</span><span class="chip">Multi-speciality</span>
+      <span class="chip">Residential apartments</span><span class="chip">Luxury villas</span><span class="chip">Affordable housing</span>
+      <span class="chip">Commercial / office space</span><span class="chip">Plotted development</span><span class="chip">Mixed-use / township</span>
     </div>
   </div>
 </section>
@@ -651,39 +603,39 @@
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow">Pricing</span>
-      <h2>Cheaper than the calls you're missing</h2>
-      <p>An average clinic misses 6 to 11 calls a day during OPD. At a ₹500 consultation, that's the plan paid for by the second week.</p>
+      <h2>Cheaper than the leads you're losing</h2>
+      <p>Most Indian brokerages never call back more than half of their enquiries, and the ones that do average a 15-hour response. One converted lead pays for a year of this.</p>
     </div>
     <div class="plans reveal stagger">
       <div class="plan">
-        <span class="kicker">Solo practice</span>
+        <span class="kicker">Single project</span>
         <div class="price">₹2,999<s> /month</s></div>
         <ul>
-          <li>One doctor, one number</li>
+          <li>One project, one number</li>
           <li>500 call minutes included</li>
-          <li>Booking, rescheduling, fees, directions</li>
-          <li>WhatsApp confirmations</li>
+          <li>Price, floor plan &amp; possession Q&amp;A</li>
+          <li>WhatsApp brochure delivery</li>
         </ul>
         <a class="btn btn-ghost" href="#calendar-booking" data-open-calendar>Book Trial Demo</a>
       </div>
       <div class="plan feature">
-        <span class="kicker">Multi-doctor clinic · most chosen</span>
+        <span class="kicker">Multi-project developer · most chosen</span>
         <div class="price">₹7,999<s> /month</s></div>
         <ul>
-          <li>Up to 6 doctors and 3 rooms</li>
+          <li>Up to 6 live projects</li>
           <li>1,500 call minutes included</li>
-          <li>Practice-software sync, both ways</li>
-          <li>Waitlist fill on cancellation</li>
-          <li>Emergency escalation to on-duty mobile</li>
+          <li>CRM sync, both ways</li>
+          <li>Hot-lead escalation to sales lead</li>
+          <li>Channel-partner call screening</li>
         </ul>
         <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Start Free Trial</a>
       </div>
       <div class="plan">
-        <span class="kicker">Hospital or chain</span>
+        <span class="kicker">Developer group / township</span>
         <div class="price">Let's talk</div>
         <ul>
-          <li>Multiple branches and departments</li>
-          <li>Routing by specialty and shift</li>
+          <li>Multiple projects and sites</li>
+          <li>Routing by project and sales team</li>
           <li>Call recordings, retention on your terms</li>
           <li>Named onboarding engineer</li>
         </ul>
@@ -698,7 +650,7 @@
     <div class="close-in reveal">
       <span class="eyebrow">Schedule a Demo</span>
       <h2>Book a personalized demo<br>via Google Meet</h2>
-      <p>Our team will walk you through how Aigenetic works for your clinic, answer questions, and help you get started.</p>
+      <p>Our team will walk you through how Aigenetic works for your sales office, answer questions, and help you get started.</p>
       <div class="cta-row">
         <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Schedule via Calendar →</a>
         <a class="btn btn-ghost btn-lg" href="tel:+917428497033" data-phone-link>📞 Call Now</a>
@@ -712,8 +664,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for clinics</small></a>
-        <p>An AI phone assistant built for Indian clinics — answers calls, books and reschedules appointments, and follows up with patients in their own language, 24/7.</p>
+        <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for developers</small></a>
+        <p>An AI phone assistant built for Indian real estate developers — answers enquiries, shares price and possession details, books site visits, and follows up with buyers in their own language, 24/7.</p>
       </div>
 
       <div class="footer-col">
@@ -743,7 +695,7 @@
 
     <div class="footer-bottom">
       <span>© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.</span>
-      <span class="sp">Patient data stays in India, deleted on your schedule. Not a medical device — does not provide medical advice.</span>
+      <span class="sp">Buyer data stays in India, deleted on your schedule. Not a substitute for RERA-registered disclosures — always verify project details on the RERA portal.</span>
     </div>
   </div>
 </footer>
@@ -816,69 +768,6 @@
       }));
     }
   })();
-
-  // Waveform bars for the call player — generated once, animated via CSS while playing
-  document.querySelectorAll('[data-waveform]').forEach(wf => {
-    const bars = 44;
-    for (let i = 0; i < bars; i++) {
-      const span = document.createElement('span');
-      const h = 18 + Math.round(Math.abs(Math.sin(i * 0.6)) * 60 + Math.random() * 18);
-      span.style.height = Math.min(h, 92) + '%';
-      span.style.animationDuration = (0.75 + Math.random() * 0.6).toFixed(2) + 's';
-      span.style.animationDelay = (Math.random() * -1).toFixed(2) + 's';
-      wf.appendChild(span);
-    }
-  });
-
-  // "Play the audio" button — toggles play/pause on the paired <audio> element,
-  // drives the waveform animation and the running time display
-  document.querySelectorAll('[data-play-audio]').forEach(btn => {
-    const src = btn.getAttribute('data-play-audio');
-    const container = btn.closest('[data-call-player]') || btn.parentElement;
-    const audio = container.querySelector('[data-audio-player]');
-    const icon = btn.querySelector('[data-play-icon]');
-    const timeCurrent = container.querySelector('[data-time-current]');
-    const timeTotal = container.querySelector('[data-time-total]');
-    if (!audio) return;
-    audio.src = src;
-
-    const formatTime = (s) => {
-      if (!isFinite(s)) return '0:00';
-      const m = Math.floor(s / 60);
-      const sec = Math.floor(s % 60).toString().padStart(2, '0');
-      return `${m}:${sec}`;
-    };
-
-    const setIcon = (playing) => {
-      if (icon) icon.textContent = playing ? '⏸' : '▶';
-      container.classList.toggle('playing', playing);
-    };
-
-    btn.addEventListener('click', () => {
-      // optimistic state flip so the UI responds even before the media decodes
-      setIcon(audio.paused);
-      if (audio.paused) {
-        const attempt = audio.play();
-        if (attempt && typeof attempt.catch === 'function') {
-          attempt.catch(() => setIcon(false));
-        }
-      } else {
-        audio.pause();
-      }
-    });
-    audio.addEventListener('play', () => setIcon(true));
-    audio.addEventListener('pause', () => setIcon(false));
-    audio.addEventListener('ended', () => {
-      setIcon(false);
-      if (timeCurrent) timeCurrent.textContent = '0:00';
-    });
-    audio.addEventListener('loadedmetadata', () => {
-      if (timeTotal) timeTotal.textContent = formatTime(audio.duration);
-    });
-    audio.addEventListener('timeupdate', () => {
-      if (timeCurrent) timeCurrent.textContent = formatTime(audio.currentTime);
-    });
-  });
 
   // "Live Call to Voice Assistant" buttons — flash a coming-soon message, then reset
   document.querySelectorAll('[data-live-voice-call]').forEach(btn => {

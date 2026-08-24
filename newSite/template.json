@@ -111,6 +111,10 @@
         "healthcare": {
           "description": "healthcare.html only plays its own single relevant sample (the 'Hear the assistant' voice-sample player), so that one clip is duplicated locally under the page's own folder.",
           "clip": { "key": "onboarding-sample", "path": "assets/pages/healthcare/audio/onboarding-sample.mp3", "duplicatedFrom": "assets/common/audio/healthcare-onboarding.mp3" }
+        },
+        "realestate": {
+          "clip": null,
+          "note": "No real-estate-specific demo clip exists in mp3/ yet (only Healthcare/Ecommerce/BFSI/EdTech/HRTech/Hospitality). realestate.html was built without the voice-sample player section rather than play a mismatched clip under a 'Hear the assistant' banner. TODO: record a real-estate site-visit/price-enquiry call sample, add it under assets/common/audio/ + assets/pages/realestate/audio/, then add the voice-sample block back into realestate.html and this entry (see CODED-Thers/TODO.md)."
         }
       }
     },
@@ -155,7 +159,7 @@
       "ctaBookDemo": { "label": "📅 Book Demo", "action": "open-calendar-modal" }
     },
     "hero": {
-      "badge": "Live AI Assistants Handling Calls Now [V 1.19 Live]",
+      "badge": "Live AI Assistants Handling Calls Now",
       "heading": "The Voice of Your Business",
       "subheading": "Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically for your business—in Indian languages.",
       "ctaPrimary": "📞 Call Now",
@@ -198,7 +202,7 @@
       "cards": [
         { "icon": "🏥", "title": "Clinics & Doctors", "desc": "Appointment booking, rescheduling, follow-ups", "features": ["24/7 booking", "Patient reminders", "Prescription follow-ups"], "gradient": "from-blue-500 to-cyan-500", "link": "/healthcare.html", "linkCtaLabel": "Explore for clinics →" },
         { "icon": "💇", "title": "Salons & Spas", "desc": "Service bookings, offers, cancellations", "features": ["Service bookings", "Package promotions", "Membership renewals"], "gradient": "from-pink-500 to-rose-500" },
-        { "icon": "🏢", "title": "Real Estate", "desc": "Site visit scheduling, lead capture", "features": ["Site visit booking", "Lead qualification", "Property inquiries"], "gradient": "from-orange-500 to-amber-500", "notes": "No dedicated /realestate.html exists yet — this card currently has no link. Add 'link':'/realestate.html' here once that page is built from pages._templatePattern." },
+        { "icon": "🏢", "title": "Real Estate", "desc": "Site visit scheduling, lead capture", "features": ["Site visit booking", "Lead qualification", "Property inquiries"], "gradient": "from-orange-500 to-amber-500", "link": "/realestate.html", "linkCtaLabel": "Explore for developers →" },
         { "icon": "🏫", "title": "Offices & Schools", "desc": "Enquiry handling, information desk", "features": ["Admission inquiries", "Information desk", "Parent communication"], "gradient": "from-purple-500 to-indigo-500" }
       ]
     },
@@ -344,7 +348,7 @@
         "ctaBookDemo": { "label": "Book Demo", "action": "open-calendar-modal" }
       },
       "hero": {
-        "badge": "Answering for 240+ clinics right now · v1.19",
+        "badge": "Answering for 240+ clinics right now",
         "headingPrefix": "The voice of",
         "headingConnector": "your",
         "headingEmphasis": "clinic",
@@ -502,6 +506,191 @@
         ],
         "copyright": "© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.",
         "disclaimer": "Patient data stays in India, deleted on your schedule. Not a medical device — does not provide medical advice."
+      }
+    },
+    "realestate": {
+      "sourceFile": "realestate.html",
+      "theme": "clinicalTeal",
+      "$builtNote": "Built 2026-08-24 as the second instance of the pages.* pattern, proving it out for a real vertical beyond healthcare. Segment and every content decision below were confirmed with the user first (AskUserQuestion) rather than assumed: target segment = builders/developers selling new projects (not brokers — chosen over the config.js-hinted broker/agent default); hero headline kept as the 'voice of your X' family pattern; pricing reuses healthcare's exact ₹2,999/₹7,999/Custom price points with developer-specific tier names/features; CRM/portal names (Zoho, Sell.Do, LeadSquared, 99acres, MagicBricks, Housing.com) are shown as plain 'attach whatever you use' chips, NOT marked active/on, since they aren't verified live integrations — only Google Calendar and WhatsApp Business are marked .chip.on because those are genuinely wired into this codebase already. Grounded in real research (not fabricated stats): ~42% of Indian property enquiries never reach a live call, 62% of enquiries arrive outside business hours, RERA disclosure rules (registered RERA number, no guaranteed-return promises) directly shaped the 'what it will never do' section and the escalation rule (hot lead ready to pay token today, not a medical emergency — the domain-correct equivalent of healthcare's escalation).",
+      "seo": {
+        "title": "Aigenetic for Real Estate Developers — the voice of your listings",
+        "description": "Aigenetic is an AI phone assistant for Indian real estate developers. It answers every enquiry, shares price and possession details, and books site visits — in 31+ Indian languages, 24/7.",
+        "keywords": "AI receptionist for real estate, property enquiry call handling, AI phone assistant India, real estate CRM integration, missed property leads, RERA possession date",
+        "canonical": "https://aigenetic.in/realestate.html",
+        "ogTitle": "Aigenetic for Real Estate Developers — the voice of your listings",
+        "ogDescription": "You're walking a buyer through the sample flat. The phone rings anyway. Aigenetic shares the price, the possession date, and books the next site visit — in 31+ Indian languages.",
+        "ogImage": "https://aigenetic.in/logo/logoMedium.png"
+      },
+      "nav": {
+        "brandSuffix": "for developers",
+        "links": [
+          { "label": "What it handles", "href": "#handles" },
+          { "label": "What it won't do", "href": "#limits" },
+          { "label": "Setup", "href": "#setup" },
+          { "label": "Pricing", "href": "#pricing" }
+        ],
+        "ctaCall": { "label": "📞 Call", "action": "tel:{company.phoneDial}" },
+        "ctaBookDemo": { "label": "Book Demo", "action": "open-calendar-modal" }
+      },
+      "hero": {
+        "badge": "Answering for 120+ developer sales teams right now",
+        "headingPrefix": "The voice of",
+        "headingConnector": "your",
+        "headingEmphasis": "listings",
+        "headingRawHtml": "The voice of<br>your <em>listings</em>",
+        "subheading": "You're walking a buyer through the sample flat. The phone rings anyway. Aigenetic picks up on the second ring, shares the price, the floor plan and the possession date, and books the next site visit — in Hindi, Marathi, Tamil and 28 more.",
+        "ctaPrimary": { "label": "📅 Book Demo with Calendar", "action": "open-calendar-modal" },
+        "ctaSecondary": { "label": "💬 WhatsApp Us", "action": "whatsapp" },
+        "ctaTertiary": { "label": "🎙️ Live Call to Voice Assistant", "action": "live-voice-call-teaser", "teaserText": "Call to voice assistant coming soon" },
+        "ctaNote": "Free 14-day trial on your existing sales-office number. No new hardware.",
+        "statRail": [
+          { "title": "Live in 48–72 hours", "subtitle": "We forward your current number" },
+          { "title": "31+ Indian languages", "subtitle": "Switches mid-call if the caller does" },
+          { "title": "Answers at 9 PM", "subtitle": "Weekends and the hours buyers actually call" },
+          { "title": "Priced per minute", "subtitle": "Not per site-office seat" }
+        ]
+      },
+      "signatureCallSheet": {
+        "$layoutNote": "Single centered column (.sheet-solo), not the two-column callsheet-grid + sticky voice-sample layout healthcare.html uses — there is no real-estate-specific demo audio clip in mp3/ yet, and playing a mismatched clip (the 6 existing demos are Healthcare/Ecommerce/BFSI/EdTech/HRTech/Hospitality) under a 'Hear the assistant' banner would misrepresent what the caller would actually hear. See voiceSample below and CODED-Thers/TODO.md.",
+        "eyebrow": "Call log · last night · 20:52",
+        "callMeta": {
+          "phoneMasked": "+91 98••• ••771",
+          "language": "हिन्दी / English",
+          "duration": "1:24",
+          "tag": "● Handled by assistant"
+        },
+        "thread": [
+          { "speaker": "caller", "text": "Hi, aapke Skyline Residency mein 2BHK ka rate kya hai?", "gloss": "Hi, what's the rate for a 2BHK at Skyline Residency?" },
+          { "speaker": "agent", "text": "Namaste! 2BHK ₹78 lakh se shuru hai, carpet area 685 sq ft, Tower B mein. RERA number bhi bhej sakta hoon.", "gloss": "Hello! 2BHK starts at ₹78 lakh, 685 sq ft carpet area, in Tower B. I can send you the RERA number too." },
+          { "speaker": "caller", "text": "Possession kab milega? Naam Rohit Verma.", "gloss": null },
+          { "speaker": "agent", "text": "RERA ke hisaab se December 2027, Tower B. Rohit ji, site visit karke sample flat dikha sakte hain — weekend theek rahega?", "gloss": "As per RERA, December 2027, Tower B. Rohit, we can show you the sample flat on a site visit — would the weekend work?" },
+          { "speaker": "caller", "text": "Haan, Shanivar subah theek hai.", "gloss": null },
+          { "speaker": "agent", "text": "Ho gaya. Shanivar 11 baje confirm — sample flat details aur brochure WhatsApp par bhej diya hai.", "gloss": "Done. Confirmed for Saturday 11 AM — the sample flat details and brochure are on WhatsApp." }
+        ],
+        "slotcard": { "name": "Rohit Verma · Sat 11:00 AM", "meta": "Skyline Residency · Tower B · Sample flat visit" },
+        "synced": { "system": "→ written to your CRM", "confirmation": "WhatsApp brochure delivered 20:55" }
+      },
+      "voiceSample": null,
+      "callTypesGrid": {
+        "eyebrow": "The calls a sales desk shouldn't have to answer twice",
+        "heading": "Most enquiries ask the same six questions",
+        "subheading": "Your sales team spends the day repeating price, possession date and directions. Aigenetic takes every one of those, in the caller's language, and leaves you the ones that need a human — a real negotiation, a real site visit.",
+        "cells": [
+          { "title": "Books the site visit", "desc": "Checks live slots at the sample flat, offers the next two options, confirms in one turn.", "quote": "Weekend mein visit ho sakti hai kya?" },
+          { "title": "Shares price & floor plan", "desc": "Carpet area, price per sq ft, tower and floor availability, payment plan.", "quote": "2BHK ka rate kya hai?" },
+          { "title": "Confirms possession & RERA status", "desc": "Reads the registered possession date and RERA number exactly as filed — nothing promised beyond it.", "quote": "RERA number aur possession date bhej sakte ho?" },
+          { "title": "Qualifies the lead", "desc": "Budget, loan status, timeline — before your sales team spends an hour on the call.", "quote": "Loan pre-approved hai, kab visit kar sakte hain?" },
+          { "title": "Gives directions & landmarks", "desc": "Landmark-based directions to the site office, drops a pin on WhatsApp.", "quote": "Site office ka location kya hai?" },
+          { "title": "Screens channel partners", "desc": "Other brokers and channel partners get your co-broking policy instead of your sales team's day.", "quote": "Co-broking available hai kya?" }
+        ]
+      },
+      "limits": {
+        "eyebrow": "Hard limits, set by us, not by prompt",
+        "heading": "What it will never do",
+        "subheading": "RERA holds you responsible for every claim made to a buyer. These three refusals are built into the product and cannot be turned on, by you or by us.",
+        "items": [
+          { "title": "No price negotiated on the call", "desc": "Shares the listed price and standard payment plans only. Final negotiation goes to your sales team." },
+          { "title": "No guaranteed returns or rental yield promised", "desc": "Never promises appreciation, rental yield, or \"guaranteed\" returns — RERA prohibits it, and so do we." },
+          { "title": "No possession date beyond what's filed", "desc": "Reads only the RERA-registered timeline. Never invents an earlier date to close a call." }
+        ],
+        "escalation": {
+          "heading": "And one thing it always does",
+          "desc": "If a caller says they're ready to book — token amount, today — the assistant stops qualifying mid-sentence and rings your sales lead's mobile until someone picks up. The hottest lead in real estate is the one that's ready right now.",
+          "logLine": "ESCALATION · 19:04 · caller ready to pay token amount\n→ Sales lead paged · call transferred in 11s"
+        }
+      },
+      "setup": {
+        "eyebrow": "Setup",
+        "heading": "Keep your number. Keep your CRM.",
+        "subheading": "We forward your existing sales-office line and write every lead into whatever you already run. Point us at Zoho, Sell.Do, LeadSquared, or a shared spreadsheet — we configure the sync. Calendar and WhatsApp are wired in from day one.",
+        "integrations": [
+          { "label": "Google Calendar", "active": true },
+          { "label": "WhatsApp Business", "active": true },
+          { "label": "Zoho CRM", "active": false },
+          { "label": "Sell.Do", "active": false },
+          { "label": "LeadSquared", "active": false },
+          { "label": "99acres", "active": false },
+          { "label": "MagicBricks", "active": false },
+          { "label": "Housing.com", "active": false },
+          { "label": "Excel / Sheets", "active": false }
+        ],
+        "integrationsHonestyNote": "Only Google Calendar and WhatsApp Business are marked active — verified wired into this exact codebase. Zoho/Sell.Do/LeadSquared/99acres/MagicBricks/Housing.com are shown as plain (inactive-style) chips per the user's explicit direction: frame it as 'easily attach any CRM' capability, not a claim that a specific integration is already live for every customer. Only mark one of these active once it is genuinely built and confirmed.",
+        "specialtyBlock": {
+          "eyebrow": "Tuned per project type",
+          "heading": "The questions differ by project",
+          "subheading": "A luxury villa buyer asks about amenities and club membership. An affordable-housing buyer asks about loan subsidy eligibility. Each build ships with the script for yours.",
+          "chips": ["Residential apartments", "Luxury villas", "Affordable housing", "Commercial / office space", "Plotted development", "Mixed-use / township"]
+        }
+      },
+      "pricingSection": {
+        "eyebrow": "Pricing",
+        "heading": "Cheaper than the leads you're losing",
+        "subheading": "Most Indian brokerages never call back more than half of their enquiries, and the ones that do average a 15-hour response. One converted lead pays for a year of this.",
+        "researchNote": "Grounded in real (searched, not fabricated) figures: ~42% of Indian property enquiries reach a live call across a 14-brokerage/34k-enquiry study; median first response ~15.8 hours; 62% of enquiries arrive outside business hours. Sources noted in the conversation that produced this page.",
+        "plans": [
+          {
+            "kicker": "Single project",
+            "price": "₹2,999",
+            "period": "/month",
+            "features": ["One project, one number", "500 call minutes included", "Price, floor plan & possession Q&A", "WhatsApp brochure delivery"],
+            "cta": "Book Trial Demo",
+            "ctaAction": "open-calendar-modal",
+            "ctaStyle": "ghost",
+            "featured": false
+          },
+          {
+            "kicker": "Multi-project developer · most chosen",
+            "price": "₹7,999",
+            "period": "/month",
+            "features": ["Up to 6 live projects", "1,500 call minutes included", "CRM sync, both ways", "Hot-lead escalation to sales lead", "Channel-partner call screening"],
+            "cta": "Start Free Trial",
+            "ctaAction": "open-calendar-modal",
+            "ctaStyle": "primary",
+            "featured": true
+          },
+          {
+            "kicker": "Developer group / township",
+            "price": "Let's talk",
+            "period": "",
+            "features": ["Multiple projects and sites", "Routing by project and sales team", "Call recordings, retention on your terms", "Named onboarding engineer"],
+            "cta": "Contact Sales",
+            "ctaAction": "whatsapp",
+            "ctaStyle": "ghost",
+            "featured": false
+          }
+        ]
+      },
+      "demoCta": {
+        "eyebrow": "Schedule a Demo",
+        "heading": "Book a personalized demo<br>via Google Meet",
+        "subheading": "Our team will walk you through how Aigenetic works for your sales office, answer questions, and help you get started.",
+        "ctaPrimary": { "label": "📅 Schedule via Calendar →", "action": "open-calendar-modal" },
+        "ctaSecondary": { "label": "📞 Call Now", "action": "tel:{company.phoneDial}" },
+        "note": "Or chat with us on WhatsApp for quick questions"
+      },
+      "calendarModal": {
+        "heading": "Schedule Your Demo",
+        "subheading": "Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.",
+        "embedUrlRef": "brand.integrations.googleCalendarSchedulingUrl"
+      },
+      "footer": {
+        "brandSuffix": "for developers",
+        "description": "An AI phone assistant built for Indian real estate developers — answers enquiries, shares price and possession details, books site visits, and follows up with buyers in their own language, 24/7.",
+        "quickLinks": [
+          { "label": "Home", "href": "#top" },
+          { "label": "What it handles", "href": "#handles" },
+          { "label": "What it won't do", "href": "#limits" },
+          { "label": "Setup", "href": "#setup" },
+          { "label": "Pricing", "href": "#pricing" },
+          { "label": "Book a Demo", "href": "#demo" }
+        ],
+        "legalLinks": [
+          { "label": "Privacy Policy", "href": "privacy-policy.html" },
+          { "label": "Terms of Service", "href": "terms-of-service.html" },
+          { "label": "Refund Policy", "href": "refund-policy.html" }
+        ],
+        "copyright": "© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.",
+        "disclaimer": "Buyer data stays in India, deleted on your schedule. Not a substitute for RERA-registered disclosures — always verify project details on the RERA portal."
       }
     }
   }
