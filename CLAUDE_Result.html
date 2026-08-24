@@ -20,7 +20,20 @@
 <body>
 
 <h1>Aigenetic — Test Findings &amp; Activity Log</h1>
-<p>Updated 2026-08-24.</p>
+<p>Updated 2026-08-25.</p>
+
+<h2>Audio Demos section lightened (index.html)</h2>
+<p><code>#audio-demos</code> was the only dark-themed section on the page (near-black radial
+gradient, light-gray/white text) — inconsistent with every other section and with
+healthcare.html's light mint/teal audio player. Restyled to the shared light palette:
+section background <code>var(--mint)</code>, cards white with <code>var(--border)</code>, all
+text on <code>var(--text-primary)</code>/<code>var(--text-secondary)</code> tokens instead of
+hardcoded dark-mode hex/rgba values. Waveform and play-button accent gradient (purple/blue)
+kept — reads fine on light cards. No markup, class, or test-selector changes; only colors in
+<code>styles.css</code> (<code>.audio-showcase</code>, <code>.audio-card</code>,
+<code>.audio-pill</code>, <code>.audio-wave</code>, <code>.audio-time</code>) and three inline
+JSX style props in <code>index.html</code>. Verified visually with a local Playwright
+screenshot: clean white→mint→white section rhythm, no dark panel left.</p>
 
 <h2>index.html resynced to healthcare.html's redesign</h2>
 <p>Brought <code>index.html</code> to look-and-feel parity with healthcare.html's redesign, in its
@@ -178,6 +191,12 @@ directly with <code>python tests/test_healthcare.py</code> uses unittest's own a
 <li>Reran full suite, all pass</li>
 <li>Synced template.json design notes</li>
 <li>Moved resolved TODO items done</li>
+<li>Found audio section dark theme</li>
+<li>Restyled audio-showcase to light</li>
+<li>Restyled audio card, pill, wave</li>
+<li>Swapped inline dark text colors</li>
+<li>Checked healthcare.html tokens match</li>
+<li>Verified with local screenshot</li>
 </ul>
 
 </body>
