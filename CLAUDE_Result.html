@@ -22,6 +22,19 @@
 <h1>Aigenetic — Test Findings &amp; Activity Log</h1>
 <p>Updated 2026-08-25.</p>
 
+<h2>Real Estate promoted to 2nd use-case card, others marked Coming Soon</h2>
+<p>Reordered <code>CONFIG.useCases</code> in <code>config.js</code> so Real Estate is the
+2nd card (after Clinics & Doctors), ahead of Salons & Spas and Offices & Schools. Both of
+those two now carry <code>comingSoon: true</code> and render as visually disabled cards on
+<code>index.html</code>: greyed out (<code>opacity .55</code>, slight grayscale), no
+hover-lift, <code>cursor: not-allowed</code>, <code>aria-disabled="true"</code>, and a
+"Coming Soon" pill — they were already non-clickable (no <code>link</code>) but had no
+visual signal of that before. Index badges (01–04) still auto-number from array order, so
+no separate change was needed there. New CSS is index.html-only (<code>.use-case-disabled</code>,
+<code>.coming-soon-pill</code>); healthcare.html has no equivalent use-case picker grid, so
+no counterpart change applies. Full suite (main page, real estate, mobile nav — 14 tests)
+replayed headless, all pass; confirmed visually with a local screenshot.</p>
+
 <h2>Audio Demos section lightened (index.html)</h2>
 <p><code>#audio-demos</code> was the only dark-themed section on the page (near-black radial
 gradient, light-gray/white text) — inconsistent with every other section and with
@@ -261,6 +274,11 @@ directly with <code>python tests/test_healthcare.py</code> uses unittest's own a
 <li>Ran full suite, fifteen passing</li>
 <li>Documented pages.realestate in template.json</li>
 <li>Removed version tag badges everywhere</li>
+<li>Reordered Real Estate to 2nd card</li>
+<li>Flagged Salons, Offices coming-soon</li>
+<li>Styled disabled cards, added pill</li>
+<li>Replayed full suite, fourteen passing</li>
+<li>Verified layout with screenshot</li>
 </ul>
 
 </body>

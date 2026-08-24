@@ -269,6 +269,29 @@
       margin-bottom: 10px;
     }
 
+    /* ---------- use-case card: disabled / coming-soon state ---------- */
+    .use-case-disabled {
+      position: relative;
+      opacity: .55;
+      filter: grayscale(.4);
+      cursor: not-allowed;
+    }
+    .use-case-disabled .card-idx { opacity: .4; }
+    .coming-soon-pill {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
     /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
     .closing-panel {
       background: var(--primary);
@@ -525,10 +548,16 @@
                   const CardTag = useCase.link ? 'a' : 'div';
                   const cardProps = useCase.link
                     ? {href: useCase.link, className: 'minimal-card p-8 rounded-2xl hover-rise block', style: {textDecoration: 'none'}, 'aria-label': `${useCase.title} — see the dedicated page`}
-                    : {className: 'minimal-card p-8 rounded-2xl hover-rise'};
+                    : {
+                        className: `minimal-card p-8 rounded-2xl${useCase.comingSoon ? ' use-case-disabled' : ' hover-rise'}`,
+                        'aria-disabled': useCase.comingSoon ? 'true' : undefined
+                      };
                   return (
                     <CardTag key={useCase.title + idx} {...cardProps}>
                       <span className="card-idx">{String(idx + 1).padStart(2, '0')}</span>
+                      {useCase.comingSoon && (
+                        <span className="coming-soon-pill">Coming Soon</span>
+                      )}
                       <div className="feature-icon-box mb-6">
                         <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
                       </div>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AiGenetic — WhatsApp Templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#11201D;
+    --ink-soft:#4A5C57;
+    --paper:#F6F7F5;
+    --card:#FFFFFF;
+    --line:#DFE4E0;
+    --green:#0E6E5C;
+    --green-deep:#084B3F;
+    --amber:#C97A16;
+    --bubble:#E4F3D8;
+    --bubble-line:#CDE6BC;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(17,32,29,.05), 0 8px 24px -16px rgba(17,32,29,.25);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans","IBM Plex Sans Devanagari",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:15px;
+    line-height:1.5;
+  }
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:6px}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:var(--green-deep);
+    color:#fff;
+    padding:14px 20px 14px;
+    box-shadow:0 6px 20px -12px rgba(8,75,63,.7);
+  }
+  .head-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;max-width:1080px;margin:0 auto 12px}
+  .brand{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em}
+  .brand span{color:#8FD6A6}
+  .tagline{font-size:12.5px;color:#A9C9C1;font-weight:400}
+  .fills{display:grid;grid-template-columns:1.4fr 1.1fr 1fr auto;gap:10px;max-width:1080px;margin:0 auto}
+  .field label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8FB3AA;margin-bottom:4px}
+  .field input{
+    width:100%;padding:9px 11px;border-radius:9px;border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:14px;
+  }
+  .field input::placeholder{color:#7FA49B}
+  .field input:focus{background:rgba(255,255,255,.16);border-color:#8FD6A6}
+  .numchip{
+    align-self:end;display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
+    border-radius:9px;padding:9px 12px;color:#fff;font:inherit;font-size:13.5px;cursor:pointer;white-space:nowrap;
+  }
+  .numchip:hover{background:rgba(255,255,255,.18)}
+  .daychips{max-width:1080px;margin:9px auto 0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .daychips button{
+    background:transparent;border:1px solid rgba(255,255,255,.24);color:#C6DED8;
+    font:inherit;font-size:12.5px;padding:4px 11px;border-radius:20px;cursor:pointer;
+  }
+  .daychips button[aria-pressed="true"]{background:#8FD6A6;color:#07352C;border-color:#8FD6A6;font-weight:600}
+  .daychips .hint{font-size:12px;color:#7FA49B;margin-left:4px}
+
+  /* ---------- Controls ---------- */
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 20px 60px}
+  .controls{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end}
+  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:4px;gap:4px;flex-wrap:wrap}
+  .seg button{border:0;background:transparent;font:inherit;font-size:13.5px;color:var(--ink-soft);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:500}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-selected="true"]{background:var(--green);color:#fff}
+  .seg .step{font-size:11px;opacity:.65;margin-right:6px;font-variant-numeric:tabular-nums}
+  .langs{display:flex;gap:6px;flex-wrap:wrap}
+  .langs button{border:1px solid var(--line);background:var(--card);font:inherit;font-size:13px;color:var(--ink-soft);padding:7px 13px;border-radius:20px;cursor:pointer}
+  .langs button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .scen-note{font-size:13.5px;color:var(--ink-soft);margin:0 0 8px;border-left:3px solid var(--amber);padding-left:12px}
+  .edit-hint{font-size:12.5px;color:var(--ink-soft);margin:0 0 18px;padding-left:15px}
+  .edit-hint b{background:#FFE9A8;padding:0 4px;border-radius:3px;font-weight:600;color:var(--ink)}
+
+  /* ---------- Cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .card-label{font-weight:600;font-size:14px}
+  .pill{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-weight:600}
+  .pill.hinglish{background:#EAF1FB;color:#2C5A9B}
+  .pill.english{background:#F1EDFA;color:#5B44A8}
+  .pill.hindi{background:#FBF0E6;color:#9A5C10}
+
+  .chatpane{background:#EFEAE2;padding:14px;flex:1;background-image:radial-gradient(rgba(17,32,29,.05) 1px, transparent 1px);background-size:14px 14px}
+  .bubble{
+    background:var(--bubble);border:1px solid var(--bubble-line);
+    border-radius:10px 2px 10px 10px;padding:9px 11px 6px;
+    white-space:pre-wrap;word-break:break-word;font-size:14.2px;line-height:1.52;
+    box-shadow:0 1px 1px rgba(17,32,29,.08);
+  }
+  .bubble a{color:#0B62C4;text-decoration:none}
+  .ph{
+    background:#FFE9A8;border-radius:3px;padding:0 4px;font-weight:600;
+    outline:none;border-bottom:1px dashed #C99A20;cursor:text;
+  }
+  .ph:hover{background:#FFDF85}
+  .ph:focus{background:#FFF6DC;box-shadow:0 0 0 2px var(--green)}
+  .ph.empty{background:#FFD9D9;color:#A32020;border-bottom-color:#D08585}
+  .meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:10.5px;color:#6B7C77;margin-top:3px}
+  .tick{width:14px;height:9px;display:inline-block}
+
+  .card-foot{display:flex;gap:8px;padding:11px 14px;border-top:1px solid var(--line);align-items:center}
+  .btn{flex:1;border:0;border-radius:9px;padding:9px 12px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;background:var(--green);color:#fff;transition:background .15s ease}
+  .btn:hover{background:var(--green-deep)}
+  .btn.copied{background:var(--amber)}
+  .count{font-size:11.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+  .notes{margin-top:34px;border-top:1px solid var(--line);padding-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .note h4{font-family:"Bricolage Grotesque",sans-serif;font-size:13px;margin:0 0 6px;letter-spacing:.02em}
+  .note p{margin:0;font-size:13px;color:var(--ink-soft)}
+  .note a{color:var(--green)}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:22px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;z-index:50}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  body.no-dt .field.date, body.no-dt .field.time, body.no-dt .daychips{display:none}
+  body.no-dt .fills{grid-template-columns:1fr auto}
+  body.no-dt header{padding-bottom:14px}
+
+  @media (max-width:640px){
+    .fills{grid-template-columns:1fr 1fr;gap:8px}
+    .field.name{grid-column:1 / -1}
+    .numchip{grid-column:1 / -1;justify-content:center}
+    .wrap{padding:18px 14px 50px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{header{position:static}.card-foot,.controls,.numchip,.daychips{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-row">
+    <div class="brand">Ai<span>Genetic</span> — WhatsApp Templates</div>
+    <div class="tagline">आप कीजिए पेशेंट केयर, बाकी सब लेट मी टेक केयर।</div>
+  </div>
+  <div class="fills">
+    <div class="field name">
+      <label for="f-name">Doctor / Lead name</label>
+      <input id="f-name" placeholder="Dr. Sharma" autocomplete="off">
+    </div>
+    <div class="field date">
+      <label for="f-date">Date</label>
+      <input id="f-date" autocomplete="off">
+    </div>
+    <div class="field time">
+      <label for="f-time">Time</label>
+      <input id="f-time" placeholder="4:30 PM" autocomplete="off">
+    </div>
+    <button class="numchip" id="copy-num">📞 +91 74284 97033</button>
+  </div>
+  <div class="daychips">
+    <button data-off="0" aria-pressed="true">आज</button>
+    <button data-off="1" aria-pressed="false">कल</button>
+    <button data-off="2" aria-pressed="false">परसों</button>
+    <span class="hint" id="date-hint"></span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="seg" role="tablist" aria-label="Message stage">
+      <button role="tab" data-scen="first" aria-selected="true"><span class="step">1</span>First contact</button>
+      <button role="tab" data-scen="demo" aria-selected="false"><span class="step">2</span>Demo booked</button>
+      <button role="tab" data-scen="call" aria-selected="false"><span class="step">3</span>Call scheduled</button>
+      <button role="tab" data-scen="missed" aria-selected="false"><span class="step">4</span>Couldn't connect</button>
+    </div>
+    <div class="langs" aria-label="Language">
+      <button data-lang="all" aria-pressed="true">All</button>
+      <button data-lang="hinglish" aria-pressed="false">Hinglish</button>
+      <button data-lang="english" aria-pressed="false">English</button>
+      <button data-lang="hindi" aria-pressed="false">हिंदी</button>
+    </div>
+  </div>
+
+  <p class="scen-note" id="scen-note"></p>
+  <p class="edit-hint" id="edit-hint"></p>
+  <div class="grid" id="grid"></div>
+
+  <div class="notes">
+    <div class="note">
+      <h4>Number save karwana</h4>
+      <p>Stage 3 ke saath contact card bhejiye — "save kar lijiye" likhne se doctor ko manually type karna padta hai. <a href="#" id="vcf">Download AiGenetic.vcf</a> → WhatsApp mein attach → Contact.</p>
+    </div>
+    <div class="note">
+      <h4>Language kaunsi chunein</h4>
+      <p>Lead jis language mein enquiry kare, usi mein reply. Devanagari naam ya Hindi enquiry → हिंदी। Metro + English form → English. Baaki sab → Hinglish.</p>
+    </div>
+    <div class="note">
+      <h4>API template approval</h4>
+      <p>Stage 1 first-contact hai — WhatsApp Business API par utility template approval chahiye. Stage 2 aur 3 lead ke reply ke baad 24-hour window mein free-form ja sakte hain.</p>
+    </div>
+    <div class="note">
+      <h4>Date apne aap</h4>
+      <p>Date har baar aaj ki tareekh se bhar jaati hai, aur card ki bhaasha ke hisaab se — Hindi cards mein "24 अगस्त, सोमवार", English cards mein "24 August, Monday". Chip badal dijiye ya khud type kar dijiye.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const NOTES = {
+  first: "Lead ne form bhara ya ad par click kiya — turant, 5 minute ke andar. Sirf acknowledge kijiye, pitch mat kijiye.",
+  demo:  "Doctor demo ke liye haan bol chuke hain. Date aur Time bhar kar bhejiye; ek din pehle reminder repeat kijiye.",
+  call:  "Live call fix ho gayi. Number save karwana hi is message ka asli kaam hai — contact card zaroor saath bhejiye.",
+  missed:"Call uthi nahi — aur yahi sabse achha demo moment hai: unki apni missed call hi aapki pitch ban jaati hai. Message 2-3 minute ke andar bhejiye, jab tak missed call screen par dikh rahi ho."
+};
+
+const T = [
+/* ---------------- 1. FIRST CONTACT ---------------- */
+{s:"first",l:"hinglish",n:"Warm Hindi welcome",b:`नमस्ते {{Name}} जी 🙏
+
+AiGenetic से जुड़ने के लिए धन्यवाद!
+
+हमारी टीम जल्द ही आपसे बात करेगी। तब तक हम क्लिनिक्स के लिए क्या करते हैं, एक नज़र यहाँ डाल लीजिए 👇
+https://aigenetic.in/healthcare.html
+
+*आप कीजिए पेशेंट केयर, बाकी सब लेट मी टेक केयर।*
+— AiGenetic Team`},
+
+{s:"first",l:"hinglish",n:"Short and crisp",b:`नमस्ते {{Name}} जी 🙏
+
+AiGenetic में रुचि दिखाने के लिए शुक्रिया। हमारी टीम शीघ्र ही आपसे संपर्क करेगी।
+
+हमारी सर्विस एक नज़र में:
+https://aigenetic.in/healthcare.html
+
+— AiGenetic Team`},
+
+{s:"first",l:"hinglish",n:"Value-led",b:`नमस्ते {{Name}} जी 🙏
+
+AiGenetic से संपर्क करने के लिए धन्यवाद।
+
+हम आपके क्लिनिक का *दूसरा फ्रंट डेस्क* बनते हैं —
+• छूटी हुई कॉल्स पर हिंदी में वापस कॉल
+• WhatsApp पर अपॉइंटमेंट कन्फर्मेशन
+• पेशेंट फॉलो-अप के रिमाइंडर
+
+पूरी जानकारी: https://aigenetic.in/healthcare.html
+
+हमारी टीम जल्द ही आपसे बात करेगी।
+— AiGenetic Team`},
+
+{s:"first",l:"english",n:"English — short",b:`Hello {{Name}},
+
+Thank you for reaching out to AiGenetic!
+
+Our team will get in touch with you shortly. In the meantime, here's a quick look at what we do for clinics:
+https://aigenetic.in/healthcare.html
+
+— AiGenetic Team`},
+
+{s:"first",l:"english",n:"English — detailed",b:`Hello {{Name}},
+
+Thank you for your interest in AiGenetic.
+
+We act as a *second front desk* for your clinic —
+• Missed calls answered and returned, in your patient's language
+• Appointment confirmations sent on WhatsApp
+• Follow-up reminders for patients
+
+Full details here: https://aigenetic.in/healthcare.html
+
+Our team will speak with you shortly.
+
+— AiGenetic Team`},
+
+{s:"first",l:"hindi",n:"हिंदी — सरल",b:`नमस्ते {{Name}} जी 🙏
+
+AiGenetic से संपर्क करने के लिए धन्यवाद।
+
+हमारी टीम जल्द ही आपसे बात करेगी। तब तक हम चिकित्सा केंद्रों के लिए क्या करते हैं, एक नज़र यहाँ डाल लीजिए 👇
+https://aigenetic.in/healthcare.html
+
+*आप कीजिए पेशेंट केयर, बाकी सब लेट मी टेक केयर।*
+— AiGenetic टीम`},
+
+{s:"first",l:"hindi",n:"हिंदी — औपचारिक",b:`आदरणीय {{Name}} जी,
+
+AiGenetic में रुचि दिखाने हेतु आपका हार्दिक धन्यवाद।
+
+हम आपके चिकित्सा केंद्र के *दूसरे स्वागत कक्ष* की भाँति कार्य करते हैं —
+• छूटी हुई कॉल पर रोगी को हिंदी में पुनः संपर्क
+• भेंट की पुष्टि का संदेश
+• रोगियों को अगली भेंट की स्मरण सूचना
+
+सम्पूर्ण जानकारी: https://aigenetic.in/healthcare.html
+
+हमारा प्रतिनिधि शीघ्र ही आपसे संपर्क करेगा।
+
+— AiGenetic टीम`},
+
+/* ---------------- 2. DEMO BOOKED ---------------- */
+{s:"demo",l:"hinglish",n:"Simple confirmation",b:`नमस्ते {{Name}} जी 🙏
+
+आपका डेमो कन्फर्म हो गया है ✅
+
+📅 तारीख़: {{Date}}
+🕐 समय: {{Time}}
+⏱️ समय लगेगा: लगभग 15 मिनट
+
+कोई बदलाव करना हो तो इसी चैट पर बता दीजिएगा।
+
+— AiGenetic Team`},
+
+{s:"demo",l:"hinglish",n:"With prep pointers",b:`नमस्ते {{Name}} जी 🙏
+
+आपका डेमो बुक हो गया है ✅
+
+📅 {{Date}}
+🕐 {{Time}} (लगभग 15 मिनट)
+
+डेमो में आप खुद सुन पाएंगे कि आपके क्लिनिक की छूटी हुई कॉल पर मरीज़ से कैसे बात होती है।
+
+बात ज़्यादा काम की रहे, इसके लिए ये दो बातें ध्यान में रखिएगा:
+• रोज़ लगभग कितनी कॉल्स आती हैं
+• क्लिनिक के OPD टाइमिंग्स
+
+— AiGenetic Team`},
+
+{s:"demo",l:"hinglish",n:"Friendly + reminder",b:`नमस्ते {{Name}} जी 🙏
+
+समय देने के लिए धन्यवाद! आपका डेमो फिक्स हो गया है ✅
+
+📅 {{Date}}, 🕐 {{Time}}
+
+एक दिन पहले हम याद दिला देंगे। अगर उस समय आप OPD में व्यस्त हों, तो बेझिझक बता दीजिए — आपकी सुविधा से दूसरा समय रख लेंगे।
+
+— AiGenetic Team`},
+
+{s:"demo",l:"english",n:"English — short",b:`Hello {{Name}},
+
+Your demo is confirmed ✅
+
+📅 Date: {{Date}}
+🕐 Time: {{Time}}
+⏱️ Duration: about 15 minutes
+
+If anything changes, just reply here and we'll reschedule.
+
+— AiGenetic Team`},
+
+{s:"demo",l:"english",n:"English — detailed",b:`Hello {{Name}},
+
+Thank you for your time — your demo is booked ✅
+
+📅 {{Date}}
+🕐 {{Time}} (about 15 minutes)
+
+In the demo you'll hear exactly how a missed call from your clinic gets answered and how the patient is brought back.
+
+Two things worth keeping handy:
+• Roughly how many calls your clinic gets in a day
+• Your OPD timings
+
+We'll send a reminder a day before.
+
+— AiGenetic Team`},
+
+{s:"demo",l:"hindi",n:"हिंदी — सरल",b:`नमस्ते {{Name}} जी 🙏
+
+आपका डेमो कन्फर्म हो गया है ✅
+
+📅 तारीख़: {{Date}}
+🕐 समय: {{Time}}
+⏱️ समय लगेगा: लगभग 15 मिनट
+
+कोई बदलाव करना हो तो इसी चैट पर बता दीजिएगा — आपकी सुविधा से दूसरा समय रख लेंगे।
+
+— AiGenetic टीम`},
+
+{s:"demo",l:"hindi",n:"हिंदी — औपचारिक",b:`आदरणीय {{Name}} जी,
+
+समय देने हेतु धन्यवाद। आपका प्रदर्शन (डेमो) निश्चित हो गया है ✅
+
+📅 दिनांक: {{Date}}
+🕐 समय: {{Time}} (लगभग 15 मिनट)
+
+इसमें आप स्वयं सुन पाएंगे कि आपके केंद्र की छूटी हुई कॉल पर रोगी से किस प्रकार वार्ता होती है।
+
+कृपया ये दो बातें ध्यान में रखिएगा:
+• प्रतिदिन लगभग कितनी कॉल आती हैं
+• आपके केंद्र का समय
+
+एक दिन पूर्व हम स्मरण करा देंगे।
+
+— AiGenetic टीम`},
+
+/* ---------------- 3. CALL SCHEDULED ---------------- */
+{s:"call",l:"hinglish",n:"Save the number",b:`नमस्ते {{Name}} जी 🙏
+
+आपकी लाइव कॉल शेड्यूल हो गई है ✅
+
+📅 {{Date}}
+🕐 लगभग {{Time}} के आसपास
+📞 कॉल इस नंबर से आएगी: *+91 74284 97033*
+
+कृपया इस नंबर को *AiGenetic* नाम से सेव कर लीजिए, ताकि कॉल अनजान नंबर लगकर छूट न जाए।
+
+— AiGenetic Team`},
+
+{s:"call",l:"hinglish",n:"Short reminder",b:`नमस्ते {{Name}} जी 🙏
+
+{{Date}} को लगभग {{Time}} बजे हम आपको कॉल करेंगे ✅
+
+नंबर: *+91 74284 97033* — कृपया सेव कर लीजिए।
+
+— AiGenetic Team`},
+
+{s:"call",l:"hinglish",n:"Pre-call heads-up",b:`नमस्ते {{Name}} जी 🙏
+
+आपसे बात करने का समय तय हो गया है ✅
+
+📅 {{Date}} को लगभग {{Time}} बजे
+📞 कॉल आएगी: *+91 74284 97033*
+⏱️ समय लगेगा: 10–15 मिनट
+
+👉 नंबर को *AiGenetic* नाम से सेव ज़रूर कर लें।
+अगर उस समय आप मरीज़ों में व्यस्त हों, तो बस यहाँ मैसेज कर दीजिए — हम दूसरा समय रख लेंगे।
+
+— AiGenetic Team`},
+
+{s:"call",l:"english",n:"English — short",b:`Hello {{Name}},
+
+Your call is scheduled ✅
+
+📅 {{Date}}
+🕐 Around {{Time}}
+📞 We'll be calling from: *+91 74284 97033*
+
+Please save this number as *AiGenetic* so the call doesn't get missed as an unknown number.
+
+— AiGenetic Team`},
+
+{s:"call",l:"english",n:"English — detailed",b:`Hello {{Name}},
+
+Your live call is confirmed ✅
+
+📅 {{Date}}
+🕐 Around {{Time}}
+📞 Incoming from: *+91 74284 97033*
+⏱️ Duration: 10–15 minutes
+
+👉 Please save the number as *AiGenetic* — we're sending our contact card right after this message, so you can save it in one tap.
+
+If you're with patients at that time, just message here and we'll pick another slot.
+
+— AiGenetic Team`},
+
+{s:"call",l:"hindi",n:"हिंदी — सरल",b:`नमस्ते {{Name}} जी 🙏
+
+आपकी कॉल शेड्यूल हो गई है ✅
+
+📅 {{Date}}
+🕐 लगभग {{Time}} के आसपास
+📞 कॉल इस नंबर से आएगी: *+91 74284 97033*
+
+कृपया इस नंबर को *AiGenetic* नाम से सेव कर लीजिए, ताकि कॉल अनजान नंबर लगकर छूट न जाए।
+
+— AiGenetic टीम`},
+
+{s:"call",l:"hindi",n:"हिंदी — औपचारिक",b:`आदरणीय {{Name}} जी,
+
+आपसे वार्ता का समय निश्चित हो गया है ✅
+
+📅 दिनांक: {{Date}}
+🕐 समय: लगभग {{Time}} बजे
+📞 कॉल इस दूरभाष संख्या से आएगी: *+91 74284 97033*
+⏱️ अवधि: 10–15 मिनट
+
+👉 कृपया यह संख्या *AiGenetic* नाम से अवश्य सुरक्षित कर लें।
+
+यदि उस समय आप रोगियों में व्यस्त हों, तो यहाँ संदेश भेज दीजिए — हम दूसरा समय निश्चित कर लेंगे।
+
+— AiGenetic टीम`},
+
+/* ---------------- 4. COULDN'T CONNECT ---------------- */
+{s:"missed",l:"hinglish",n:"Punch — yahi to hum karte hain",b:`नमस्ते {{Name}} जी 🙏
+
+अभी AiGenetic से कॉल किया था, आप शायद मरीज़ों में व्यस्त थे — कॉल छूट गई।
+
+और सच कहें तो, *ठीक यही काम हम करते हैं।* 🙂
+आपके क्लिनिक में भी रोज़ यही होता है — मरीज़ कॉल करता है, आप busy होते हैं, कॉल छूट जाती है, और मरीज़ अगले क्लिनिक चला जाता है।
+
+AiGenetic हर छूटी हुई कॉल पर मरीज़ को हिंदी में वापस कॉल करता है — ताकि आपकी व्यस्तता की कीमत मरीज़ न चुकाए।
+
+कैसे काम करता है, यहाँ देखिए: https://aigenetic.in/healthcare.html
+बात करने के लिए कॉल या WhatsApp: *+91 74284 97033*
+
+— AiGenetic Team`},
+
+{s:"missed",l:"hinglish",n:"Punch — short",b:`नमस्ते {{Name}} जी 🙏
+
+अभी कॉल किया था, बात नहीं हो पाई — आप व्यस्त होंगे।
+
+मज़े की बात ये है कि *यही तो हमारा काम है* 🙂 — जब आप busy हों, तब आपकी छूटी हुई कॉल्स मरीज़ों को वापस करना।
+
+जब समय मिले, कॉल या WhatsApp कर दीजिए 👉 *+91 74284 97033*
+हम क्या करते हैं: https://aigenetic.in/healthcare.html
+
+— AiGenetic Team`},
+
+{s:"missed",l:"hinglish",n:"Punch + full offering",b:`नमस्ते {{Name}} जी 🙏
+
+AiGenetic से कॉल किया था, आपसे बात नहीं हो पाई।
+
+*यही वो पल है जहाँ हम काम आते हैं* — जब आप मरीज़ के साथ होते हैं और फ़ोन बजता रह जाता है।
+
+हम आपके क्लिनिक का दूसरा फ्रंट डेस्क बनते हैं —
+• हर छूटी हुई कॉल पर मरीज़ को हिंदी में वापस कॉल
+• WhatsApp पर अपॉइंटमेंट कन्फर्मेशन
+• फॉलो-अप के रिमाइंडर
+
+पूरी जानकारी: https://aigenetic.in/healthcare.html
+कॉल या WhatsApp: *+91 74284 97033*
+
+— AiGenetic Team`},
+
+{s:"missed",l:"hinglish",n:"Ask for a slot",b:`नमस्ते {{Name}} जी 🙏
+
+आज आपसे बात नहीं हो पाई — कोई बात नहीं, यही तो रोज़ का हाल है क्लिनिक में। 🙂
+
+बस इतना बता दीजिए — सुबह बात करना ठीक रहेगा या शाम को?
+या सीधे कॉल/WhatsApp कर लीजिए: *+91 74284 97033*
+
+हम क्या करते हैं, एक नज़र: https://aigenetic.in/healthcare.html
+
+— AiGenetic Team`},
+
+{s:"missed",l:"english",n:"English — punch",b:`Hello {{Name}},
+
+We just tried calling from AiGenetic and couldn't reach you — you were most likely with a patient.
+
+Which is, honestly, *exactly the problem we solve.* 🙂
+The same thing happens at your clinic every day: a patient calls, you're busy, the call goes unanswered, and that patient books somewhere else.
+
+AiGenetic calls every missed number back, in your patient's language — so being busy never costs you a patient.
+
+See how it works: https://aigenetic.in/healthcare.html
+Call or WhatsApp us on *+91 74284 97033*
+
+— AiGenetic Team`},
+
+{s:"missed",l:"english",n:"English — punch + offering",b:`Hello {{Name}},
+
+We tried reaching you and couldn't connect — this is the exact moment we help with.
+
+We work as a *second front desk* for clinics —
+• Every missed call returned to the patient, in their own language
+• Appointment confirmations on WhatsApp
+• Follow-up reminders
+
+More here: https://aigenetic.in/healthcare.html
+
+Call or WhatsApp on *+91 74284 97033* whenever it suits you.
+
+— AiGenetic Team`},
+
+{s:"missed",l:"hindi",n:"हिंदी — पंच",b:`नमस्ते {{Name}} जी 🙏
+
+अभी AiGenetic से कॉल किया था, बात नहीं हो पाई — आप व्यस्त रहे होंगे।
+
+और *ठीक यही काम हम करते हैं* 🙂
+आपके क्लिनिक में भी रोज़ यही होता है — मरीज़ कॉल करता है, आप मरीज़ के साथ होते हैं, कॉल छूट जाती है।
+
+AiGenetic हर छूटी हुई कॉल पर मरीज़ को हिंदी में वापस कॉल करता है।
+
+पूरी जानकारी: https://aigenetic.in/healthcare.html
+कॉल या WhatsApp: *+91 74284 97033*
+
+— AiGenetic टीम`},
+
+{s:"missed",l:"hindi",n:"हिंदी — औपचारिक",b:`आदरणीय {{Name}} जी,
+
+AiGenetic की ओर से आपको कॉल किया गया था, किंतु वार्ता संभव नहीं हो सकी — संभवतः आप रोगियों के साथ व्यस्त थे।
+
+*यही वह स्थिति है जहाँ हम सहायक होते हैं।* आपके केंद्र में भी प्रतिदिन यही होता है — रोगी कॉल करता है, आप व्यस्त होते हैं, और कॉल छूट जाती है।
+
+हम आपके चिकित्सा केंद्र के दूसरे स्वागत कक्ष की भाँति कार्य करते हैं —
+• छूटी हुई कॉल पर रोगी को हिंदी में पुनः संपर्क
+• भेंट की पुष्टि का संदेश
+• रोगियों को अगली भेंट की स्मरण सूचना
+
+विस्तृत जानकारी: https://aigenetic.in/healthcare.html
+आपकी सुविधानुसार कॉल अथवा WhatsApp कीजिए: *+91 74284 97033*
+
+— AiGenetic टीम`}
+];
+
+/* ---------------- date helpers ---------------- */
+const HI_M=["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"];
+const HI_D=["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"];
+const EN_M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const EN_D=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+const state = { Name:"", Time:"", dateAuto:true, dateOffset:0, dateText:"" };
+
+function dayFor(off){ const d=new Date(); d.setDate(d.getDate()+off); return d; }
+function fmt(d, lang){
+  return lang === "english"
+    ? d.getDate()+" "+EN_M[d.getMonth()]+", "+EN_D[d.getDay()]
+    : d.getDate()+" "+HI_M[d.getMonth()]+", "+HI_D[d.getDay()];
+}
+function dateFor(lang){
+  return state.dateAuto ? fmt(dayFor(state.dateOffset), lang) : state.dateText;
+}
+
+const $ = s => document.querySelector(s);
+const grid = $("#grid");
+let scen = "first", lang = "all", current = [];
+
+function valFor(key, cardLang){
+  if(key === "Date") return dateFor(cardLang);
+  return state[key];
+}
+
+/* text that actually goes to the clipboard */
+function fill(body, cardLang){
+  return body.replace(/\{\{(Name|Date|Time)\}\}/g, (m,k) => valFor(k, cardLang) || m);
+}
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+/* preview with inline-editable placeholders */
+function preview(body, cardLang){
+  let out = esc(body).replace(/\{\{(Name|Date|Time)\}\}/g, (m,k)=>{
+    const v = valFor(k, cardLang);
+    const cls = v ? "ph" : "ph empty";
+    const txt = v ? esc(v) : k + "?";
+    return '<span class="'+cls+'" contenteditable="true" spellcheck="false" data-k="'+k+'" title="Tap karke edit kijiye">'+txt+'</span>';
+  });
+  out = out.replace(/\*([^*\n]+)\*/g, "<strong>$1</strong>");
+  out = out.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  return out;
+}
+
+const TICK = '<svg class="tick" viewBox="0 0 16 11" fill="none"><path d="M1 6l3 3 6-8M6 9l6-8" stroke="#53BDEB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function render(){
+  $("#scen-note").textContent = NOTES[scen];
+  const usesDT = (scen === "demo" || scen === "call");
+  document.body.classList.toggle("no-dt", !usesDT);
+  $("#edit-hint").textContent = usesDT
+    ? "Message ke andar highlighted value par tap karke seedha edit kijiye — copy wahi updated text uthayega."
+    : "Is stage mein sirf naam bharna hai. Bubble mein highlighted naam par tap karke bhi badal sakte hain.";
+  current = T.filter(t => t.s === scen && (lang === "all" || t.l === lang));
+  grid.innerHTML = current.map((t,i) => {
+    const langName = t.l === "hindi" ? "हिंदी" : t.l.charAt(0).toUpperCase()+t.l.slice(1);
+    return '<article class="card" data-idx="'+i+'">'
+      + '<div class="card-top"><span class="card-label">'+esc(t.n)+'</span>'
+      + '<span class="pill '+t.l+'">'+langName+'</span></div>'
+      + '<div class="chatpane"><div class="bubble">'+preview(t.b, t.l)
+      + '<div class="meta"><span class="stamp">'+(state.Time || "now")+'</span> '+TICK+'</div></div></div>'
+      + '<div class="card-foot"><button class="btn">Copy message</button>'
+      + '<span class="count">'+fill(t.b, t.l).length+'</span></div></article>';
+  }).join("");
+  syncHeader();
+}
+
+/* update everything on the page without rebuilding the card being edited */
+function refreshLive(sourceEl){
+  document.querySelectorAll(".card").forEach(card => {
+    const t = current[+card.dataset.idx];
+    card.querySelectorAll(".ph").forEach(sp => {
+      if(sp === sourceEl) return;
+      const v = valFor(sp.dataset.k, t.l);
+      sp.textContent = v || (sp.dataset.k + "?");
+      sp.classList.toggle("empty", !v);
+    });
+    card.querySelector(".count").textContent = fill(t.b, t.l).length;
+    card.querySelector(".stamp").textContent = state.Time || "now";
+  });
+}
+
+function setVal(key, value, sourceEl){
+  if(key === "Date"){
+    state.dateAuto = false; state.dateText = value;
+    document.querySelectorAll(".daychips button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  } else {
+    state[key] = value;
+  }
+  syncHeader();
+  refreshLive(sourceEl);
+}
+
+function syncHeader(){
+  const nameEl = $("#f-name"), dateEl = $("#f-date"), timeEl = $("#f-time");
+  if(document.activeElement !== nameEl) nameEl.value = state.Name;
+  if(document.activeElement !== timeEl) timeEl.value = state.Time;
+  if(document.activeElement !== dateEl) dateEl.value = dateFor("hindi");
+  $("#date-hint").textContent = state.dateAuto
+    ? "apne aap bhara — English cards mein: " + fmt(dayFor(state.dateOffset), "english")
+    : "khud type kiya hua";
+}
+
+/* ---------- inline editing inside the bubble ---------- */
+grid.addEventListener("input", e => {
+  const el = e.target.closest(".ph"); if(!el) return;
+  el.classList.remove("empty");
+  setVal(el.dataset.k, el.textContent.replace(/\n/g," ").trim(), el);
+});
+grid.addEventListener("focusin", e => {
+  const el = e.target.closest(".ph"); if(!el) return;
+  if(el.classList.contains("empty")){ el.textContent = ""; }
+});
+grid.addEventListener("focusout", e => {
+  const el = e.target.closest(".ph"); if(!el) return;
+  const v = valFor(el.dataset.k, current[+el.closest(".card").dataset.idx].l);
+  if(!v){ el.textContent = el.dataset.k + "?"; el.classList.add("empty"); }
+  else { el.textContent = v; el.classList.remove("empty"); }
+});
+grid.addEventListener("keydown", e => {
+  if(e.target.closest(".ph") && e.key === "Enter"){ e.preventDefault(); e.target.blur(); }
+});
+grid.addEventListener("paste", e => {
+  const el = e.target.closest(".ph"); if(!el) return;
+  e.preventDefault();
+  const txt = (e.clipboardData || window.clipboardData).getData("text").replace(/\s+/g," ").trim();
+  document.execCommand("insertText", false, txt);
+});
+
+/* ---------- copy ---------- */
+grid.addEventListener("click", e => {
+  const btn = e.target.closest(".btn"); if(!btn) return;
+  const t = current[+btn.closest(".card").dataset.idx];
+  copy(fill(t.b, t.l));
+  btn.textContent = "Copied ✓"; btn.classList.add("copied");
+  setTimeout(()=>{btn.textContent="Copy message";btn.classList.remove("copied")},1400);
+});
+
+function copy(text){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=>toast("Copied — paste into WhatsApp")).catch(()=>fallback(text));
+  } else fallback(text);
+}
+function fallback(text){
+  const ta=document.createElement("textarea");
+  ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");toast("Copied — paste into WhatsApp")}
+  catch(err){toast("Copy nahi hua — text select karke manually copy kijiye")}
+  ta.remove();
+}
+let tid;
+function toast(msg){
+  const el=$("#toast");el.textContent=msg;el.classList.add("show");
+  clearTimeout(tid);tid=setTimeout(()=>el.classList.remove("show"),1900);
+}
+
+/* ---------- header controls ---------- */
+$("#f-name").addEventListener("input", e => setVal("Name", e.target.value.trim()));
+$("#f-time").addEventListener("input", e => setVal("Time", e.target.value.trim()));
+$("#f-date").addEventListener("input", e => setVal("Date", e.target.value.trim()));
+
+document.querySelectorAll(".daychips button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".daychips button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true");
+  state.dateAuto = true; state.dateOffset = +b.dataset.off;
+  syncHeader(); refreshLive(null);
+}));
+
+document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-selected","false"));
+  b.setAttribute("aria-selected","true"); scen=b.dataset.scen; render();
+}));
+document.querySelectorAll(".langs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".langs button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true"); lang=b.dataset.lang; render();
+}));
+
+$("#copy-num").addEventListener("click",()=>copy("+917428497033"));
+
+$("#vcf").addEventListener("click",e=>{
+  e.preventDefault();
+  const card = ["BEGIN:VCARD","VERSION:3.0","N:;AiGenetic;;;","FN:AiGenetic",
+    "ORG:AiGenetic","TEL;TYPE=WORK,VOICE:+917428497033",
+    "URL:https://aigenetic.in/healthcare.html","END:VCARD"].join("\r\n");
+  const url = URL.createObjectURL(new Blob([card],{type:"text/vcard"}));
+  const a=document.createElement("a");a.href=url;a.download="AiGenetic.vcf";a.click();
+  URL.revokeObjectURL(url); toast("AiGenetic.vcf downloaded");
+});
+
+render();
+</script>
+</body>
+</html>
