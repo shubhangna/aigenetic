@@ -102,9 +102,6 @@ template as the shared source of truth. That means:
 
 ## Known gaps carried over from the source pages (fix opportunistically)
 
-- `healthcare.html` has no `<meta name="description">` or Open Graph tags,
-  unlike `index.html` (see `pages.healthcare.seo.note` in `template.json`).
-  New vertical pages should include them from the start.
 - The "Real Estate" card in the main page's Use Cases grid
   (`brand.useCasesSection.cards[2]`) has no `link` yet because
   `realestate.html` doesn't exist. Add one when it's built.
@@ -112,4 +109,19 @@ template as the shared source of truth. That means:
   under different variable names and slightly different implementations
   (Tailwind CDN vs. hand-rolled CSS). They aren't formally unified into one
   stylesheet — if you ever do that consolidation, update both theme blocks
-  here to point at the same source.
+  here to point at the same source. Both now carry the same *derived*
+  surface/motion tokens (`--card`/`--r-*`/`--sh-*`/`--ease` and equivalents)
+  too, added in the 2026-08-23/24 redesign pass — keep those in sync as well.
+
+## Resolved (kept for history)
+
+- ~~`healthcare.html` had no meta description / Open Graph tags~~ — fixed
+  2026-08-23; see `pages.healthcare.seo.note`.
+- ~~`index.html` and `healthcare.html` had drifted apart visually~~ — both
+  pages carry the same design language again as of 2026-08-24 (derived
+  tokens, sticky nav with scroll state, a working mobile menu on both pages,
+  card-style stat rail, reveal/stagger entrances, dark closing CTA panel).
+  See `theme.default.$designNote` and `pages.healthcare.$designNote` in
+  `template.json` for exactly what changed on each page. index.html's mobile
+  menu is a **new fix**, not a resync — it previously had no mobile nav at
+  all (links just vanished under `hidden md:flex`).

@@ -20,6 +20,7 @@
       "description": "Tailwind CDN + hand-rolled CSS variables. Light, editorial, generous whitespace. Used by the main React/JSX landing page.",
       "engine": "Tailwind CSS (CDN, darkMode:'class') + custom <style> block, no build step",
       "googleFonts": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Schibsted+Grotesk:wght@700;800&display=swap",
+      "$designNote": "Resynced 2026-08-24 to healthcare.html's 2026-08-23 redesign, in this page's own React/Tailwind idiom — zero copy changes, only presentation. Added: derived surface/motion tokens (--card, --line-soft, --mint-deep, --r-sm/md/lg, --sh-1/2/3, --ease) layered on top of cssVariables below without altering a single brand hex; a fixed ambient radial wash on body::before plus a masked grid on the hero (.hero-grid-wash); a sticky header that gains a background/shadow only after scroll (#header.scrolled, via a scroll-position React state) and, below 768px, replaces the nav links/CTAs with a hamburger (.nav-toggle) opening a conditionally-rendered panel (#mobile-nav-panel) — index.html previously had no mobile nav at all, the links just vanished under `hidden md:flex` with nothing to replace them, which is the bug nav.$mobilePattern's healthcare hamburger already fixed there; the hero key-feature strip rendered as four hover-lift cards (.stat-card) instead of plain text columns; a mono index badge (.card-idx) on each Use Cases card; a new dark rounded closing CTA panel (.closing-panel) after the pricing section, reusing hero's own CTA labels rather than adding new marketing copy; and section entrances via a small <Reveal> React component (IntersectionObserver-driven, mirrors .reveal/.stagger) with a full prefers-reduced-motion opt-out. Behavior (calendar modal, audio player, live-call teaser) is unchanged; the calendar-modal-main dialog gained backdrop blur, a modal-in animation, Escape-to-close, body-scroll lock and ARIA (role=dialog/aria-modal/aria-labelledby), matching healthcare.html's #calendar-modal.",
       "fonts": {
         "body": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif",
         "display": "'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif",
@@ -34,6 +35,19 @@
         "--text-primary": "#0E1B1E",
         "--text-secondary": "#546567",
         "--border": "#E3E5E0"
+      },
+      "derivedTokens": {
+        "--card": "#FFFFFF",
+        "--line-soft": "#EDEEEA",
+        "--mint-deep": "#DCEDE7",
+        "--r-sm": "12px",
+        "--r-md": "18px",
+        "--r-lg": "26px",
+        "--sh-1": "0 1px 2px rgba(14,27,30,.05), 0 8px 24px -18px rgba(14,27,30,.35)",
+        "--sh-2": "0 2px 6px rgba(14,27,30,.05), 0 26px 60px -38px rgba(14,27,30,.45)",
+        "--sh-3": "0 30px 80px -46px rgba(12,107,92,.55)",
+        "--ease": "cubic-bezier(.2,.7,.3,1)",
+        "notes": "Same derived-token pattern as theme.clinicalTeal — no new brand hues, just surface/shadow/radius/easing values layered on the palette above. Keep both theme blocks' derived tokens identical if either changes (root CLAUDE.md main/child sync rule)."
       },
       "audioShowcaseDarkPanel": {
         "background": "radial-gradient(circle at top, #1b1a23 0%, #0b0a10 55%, #09090d 100%)",
@@ -131,6 +145,7 @@
     },
     "nav": {
       "brandSuffix": "for Businesses",
+      "$mobilePattern": "React equivalent of pages.healthcare.nav.$mobilePattern, added 2026-08-24: below 768px the header hides the desktop `links` row and CTA pair (Tailwind `hidden md:flex`) and shows a `.nav-toggle` hamburger (React state `menuOpen`) that conditionally renders `#mobile-nav-panel` — the same `links` repeated plus a `.panel-cta` row holding ctaCall + ctaBookDemo. There is no separate 680px CTA-hiding breakpoint here (unlike healthcare.html) since the panel already carries both CTAs below 768px.",
       "links": [
         { "label": "Features", "href": "#features" },
         { "label": "Use Cases", "href": "#use-cases" },
@@ -270,6 +285,15 @@
         "description": "Book a free demo and we'll recommend the best plan based on your monthly call volume. Most businesses save 60-70% compared to hiring a receptionist.",
         "cta": "Chat on WhatsApp"
       }
+    },
+    "closingCtaSection": {
+      "$addedNote": "New 2026-08-24, added as part of the healthcare.html design-parity pass — a dark rounded CTA panel (.closing-panel) between pricing and the footer, mirroring pages.healthcare.demoCta's visual pattern. Its own eyebrow/heading/subheading below are literal hardcoded JSX strings, same convention as howItWorksSection/useCasesSection/uspsSection etc. Its buttons are NOT new copy — they reuse hero.ctaPrimary, hero.ctaSecondary, and hero's literal 'Schedule Demo' label.",
+      "eyebrow": "Get Started",
+      "heading": "Ready to stop missing calls?",
+      "subheading": "See Aigenetic answer, understand, and book appointments for your business — live, in a short demo.",
+      "ctaPrimaryRef": "brand.hero.ctaPrimary",
+      "ctaSecondaryRef": "brand.hero.ctaSecondary",
+      "ctaTertiary": "📅 Schedule Demo"
     },
     "footer": {
       "descriptionTemplate": "{company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs. We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.",

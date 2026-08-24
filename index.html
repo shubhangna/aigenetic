@@ -9,15 +9,23 @@
   <meta name="description" content="Aigenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
   <meta name="keywords" content="AI phone assistant, voice agent India, appointment booking, SME automation, Indian languages">
   <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
-  
+  <meta name="theme-color" content="#0E1B1E">
+  <link rel="canonical" href="https://aigenetic.in/">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aigenetic">
   <meta property="og:title" content="Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls">
   <meta property="og:description" content="Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically.">
   <meta property="og:url" content="https://aigenetic.in">
-  
+  <meta property="og:image" content="https://aigenetic.in/logo/logoMedium.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls">
+  <meta name="twitter:description" content="Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically.">
+  <meta name="twitter:image" content="https://aigenetic.in/logo/logoMedium.png">
+
   <title>Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls</title>
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/logo/logo.png">
@@ -53,13 +61,41 @@
       --text-primary: #0E1B1E;
       --text-secondary: #546567;
       --border: #E3E5E0;
+
+      /* derived surface + motion tokens — mirrors healthcare.html's
+         theme.clinicalTeal additions; no new brand hues introduced.
+         See newSite/template.json theme.default for the source of truth. */
+      --card: #FFFFFF;
+      --line-soft: #EDEEEA;
+      --mint-deep: #DCEDE7;
+      --r-sm: 12px;
+      --r-md: 18px;
+      --r-lg: 26px;
+      --sh-1: 0 1px 2px rgba(14,27,30,.05), 0 8px 24px -18px rgba(14,27,30,.35);
+      --sh-2: 0 2px 6px rgba(14,27,30,.05), 0 26px 60px -38px rgba(14,27,30,.45);
+      --sh-3: 0 30px 80px -46px rgba(12,107,92,.55);
+      --ease: cubic-bezier(.2,.7,.3,1);
     }
 
     body {
       background: var(--secondary);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
       color: var(--text-primary);
+      overflow-x: hidden;
     }
+
+    /* ambient wash — sits behind everything, costs nothing (same pattern as healthcare.html) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(760px 520px at 78% -6%, rgba(23,179,127,.10), transparent 62%),
+        radial-gradient(620px 460px at 6% 2%, rgba(12,107,92,.08), transparent 60%);
+    }
+    #root { position: relative; z-index: 1; }
 
     .text-gradient {
       background: linear-gradient(135deg, #0E1B1E, #0C6B5C);
@@ -165,6 +201,116 @@
       justify-content: center;
       font-size: 1.75rem;
     }
+
+    /* ---------- nav: sticky scroll state + mobile menu ----------
+       Mirrors healthcare.html's .nav.scrolled behavior and hamburger
+       pattern (nav.$mobilePattern in newSite/template.json), reimplemented
+       as React state here since index.html is JSX, not vanilla JS. */
+    #header { transition: box-shadow .3s var(--ease), background .3s var(--ease), border-color .3s var(--ease); }
+    #header.scrolled { background: rgba(250,250,247,.92) !important; box-shadow: 0 10px 30px -28px rgba(14,27,30,.7); border-bottom-color: var(--border) !important; }
+    .nav-toggle { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border); background: #fff; cursor: pointer; padding: 0; align-items: center; justify-content: center; flex-direction: column; gap: 4px; }
+    .nav-toggle i { display: block; width: 16px; height: 2px; background: var(--primary); border-radius: 2px; transition: transform .25s var(--ease), opacity .2s var(--ease); }
+    .nav-toggle.open i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open i:nth-child(2) { opacity: 0; }
+    .nav-toggle.open i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-panel { border-top: 1px solid var(--border); background: rgba(250,250,247,.98); padding: 10px 0 18px; }
+    .nav-panel a { display: block; padding: 12px 4px; text-decoration: none; color: var(--primary); font-weight: 500; border-bottom: 1px solid var(--line-soft); }
+    .nav-panel a:last-child { border-bottom: 0; }
+    .nav-panel .panel-cta { display: flex; gap: 10px; margin-top: 16px; }
+    @media (max-width: 767px) { .nav-toggle { display: flex; } }
+
+    /* ---------- hero: masked grid wash (mirrors healthcare.html .hero::after) ---------- */
+    .hero-grid-wash::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(14,27,30,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,27,30,.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
+              mask-image: radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
+    }
+
+    /* ---------- hero key-feature rail as hover-lift cards (mirrors healthcare.html .rail) ---------- */
+    .stat-card {
+      position: relative;
+      padding: 20px 18px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      box-shadow: var(--sh-1);
+      overflow: hidden;
+      transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform .35s var(--ease);
+    }
+    .stat-card:hover { transform: translateY(-4px); border-color: var(--mint-deep); box-shadow: var(--sh-2); }
+    .stat-card:hover::before { transform: scaleY(1); }
+
+    /* ---------- use-case card index badge (mirrors healthcare.html .cell .idx) ---------- */
+    .card-idx {
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      font-size: 11.5px;
+      letter-spacing: .14em;
+      color: var(--accent);
+      opacity: .75;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
+    .closing-panel {
+      background: var(--primary);
+      color: #EAF2F0;
+      border-radius: 34px;
+      padding: 88px 32px 76px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .closing-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(620px 320px at 50% 0%, rgba(23,179,127,.22), transparent 66%),
+        radial-gradient(420px 260px at 12% 100%, rgba(12,107,92,.3), transparent 70%);
+    }
+    .closing-panel > * { position: relative; }
+    @media (max-width: 900px) { .closing-panel { padding: 64px 22px 56px; border-radius: 26px; } }
+
+    /* ---------- scroll-reveal motion (mirrors healthcare.html .reveal / .stagger) ---------- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .stagger.in > * { opacity: 1; transform: none; }
+    .stagger.in > *:nth-child(1) { transition-delay: .04s; }
+    .stagger.in > *:nth-child(2) { transition-delay: .10s; }
+    .stagger.in > *:nth-child(3) { transition-delay: .16s; }
+    .stagger.in > *:nth-child(4) { transition-delay: .22s; }
+    .stagger.in > *:nth-child(5) { transition-delay: .28s; }
+    .stagger.in > *:nth-child(6) { transition-delay: .34s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * { transition: none !important; opacity: 1 !important; transform: none !important; }
+      .stat-card:hover, .hover-rise:hover { transform: none !important; }
+    }
+
+    /* ---------- calendar modal polish ---------- */
+    #calendar-modal-main { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .calendar-modal-main-content { animation: modal-in .35s var(--ease); }
+    @keyframes modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
   </style>
 </head>
 <body class="antialiased text-slate-900 custom-scrollbar">
@@ -180,18 +326,55 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
+
+    // Scroll-reveal wrapper — mirrors healthcare.html's IntersectionObserver-driven
+    // .reveal / .stagger classes, reimplemented as a React component since index.html
+    // is JSX. `stagger` reveals direct children one-by-one via the .stagger CSS rules.
+    function Reveal({ as: Tag = 'div', stagger = false, className = '', children, ...rest }) {
+      const ref = useRef(null);
+      const [inView, setInView] = useState(false);
+
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setInView(true);
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        io.observe(el);
+        return () => io.disconnect();
+      }, []);
+
+      const cls = `${stagger ? 'stagger' : 'reveal'} ${inView ? 'in' : ''} ${className}`.trim();
+      return <Tag ref={ref} className={cls} {...rest}>{children}</Tag>;
+    }
 
     function App() {
       const phoneLink = `tel:${CONFIG.company.phoneDial}`;
       const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
       const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
       const featureIcons = ['⚡', '🌐', '⏰', '💰'];
+      const [scrolled, setScrolled] = useState(false);
+      const [menuOpen, setMenuOpen] = useState(false);
+
+      // Sticky nav shadow/background once the page scrolls — mirrors
+      // healthcare.html's .nav.scrolled behavior.
+      useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 8);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
 
       return (
         <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
           {/* Header */}
-          <header id="header" className="sticky top-0 z-40" style={{background: 'rgba(250, 250, 247, 0.86)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border)'}}>
+          <header id="header" className={`sticky top-0 z-40${scrolled ? ' scrolled' : ''}`} style={{background: 'rgba(250, 250, 247, 0.86)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border)'}}>
             <div className="max-w-7xl mx-auto px-8 flex items-center" style={{height: '68px', gap: '28px'}}>
               <div className="flex items-center" style={{gap: '10px'}}>
                 <img src="logo/logoMedium.png" alt={CONFIG.company.name} style={{height: '32px', width: 'auto'}} />
@@ -204,15 +387,41 @@
                 <a href="#pricing" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
               </nav>
 
-              <div className="flex items-center" style={{marginLeft: 'auto', gap: '12px'}}>
+              <div className="hidden md:flex items-center" style={{marginLeft: 'auto', gap: '12px'}}>
                 <a href={phoneLink} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', color: 'var(--primary)', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.borderColor = 'var(--primary)'}} onMouseLeave={(e) => {e.target.style.borderColor = 'var(--border)'}}>📞 Call</a>
                 <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'var(--primary)', color: 'white', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>📅 Book Demo</a>
               </div>
+
+              <button
+                type="button"
+                className={`nav-toggle md:hidden${menuOpen ? ' open' : ''}`}
+                style={{marginLeft: 'auto'}}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-nav-panel"
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMenuOpen((open) => !open)}
+              >
+                <i></i><i></i><i></i>
+              </button>
             </div>
+
+            {menuOpen && (
+              <div className="nav-panel md:hidden" id="mobile-nav-panel">
+                <div className="max-w-7xl mx-auto px-8">
+                  <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
+                  <a href="#use-cases" onClick={() => setMenuOpen(false)}>Use Cases</a>
+                  <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+                  <div className="panel-cta">
+                    <a href={phoneLink} className="transition-all" style={{flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '15px', padding: '13px 14px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', color: 'var(--primary)', textDecoration: 'none'}}>📞 Call</a>
+                    <a href="#" onClick={(e) => {e.preventDefault(); setMenuOpen(false); openCalendarModalMain();}} className="transition-all" style={{flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '15px', padding: '13px 14px', borderRadius: '999px', background: 'var(--primary)', color: 'white', textDecoration: 'none'}}>📅 Book Demo</a>
+                  </div>
+                </div>
+              </div>
+            )}
           </header>
 
           {/* Hero */}
-          <section className="relative min-h-screen flex items-center justify-center" style={{background: 'var(--secondary)'}}>
+          <section className="relative min-h-screen flex items-center justify-center hero-grid-wash" style={{background: 'var(--secondary)'}}>
             <div className="relative max-w-7xl mx-auto px-8 py-32 text-center">
               <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
@@ -251,15 +460,15 @@
                   />
                 </div>
 
-                <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <Reveal as="div" stagger className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
                   {CONFIG.hero.keyFeatures.map((feature, idx) => (
-                    <div key={feature.title + idx} className="text-center">
+                    <div key={feature.title + idx} className="stat-card">
                       <div className="text-3xl mb-3">{featureIcons[idx] || '✓'}</div>
                       <div className="font-semibold text-sm mb-1" style={{color: 'var(--text-primary)'}}>{feature.title}</div>
                       <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{feature.subtitle}</div>
                     </div>
                   ))}
-                </div>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -267,14 +476,14 @@
           {/* Stats */}
           <section className="py-24" style={{background: 'white'}}>
             <div className="max-w-7xl mx-auto px-8">
-              <div className="grid md:grid-cols-4 gap-12">
+              <Reveal as="div" stagger className="grid md:grid-cols-4 gap-12">
                 {CONFIG.stats.map((stat, idx) => (
                   <div key={stat.label + idx} className="text-center">
                     <div className="text-6xl font-semibold mb-3" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{stat.number}</div>
                     <div className="text-sm font-medium" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{stat.label}</div>
                   </div>
                 ))}
-              </div>
+              </Reveal>
             </div>
           </section>
 
@@ -287,7 +496,7 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>that handles every customer call with precision</p>
               </div>
 
-              <div className="grid md:grid-cols-5 gap-8">
+              <Reveal as="div" stagger className="grid md:grid-cols-5 gap-8">
                 {CONFIG.howItWorks.map((item, idx) => (
                   <div key={item.title + idx} className="text-center">
                     <div className="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-2xl text-4xl" style={{background: 'white', border: '1px solid var(--border)'}}>
@@ -298,7 +507,7 @@
                     <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{item.desc}</div>
                   </div>
                 ))}
-              </div>
+              </Reveal>
             </div>
           </section>
 
@@ -311,7 +520,7 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Trusted by Indian SMEs across industries</p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Reveal as="div" stagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {CONFIG.useCases.map((useCase, idx) => {
                   const CardTag = useCase.link ? 'a' : 'div';
                   const cardProps = useCase.link
@@ -319,6 +528,7 @@
                     : {className: 'minimal-card p-8 rounded-2xl hover-rise'};
                   return (
                     <CardTag key={useCase.title + idx} {...cardProps}>
+                      <span className="card-idx">{String(idx + 1).padStart(2, '0')}</span>
                       <div className="feature-icon-box mb-6">
                         <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
                       </div>
@@ -338,18 +548,18 @@
                     </CardTag>
                   );
                 })}
-              </div>
+              </Reveal>
             </div>
           </section>
 
           {/* Audio Showcase */}
           <section id="audio-demos" className="py-32 section-divide audio-showcase">
             <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-4xl mx-auto mb-20">
+              <Reveal className="text-center max-w-4xl mx-auto mb-20">
                 <div className="section-label mb-6">{CONFIG.audioShowcase.label}</div>
                 <h2 className="text-5xl font-semibold mb-6 audio-showcase-title">{CONFIG.audioShowcase.title}</h2>
                 <p className="text-lg" style={{color: 'rgba(226, 232, 240, 0.75)'}}>{CONFIG.audioShowcase.subtitle}</p>
-              </div>
+              </Reveal>
 
               <AudioShowcase />
             </div>
@@ -364,7 +574,7 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Fully managed AI phone service designed for Indian businesses</p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <Reveal as="div" stagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {CONFIG.usps.map((usp, idx) => (
                   <div key={usp.title + idx} className="text-center">
                     <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl text-3xl mb-6" style={{background: 'white', border: '1px solid var(--border)'}}>
@@ -374,7 +584,7 @@
                     <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{usp.desc}</div>
                   </div>
                 ))}
-              </div>
+              </Reveal>
             </div>
           </section>
 
@@ -387,7 +597,7 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>See how {CONFIG.company.name} is transforming customer communication</p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8">
+              <Reveal as="div" stagger className="grid md:grid-cols-3 gap-8">
                 {CONFIG.testimonials.map((testimonial, idx) => (
                   <div key={testimonial.name + idx} className="minimal-card p-8 rounded-2xl hover-rise">
                     <div className="flex gap-1 mb-6">
@@ -407,7 +617,7 @@
                     </div>
                   </div>
                 ))}
-              </div>
+              </Reveal>
             </div>
           </section>
 
@@ -420,7 +630,7 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>No hidden fees. Pay only for what you use.</p>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+              <Reveal as="div" stagger className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
                 {CONFIG.pricing.map((plan, idx) => (
                   <div key={plan.name + idx} className={`relative minimal-card p-10 rounded-2xl ${plan.highlighted ? 'hover-rise' : ''}`} style={plan.highlighted ? {borderColor: 'var(--primary)', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'} : {}}>
                     {plan.badge && (
@@ -452,7 +662,7 @@
                     </a>
                   </div>
                 ))}
-              </div>
+              </Reveal>
 
               <div className="max-w-4xl mx-auto">
                 <div className="minimal-card p-8 rounded-2xl">
@@ -469,6 +679,28 @@
                 </div>
               </div>
             </div>
+          </section>
+
+          {/* Closing CTA — dark rounded panel, mirrors healthcare.html's .close-in.
+              Reuses hero's own CTA labels (phone / WhatsApp / calendar), no new
+              marketing copy added to config.js. */}
+          <section className="py-20 px-8">
+            <Reveal as="div" className="max-w-6xl mx-auto closing-panel">
+              <div className="section-label mb-6" style={{color: '#8FE3C6'}}>Get Started</div>
+              <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: '#fff'}}>Ready to stop missing calls?</h2>
+              <p className="text-lg max-w-xl mx-auto" style={{color: '#B6C7C4'}}>See Aigenetic answer, understand, and book appointments for your business — live, in a short demo.</p>
+              <div className="flex flex-wrap justify-center gap-4 pt-10">
+                <a href={phoneLink} className="px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: '#fff', color: 'var(--primary)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'var(--mint)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#fff'}}>
+                  {CONFIG.hero.ctaPrimary}
+                </a>
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.24)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'rgba(255,255,255,.08)'; e.currentTarget.style.borderColor = '#8FE3C6'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.24)'}}>
+                  {CONFIG.hero.ctaSecondary}
+                </a>
+                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.24)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'rgba(255,255,255,.08)'; e.currentTarget.style.borderColor = '#8FE3C6'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.24)'}}>
+                  📅 Schedule Demo
+                </a>
+              </div>
+            </Reveal>
           </section>
 
           {/* Footer */}
@@ -663,14 +895,14 @@
   </script>
 
   <!-- Calendar Booking Modal for Main Site -->
-  <div id="calendar-modal-main" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
+  <div id="calendar-modal-main" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-main-title" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
     <div class="calendar-modal-main-content" style="background:#fff;border-radius:20px;padding:32px;max-width:680px;width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);position:relative">
-      <button onclick="closeCalendarModalMain()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
-      <h2 style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
+      <button onclick="closeCalendarModalMain()" aria-label="Close booking dialog" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
+      <h2 id="calendar-modal-main-title" style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
       <p style="color:var(--text-secondary);margin-bottom:24px">Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
 
       <!-- Google Calendar Appointment Scheduling begin -->
-      <iframe class="calendar-modal-main-iframe" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0;display:block;width:100%;height:600px;max-height:calc(100dvh - 180px)" frameborder="0"></iframe>
+      <iframe class="calendar-modal-main-iframe" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0;display:block;width:100%;height:600px;max-height:calc(100dvh - 180px)" frameborder="0" title="Book a demo with Aigenetic"></iframe>
       <!-- end Google Calendar Appointment Scheduling -->
     </div>
   </div>
@@ -679,16 +911,23 @@
     // Calendar Modal Functions for Main Site
     function openCalendarModalMain() {
       document.getElementById('calendar-modal-main').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
     function closeCalendarModalMain() {
       document.getElementById('calendar-modal-main').style.display = 'none';
+      document.body.style.overflow = '';
     }
 
     document.getElementById('calendar-modal-main').addEventListener('click', (e) => {
       if (e.target.id === 'calendar-modal-main') {
         closeCalendarModalMain();
       }
+    });
+
+    // Close modal on Escape (matches healthcare.html)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCalendarModalMain();
     });
 
     // Set up calendar modal triggers
