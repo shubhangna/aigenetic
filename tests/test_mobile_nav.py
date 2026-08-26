@@ -57,7 +57,9 @@ class TestMainPageMobileNav(MobileNavTestCase):
 
 class TestHealthcareMobileNav(MobileNavTestCase):
     def test_hamburger_opens_and_closes_on_healthcare(self):
-        self.open_page("healthcare.html", ready_selector="h1")
+        # healthcare.html now redirects to /?mode=healthcare (see index.html's
+        # vertical mode router); open the consolidated URL directly.
+        self.open_page("/?mode=healthcare", ready_selector="h1")
         self.assert_no_horizontal_overflow()
 
         toggle = self.page.locator("#nav-toggle")
@@ -76,7 +78,9 @@ class TestHealthcareMobileNav(MobileNavTestCase):
 
 class TestRealEstateMobileNav(MobileNavTestCase):
     def test_hamburger_opens_and_closes_on_realestate(self):
-        self.open_page("realestate.html", ready_selector="h1")
+        # realestate.html now redirects to /?mode=realestate (see index.html's
+        # vertical mode router); open the consolidated URL directly.
+        self.open_page("/?mode=realestate", ready_selector="h1")
         self.assert_no_horizontal_overflow()
 
         toggle = self.page.locator("#nav-toggle")

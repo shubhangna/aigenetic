@@ -3,6 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ---------- vertical mode router: redirect shim ----------
+     This page is aigenetic.in's healthcare content, fetched and injected by
+     index.html's loadModeContent() when you land on /?mode=healthcare — see
+     the router script in index.html. A direct/real visit to this URL (this
+     script only runs when the browser actually renders the page, never when
+     index.html fetches its raw text) is bounced to the consolidated URL so
+     the whole site lives under one address. With JS disabled the redirect
+     never fires and this page renders normally as a graceful fallback. -->
+<script>location.replace('/?mode=healthcare' + (location.hash || ''));</script>
+
 <title>Aigenetic for Clinics — the voice of your clinic</title>
 
 <!-- SEO -->
@@ -10,12 +21,12 @@
 <meta name="keywords" content="AI receptionist for clinics, clinic appointment booking, AI phone assistant India, Practo Ray integration, missed clinic calls">
 <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
 <meta name="theme-color" content="#0E1B1E">
-<link rel="canonical" href="https://aigenetic.in/healthcare.html">
+<link rel="canonical" href="https://aigenetic.in/?mode=healthcare">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aigenetic">
 <meta property="og:title" content="Aigenetic for Clinics — the voice of your clinic">
 <meta property="og:description" content="You're with a patient. The phone rings anyway. Aigenetic picks up on the second ring, books the slot, and sends the confirmation on WhatsApp — in 31+ Indian languages.">
-<meta property="og:url" content="https://aigenetic.in/healthcare.html">
+<meta property="og:url" content="https://aigenetic.in/?mode=healthcare">
 <meta property="og:image" content="https://aigenetic.in/logo/logoMedium.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Aigenetic for Clinics — the voice of your clinic">

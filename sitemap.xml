@@ -41,18 +41,20 @@
     <priority>0.7</priority>
   </url>
   
-  <!-- Healthcare vertical landing page -->
+  <!-- Healthcare vertical (consolidated into the main site as a mode; the
+       old /healthcare.html URL now redirects here) -->
   <url>
-    <loc>https://aigenetic.in/healthcare.html</loc>
-    <lastmod>2026-08-24</lastmod>
+    <loc>https://aigenetic.in/?mode=healthcare</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Real Estate vertical landing page -->
+  <!-- Real Estate vertical (consolidated into the main site as a mode; the
+       old /realestate.html URL now redirects here) -->
   <url>
-    <loc>https://aigenetic.in/realestate.html</loc>
-    <lastmod>2026-08-24</lastmod>
+    <loc>https://aigenetic.in/?mode=realestate</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

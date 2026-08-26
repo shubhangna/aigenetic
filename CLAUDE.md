@@ -25,10 +25,29 @@ If any todo item is done move it to Done section at the bottom with Comment - cl
   There is no `npm`/webpack/vite pipeline; React, ReactDOM, Babel, and Tailwind are all pulled from CDNs.
   Component tree is one big `App()` function rendering sections (`header`, hero, how-it-works, use cases,
   audio showcase, USPs, testimonials, pricing, footer) that read their copy from `window.CONFIG`.
-- `healthcare.html` — a clinic-focused landing page variant. Plain HTML + vanilla JS (no React/Babel), but
-  still loads `config.js` and applies shared contact data (`data-phone-link`, `data-whatsapp-link`,
-  `data-email-link`, etc. attributes) via a small IIFE. Has its own copy of the calendar-modal and
-  waveform/audio-player logic — these are duplicated between `index.html` and `healthcare.html`, not shared.
+- `healthcare.html` / `realestate.html` — clinic- and developer-focused landing page variants. Plain HTML +
+  vanilla JS (no React/Babel), still load `config.js` and apply shared contact data (`data-phone-link`,
+  `data-whatsapp-link`, `data-email-link`, etc. attributes) via a small IIFE. Each has its own copy of the
+  calendar-modal and waveform/audio-player logic — these are duplicated between `index.html` and these
+  pages, not shared. **They are no longer visited directly on aigenetic.in** — see "vertical mode router"
+  below — but they remain the single source of truth for their own copy/markup, and still need to load and
+  work correctly on their own (tests open them directly to check the redirect, and `loadModeContent()`
+  falls back to a real navigation to the file itself if the fetch fails).
+- **Vertical mode router** (in `index.html`, top of `<body>`): `aigenetic.in/healthcare.html` and
+  `aigenetic.in/realestate.html` each open with a `<script>` at the very top of `<head>` that
+  `location.replace()`s to `aigenetic.in/?mode=healthcare` / `?mode=realestate` (JS-disabled visitors skip
+  the redirect and see that page rendered normally — the graceful fallback). On `index.html`,
+  `getAigeneticMode()` reads `?mode=`; for `healthcare`/`realestate` it skips mounting the React app and
+  calls `loadModeContent(mode)`, which `fetch()`es that page's raw HTML, swaps its `<title>`/meta/canonical
+  into the current document, appends its `<style>` block(s) into `#mode-style`, injects `doc.body.innerHTML`
+  into `#mode-root` (with `#root` hidden), and re-creates its `<script>` tags so their calendar-modal/nav/
+  waveform behavior runs. Injected content is used byte-for-byte as-is — notably its logo/"Home" links keep
+  their original `href="#top"` (scroll within that vertical) rather than being rewritten to point at the
+  main site; clicking the logo in healthcare/realestate mode is meant to stay in that mode, not leave it.
+  `CONFIG.useCases[].link` points at `/?mode=healthcare` / `/?mode=realestate`
+  accordingly. This keeps each vertical's content authored once, in its own file, while presenting it under
+  the single `aigenetic.in` URL — SEO note: the old `/healthcare.html` and `/realestate.html` URLs no longer
+  carry their own indexed identity, everything consolidates under query-string variants of the homepage.
 - `config.js` — sets `window.CONFIG`, the single source of truth for all business copy: company info,
   hero content, pricing plans, use cases, testimonials, audio demo metadata, etc. Keep this file **data
   only** — no DOM logic or JSX here. Both `index.html` and `healthcare.html` load it before their own
@@ -60,8 +79,12 @@ If any todo item is done move it to Done section at the bottom with Comment - cl
 - Preserve accessibility: meaningful `alt` text, ARIA labels where needed, keyboard-friendly controls.
 - Keep canonical/SEO meta tags intact when editing `<head>` content; don't break GitHub Pages custom-domain
   assumptions (the `CNAME` file, absolute `/`-rooted asset paths like `/favicon.svg`, `/logo/...`).
-- If touching the calendar-modal or audio-player logic, remember it's duplicated in both `index.html` and
-  `healthcare.html` — update both if the fix/feature applies to both pages.
+- If touching the calendar-modal or audio-player logic, remember it's duplicated across `index.html`,
+  `healthcare.html`, and `realestate.html` — update all that apply.
+- If adding another vertical (a third `<industry>.html`), give it the same redirect-shim `<script>` at the
+  top of `<head>` as `healthcare.html`/`realestate.html`, add its mode to `getAigeneticMode()`'s allow-list
+  and the `mode === 'healthcare' ? ... : ...` file lookup in `loadModeContent()`, and point its use-case
+  card's `link` at `/?mode=<industry>`.
 
 ## Testing
 

@@ -292,6 +292,44 @@
       padding: 4px 10px;
     }
 
+    /* ---------- use-case marquee: continuous horizontal rolling strip ----------
+       The card list is rendered twice back-to-back (UseCaseMarquee in the JSX
+       below) and the track drifts by exactly -50% so the loop is seamless.
+       Paused via React state (onMouseEnter/onFocus) rather than a CSS :hover,
+       so keyboard focus pauses it too without relying on :has() support. */
+    .usecase-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+    }
+    .usecase-track {
+      display: flex;
+      gap: 24px;
+      width: max-content;
+      /* Slow, weighted drift rather than a conveyor-belt scroll: an ease-in-out
+         curve repeated across several keyframe stops (not just two endpoints)
+         so speed swells and eases within each leg, like a hydraulic ram under
+         pressure rather than a motor spinning at constant RPM. */
+      animation: usecase-scroll 60s cubic-bezier(.65,0,.35,1) infinite;
+      will-change: transform;
+    }
+    .usecase-track.paused { animation-play-state: paused; }
+    .usecase-card-wrap {
+      flex: 0 0 auto;
+      width: min(82vw, 300px);
+    }
+    @keyframes usecase-scroll {
+      0%   { transform: translateX(0); }
+      25%  { transform: translateX(-14%); }
+      50%  { transform: translateX(-25%); }
+      75%  { transform: translateX(-36%); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .usecase-track { animation: none; }
+      .usecase-marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    }
+
     /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
     .closing-panel {
       background: var(--primary);
@@ -339,15 +377,91 @@
 <body class="antialiased text-slate-900 custom-scrollbar">
     
   <div id="root"></div>
-  
+  <div id="mode-root" style="display:none"></div>
+
   <!-- React & ReactDOM -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="config.js"></script>
-  
+
+  <!-- ---------- vertical mode router ----------
+       aigenetic.in/healthcare.html and aigenetic.in/realestate.html redirect
+       here with ?mode=healthcare / ?mode=realestate (see the redirect script
+       at the top of those files) so the whole site lives under one URL.
+       Instead of re-authoring their content as JSX, this fetches that page's
+       own markup — still the single source of truth for its copy — and
+       swaps it into #mode-root. See CLAUDE.md's "vertical mode router" note. -->
+  <script>
+    function getAigeneticMode() {
+      var params = new URLSearchParams(location.search);
+      var mode = params.get('mode');
+      return (mode === 'healthcare' || mode === 'realestate') ? mode : 'home';
+    }
+    window.__AIGENETIC_MODE__ = getAigeneticMode();
+
+    async function loadModeContent(mode) {
+      var file = mode === 'healthcare' ? 'healthcare.html' : 'realestate.html';
+      try {
+        var res = await fetch(file);
+        if (!res.ok) throw new Error('fetch failed: ' + res.status);
+        var html = await res.text();
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+
+        if (doc.title) document.title = doc.title;
+        ['description', 'keywords', 'og:title', 'og:description', 'og:url',
+         'twitter:title', 'twitter:description'].forEach(function (name) {
+          var selector = name.indexOf(':') > -1
+            ? 'meta[property="' + name + '"]'
+            : 'meta[name="' + name + '"]';
+          var src = doc.querySelector(selector);
+          var dest = document.querySelector(selector);
+          if (src && dest) dest.setAttribute('content', src.getAttribute('content'));
+        });
+        var canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.href = 'https://aigenetic.in/?mode=' + mode;
+
+        var styleTag = document.getElementById('mode-style');
+        if (!styleTag) {
+          styleTag = document.createElement('style');
+          styleTag.id = 'mode-style';
+          document.head.appendChild(styleTag);
+        }
+        styleTag.textContent = Array.from(doc.querySelectorAll('style'))
+          .map(function (s) { return s.textContent; })
+          .join('\n');
+
+        var root = document.getElementById('root');
+        if (root) root.style.display = 'none';
+        var modeRoot = document.getElementById('mode-root');
+        modeRoot.innerHTML = doc.body.innerHTML;
+        modeRoot.style.display = '';
+
+        // Deliberately NOT rewriting the injected page's logo / "Home" links:
+        // they keep their original href="#top" (scroll within this vertical)
+        // rather than pointing back at the main site — clicking the logo
+        // while in healthcare/realestate mode should stay in that mode.
+
+        // innerHTML does not execute <script> tags — recreate them so the
+        // page's own calendar-modal / waveform / nav behavior comes alive.
+        modeRoot.querySelectorAll('script').forEach(function (oldScript) {
+          var newScript = document.createElement('script');
+          if (oldScript.src) {
+            newScript.src = oldScript.src;
+          } else {
+            newScript.textContent = oldScript.textContent;
+          }
+          oldScript.replaceWith(newScript);
+        });
+      } catch (err) {
+        console.error('Failed to load ' + mode + ' content inline, falling back to its own page.', err);
+        location.href = file;
+      }
+    }
+  </script>
+
   <!-- Babel Standalone for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
+
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
@@ -543,40 +657,8 @@
                 <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Trusted by Indian SMEs across industries</p>
               </div>
 
-              <Reveal as="div" stagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {CONFIG.useCases.map((useCase, idx) => {
-                  const CardTag = useCase.link ? 'a' : 'div';
-                  const cardProps = useCase.link
-                    ? {href: useCase.link, className: 'minimal-card p-8 rounded-2xl hover-rise block', style: {textDecoration: 'none'}, 'aria-label': `${useCase.title} — see the dedicated page`}
-                    : {
-                        className: `minimal-card p-8 rounded-2xl${useCase.comingSoon ? ' use-case-disabled' : ' hover-rise'}`,
-                        'aria-disabled': useCase.comingSoon ? 'true' : undefined
-                      };
-                  return (
-                    <CardTag key={useCase.title + idx} {...cardProps}>
-                      <span className="card-idx">{String(idx + 1).padStart(2, '0')}</span>
-                      {useCase.comingSoon && (
-                        <span className="coming-soon-pill">Coming Soon</span>
-                      )}
-                      <div className="feature-icon-box mb-6">
-                        <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
-                      <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
-                      <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
-                        {useCase.features.map((feature, jdx) => (
-                          <li key={feature + jdx} className="flex items-start gap-2">
-                            <span style={{color: 'var(--primary)'}}>✓</span>
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      {useCase.link && (
-                        <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>{useCase.linkCtaLabel || 'Explore →'}</div>
-                      )}
-                    </CardTag>
-                  );
-                })}
+              <Reveal as="div">
+                <UseCaseMarquee />
               </Reveal>
             </div>
           </section>
@@ -778,9 +860,9 @@
               <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style={{borderTop: '1px solid rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.5)'}}>
                 <div>© 2026 {CONFIG.company.legalName}. All rights reserved.</div>
                 <div className="flex gap-8">
-                  <a href="privacy-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Privacy Policy</a>
-                  <a href="terms-of-service.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Terms of Service</a>
-                  <a href="refund-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Refund Policy</a>
+                  <a href="privacy-policy.html" data-open-legal="privacy-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Privacy Policy</a>
+                  <a href="terms-of-service.html" data-open-legal="terms-of-service.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Terms of Service</a>
+                  <a href="refund-policy.html" data-open-legal="refund-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Refund Policy</a>
                 </div>
               </div>
             </div>
@@ -816,6 +898,72 @@
         <button type="button" onClick={handleClick} className={className} style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
           {text}
         </button>
+      );
+    }
+
+    // Use Cases: a continuously-drifting horizontal strip rather than a static
+    // grid. The card list is rendered twice back-to-back and the track drifts
+    // exactly -50% on a linear infinite loop, so it wraps seamlessly. Paused
+    // via React state on hover/focus (see .usecase-track.paused in the <style>
+    // block) so keyboard users and anyone hovering a card get a stable target.
+    function UseCaseMarquee() {
+      const [paused, setPaused] = useState(false);
+      const count = CONFIG.useCases.length;
+      const cards = [...CONFIG.useCases, ...CONFIG.useCases];
+
+      return (
+        <div
+          className="usecase-marquee"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+        >
+          <div className={`usecase-track${paused ? ' paused' : ''}`}>
+            {cards.map((useCase, idx) => {
+              const duplicate = idx >= count;
+              const CardTag = useCase.link ? 'a' : 'div';
+              const cardProps = useCase.link
+                ? {
+                    href: useCase.link,
+                    className: 'minimal-card p-8 rounded-2xl hover-rise block',
+                    style: {textDecoration: 'none'},
+                    'aria-label': `${useCase.title} — see the dedicated page`,
+                    tabIndex: duplicate ? -1 : undefined
+                  }
+                : {
+                    className: `minimal-card p-8 rounded-2xl${useCase.comingSoon ? ' use-case-disabled' : ' hover-rise'}`,
+                    'aria-disabled': useCase.comingSoon ? 'true' : undefined
+                  };
+              return (
+                <div className="usecase-card-wrap" key={useCase.title + idx} aria-hidden={duplicate ? 'true' : undefined}>
+                  <CardTag {...cardProps}>
+                    <span className="card-idx">{String((idx % count) + 1).padStart(2, '0')}</span>
+                    {useCase.comingSoon && (
+                      <span className="coming-soon-pill">Coming Soon</span>
+                    )}
+                    <div className="feature-icon-box mb-6">
+                      <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
+                    <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
+                    <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
+                      {useCase.features.map((feature, jdx) => (
+                        <li key={feature + jdx} className="flex items-start gap-2">
+                          <span style={{color: 'var(--primary)'}}>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {useCase.link && (
+                      <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>{useCase.linkCtaLabel || 'Explore →'}</div>
+                    )}
+                  </CardTag>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       );
     }
 
@@ -920,7 +1068,11 @@
       );
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    if (window.__AIGENETIC_MODE__ === 'home') {
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    } else {
+      loadModeContent(window.__AIGENETIC_MODE__);
+    }
   </script>
 
   <!-- Calendar Booking Modal for Main Site -->
@@ -959,8 +1111,12 @@
       if (e.key === 'Escape') closeCalendarModalMain();
     });
 
-    // Set up calendar modal triggers
+    // Set up calendar modal triggers. Skipped outside 'home' mode: healthcare.html
+    // and realestate.html's own injected script wires up [data-open-calendar]
+    // itself against their own #calendar-modal — this delegated handler would
+    // otherwise also fire and pop open this page's #calendar-modal-main on top of it.
     document.addEventListener('click', (e) => {
+      if (window.__AIGENETIC_MODE__ !== 'home') return;
       if (e.target.matches('[data-open-calendar]')) {
         e.preventDefault();
         openCalendarModalMain();

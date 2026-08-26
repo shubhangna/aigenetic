@@ -2,284 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>CLAUDE Result Log</title>
+<title>Aigenetic Work Summary</title>
 <style>
   body{font-family:Arial,Helvetica,sans-serif;max-width:900px;margin:32px auto;padding:0 16px;color:#222;line-height:1.5}
   h1{font-size:22px;margin-bottom:4px}
-  h2{font-size:17px;margin-top:32px;border-bottom:1px solid #ddd;padding-bottom:4px}
+  h2{font-size:17px;margin-top:28px;border-bottom:1px solid #ddd;padding-bottom:4px}
   code{background:#f4f4f4;padding:1px 5px;border-radius:3px;font-size:13px}
-  table{border-collapse:collapse;width:100%;margin-top:8px}
-  th,td{border:1px solid #ddd;padding:6px 10px;text-align:left;font-size:14px;vertical-align:top}
-  th{background:#fafafa}
-  .pass{color:#0f7a55;font-weight:bold}
-  .fail{color:#b42318;font-weight:bold}
-  ul{margin-top:4px}
-  li{margin-bottom:3px}
 </style>
 </head>
 <body>
+<h1>Aigenetic - Work Summary</h1>
+<p>Updated 2026-08-26.</p>
 
-<h1>Aigenetic — Test Findings &amp; Activity Log</h1>
-<p>Updated 2026-08-25.</p>
+<h2>1. Site and vertical pages updated</h2>
+<p>Resynced the main page with the healthcare design, added the real-estate developer page,
+promoted Real Estate as the second use case, marked Salons and Offices as coming soon,
+added the continuous use-case marquee, improved the audio section and mobile navigation,
+and kept shared contact, pricing, policy, logo and accessibility behavior consistent.</p>
 
-<h2>Real Estate promoted to 2nd use-case card, others marked Coming Soon</h2>
-<p>Reordered <code>CONFIG.useCases</code> in <code>config.js</code> so Real Estate is the
-2nd card (after Clinics & Doctors), ahead of Salons & Spas and Offices & Schools. Both of
-those two now carry <code>comingSoon: true</code> and render as visually disabled cards on
-<code>index.html</code>: greyed out (<code>opacity .55</code>, slight grayscale), no
-hover-lift, <code>cursor: not-allowed</code>, <code>aria-disabled="true"</code>, and a
-"Coming Soon" pill — they were already non-clickable (no <code>link</code>) but had no
-visual signal of that before. Index badges (01–04) still auto-number from array order, so
-no separate change was needed there. New CSS is index.html-only (<code>.use-case-disabled</code>,
-<code>.coming-soon-pill</code>); healthcare.html has no equivalent use-case picker grid, so
-no counterpart change applies. Full suite (main page, real estate, mobile nav — 14 tests)
-replayed headless, all pass; confirmed visually with a local screenshot.</p>
-
-<h2>Audio Demos section lightened (index.html)</h2>
-<p><code>#audio-demos</code> was the only dark-themed section on the page (near-black radial
-gradient, light-gray/white text) — inconsistent with every other section and with
-healthcare.html's light mint/teal audio player. Restyled to the shared light palette:
-section background <code>var(--mint)</code>, cards white with <code>var(--border)</code>, all
-text on <code>var(--text-primary)</code>/<code>var(--text-secondary)</code> tokens instead of
-hardcoded dark-mode hex/rgba values. Waveform and play-button accent gradient (purple/blue)
-kept — reads fine on light cards. No markup, class, or test-selector changes; only colors in
-<code>styles.css</code> (<code>.audio-showcase</code>, <code>.audio-card</code>,
-<code>.audio-pill</code>, <code>.audio-wave</code>, <code>.audio-time</code>) and three inline
-JSX style props in <code>index.html</code>. Verified visually with a local Playwright
-screenshot: clean white→mint→white section rhythm, no dark panel left.</p>
-
-<h2>realestate.html built — new developer/builder vertical page</h2>
-<p>Researched the domain first (Indian property-enquiry response stats, real CRM/portal
-names, RERA disclosure rules), drafted candidate copy, then asked 4 pivotal questions
-before writing anything: target segment, hero headline, pricing tiers, and whether to
-claim specific CRM integrations as "active." Built <code>realestate.html</code> from
-<code>newSite/template.json</code>'s <code>pages.healthcare</code> pattern (second proof
-of the template system), styled identically to healthcare.html (same CSS/JS, copied
-verbatim per the template's own instructions).</p>
-
-<table>
-<tr><th>Decision</th><th>Answer</th></tr>
-<tr><td>Segment</td><td>Builders/developers selling new projects (not brokers, despite config.js's broker-flavored hint)</td></tr>
-<tr><td>Hero headline</td><td>"The voice of your listings" — kept the healthcare.html-family pattern, subheading adapted to sample-flat/possession-date context</td></tr>
-<tr><td>Pricing</td><td>Same ₹2,999 / ₹7,999 / Custom ladder as healthcare.html, tier names renamed to Single project / Multi-project developer / Developer group</td></tr>
-<tr><td>Integrations</td><td>Zoho, Sell.Do, LeadSquared, 99acres, MagicBricks, Housing.com shown as plain "attach whatever you use" chips — NOT marked active/on. Only Google Calendar + WhatsApp Business get the checkmark, since those are genuinely wired into this codebase already</td></tr>
-</table>
-
-<p><strong>Content grounded in real research</strong> (search results in the conversation,
-not fabricated): ~42% of Indian property enquiries reach a live call; 62% arrive outside
-business hours; RERA disclosure rules shaped the "what it will never do" section (no
-guaranteed-return promises, no invented possession dates, no undisclosed RERA numbers)
-and the escalation rule (hot lead ready to pay token today — the real-estate-correct
-equivalent of healthcare.html's medical emergency escalation, not a copy of it).</p>
-
-<p><strong>Honest omission:</strong> no real-estate-specific demo audio clip exists in
-<code>mp3/</code> — the 6 existing clips are Healthcare/Ecommerce/BFSI/EdTech/HRTech/
-Hospitality. Rather than play a mismatched clip under a "Hear the assistant" banner,
-realestate.html ships without that player (single-column call-sheet transcript instead
-of healthcare's two-column sheet+player layout). Logged in TODO.md to record a real one.</p>
-
-<p><strong>Bug found and fixed while linking it in:</strong> index.html hardcoded the
-literal text "Explore for clinics →" on <em>any</em> linked Use Cases card — so simply
-adding a Real Estate link would have wrongly shown clinic copy on that card too. Fixed
-to read <code>useCase.linkCtaLabel</code> per-card instead (config.js now sets it for
-both Clinics and Real Estate).</p>
-
-<table>
-<tr><th>Check (Playwright, local server, headless)</th><th>Result</th></tr>
-<tr><td>New <code>tests/test_realestate.py</code> (mirrors test_healthcare.py: content, pricing, calendar modal x&ge;4 triggers, phone/email CTAs, console errors)</td><td class="pass">pass</td></tr>
-<tr><td>New mobile-nav coverage for realestate.html in <code>tests/test_mobile_nav.py</code></td><td class="pass">pass</td></tr>
-<tr><td>Regression test: Real Estate card links to <code>/realestate.html</code> with its own label, not "Explore for clinics"</td><td class="pass">pass</td></tr>
-<tr><td>Full existing suite (index, healthcare, mobile nav) replayed after the config.js/index.html link fix</td><td class="pass">all pass</td></tr>
-</table>
-
-<p>Also added <code>healthcare.html</code> to <code>sitemap.xml</code> alongside the new
-<code>realestate.html</code> entry — it had never been listed there at all.</p>
-
-<h2>index.html resynced to healthcare.html's redesign</h2>
-<p>Brought <code>index.html</code> to look-and-feel parity with healthcare.html's redesign, in its
-own React/Tailwind/JSX idiom (not a port of healthcare's vanilla CSS/JS). <strong>Zero copy
-changes</strong> to existing content — every heading, stat, plan and footer string CONFIG already
-held is untouched; only presentation changed, plus one small new closing-CTA section that
-reuses existing hero CTA labels rather than inventing new marketing copy. Brand hexes in
-<code>theme.default.cssVariables</code> are untouched; the new look is derived surface + motion
-tokens layered on top, mirroring <code>theme.clinicalTeal</code>'s pattern.</p>
-
-<table>
-<tr><th>Area</th><th>What changed</th></tr>
-<tr><td>Head</td><td>Added theme-color, canonical, og:site_name, og:image and full Twitter-card tags (description/keywords/author/OG already existed)</td></tr>
-<tr><td>Nav</td><td><strong>Fixed a real bug</strong>: below 768px the nav links previously just vanished (<code>hidden md:flex</code>) with no replacement at all — worse than healthcare.html's old gap, which at least kept desktop links visible. Added a React-state hamburger + conditionally-rendered panel, plus sticky background/shadow after scroll (<code>#header.scrolled</code>)</td></tr>
-<tr><td>Hero</td><td>Masked grid wash behind the hero (same technique as healthcare.html); the 4 key-feature blurbs now render as hover-lift bordered cards instead of plain text columns</td></tr>
-<tr><td>Use Cases</td><td>Added a mono index badge (01–04) to each card, same visual language as healthcare.html's call-type grid</td></tr>
-<tr><td>New section</td><td>Dark rounded closing CTA panel between Pricing and the footer (<code>.closing-panel</code>), mirroring healthcare.html's <code>.close-in</code> — reuses hero's own Call/WhatsApp/Schedule-Demo CTAs</td></tr>
-<tr><td>Motion</td><td>New <code>&lt;Reveal&gt;</code> React component (IntersectionObserver-driven, mirrors <code>.reveal</code>/<code>.stagger</code>) applied to every major section, full <code>prefers-reduced-motion</code> opt-out</td></tr>
-<tr><td>Calendar modal</td><td>Backdrop blur, modal-in animation, Escape-to-close, body-scroll lock, ARIA (<code>role=dialog</code>/<code>aria-modal</code>/<code>aria-labelledby</code>) — matches healthcare.html's <code>#calendar-modal</code>, previously only healthcare had these</td></tr>
-</table>
-
-<p>Behavior and every test-relied-on class/id/selector are unchanged: <code>h1.hero-title</code>,
-<code>#features .section-label</code>, <code>#pricing .minimal-card</code> (still 4), <code>#audio-demos</code>
-audio/play-button structure, footer links, calendar-modal wiring. The new mobile panel is
-conditionally rendered (absent from the DOM when closed), so it can't interfere with any
-existing <code>:visible</code> selector.</p>
-
-<table>
-<tr><th>Check (Playwright, local server, headless)</th><th>Result</th></tr>
-<tr><td>Full existing suite: <code>test_main_page.py</code> (9 tests) + <code>test_healthcare.py</code> (1 test, 9 subtests)</td><td class="pass">all pass</td></tr>
-<tr><td>390px viewport: no horizontal scroll, hamburger opens/closes panel, nav-link click scrolls and closes it — both pages</td><td class="pass">pass</td></tr>
-<tr><td>Console errors after a fresh load</td><td class="pass">none</td></tr>
-</table>
-
-<p>Also added <code>tests/test_mobile_nav.py</code> — a permanent regression test for the
-390px hamburger behavior on both pages, closing the "Test add: mobile-width run" TODO item
-that had been open since the healthcare.html redesign.</p>
-
-<h2>healthcare.html rebuilt from the newSite template</h2>
-<p>Regenerated <code>healthcare.html</code> from <code>newSite/template.json</code> +
-<code>newSite/templates/vertical-page.template.html</code>. <strong>Zero copy changes</strong> — every
-heading, transcript line, chip, plan and footer string is identical to what
-<code>pages.healthcare</code> holds; only presentation changed. Brand hexes in
-<code>theme.clinicalTeal</code> are untouched (<code>--ink</code>/<code>--teal</code>/<code>--mint</code> etc.);
-the new look is built from derived surface + motion tokens layered on top.</p>
-
-<table>
-<tr><th>Area</th><th>What changed</th></tr>
-<tr><td>Head</td><td>Added description, keywords, author, theme-color, canonical, Open Graph and Twitter-card tags (the gap tracked in TODO.md)</td></tr>
-<tr><td>Nav</td><td>Sticky bar that gains its border/shadow only after scroll; hamburger + slide-down panel below 900px (links previously just disappeared)</td></tr>
-<tr><td>Hero</td><td>Masked grid and ambient radial wash, refined highlight behind "clinic", stat rail rendered as four hover-lift cards</td></tr>
-<tr><td>Call sheet</td><td>Transcript and voice-sample player side by side, sample card sticky beside the scrolling thread; stacks below 1040px</td></tr>
-<tr><td>Sections</td><td>Rounded card grid with mono index numbers and bottom-aligned caller quotes; dark escalation panel with terminal-style log block; dark rounded closing CTA panel</td></tr>
-<tr><td>Motion</td><td><code>.reveal</code> / <code>.stagger</code> entrances with a full <code>prefers-reduced-motion</code> opt-out</td></tr>
-<tr><td>Fixes</td><td>Player time no longer overlaps the waveform; modal close button now has a positioning context; orphaned mobile CSS rules moved back inside their media query</td></tr>
-</table>
-
-<p>Behavior is unchanged and still copied verbatim between pages: calendar modal, waveform
-generation, audio player, live-call teaser, <code>data-*-link</code> binding, IntersectionObserver.
-Every <code>data-</code> hook the suite relies on is intact.</p>
-
-<table>
-<tr><th>Check (21 assertions, Playwright, local server)</th><th>Result</th></tr>
-<tr><td>Every assertion in <code>tests/test_healthcare.py</code>, replayed</td><td class="pass">pass</td></tr>
-<tr><td>Console errors after a fresh load</td><td class="pass">none</td></tr>
-<tr><td>390px: no horizontal scroll, hamburger opens panel</td><td class="pass">pass</td></tr>
-<tr><td>All 5 <code>data-open-calendar</code> triggers open and close the real Google booking iframe</td><td class="pass">pass</td></tr>
-</table>
-
-<p><strong>Resolved 2026-08-24:</strong> <code>index.html</code> now carries the same design language —
-see the entry above.</p>
-
-<h2>newSite/ template extraction</h2>
-<p>Built <code>newSite/</code>: a content+asset template system extracted from <code>index.html</code>,
-<code>healthcare.html</code> and <code>config.js</code>, for generating future vertical pages (e.g.
-<code>realestate.html</code>) without losing any existing copy or specs. Contains
-<code>template.json</code> (brand data + two theme token sets + full <code>pages.healthcare</code> schema
-instance), <code>assets/common/</code> and <code>assets/pages/&lt;page&gt;/</code> (logos, favicon, 6 audio demos,
-reorganized by usage), <code>templates/vertical-page.template.html</code> (annotated skeleton), and its
-own <code>newSite/CLAUDE.md</code> instructing future edits to keep pages in sync automatically.
-Nothing in the live site was modified — pure non-destructive extraction.</p>
-
-<h2>Why "most tests failing"</h2>
-<p>Not a site defect. Root cause: tests were run without <code>HEADLESS=true</code>, so Playwright launched
-a headed (visible) Chromium. In this sandbox (no real display focus), headed clicks on
-<code>healthcare.html</code>'s calendar modal / audio player / live-call button / WhatsApp CTA don't register
-reliably, which cascades into timeouts for every subTest after the first click failure. Reproduced on both
-local (<code>localhost:8989</code>) and live (<code>https://aigenetic.in</code>) — same 4 subTest failures either way,
-confirming it's an execution-mode issue, not a remote-site-only issue.</p>
-
-<table>
-<tr><th>Mode</th><th>Result</th></tr>
-<tr><td><code>HEADLESS=true</code> (headless)</td><td class="pass">10 passed, 0 failed</td></tr>
-<tr><td>default (headed, <code>HEADLESS</code> unset)</td><td class="fail">4 subTests failed (calendar close, audio playing class, live-call text, whatsapp request)</td></tr>
-</table>
-
-<h2>How to run correctly</h2>
-<pre>HEADLESS=true python -m pytest tests/ --site remote     # live site
-HEADLESS=true python -m pytest tests/ --site local       # localhost:8989, server must be running</pre>
-<p><code>--site</code> only works via <code>pytest</code> (it's a conftest.py plugin option) — running a test file
-directly with <code>python tests/test_healthcare.py</code> uses unittest's own arg parser and doesn't know
-<code>--site</code>; set <code>BASE_URL</code> env var directly for that path instead.</p>
-
-<h2>Activity Log</h2>
-<ul>
-<li>Diagnosed headed mode failures</li>
-<li>Filtered reCAPTCHA console noise</li>
-<li>Verified fix headless mode</li>
-<li>Logged headless env note</li>
-<li>Reproduced failures on remote</li>
-<li>Confirmed same root cause</li>
-<li>Wrote this report</li>
-<li>Explored full site structure</li>
-<li>Read config.js, both pages</li>
-<li>Asked scope/asset/theme/skeleton questions</li>
-<li>Created newSite folder tree</li>
-<li>Copied logos, audio by usage</li>
-<li>Wrote full template.json</li>
-<li>Wrote vertical-page HTML skeleton</li>
-<li>Wrote newSite/CLAUDE.md instructions</li>
-<li>Logged two gaps found</li>
-<li>Rebuilt healthcare.html from template</li>
-<li>Added full SEO meta block</li>
-<li>Built sticky nav scroll state</li>
-<li>Added mobile hamburger nav panel</li>
-<li>Redesigned hero stat rail</li>
-<li>Paired call sheet, voice player</li>
-<li>Restyled call-type card grid</li>
-<li>Darkened escalation and closing panels</li>
-<li>Added reveal stagger motion</li>
-<li>Honoured prefers-reduced-motion fully</li>
-<li>Fixed player time overlap</li>
-<li>Fixed modal close positioning</li>
-<li>Fixed orphaned mobile CSS</li>
-<li>Replayed full healthcare test suite</li>
-<li>Verified desktop tablet mobile renders</li>
-<li>Synced template.json and skeleton</li>
-<li>Logged index.html resync TODO</li>
-<li>Read updated healthcare.html redesign</li>
-<li>Read updated template.json notes</li>
-<li>Checked test suite selectors first</li>
-<li>Enhanced index.html SEO meta</li>
-<li>Added derived tokens, ambient wash</li>
-<li>Built React scroll nav state</li>
-<li>Fixed missing mobile nav bug</li>
-<li>Wrapped hero features in cards</li>
-<li>Built reusable Reveal component</li>
-<li>Applied reveal/stagger to sections</li>
-<li>Added use-case card indexes</li>
-<li>Added dark closing CTA panel</li>
-<li>Polished calendar modal accessibility</li>
-<li>Ran full Playwright suite headless</li>
-<li>Verified mobile viewport manually first</li>
-<li>Wrote permanent mobile nav test</li>
-<li>Reran full suite, all pass</li>
-<li>Synced template.json design notes</li>
-<li>Moved resolved TODO items done</li>
-<li>Found audio section dark theme</li>
-<li>Restyled audio-showcase to light</li>
-<li>Restyled audio card, pill, wave</li>
-<li>Swapped inline dark text colors</li>
-<li>Checked healthcare.html tokens match</li>
-<li>Verified with local screenshot</li>
-<li>Researched Indian property lead stats</li>
-<li>Researched real estate CRMs, RERA rules</li>
-<li>Drafted candidate headline, content options</li>
-<li>Asked 4 pivotal questions first</li>
-<li>Built realestate.html from template</li>
-<li>Wrote developer-context call transcript</li>
-<li>Wrote RERA-grounded hard limits</li>
-<li>Added hot-lead escalation rule</li>
-<li>Framed CRM chips as attach-any</li>
-<li>Linked Real Estate card, config.js</li>
-<li>Fixed hardcoded clinics-only label</li>
-<li>Added healthcare, realestate to sitemap</li>
-<li>Wrote realestate Playwright test suite</li>
-<li>Extended mobile nav test coverage</li>
-<li>Ran full suite, fifteen passing</li>
-<li>Documented pages.realestate in template.json</li>
-<li>Removed version tag badges everywhere</li>
-<li>Reordered Real Estate to 2nd card</li>
-<li>Flagged Salons, Offices coming-soon</li>
-<li>Styled disabled cards, added pill</li>
-<li>Replayed full suite, fourteen passing</li>
-<li>Verified layout with screenshot</li>
-</ul>
-
+<h2>2. Vertical mode routing verified</h2>
+<p><code>healthcare.html</code> and <code>realestate.html</code> remain the source files for
+their own content. <code>index.html</code> fetches and injects them for
+<code>?mode=healthcare</code> and <code>?mode=realestate</code>, while direct child-page
+visits redirect to those modes. Playwright testing against the local static server passed
+for content, links, calendar dialogs, mobile navigation, injected scripts and console errors.</p>
 </body>
 </html>

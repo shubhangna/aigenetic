@@ -14,7 +14,15 @@ from utilities import WebsiteTestCase
 
 class TestRealEstatePage(WebsiteTestCase):
     def open_realestate_page(self):
-        return self.open_page("realestate.html", ready_selector="h1")
+        # realestate.html now redirects to /?mode=realestate (see index.html's
+        # vertical mode router); open the consolidated URL directly.
+        return self.open_page("/?mode=realestate", ready_selector="h1")
+
+    def test_realestate_html_redirects_to_consolidated_url(self):
+        self.page.goto(self.page_url("realestate.html"), wait_until="load", timeout=45000)
+        self.page.locator("h1").wait_for(state="visible", timeout=15000)
+        self.assertIn("mode=realestate", self.page.url)
+        expect(self.page.locator("h1")).to_contain_text("listings")
 
     def test_realestate_page(self):
         page = self.page
@@ -82,13 +90,17 @@ class TestRealEstatePage(WebsiteTestCase):
             phone.click()
             # tel: is an unsupported scheme for the browser tab itself, so the
             # click must not navigate the SPA away or throw.
-            self.assertIn("realestate.html", page.url)
+            self.assertIn("mode=realestate", page.url)
 
 
 class TestMainPageLinksToRealEstate(WebsiteTestCase):
     def test_use_case_card_links_to_realestate_with_its_own_label(self):
         self.open_page(ready_selector="h1.hero-title")
-        card = self.page.locator('a[href="/realestate.html"]')
+        # The Use Cases marquee (UseCaseMarquee in index.html) renders the card
+        # list twice back-to-back for a seamless scroll loop, so two matching
+        # anchors exist -- .first is the real, tab-reachable one; its duplicate
+        # is aria-hidden with tabindex="-1".
+        card = self.page.locator('a[href="/?mode=realestate"]').first
         expect(card).to_be_visible()
         expect(card).to_contain_text("Explore for developers")
         # Regression guard: the Real Estate card must not show the Clinics

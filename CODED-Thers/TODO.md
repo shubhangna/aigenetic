@@ -1,4 +1,12 @@
 # TODO
+- After deploy, submit /?mode=healthcare and /?mode=realestate in Google Search
+  Console and request removal/301-style handling of the old /healthcare.html and
+  /realestate.html URLs from the index — client-side redirects consolidate slower
+  than a real server 301 would (accepted trade-off, see CLAUDE_Result.html)
+- CLAUDE.md's Testing section still names tests/test_website_e2e.py, which doesn't
+  exist — actual files are test_main_page.py, test_healthcare.py, test_realestate.py,
+  test_mobile_nav.py, test_github_ips.py; doc drift predates this session, worth a
+  cleanup pass
 - Main page to have scrolling use cases
 - Add animation like husky voice
 - Add languages as a list somewhere on the site
@@ -50,3 +58,7 @@
 - Removed stray "[V 1.19 Live]" / "· v1.19" version tags from hero badges in
   config.js, healthcare.html, realestate.html and newSite/template.json — claude
   moved at the end
+- Consolidated healthcare.html/realestate.html under aigenetic.in as ?mode=
+  variants via a client-side vertical mode router, so both verticals show under
+  the single main-site URL instead of their own; old URLs now redirect there —
+  claude moved at the end
