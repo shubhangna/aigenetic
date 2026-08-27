@@ -63,21 +63,20 @@ class TestHealthcarePage(WebsiteTestCase):
             expect(page.get_by_role("link", name="Refund Policy")).to_be_visible()
 
         with self.subTest("whatsapp CTA opens a chat to the configured number"):
-            # WhatsApp links have no JS handler and no target="_blank" -- clicking
-            # one really navigates the tab away, so the page is restored via
-            # open_healthcare_page() straight after regardless of what runs next.
             whatsapp = page.locator("a[data-whatsapp-link]:visible").first
             expect(whatsapp).to_be_visible()
             expected_wa_url = f"https://wa.me/{company['whatsappNumber']}"
             self.assertEqual(whatsapp.get_attribute("href"), expected_wa_url)
-            page.route("https://wa.me/**", lambda route: route.abort())
+            self.assertEqual(whatsapp.get_attribute("target"), "_blank")
+            self.assertIn("noopener", whatsapp.get_attribute("rel") or "")
+            self.context.route("https://wa.me/**", lambda route: route.abort())
             try:
-                with page.expect_request("https://wa.me/**", timeout=5000) as request_info:
+                with page.expect_popup(timeout=5000) as popup_info:
                     whatsapp.click()
-                self.assertEqual(request_info.value.url, expected_wa_url)
+                popup = popup_info.value
+                popup.close()
             finally:
-                page.unroute("https://wa.me/**")
-                self.open_healthcare_page()
+                self.context.unroute("https://wa.me/**")
 
         with self.subTest("no critical console errors after a fresh load"):
             page.reload(wait_until="domcontentloaded", timeout=45000)

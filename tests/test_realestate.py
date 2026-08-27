@@ -54,7 +54,21 @@ class TestRealEstatePage(WebsiteTestCase):
             )
             expect(page.locator("#pricing")).to_contain_text("Single project")
             page.locator("footer").scroll_into_view_if_needed()
-            expect(page.get_by_role("link", name="Refund Policy")).to_be_visible()
+        with self.subTest("whatsapp CTA opens a chat to the configured number"):
+            whatsapp = page.locator("a[data-whatsapp-link]:visible").first
+            expect(whatsapp).to_be_visible()
+            expected_wa_url = f"https://wa.me/{company['whatsappNumber']}"
+            self.assertEqual(whatsapp.get_attribute("href"), expected_wa_url)
+            self.assertEqual(whatsapp.get_attribute("target"), "_blank")
+            self.assertIn("noopener", whatsapp.get_attribute("rel") or "")
+            self.context.route("https://wa.me/**", lambda route: route.abort())
+            try:
+                with page.expect_popup(timeout=5000) as popup_info:
+                    whatsapp.click()
+                popup = popup_info.value
+                popup.close()
+            finally:
+                self.context.unroute("https://wa.me/**")
 
         with self.subTest("no critical console errors after a fresh load"):
             page.reload(wait_until="domcontentloaded", timeout=45000)

@@ -530,7 +530,7 @@
     <p class="sub rise">You're with a patient. The phone rings anyway. Aigenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
     <div class="cta-row rise">
       <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
-      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link>💬 WhatsApp Us</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
       <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>🎙️ Live Call to Voice Assistant</button>
     </div>
     <p class="cta-note rise">Free 14-day trial on your existing clinic number. No new hardware.</p>
@@ -698,7 +698,7 @@
           <li>Call recordings, retention on your terms</li>
           <li>Named onboarding engineer</li>
         </ul>
-        <a class="btn btn-ghost" href="#demo" data-whatsapp-link>Contact Sales</a>
+        <a class="btn btn-ghost" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer">Contact Sales</a>
       </div>
     </div>
   </div>
@@ -714,7 +714,7 @@
         <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Schedule via Calendar →</a>
         <a class="btn btn-ghost btn-lg" href="tel:+917428497033" data-phone-link>📞 Call Now</a>
       </div>
-      <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
+      <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
     </div>
   </div>
 </section>
@@ -741,7 +741,7 @@
         <h5>Contact</h5>
         <a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a>
         <a href="tel:+917428497033" data-phone-link><span data-phone-display>+91 742849 7033</span></a>
-        <a href="#" data-whatsapp-link>WhatsApp Support</a>
+        <a href="#" data-whatsapp-link target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
       </div>
 
       <div class="footer-col">
@@ -927,6 +927,8 @@
 
     document.querySelectorAll('[data-whatsapp-link]').forEach((el) => {
       el.href = `https://wa.me/${company.whatsappNumber}`;
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
       el.setAttribute('aria-label', 'Chat on WhatsApp');
     });
 
