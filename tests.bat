@@ -1,9 +1,19 @@
 @echo off
 setlocal enabledelayedexpansion
 
+:: Activate virtual environment if it exists
+if exist "%~dp0.venv\Scripts\activate.bat" (
+    call "%~dp0.venv\Scripts\activate.bat"
+) else if exist "%~dp0venv\Scripts\activate.bat" (
+    call "%~dp0venv\Scripts\activate.bat"
+) else if exist "%~dp0env\Scripts\activate.bat" (
+    call "%~dp0env\Scripts\activate.bat"
+)
+
 echo ========================================================
 echo Running tests...
 echo ========================================================
+
 python -m pytest tests/
 if errorlevel 1 (
     echo.
@@ -21,9 +31,7 @@ echo ========================================================
 git add .
 
 set "COMMIT_MSG=%*"
-if "%COMMIT_MSG%"=="" (
-    set /p COMMIT_MSG="Enter commit message (press Enter for default): "
-)
+
 if "!COMMIT_MSG!"=="" (
     set "COMMIT_MSG=test: pass all tests and update codebase"
 )
