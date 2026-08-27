@@ -62,3 +62,5 @@
   variants via a client-side vertical mode router, so both verticals show under
   the single main-site URL instead of their own; old URLs now redirect there —
   claude moved at the end
+- Real estate footer misalignment fixed — claude moved at the end
+- Header and footer template unified across all 3 pages — claude moved at the end

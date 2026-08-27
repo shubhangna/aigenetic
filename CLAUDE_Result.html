@@ -26,5 +26,11 @@ their own content. <code>index.html</code> fetches and injects them for
 <code>?mode=healthcare</code> and <code>?mode=realestate</code>, while direct child-page
 visits redirect to those modes. Playwright testing against the local static server passed
 for content, links, calendar dialogs, mobile navigation, injected scripts and console errors.</p>
+
+<h2>3. Real estate footer aligned</h2>
+<p>Shortened the disclaimer text to fit desktop layout on one line matching healthcare, and added responsive column stacking at 820px breakpoint so both lines stay left-aligned when wrapped.</p>
+
+<h2>4. Header &amp; Footer template unified across all 3 pages</h2>
+<p>Unified the header (<code>.nav</code>, <code>.brand</code> with pill badge, <code>.nav-links</code>, <code>.nav-cta</code>, mobile toggle and drawer) and footer (<code>.site-footer</code> 4-column grid [Brand, Quick Links, Contact, Legal] and bottom bar with copyright and privacy disclaimer) across <code>index.html</code>, <code>healthcare.html</code>, and <code>realestate.html</code> so all 3 pages share the identical visual template and design system tokens. Full test suite (17/17 tests) passed.</p>
 </body>
 </html>

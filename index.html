@@ -34,7 +34,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Schibsted+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -61,6 +61,18 @@
       --text-primary: #0E1B1E;
       --text-secondary: #546567;
       --border: #E3E5E0;
+
+      /* Shared design system tokens matching healthcare.html / realestate.html */
+      --ink: #0E1B1E;
+      --paper: #FAFAF7;
+      --teal: #0C6B5C;
+      --teal-deep: #084A40;
+      --line: #E3E5E0;
+      --muted: #546567;
+      --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+      --body: "Instrument Sans", system-ui, -apple-system, Segoe UI, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --wrap: 1180px;
 
       /* derived surface + motion tokens — mirrors healthcare.html's
          theme.clinicalTeal additions; no new brand hues introduced.
@@ -202,22 +214,105 @@
       font-size: 1.75rem;
     }
 
-    /* ---------- nav: sticky scroll state + mobile menu ----------
-       Mirrors healthcare.html's .nav.scrolled behavior and hamburger
-       pattern (nav.$mobilePattern in newSite/template.json), reimplemented
-       as React state here since index.html is JSX, not vanilla JS. */
-    #header { transition: box-shadow .3s var(--ease), background .3s var(--ease), border-color .3s var(--ease); }
-    #header.scrolled { background: rgba(250,250,247,.92) !important; box-shadow: 0 10px 30px -28px rgba(14,27,30,.7); border-bottom-color: var(--border) !important; }
-    .nav-toggle { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border); background: #fff; cursor: pointer; padding: 0; align-items: center; justify-content: center; flex-direction: column; gap: 4px; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- nav: header matching vertical pages ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 60; background: rgba(250, 250, 247, .72);
+      backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(250, 250, 247, .92);
+      box-shadow: 0 10px 30px -28px rgba(14, 27, 30, .7);
+    }
+    .nav-in {
+      display: flex; align-items: center; gap: 28px; height: 72px;
+      max-width: var(--wrap); margin: 0 auto; padding: 0 24px;
+      transition: height .3s var(--ease);
+    }
+    .nav.scrolled .nav-in { height: 64px; }
+    .brand {
+      display: flex; align-items: center; gap: 11px;
+      font-family: var(--display); font-weight: 800; font-size: 19px;
+      letter-spacing: -.025em; text-decoration: none; color: var(--primary);
+    }
+    .brand img { height: 32px; width: auto; display: block; }
+    .brand small {
+      font-family: var(--body); font-weight: 600; font-size: 11px;
+      color: var(--accent-deep); letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 9px; border-radius: 999px; background: var(--mint);
+      border: 1px solid var(--mint-deep); line-height: 1;
+    }
+    .nav-links { margin-left: auto; display: flex; gap: 6px; font-size: 15px; font-weight: 500; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-secondary); padding: 8px 14px;
+      border-radius: 999px; transition: color .2s var(--ease), background .2s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text-primary); background: rgba(233, 243, 240, .85); }
+    .nav-cta { display: flex; gap: 10px; margin-left: auto; align-items: center; }
+    .nav-links + .nav-cta { margin-left: 22px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      font-family: var(--body); font-weight: 600; font-size: 15px; padding: 12px 22px;
+      border-radius: 999px; text-decoration: none; border: 1px solid transparent;
+      transition: transform .18s var(--ease), background .2s var(--ease), box-shadow .25s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+      cursor: pointer; line-height: 1.15; white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--primary); color: var(--secondary); box-shadow: 0 10px 24px -16px rgba(14, 27, 30, .9); }
+    .btn-primary:hover { background: var(--accent-deep); box-shadow: 0 16px 34px -16px rgba(8, 74, 64, .75); color: white; }
+    .btn-ghost { background: #fff; color: var(--primary); border-color: var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-deep); box-shadow: 0 14px 30px -22px rgba(12, 107, 92, .8); }
+    .btn-lg { font-size: 16.5px; padding: 16px 30px; }
+    .nav .btn { font-size: 14px; padding: 10px 18px; }
+
+    .nav-toggle {
+      display: none; width: 42px; height: 42px; border-radius: 12px;
+      border: 1px solid var(--border); background: #fff; cursor: pointer;
+      padding: 0; align-items: center; justify-content: center; flex-direction: column; gap: 4px;
+    }
     .nav-toggle i { display: block; width: 16px; height: 2px; background: var(--primary); border-radius: 2px; transition: transform .25s var(--ease), opacity .2s var(--ease); }
-    .nav-toggle.open i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .nav-toggle.open i:nth-child(2) { opacity: 0; }
-    .nav-toggle.open i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-    .nav-panel { border-top: 1px solid var(--border); background: rgba(250,250,247,.98); padding: 10px 0 18px; }
+    .nav-toggle.open i:nth-child(1), .nav-toggle[aria-expanded="true"] i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open i:nth-child(2), .nav-toggle[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+    .nav-toggle.open i:nth-child(3), .nav-toggle[aria-expanded="true"] i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-panel { border-top: 1px solid var(--border); background: rgba(250, 250, 247, .98); padding: 10px 0 18px; }
     .nav-panel a { display: block; padding: 12px 4px; text-decoration: none; color: var(--primary); font-weight: 500; border-bottom: 1px solid var(--line-soft); }
     .nav-panel a:last-child { border-bottom: 0; }
     .nav-panel .panel-cta { display: flex; gap: 10px; margin-top: 16px; }
-    @media (max-width: 767px) { .nav-toggle { display: flex; } }
+    .nav-panel .panel-cta .btn { display: inline-flex; flex: 1; border-bottom: 0; padding: 13px 14px; font-size: 15px; }
+
+    /* ---------- site footer (matches healthcare.html & realestate.html) ---------- */
+    .site-footer { border-top: 1px solid var(--border); background: var(--mint); padding: 64px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 44px; }
+    .footer-brand p { margin-top: 16px; color: var(--text-secondary); font-size: 14px; max-width: 340px; line-height: 1.65; }
+    .footer-col h5 { font-family: var(--display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--accent-deep); margin: 0 0 16px; font-weight: 700; }
+    .footer-col a { display: block; color: var(--text-secondary); font-size: 14.5px; text-decoration: none; margin-bottom: 11px; width: fit-content; transition: color .2s var(--ease), transform .2s var(--ease); }
+    .footer-col a:hover { color: var(--accent-deep); transform: translateX(3px); }
+    .footer-bottom { margin-top: 48px; padding-top: 26px; border-top: 1px solid var(--mint-deep); display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; font-size: 13px; color: var(--text-secondary); }
+    .footer-bottom .sp { margin-left: auto; text-align: right; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-cta { margin-left: auto; }
+    }
+    @media (max-width: 820px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px 24px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-bottom .sp { margin-left: 0; text-align: left; }
+    }
+    @media (max-width: 680px) {
+      .nav-cta > .btn { display: none; }
+    }
+    @media (max-width: 560px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
 
     /* ---------- hero: masked grid wash (mirrors healthcare.html .hero::after) ---------- */
     .hero-grid-wash::after {
@@ -511,51 +606,50 @@
       return (
         <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
           {/* Header */}
-          <header id="header" className={`sticky top-0 z-40${scrolled ? ' scrolled' : ''}`} style={{background: 'rgba(250, 250, 247, 0.86)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border)'}}>
-            <div className="max-w-7xl mx-auto px-8 flex items-center" style={{height: '68px', gap: '28px'}}>
-              <div className="flex items-center" style={{gap: '10px'}}>
-                <img src="logo/logoMedium.png" alt={CONFIG.company.name} style={{height: '32px', width: 'auto'}} />
-                <div style={{fontFamily: "'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif", fontWeight: 800, fontSize: '19px', letterSpacing: '-0.02em', color: 'var(--primary)'}}>{CONFIG.company.name} <span style={{fontWeight: 500, fontSize: '13px', color: 'var(--text-secondary)'}}>for Businesses</span></div>
+          <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="site-nav">
+            <div className="wrap nav-in">
+              <a className="brand" href="#top">
+                <img src="logo/logoMedium.png" alt={CONFIG.company.name} />
+                {CONFIG.company.name} <small>for Businesses</small>
+              </a>
+
+              <div className="nav-links">
+                <a href="#features">Features</a>
+                <a href="#use-cases">Use Cases</a>
+                <a href="#pricing">Pricing</a>
               </div>
 
-              <nav className="hidden md:flex items-center" style={{gap: '30px', fontSize: '15px', fontWeight: 500}}>
-                <a href="#features" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Features</a>
-                <a href="#use-cases" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Use Cases</a>
-                <a href="#pricing" className="transition-colors" style={{color: 'var(--text-secondary)', textDecoration: 'none'}} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Pricing</a>
-              </nav>
-
-              <div className="hidden md:flex items-center" style={{marginLeft: 'auto', gap: '12px'}}>
-                <a href={phoneLink} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', color: 'var(--primary)', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.borderColor = 'var(--primary)'}} onMouseLeave={(e) => {e.target.style.borderColor = 'var(--border)'}}>📞 Call</a>
-                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="transition-all" style={{display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: '15px', padding: '12px 18px', borderRadius: '999px', background: 'var(--primary)', color: 'white', textDecoration: 'none'}} onMouseEnter={(e) => {e.target.style.background = '#084A40'; e.target.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.target.style.background = 'var(--primary)'; e.target.style.transform = 'translateY(0)'}}>📅 Book Demo</a>
+              <div className="nav-cta">
+                <a className="btn btn-ghost" href={phoneLink} data-phone-link>📞 Call</a>
+                <a className="btn btn-primary" href="#calendar-booking" data-open-calendar onClick={(e) => {e.preventDefault(); openCalendarModalMain();}}>Book Demo</a>
+                <button
+                  type="button"
+                  className={`nav-toggle${menuOpen ? ' open' : ''}`}
+                  id="nav-toggle"
+                  aria-expanded={menuOpen}
+                  aria-controls="mobile-nav-panel"
+                  aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                  onClick={() => setMenuOpen((open) => !open)}
+                >
+                  <i></i><i></i><i></i>
+                </button>
               </div>
-
-              <button
-                type="button"
-                className={`nav-toggle md:hidden${menuOpen ? ' open' : ''}`}
-                style={{marginLeft: 'auto'}}
-                aria-expanded={menuOpen}
-                aria-controls="mobile-nav-panel"
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMenuOpen((open) => !open)}
-              >
-                <i></i><i></i><i></i>
-              </button>
             </div>
 
             {menuOpen && (
-              <div className="nav-panel md:hidden" id="mobile-nav-panel">
-                <div className="max-w-7xl mx-auto px-8">
+              <div className="nav-panel open" id="mobile-nav-panel">
+                <div className="wrap">
                   <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
                   <a href="#use-cases" onClick={() => setMenuOpen(false)}>Use Cases</a>
                   <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
                   <div className="panel-cta">
-                    <a href={phoneLink} className="transition-all" style={{flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '15px', padding: '13px 14px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', color: 'var(--primary)', textDecoration: 'none'}}>📞 Call</a>
-                    <a href="#" onClick={(e) => {e.preventDefault(); setMenuOpen(false); openCalendarModalMain();}} className="transition-all" style={{flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '15px', padding: '13px 14px', borderRadius: '999px', background: 'var(--primary)', color: 'white', textDecoration: 'none'}}>📅 Book Demo</a>
+                    <a className="btn btn-ghost" href={phoneLink} data-phone-link>📞 Call</a>
+                    <a className="btn btn-primary" href="#calendar-booking" onClick={(e) => {e.preventDefault(); setMenuOpen(false); openCalendarModalMain();}}>Book Demo</a>
                   </div>
                 </div>
               </div>
             )}
-          </header>
+          </nav>
 
           {/* Hero */}
           <section className="relative min-h-screen flex items-center justify-center hero-grid-wash" style={{background: 'var(--secondary)'}}>
@@ -815,55 +909,46 @@
           </section>
 
           {/* Footer */}
-          <footer style={{background: 'var(--primary)', color: 'white', padding: '4rem 2rem 2rem'}}>
-            <div className="max-w-7xl mx-auto">
-              <div className="grid md:grid-cols-4 gap-12 mb-12">
-                <div className="md:col-span-2">
-                  <div className="flex items-center gap-3 mb-6">
-                    <img src="logo/logo.png" alt={CONFIG.company.name} className="h-12 w-auto" style={{filter: 'brightness(0) invert(1)'}} />
-                    <div>
-                      <div style={{fontFamily: "'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif", fontWeight: 800, fontSize: '19px', letterSpacing: '-0.02em'}}>{CONFIG.company.name}</div>
-                      <div className="text-sm opacity-70">{CONFIG.company.tagline}</div>
-                    </div>
-                  </div>
-                  <p className="text-sm leading-relaxed max-w-md" style={{color: 'rgba(255, 255, 255, 0.7)'}}>
-                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs. We handle customer calls 24/7, book appointments, and help businesses never miss an opportunity.
+          <footer className="site-footer">
+            <div className="wrap">
+              <div className="footer-grid">
+                <div className="footer-brand">
+                  <a className="brand" href="#top">
+                    <img src="logo/logoMedium.png" alt={CONFIG.company.name} />
+                    {CONFIG.company.name} <small>for Businesses</small>
+                  </a>
+                  <p>
+                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs — answers customer calls 24/7, books appointments, and helps businesses never miss an opportunity.
                   </p>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold mb-6 text-base">Quick Links</h4>
-                  <ul className="space-y-3 text-sm">
-                    <li><a href="#" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Home</a></li>
-                    <li><a href="#features" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>How It Works</a></li>
-                    <li><a href="#pricing" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Pricing</a></li>
-                    <li><a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>Book Demo</a></li>
-                  </ul>
+                <div className="footer-col">
+                  <h5>Quick Links</h5>
+                  <a href="#top">Home</a>
+                  <a href="#features">How It Works</a>
+                  <a href="#use-cases">Use Cases</a>
+                  <a href="#pricing">Pricing</a>
+                  <a href="#calendar-booking" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}}>Book a Demo</a>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold mb-6 text-base">Contact</h4>
-                  <ul className="space-y-3 text-sm">
-                    <li>
-                      <a href={`mailto:${CONFIG.company.email}`} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.email}</a>
-                    </li>
-                    <li>
-                      <a href={phoneLink} className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>{CONFIG.company.phoneDisplay}</a>
-                    </li>
-                    <li>
-                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="transition-colors" style={{color: 'rgba(255, 255, 255, 0.7)'}} onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}>WhatsApp Support</a>
-                    </li>
-                  </ul>
+                <div className="footer-col">
+                  <h5>Contact</h5>
+                  <a href={`mailto:${CONFIG.company.email}`} data-email-link>{CONFIG.company.email}</a>
+                  <a href={phoneLink} data-phone-link><span data-phone-display>{CONFIG.company.phoneDisplay}</span></a>
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" data-whatsapp-link>WhatsApp Support</a>
+                </div>
+
+                <div className="footer-col">
+                  <h5>Legal</h5>
+                  <a href="privacy-policy.html">Privacy Policy</a>
+                  <a href="terms-of-service.html">Terms of Service</a>
+                  <a href="refund-policy.html">Refund Policy</a>
                 </div>
               </div>
 
-              <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style={{borderTop: '1px solid rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.5)'}}>
-                <div>© 2026 {CONFIG.company.legalName}. All rights reserved.</div>
-                <div className="flex gap-8">
-                  <a href="privacy-policy.html" data-open-legal="privacy-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Privacy Policy</a>
-                  <a href="terms-of-service.html" data-open-legal="terms-of-service.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Terms of Service</a>
-                  <a href="refund-policy.html" data-open-legal="refund-policy.html" className="transition-colors" onMouseEnter={(e) => e.target.style.color = 'white'} onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.5)'}>Refund Policy</a>
-                </div>
+              <div className="footer-bottom">
+                <span>© 2026 {CONFIG.company.legalName}. All rights reserved.</span>
+                <span className="sp">Enterprise data stays in India, deleted on your schedule.</span>
               </div>
             </div>
           </footer>
