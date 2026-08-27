@@ -45,6 +45,13 @@ class TestSmoke(WebsiteTestCase):
         expect(self.page.locator("h1")).to_contain_text("listings")
         expect(self.page.locator("a[data-email-link]:visible").first).to_be_visible()
 
+    def test_coaching_page_is_up(self):
+        response = self.open_page("/?mode=coaching", ready_selector="h1")
+        self.assert_successful_response(response)
+        self.assertIn("coaching", self.page.title().lower())
+        expect(self.page.locator("h1")).to_contain_text("institute")
+        expect(self.page.locator("a[data-email-link]:visible").first).to_be_visible()
+
     def test_github_domain_resolves_to_expected_ips(self):
         try:
             resolved_ips = resolve_domain_ips("aigenetic.in")

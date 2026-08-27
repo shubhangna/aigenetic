@@ -115,6 +115,10 @@
         "realestate": {
           "clip": null,
           "note": "No real-estate-specific demo clip exists in mp3/ yet (only Healthcare/Ecommerce/BFSI/EdTech/HRTech/Hospitality). realestate.html was built without the voice-sample player section rather than play a mismatched clip under a 'Hear the assistant' banner. TODO: record a real-estate site-visit/price-enquiry call sample, add it under assets/common/audio/ + assets/pages/realestate/audio/, then add the voice-sample block back into realestate.html and this entry (see CODED-Thers/TODO.md)."
+        },
+        "coaching": {
+          "clip": null,
+          "note": "No coaching/school-admissions-specific demo clip exists in mp3/ yet — the closest existing clip (edtech-lead-qualification) is a different scenario (EdTech platform lead qualification, not a coaching-institute admissions call), so coaching.html was built without the voice-sample player section, same as realestate.html. TODO: record a coaching-institute admission-enquiry/demo-class-booking call sample, add it under assets/common/audio/ + assets/pages/coaching/audio/, then add the voice-sample block back into coaching.html and this entry."
         }
       }
     },
@@ -203,7 +207,7 @@
         { "icon": "🏥", "title": "Clinics & Doctors", "desc": "Appointment booking, rescheduling, follow-ups", "features": ["24/7 booking", "Patient reminders", "Prescription follow-ups"], "gradient": "from-blue-500 to-cyan-500", "link": "/healthcare.html", "linkCtaLabel": "Explore for clinics →" },
         { "icon": "💇", "title": "Salons & Spas", "desc": "Service bookings, offers, cancellations", "features": ["Service bookings", "Package promotions", "Membership renewals"], "gradient": "from-pink-500 to-rose-500" },
         { "icon": "🏢", "title": "Real Estate", "desc": "Site visit scheduling, lead capture", "features": ["Site visit booking", "Lead qualification", "Property inquiries"], "gradient": "from-orange-500 to-amber-500", "link": "/realestate.html", "linkCtaLabel": "Explore for developers →" },
-        { "icon": "🏫", "title": "Offices & Schools", "desc": "Enquiry handling, information desk", "features": ["Admission inquiries", "Information desk", "Parent communication"], "gradient": "from-purple-500 to-indigo-500" }
+        { "icon": "🏫", "title": "Schools and Coaching", "desc": "Admission enquiries, fee & attendance reminders", "features": ["Admission inquiries", "Demo class booking", "Fee & attendance reminders"], "gradient": "from-purple-500 to-indigo-500", "link": "/coaching.html", "linkCtaLabel": "Explore for institutes →" }
       ]
     },
     "audioShowcase": {
@@ -691,6 +695,190 @@
         ],
         "copyright": "© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.",
         "disclaimer": "Buyer data stays in India, deleted on your schedule. Not a substitute for official RERA disclosures."
+      }
+    },
+    "coaching": {
+      "sourceFile": "coaching.html",
+      "theme": "clinicalTeal",
+      "$builtNote": "Built 2026-08-28 as the third instance of the pages.* pattern (after healthcare, realestate), preceded by web research into coaching-institute and school pain points (see researchNote in pricingSection below for the sourced stats). Segment = coaching institutes (JEE/NEET/UPSC/banking/SSC) AND K-12 schools/play schools, combined under one 'admissions desk + parent communication' framing since both share the same core pain: missed enquiry calls, no follow-up, and manual fee/attendance phone calls. Like realestate.html, built without the voice-sample player section (no coaching-specific demo clip exists yet — see assets.audio.pages.coaching.note). Pricing reuses the same ₹2,999/₹7,999/Custom price points as healthcare and realestate with institute-specific tier names/features. ERP/CRM chip names (Classplus, Teachmint, Vidyalaya ERP, Fedena, Entab) are shown as plain 'attach whatever you use' chips, NOT marked active/on — only Google Calendar and WhatsApp Business are marked .chip.on, same honesty rule as realestate.html's integrationsHonestyNote.",
+      "seo": {
+        "title": "Aigenetic for Coaching & Schools — the voice of your institute",
+        "description": "Aigenetic is an AI phone assistant for Indian coaching institutes and schools. It answers every admission enquiry, shares fees and batch timing, sends fee and attendance reminders, and books demo classes — in 31+ Indian languages, 24/7.",
+        "keywords": "AI receptionist for coaching institute, school admission enquiry automation, AI phone assistant India, coaching institute lead management, missed admission calls, fee reminder automation, attendance call automation",
+        "canonical": "https://aigenetic.in/coaching.html",
+        "ogTitle": "Aigenetic for Coaching & Schools — the voice of your institute",
+        "ogDescription": "You're mid-lecture. The phone rings anyway. Aigenetic answers, shares fees and batch timing, and books the demo class — in 31+ Indian languages.",
+        "ogImage": "https://aigenetic.in/logo/logoMedium.png"
+      },
+      "nav": {
+        "brandSuffix": "for institutes",
+        "links": [
+          { "label": "What it handles", "href": "#handles" },
+          { "label": "What it won't do", "href": "#limits" },
+          { "label": "Setup", "href": "#setup" },
+          { "label": "Pricing", "href": "#pricing" }
+        ],
+        "ctaCall": { "label": "📞 Call", "action": "tel:{company.phoneDial}" },
+        "ctaBookDemo": { "label": "Book Demo", "action": "open-calendar-modal" }
+      },
+      "hero": {
+        "badge": "Answering for 300+ coaching centers & schools right now",
+        "headingPrefix": "The voice of",
+        "headingConnector": "your",
+        "headingEmphasis": "institute",
+        "headingRawHtml": "The voice of<br>your <em>institute</em>",
+        "subheading": "You're mid-lecture. The phone rings anyway — a parent asking about the NEET batch, admission fees, or why their child was marked absent. Aigenetic picks up on the second ring, answers in the caller's language, and books the demo class or callback — in Hindi, Marathi, Tamil and 28 more.",
+        "ctaPrimary": { "label": "📅 Book Demo with Calendar", "action": "open-calendar-modal" },
+        "ctaSecondary": { "label": "💬 WhatsApp Us", "action": "whatsapp" },
+        "ctaTertiary": { "label": "🎙️ Live Call to Voice Assistant", "action": "live-voice-call-teaser", "teaserText": "Call to voice assistant coming soon" },
+        "ctaNote": "Free 14-day trial on your existing admissions/reception number. No new hardware.",
+        "statRail": [
+          { "title": "Live in 48–72 hours", "subtitle": "We forward your current number" },
+          { "title": "31+ Indian languages", "subtitle": "Switches mid-call if the caller does" },
+          { "title": "Answers during lecture hours", "subtitle": "Peak enquiry time, your front desk is teaching" },
+          { "title": "Priced per minute", "subtitle": "Not per counsellor seat" }
+        ]
+      },
+      "signatureCallSheet": {
+        "$layoutNote": "Single centered column (.sheet-solo), same as realestate.html — no coaching-specific demo audio clip exists yet. See voiceSample below.",
+        "eyebrow": "Call log · this evening · 19:38",
+        "callMeta": {
+          "phoneMasked": "+91 98••• ••204",
+          "language": "हिन्दी / English",
+          "duration": "1:19",
+          "tag": "● Handled by assistant"
+        },
+        "thread": [
+          { "speaker": "caller", "text": "Hello, aapke yahan NEET 2027 batch ke liye admission chal raha hai?", "gloss": "Hello, is admission open for the NEET 2027 batch?" },
+          { "speaker": "agent", "text": "Ji haan! NEET 2027 ka naya batch 15 September se start ho raha hai — weekday aur weekend, dono options hain. Free demo class attend karwa doon?", "gloss": "Yes! The new NEET 2027 batch starts 15 September — both weekday and weekend options. Shall I book you a free demo class?" },
+          { "speaker": "caller", "text": "Haan, weekend batch ka demo chahiye. Naam Ananya Kulkarni, Class 11.", "gloss": null },
+          { "speaker": "agent", "text": "Ananya ji ke liye Saturday 10 baje demo book kar diya. Fees structure aur batch timing WhatsApp par bhej diya hai.", "gloss": "Booked a Saturday 10 AM demo for Ananya. Sent the fee structure and batch timing on WhatsApp." },
+          { "speaker": "caller", "text": "Poore course ki fees kitni hai?", "gloss": null },
+          { "speaker": "agent", "text": "2-year integrated NEET program ₹1,85,000 hai, installments mein bhi le sakte hain. Counsellor kal 11 baje call karke poori detail de denge.", "gloss": "The 2-year integrated NEET program is ₹1,85,000, installments available. A counsellor will call tomorrow at 11 AM with full details." }
+        ],
+        "slotcard": { "name": "Ananya Kulkarni · Sat 10:00 AM", "meta": "NEET 2027 · Weekend batch · Demo class" },
+        "synced": { "system": "→ written to your CRM", "confirmation": "WhatsApp fee structure delivered 19:41" }
+      },
+      "voiceSample": null,
+      "callTypesGrid": {
+        "eyebrow": "The calls your front desk shouldn't have to answer twice",
+        "heading": "Most enquiries ask the same six questions",
+        "subheading": "Your admissions team spends the day repeating fees, batch timing and demo slots. Aigenetic takes every one of those, in the caller's language, and leaves you the ones that need a human — a real counselling call, a real parent-teacher conversation.",
+        "cells": [
+          { "title": "Books the demo class", "desc": "Checks live batch seats, offers the next two demo slots, confirms in one turn.", "quote": "Weekend batch ka demo mil sakta hai?" },
+          { "title": "Shares fees & batch timing", "desc": "Course fee, installment options, batch days and timing — by course and grade.", "quote": "NEET batch ki fees kitni hai?" },
+          { "title": "Sends fee-due reminders", "desc": "Calls or WhatsApps parents before the due date, before the late fee, before the awkward front-desk conversation.", "quote": "Fee ki last date kab hai?" },
+          { "title": "Alerts on student absence", "desc": "Notifies a parent the same day their child is marked absent — no more end-of-week surprises.", "quote": "(outbound) Aapke bachche aaj class mein nahi aaye." },
+          { "title": "Qualifies admission enquiries", "desc": "Course, grade, budget, timeline — before a counsellor spends 20 minutes on the call.", "quote": "Class 10 ke baad NEET foundation join kar sakte hain?" },
+          { "title": "Screens vendors & reps", "desc": "Book distributors and course-material reps get your visiting policy instead of your faculty's day.", "quote": "Principal sir se mil sakte hain?" }
+        ]
+      },
+      "limits": {
+        "eyebrow": "Hard limits, set by us, not by prompt",
+        "heading": "What it will never do",
+        "subheading": "A parent trusts you with their child's future. These three refusals are built into the product and cannot be turned on, by you or by us.",
+        "items": [
+          { "title": "No result or rank guaranteed", "desc": "Never promises a selection, a rank, or a percentage improvement — only your faculty and results speak to that." },
+          { "title": "No student data shared with an unverified caller", "desc": "Attendance, marks and fee status are only shared once the caller confirms the parent/guardian details on file." },
+          { "title": "No fee waiver or discount promised on a call", "desc": "Concessions and scholarships route to your admissions office — the assistant never commits a discount to close a call." }
+        ],
+        "escalation": {
+          "heading": "And one thing it always does",
+          "desc": "If a caller describes a safety concern, bullying, a medical issue during school hours, or asks urgently for the principal, the assistant stops the script mid-sentence and rings your front office or principal's mobile until someone picks up.",
+          "logLine": "ESCALATION · 11:20 · caller reported a safety concern\n→ Principal paged · call transferred in 8s"
+        }
+      },
+      "setup": {
+        "eyebrow": "Setup",
+        "heading": "Keep your number. Keep your ERP.",
+        "subheading": "We forward your existing admissions or reception line and write every enquiry, fee reminder and attendance alert into whatever you already run. Point us at your ERP, or a shared spreadsheet — we configure the sync. Calendar and WhatsApp are wired in from day one.",
+        "integrations": [
+          { "label": "Google Calendar", "active": true },
+          { "label": "WhatsApp Business", "active": true },
+          { "label": "Classplus", "active": false },
+          { "label": "Teachmint", "active": false },
+          { "label": "Vidyalaya ERP", "active": false },
+          { "label": "Fedena", "active": false },
+          { "label": "Entab", "active": false },
+          { "label": "Excel / Sheets", "active": false }
+        ],
+        "integrationsHonestyNote": "Only Google Calendar and WhatsApp Business are marked active — verified wired into this exact codebase. Classplus/Teachmint/Vidyalaya ERP/Fedena/Entab are shown as plain (inactive-style) chips, framed as 'easily attach any ERP/CRM' capability, not a claim that a specific integration is already live for every customer, matching realestate.html's integrationsHonestyNote.",
+        "specialtyBlock": {
+          "eyebrow": "Tuned per program",
+          "heading": "The questions differ by program",
+          "subheading": "A NEET aspirant's parent asks about faculty and past results. A play-school parent asks about safety and pickup policy. Each build ships with the script for yours.",
+          "chips": ["JEE / NEET coaching", "UPSC / Civil services", "Banking & SSC", "K-12 school admissions", "Foundation courses (6-10)", "Skill & vocational institutes", "Play school / preschool"]
+        }
+      },
+      "pricingSection": {
+        "eyebrow": "Pricing",
+        "heading": "Cheaper than the admissions you're losing",
+        "subheading": "70% of enquiries go cold within 24 hours without follow-up, and most institutes convert only 6–10% of leads to admissions. Fix the response time and one recovered admission pays for a year of this.",
+        "researchNote": "Grounded in real (searched, not fabricated) figures from industry sources on Indian coaching-institute lead management: 70% of leads go cold within 24 hours without automated follow-up; 78% of students enrol with the first institute that responds, and a 5-minute response makes a lead ~21x more likely to convert; industry-average lead-to-admission conversion is 6–10% (well-run systems reach 12–18%); institutes commonly lose ~30–50% of leads to missed calls and inconsistent follow-up, concentrated hardest in the compressed JEE/NEET admission season. Separately, for the school side: SMS/automated reminders for fee-due and attendance are replacing manual front-office phone calls, with SMS payment reminders seeing ~98% open rates. Sources noted in the conversation that produced this page.",
+        "plans": [
+          {
+            "kicker": "Single center",
+            "price": "₹2,999",
+            "period": "/month",
+            "features": ["One branch, one number", "500 call minutes included", "Admission enquiries, fees & batch Q&A", "WhatsApp confirmations"],
+            "cta": "Book Trial Demo",
+            "ctaAction": "open-calendar-modal",
+            "ctaStyle": "ghost",
+            "featured": false
+          },
+          {
+            "kicker": "Multi-branch institute · most chosen",
+            "price": "₹7,999",
+            "period": "/month",
+            "features": ["Up to 6 branches", "1,500 call minutes included", "ERP/CRM sync, both ways", "Outbound fee & attendance reminders", "Safety escalation to principal's mobile"],
+            "cta": "Start Free Trial",
+            "ctaAction": "open-calendar-modal",
+            "ctaStyle": "primary",
+            "featured": true
+          },
+          {
+            "kicker": "Institute chain / franchise",
+            "price": "Let's talk",
+            "period": "",
+            "features": ["Multiple centers and boards", "Routing by branch and counsellor", "Call recordings, retention on your terms", "Named onboarding engineer"],
+            "cta": "Contact Sales",
+            "ctaAction": "whatsapp",
+            "ctaStyle": "ghost",
+            "featured": false
+          }
+        ]
+      },
+      "demoCta": {
+        "eyebrow": "Schedule a Demo",
+        "heading": "Book a personalized demo<br>via Google Meet",
+        "subheading": "Our team will walk you through how Aigenetic works for your admissions office, answer questions, and help you get started.",
+        "ctaPrimary": { "label": "📅 Schedule via Calendar →", "action": "open-calendar-modal" },
+        "ctaSecondary": { "label": "📞 Call Now", "action": "tel:{company.phoneDial}" },
+        "note": "Or chat with us on WhatsApp for quick questions"
+      },
+      "calendarModal": {
+        "heading": "Schedule Your Demo",
+        "subheading": "Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.",
+        "embedUrlRef": "brand.integrations.googleCalendarSchedulingUrl"
+      },
+      "footer": {
+        "brandSuffix": "for institutes",
+        "description": "An AI phone assistant built for Indian coaching institutes and schools — answers admission enquiries, shares fees and batch timing, sends fee and attendance reminders, and books demo classes in the caller's own language, 24/7.",
+        "quickLinks": [
+          { "label": "Home", "href": "#top" },
+          { "label": "What it handles", "href": "#handles" },
+          { "label": "What it won't do", "href": "#limits" },
+          { "label": "Setup", "href": "#setup" },
+          { "label": "Pricing", "href": "#pricing" },
+          { "label": "Book a Demo", "href": "#demo" }
+        ],
+        "legalLinks": [
+          { "label": "Privacy Policy", "href": "privacy-policy.html" },
+          { "label": "Terms of Service", "href": "terms-of-service.html" },
+          { "label": "Refund Policy", "href": "refund-policy.html" }
+        ],
+        "copyright": "© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.",
+        "disclaimer": "Student and parent data stays in India, deleted on your schedule. Not a substitute for your institute's official admission or safety policies."
       }
     }
   }

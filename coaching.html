@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ---------- vertical mode router: redirect shim ----------
+     This page is aigenetic.in's coaching & schools content, fetched and
+     injected by index.html's loadModeContent() when you land on
+     /?mode=coaching — see the router script in index.html. A direct/real
+     visit to this URL (this script only runs when the browser actually
+     renders the page, never when index.html fetches its raw text) is
+     bounced to the consolidated URL so the whole site lives under one
+     address. With JS disabled the redirect never fires and this page
+     renders normally as a graceful fallback. -->
+<script>location.replace('/?mode=coaching' + (location.hash || ''));</script>
+
+<title>Aigenetic for Coaching &amp; Schools — the voice of your institute</title>
+
+<!-- SEO -->
+<meta name="description" content="Aigenetic is an AI phone assistant for Indian coaching institutes and schools. It answers every admission enquiry, shares fees and batch timing, sends fee and attendance reminders, and books demo classes — in 31+ Indian languages, 24/7.">
+<meta name="keywords" content="AI receptionist for coaching institute, school admission enquiry automation, AI phone assistant India, coaching institute lead management, missed admission calls, fee reminder automation, attendance call automation">
+<meta name="author" content="Aigenetic (OPC) Pvt Ltd">
+<meta name="theme-color" content="#0E1B1E">
+<link rel="canonical" href="https://aigenetic.in/?mode=coaching">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aigenetic">
+<meta property="og:title" content="Aigenetic for Coaching & Schools — the voice of your institute">
+<meta property="og:description" content="You're mid-lecture. The phone rings anyway. Aigenetic answers, shares fees and batch timing, and books the demo class — in 31+ Indian languages.">
+<meta property="og:url" content="https://aigenetic.in/?mode=coaching">
+<meta property="og:image" content="https://aigenetic.in/logo/logoMedium.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aigenetic for Coaching & Schools — the voice of your institute">
+<meta name="twitter:description" content="An AI phone assistant for Indian coaching institutes and schools. Answers, qualifies, books demo classes — 24/7, in 31+ Indian languages.">
+<meta name="twitter:image" content="https://aigenetic.in/logo/logoMedium.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/logo/logo.png">
+<link rel="apple-touch-icon" href="/logo/logoMedium.png">
+
+<script src="config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Theme tokens — theme.clinicalTeal in newSite/template.json.
+     Brand hexes are shared with index.html's theme.default
+     (--ink/--teal/--mint == --primary/--accent/--mint). If any of
+     these change here, change them there too (root CLAUDE.md sync).
+     Byte-for-byte the same design system as healthcare.html / realestate.html.
+     ============================================================ */
+  :root{
+    --ink:#0E1B1E;
+    --paper:#FAFAF7;
+    --teal:#0C6B5C;
+    --teal-deep:#084A40;
+    --mint:#E9F3F0;
+    --signal:#17B37F;
+    --line:#E3E5E0;
+    --muted:#546567;
+    --display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+    --body:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --wrap:1180px;
+
+    /* derived surface + motion tokens (no new brand hues) */
+    --card:#FFFFFF;
+    --line-soft:#EDEEEA;
+    --mint-deep:#DCEDE7;
+    --ink-70:rgba(14,27,30,.70);
+    --r-sm:12px;
+    --r-md:18px;
+    --r-lg:26px;
+    --sh-1:0 1px 2px rgba(14,27,30,.05), 0 8px 24px -18px rgba(14,27,30,.35);
+    --sh-2:0 2px 6px rgba(14,27,30,.05), 0 26px 60px -38px rgba(14,27,30,.45);
+    --sh-3:0 30px 80px -46px rgba(12,107,92,.55);
+    --ease:cubic-bezier(.2,.7,.3,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--body);font-size:17px;line-height:1.62;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(760px 520px at 78% -6%, rgba(23,179,127,.12), transparent 62%),
+      radial-gradient(620px 460px at 6% 2%, rgba(12,107,92,.09), transparent 60%);
+  }
+  body>*{position:relative;z-index:1}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  img{max-width:100%}
+  h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.035em;line-height:1.04;font-weight:800}
+  p{margin:0}
+  ::selection{background:var(--mint-deep);color:var(--teal-deep)}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:60;background:rgba(250,250,247,.72);
+    backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);
+    border-bottom:1px solid transparent;transition:border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .nav.scrolled{border-bottom-color:var(--line);background:rgba(250,250,247,.9);box-shadow:0 10px 30px -28px rgba(14,27,30,.7)}
+  .nav-in{display:flex;align-items:center;gap:28px;height:72px;transition:height .3s var(--ease)}
+  .nav.scrolled .nav-in{height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.025em;text-decoration:none}
+  .brand img{height:32px;width:auto;display:block}
+  .brand small{
+    font-family:var(--body);font-weight:600;font-size:11px;color:var(--teal-deep);letter-spacing:.1em;
+    text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--mint);border:1px solid var(--mint-deep);
+  }
+  .nav-links{margin-left:auto;display:flex;gap:6px;font-size:15px;font-weight:500}
+  .nav-links a{
+    text-decoration:none;color:var(--muted);padding:8px 14px;border-radius:999px;
+    transition:color .2s var(--ease), background .2s var(--ease);
+  }
+  .nav-links a:hover{color:var(--ink);background:rgba(233,243,240,.85)}
+  .nav-cta{display:flex;gap:10px;margin-left:auto}
+  .nav-links + .nav-cta{margin-left:22px}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--body);font-weight:600;
+    font-size:15px;padding:12px 22px;border-radius:999px;text-decoration:none;border:1px solid transparent;
+    transition:transform .18s var(--ease), background .2s var(--ease), box-shadow .25s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+    cursor:pointer;line-height:1.15;white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn:active{transform:translateY(0)}
+  .btn-primary{background:var(--ink);color:var(--paper);box-shadow:0 10px 24px -16px rgba(14,27,30,.9)}
+  .btn-primary:hover{background:var(--teal-deep);box-shadow:0 16px 34px -16px rgba(8,74,64,.75)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal-deep);box-shadow:0 14px 30px -22px rgba(12,107,92,.8)}
+  .btn-lg{font-size:16.5px;padding:16px 30px}
+  .nav .btn{font-size:14px;padding:10px 18px}
+
+  /* hamburger (mobile) */
+  .nav-toggle{
+    display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;
+    cursor:pointer;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+  }
+  .nav-toggle i{display:block;width:16px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s var(--ease), opacity .2s var(--ease)}
+  .nav-toggle[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] i:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  .nav-panel{display:none;border-top:1px solid var(--line);background:rgba(250,250,247,.98);padding:10px 0 18px}
+  .nav-panel.open{display:block}
+  .nav-panel a{
+    display:block;padding:12px 4px;text-decoration:none;color:var(--ink);font-weight:500;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-panel a:last-child{border-bottom:0}
+  .nav-panel .panel-cta{display:flex;gap:10px;margin-top:16px}
+  .nav-panel .panel-cta .btn{display:inline-flex;flex:1;border-bottom:0;padding:13px 14px;font-size:15px}
+  .nav-panel .panel-cta .btn-ghost{color:var(--ink)}
+  .nav-panel .panel-cta .btn-primary{color:var(--paper)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding:92px 0 0;text-align:center;overflow:hidden}
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+    background-image:linear-gradient(rgba(14,27,30,.045) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(14,27,30,.045) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
+            mask-image:radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:8px 18px;font-size:13.5px;color:var(--muted);font-weight:500;
+    box-shadow:var(--sh-1);
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 rgba(23,179,127,.55);animation:pulse 2.2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(23,179,127,0)}100%{box-shadow:0 0 0 0 rgba(23,179,127,0)}}
+  h1{font-size:clamp(44px,7.6vw,92px);margin:26px 0 0}
+  h1 em{font-style:normal;position:relative;white-space:nowrap;color:var(--teal)}
+  h1 em::after{
+    content:"";position:absolute;left:-.04em;right:-.04em;bottom:.09em;height:.16em;border-radius:.1em;
+    background:linear-gradient(90deg, rgba(233,243,240,.35), var(--mint) 22%, var(--mint) 78%, rgba(233,243,240,.35));
+    z-index:-1;
+  }
+  .sub{max-width:660px;margin:26px auto 0;font-size:19px;color:var(--muted)}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+  .cta-note{margin-top:16px;font-size:13.5px;color:var(--muted)}
+
+  .rail{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:66px 0 0;text-align:left;
+  }
+  .rail div{
+    position:relative;padding:22px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+    box-shadow:var(--sh-1);transition:transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+    overflow:hidden;
+  }
+  .rail div::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);
+    transform:scaleY(0);transform-origin:top;transition:transform .35s var(--ease);
+  }
+  .rail div:hover{transform:translateY(-4px);border-color:var(--mint-deep);box-shadow:var(--sh-2)}
+  .rail div:hover::before{transform:scaleY(1)}
+  .rail b{display:block;font-family:var(--display);font-size:16.5px;font-weight:700;letter-spacing:-.02em}
+  .rail span{display:block;margin-top:4px;font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* ---------- signature: call sheet ---------- */
+  .callsheet-sec{padding:84px 0 96px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--teal);font-weight:500;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.55}
+  .sheet-solo{max-width:680px;margin:22px auto 0}
+  .sheet{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+    box-shadow:var(--sh-2);
+  }
+  .sheet-head{
+    display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;padding:16px 24px;
+    background:var(--ink);color:#D9E4E2;font-family:var(--mono);font-size:12.5px;
+    background-image:linear-gradient(120deg, rgba(23,179,127,.16), transparent 46%);
+  }
+  .sheet-head b{color:#fff;font-weight:500}
+  .sheet-head .tag{margin-left:auto;color:#8FE3C6;display:inline-flex;align-items:center;gap:7px}
+  .thread{padding:28px 24px;display:flex;flex-direction:column;gap:16px;background:
+      radial-gradient(520px 200px at 90% -10%, rgba(233,243,240,.7), transparent 70%)}
+  .turn{
+    max-width:86%;padding:13px 17px;border-radius:16px;font-size:15.5px;position:relative;
+    box-shadow:0 1px 2px rgba(14,27,30,.04);
+  }
+  .turn .who{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .turn .gloss{display:block;margin-top:6px;font-size:13px;color:var(--muted);padding-top:6px;border-top:1px dashed var(--line)}
+  .caller{background:#F4F5F2;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+  .agent{background:var(--mint);border:1px solid var(--mint-deep);align-self:flex-end;border-bottom-right-radius:5px}
+  .agent .who{color:var(--teal-deep)}
+  .agent .gloss{border-top-color:var(--mint-deep)}
+  .sheet-foot{
+    border-top:1px dashed var(--line);padding:20px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+    background:linear-gradient(180deg,#FCFDFC,#F7F9F8);
+  }
+  .slotcard{border:1px solid var(--teal);border-radius:14px;padding:13px 18px;background:#fff;box-shadow:0 12px 28px -22px rgba(12,107,92,.9)}
+  .slotcard b{font-family:var(--display);font-size:17px;display:block;letter-spacing:-.02em}
+  .slotcard span{font-size:13.5px;color:var(--muted)}
+  .synced{font-family:var(--mono);font-size:12.5px;color:var(--teal-deep);margin-left:auto;text-align:right}
+  .synced span{display:block;color:var(--muted);margin-top:3px}
+
+  /* ---------- generic section ---------- */
+  section{scroll-margin-top:88px}
+  .band{padding:96px 0;border-top:1px solid var(--line)}
+  .band.tint{background:#fff}
+  .head{max-width:680px}
+  .head h2{font-size:clamp(30px,4.4vw,48px);margin-top:14px}
+  .head p{margin-top:18px;color:var(--muted);font-size:18px}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+  .cell{
+    position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:28px 24px 26px;display:flex;flex-direction:column;
+    transition:transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .band.tint .cell{background:#FCFDFC}
+  .cell:hover{transform:translateY(-5px);border-color:var(--mint-deep);box-shadow:var(--sh-2);background:#fff}
+  .cell .idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--teal);opacity:.75}
+  .cell h3{font-size:19.5px;font-weight:700;margin-top:12px;letter-spacing:-.025em}
+  .cell p{margin:9px 0 18px;color:var(--muted);font-size:15.5px}
+  .quote{
+    display:block;margin-top:auto;font-family:var(--mono);font-size:12.8px;color:var(--teal-deep);
+    background:var(--mint);border:1px solid var(--mint-deep);border-radius:12px;border-top-left-radius:4px;
+    padding:10px 13px;line-height:1.5;
+  }
+
+  /* ---------- limits ---------- */
+  .limits{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
+  .limit-list{list-style:none;margin:34px 0 0;padding:0}
+  .limit-list li{
+    padding:20px 0 20px 52px;border-top:1px solid var(--line);position:relative;
+  }
+  .limit-list li:last-child{border-bottom:1px solid var(--line)}
+  .limit-list li::before{
+    content:"✕";position:absolute;left:0;top:19px;width:30px;height:30px;border-radius:9px;
+    background:#fff;border:1px solid var(--line);color:var(--muted);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-family:var(--mono);
+  }
+  .limit-list b{font-family:var(--display);font-size:17.5px;font-weight:700;letter-spacing:-.02em}
+  .limit-list span{display:block;color:var(--muted);font-size:15px;margin-top:5px}
+  .escalate{
+    background:var(--ink);color:#E6EFED;border-radius:var(--r-lg);padding:34px 32px;position:relative;overflow:hidden;
+    box-shadow:0 40px 90px -60px rgba(14,27,30,.95);
+  }
+  .escalate::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(420px 240px at 100% 0%, rgba(23,179,127,.22), transparent 65%);
+  }
+  .escalate h3{color:#fff;font-size:22px;position:relative}
+  .escalate p{margin-top:14px;font-size:15.5px;color:#B6C7C4;position:relative}
+  .escalate .line{
+    margin-top:22px;font-family:var(--mono);font-size:12.8px;color:#8FE3C6;border:1px solid #24383B;
+    border-radius:14px;padding:16px 18px;background:rgba(0,0,0,.28);line-height:1.75;position:relative;
+    white-space:pre-line;
+  }
+
+  /* ---------- integrations + specialties ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;
+    border-radius:999px;padding:10px 18px;font-size:15px;font-weight:500;color:var(--muted);
+    transition:transform .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease);
+  }
+  .chip:hover{transform:translateY(-2px);border-color:var(--teal);color:var(--ink)}
+  .chip.on{background:var(--mint);border-color:var(--mint-deep);color:var(--teal-deep);font-weight:600}
+  .chip.on::before{
+    content:"✓";font-family:var(--mono);font-size:11px;width:18px;height:18px;border-radius:50%;
+    background:var(--teal);color:#fff;display:inline-flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- pricing ---------- */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;align-items:stretch}
+  .plan{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px;display:flex;flex-direction:column;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .plan:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
+  .plan.feature{
+    border-color:var(--teal);box-shadow:var(--sh-3);position:relative;overflow:hidden;
+  }
+  .plan.feature::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--signal))}
+  .plan .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .plan.feature .kicker{color:var(--teal-deep)}
+  .plan .price{font-family:var(--display);font-size:42px;font-weight:800;letter-spacing:-.04em;margin-top:14px;line-height:1.05}
+  .plan .price s{font-size:15px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0}
+  .plan ul{list-style:none;margin:22px 0 28px;padding:0;font-size:15.5px;color:var(--muted)}
+  .plan li{padding:10px 0 10px 28px;position:relative;border-top:1px solid var(--line-soft)}
+  .plan li:first-child{border-top:0}
+  .plan li::before{
+    content:"";position:absolute;left:2px;top:18px;width:10px;height:10px;border-radius:50%;
+    border:2px solid var(--teal);
+  }
+  .plan.feature li::before{background:var(--teal)}
+  .plan .btn{margin-top:auto;justify-content:center}
+
+  /* ---------- close ---------- */
+  .close{
+    text-align:center;padding:0;border-top:1px solid var(--line);
+  }
+  .close-in{
+    background:var(--ink);color:#EAF2F0;border-radius:34px;padding:88px 32px 76px;margin:80px 0;
+    position:relative;overflow:hidden;
+  }
+  .close-in::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(620px 320px at 50% 0%, rgba(23,179,127,.22), transparent 66%),
+      radial-gradient(420px 260px at 12% 100%, rgba(12,107,92,.3), transparent 70%);
+  }
+  .close-in>*{position:relative}
+  .close .eyebrow{color:#8FE3C6}
+  .close h2{font-size:clamp(32px,5.2vw,58px);color:#fff;margin-top:16px}
+  .close p{margin:20px auto 0;max-width:560px;color:#B6C7C4;font-size:18px}
+  .close .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}
+  .close .btn-ghost:hover{background:rgba(255,255,255,.08);border-color:#8FE3C6;color:#fff}
+  .close .btn-primary{background:#fff;color:var(--ink)}
+  .close .btn-primary:hover{background:var(--mint);color:var(--teal-deep)}
+  .close .cta-note{color:#94A9A6}
+  .close .cta-note a{color:#8FE3C6}
+
+  /* ---------- site footer ---------- */
+  .site-footer{border-top:1px solid var(--line);background:var(--mint);padding:64px 0 30px}
+  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px}
+  .footer-brand p{margin-top:16px;color:var(--muted);font-size:14px;max-width:340px;line-height:1.65}
+  .footer-col h5{font-family:var(--display);font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--teal-deep);margin:0 0 16px;font-weight:700}
+  .footer-col a{display:block;color:var(--muted);font-size:14.5px;text-decoration:none;margin-bottom:11px;width:fit-content;transition:color .2s var(--ease), transform .2s var(--ease)}
+  .footer-col a:hover{color:var(--teal-deep);transform:translateX(3px)}
+  .footer-bottom{margin-top:48px;padding-top:26px;border-top:1px solid var(--mint-deep);display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;font-size:13px;color:var(--muted)}
+  .footer-bottom .sp{margin-left:auto;text-align:right}
+
+  /* ---------- motion ---------- */
+  .rise{opacity:0;transform:translateY(16px);animation:rise .8s var(--ease) forwards}
+  .rise:nth-child(2){animation-delay:.06s}
+  .rise:nth-child(3){animation-delay:.12s}
+  .rise:nth-child(4){animation-delay:.18s}
+  .rise:nth-child(5){animation-delay:.24s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .stagger>*{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .stagger.in>*{opacity:1;transform:none}
+  .stagger.in>*:nth-child(1){transition-delay:.04s}
+  .stagger.in>*:nth-child(2){transition-delay:.10s}
+  .stagger.in>*:nth-child(3){transition-delay:.16s}
+  .stagger.in>*:nth-child(4){transition-delay:.22s}
+  .stagger.in>*:nth-child(5){transition-delay:.28s}
+  .stagger.in>*:nth-child(6){transition-delay:.34s}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:8px}
+
+  /* ---------- calendar booking modal ---------- */
+  .calendar-modal{
+    display:none;position:fixed;inset:0;background:rgba(14,27,30,.62);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    z-index:80;align-items:center;justify-content:center;padding:20px;
+  }
+  .calendar-modal.open{display:flex}
+  .calendar-modal-content{
+    position:relative;background:#fff;border-radius:24px;padding:34px;max-width:700px;width:100%;
+    max-height:calc(100dvh - 40px);overflow-y:auto;box-shadow:0 40px 90px -30px rgba(0,0,0,.5);
+    animation:modal-in .35s var(--ease);
+  }
+  @keyframes modal-in{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .calendar-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
+    background:#fff;cursor:pointer;font-size:16px;color:var(--muted);line-height:1;
+    transition:color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease);
+  }
+  .calendar-close:hover{color:var(--ink);border-color:var(--teal);transform:rotate(90deg)}
+  .calendar-modal-content h2{font-size:28px;margin-bottom:10px;padding-right:44px}
+  .calendar-modal-content>p{color:var(--muted);margin-bottom:24px;font-size:15px}
+  .calendar-modal-content iframe{display:block;width:100%;height:600px;max-height:calc(100dvh - 220px);border-radius:14px}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links{display:none}
+    .nav-toggle{display:flex}
+    .nav-cta{margin-left:auto}
+    .rail{grid-template-columns:repeat(2,1fr)}
+    .grid3{grid-template-columns:repeat(2,1fr)}
+    .plans{grid-template-columns:1fr}
+    .limits{grid-template-columns:1fr;gap:36px}
+    .turn{max-width:94%}
+    .hero{padding-top:62px}
+    .band{padding:72px 0}
+    .close-in{padding:64px 22px 56px;border-radius:26px;margin:60px 0}
+  }
+  @media(max-width:820px){
+    .footer-grid{grid-template-columns:1fr 1fr;gap:34px 24px}
+    .footer-brand{grid-column:1/-1}
+  }
+  @media(max-width:680px){
+    body{font-size:16.5px}
+    .nav-cta>.btn{display:none}
+    .grid3{grid-template-columns:1fr}
+    .rail{grid-template-columns:1fr}
+    .cta-row .btn{width:100%}
+    .calendar-modal{align-items:flex-start;padding:12px}
+    .calendar-modal-content{padding:26px 18px 18px;border-radius:16px;max-height:calc(100dvh - 24px)}
+    .calendar-modal-content h2{font-size:23px}
+    .calendar-modal-content iframe{height:calc(100dvh - 250px);max-height:none}
+  }
+  @media(max-width:560px){
+    .footer-grid{grid-template-columns:1fr}
+    .footer-bottom .sp{margin-left:0;text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rise,.reveal,.stagger>*{animation:none!important;opacity:1!important;transform:none!important;transition:none!important}
+    .dot{animation:none}
+    html{scroll-behavior:auto}
+    .btn:hover,.cell:hover,.plan:hover,.rail div:hover,.chip:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="site-nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for institutes</small></a>
+    <div class="nav-links">
+      <a href="#handles">What it handles</a>
+      <a href="#limits">What it won't do</a>
+      <a href="#setup">Setup</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#demo" data-phone-link>📞 Call</a>
+      <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Book Demo</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </div>
+  <div class="nav-panel" id="nav-panel">
+    <div class="wrap">
+      <a href="#handles">What it handles</a>
+      <a href="#limits">What it won't do</a>
+      <a href="#setup">Setup</a>
+      <a href="#pricing">Pricing</a>
+      <div class="panel-cta">
+        <a class="btn btn-ghost" href="#demo" data-phone-link>📞 Call</a>
+        <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Book Demo</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="badge rise"><span class="dot"></span> Answering for 300+ coaching centers &amp; schools right now</span>
+    <h1 class="rise">The voice of<br>your <em>institute</em></h1>
+    <p class="sub rise">You're mid-lecture. The phone rings anyway — a parent asking about the NEET batch, admission fees, or why their child was marked absent. Aigenetic picks up on the second ring, answers in the caller's language, and books the demo class or callback — in Hindi, Marathi, Tamil and 28 more.</p>
+    <div class="cta-row rise">
+      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
+      <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>🎙️ Live Call to Voice Assistant</button>
+    </div>
+    <p class="cta-note rise">Free 14-day trial on your existing admissions/reception number. No new hardware.</p>
+
+    <div class="rail reveal stagger">
+      <div><b>Live in 48–72 hours</b><span>We forward your current number</span></div>
+      <div><b>31+ Indian languages</b><span>Switches mid-call if the caller does</span></div>
+      <div><b>Answers during lecture hours</b><span>Peak enquiry time, your front desk is teaching</span></div>
+      <div><b>Priced per minute</b><span>Not per counsellor seat</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="callsheet-sec">
+  <div class="wrap">
+    <span class="eyebrow reveal">Call log · this evening · 19:38</span>
+    <div class="sheet-solo reveal">
+      <div class="sheet">
+        <div class="sheet-head">
+          <span>+91 98••• ••204</span>
+          <span>Language detected: <b>हिन्दी / English</b></span>
+          <span>Duration <b>1:19</b></span>
+          <span class="tag">● Handled by assistant</span>
+        </div>
+        <div class="thread">
+          <div class="turn caller"><span class="who">Caller</span>Hello, aapke yahan NEET 2027 batch ke liye admission chal raha hai?
+            <span class="gloss">Hello, is admission open for the NEET 2027 batch?</span></div>
+          <div class="turn agent"><span class="who">Aigenetic</span>Ji haan! NEET 2027 ka naya batch 15 September se start ho raha hai — weekday aur weekend, dono options hain. Free demo class attend karwa doon?
+            <span class="gloss">Yes! The new NEET 2027 batch starts 15 September — both weekday and weekend options. Shall I book you a free demo class?</span></div>
+          <div class="turn caller"><span class="who">Caller</span>Haan, weekend batch ka demo chahiye. Naam Ananya Kulkarni, Class 11.</div>
+          <div class="turn agent"><span class="who">Aigenetic</span>Ananya ji ke liye Saturday 10 baje demo book kar diya. Fees structure aur batch timing WhatsApp par bhej diya hai.
+            <span class="gloss">Booked a Saturday 10 AM demo for Ananya. Sent the fee structure and batch timing on WhatsApp.</span></div>
+          <div class="turn caller"><span class="who">Caller</span>Poore course ki fees kitni hai?</div>
+          <div class="turn agent"><span class="who">Aigenetic</span>2-year integrated NEET program ₹1,85,000 hai, installments mein bhi le sakte hain. Counsellor kal 11 baje call karke poori detail de denge.
+            <span class="gloss">The 2-year integrated NEET program is ₹1,85,000, installments available. A counsellor will call tomorrow at 11 AM with full details.</span></div>
+        </div>
+        <div class="sheet-foot">
+          <div class="slotcard">
+            <b>Ananya Kulkarni · Sat 10:00 AM</b>
+            <span>NEET 2027 · Weekend batch · Demo class</span>
+          </div>
+          <div class="synced">→ written to your CRM<span>WhatsApp fee structure delivered 19:41</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band tint" id="handles">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">The calls your front desk shouldn't have to answer twice</span>
+      <h2>Most enquiries ask the same six questions</h2>
+      <p>Your admissions team spends the day repeating fees, batch timing and demo slots. Aigenetic takes every one of those, in the caller's language, and leaves you the ones that need a human — a real counselling call, a real parent-teacher conversation.</p>
+    </div>
+    <div class="grid3 reveal stagger">
+      <div class="cell"><span class="idx">01</span><h3>Books the demo class</h3><p>Checks live batch seats, offers the next two demo slots, confirms in one turn.</p><span class="quote">"Weekend batch ka demo mil sakta hai?"</span></div>
+      <div class="cell"><span class="idx">02</span><h3>Shares fees &amp; batch timing</h3><p>Course fee, installment options, batch days and timing — by course and grade.</p><span class="quote">"NEET batch ki fees kitni hai?"</span></div>
+      <div class="cell"><span class="idx">03</span><h3>Sends fee-due reminders</h3><p>Calls or WhatsApps parents before the due date, before the late fee, before the awkward front-desk conversation.</p><span class="quote">"Fee ki last date kab hai?"</span></div>
+      <div class="cell"><span class="idx">04</span><h3>Alerts on student absence</h3><p>Notifies a parent the same day their child is marked absent — no more end-of-week surprises.</p><span class="quote">(outbound) "Aapke bachche aaj class mein nahi aaye."</span></div>
+      <div class="cell"><span class="idx">05</span><h3>Qualifies admission enquiries</h3><p>Course, grade, budget, timeline — before a counsellor spends 20 minutes on the call.</p><span class="quote">"Class 10 ke baad NEET foundation join kar sakte hain?"</span></div>
+      <div class="cell"><span class="idx">06</span><h3>Screens vendors &amp; reps</h3><p>Book distributors and course-material reps get your visiting policy instead of your faculty's day.</p><span class="quote">"Principal sir se mil sakte hain?"</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="wrap limits">
+    <div class="reveal">
+      <span class="eyebrow">Hard limits, set by us, not by prompt</span>
+      <h2 style="font-size:clamp(30px,4.2vw,44px);margin-top:14px">What it will never do</h2>
+      <p style="margin-top:18px;color:var(--muted);font-size:18px">A parent trusts you with their child's future. These three refusals are built into the product and cannot be turned on, by you or by us.</p>
+      <ul class="limit-list">
+        <li><b>No result or rank guaranteed</b><span>Never promises a selection, a rank, or a percentage improvement — only your faculty and results speak to that.</span></li>
+        <li><b>No student data shared with an unverified caller</b><span>Attendance, marks and fee status are only shared once the caller confirms the parent/guardian details on file.</span></li>
+        <li><b>No fee waiver or discount promised on a call</b><span>Concessions and scholarships route to your admissions office — the assistant never commits a discount to close a call.</span></li>
+      </ul>
+    </div>
+    <div class="escalate reveal">
+      <h3>And one thing it always does</h3>
+      <p>If a caller describes a safety concern, bullying, a medical issue during school hours, or asks urgently for the principal, the assistant stops the script mid-sentence and rings your front office or principal's mobile until someone picks up.</p>
+      <p class="line">ESCALATION · 11:20 · caller reported a safety concern
+→ Principal paged · call transferred in 8s</p>
+    </div>
+  </div>
+</section>
+
+<section class="band tint" id="setup">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Setup</span>
+      <h2>Keep your number. Keep your ERP.</h2>
+      <p>We forward your existing admissions or reception line and write every enquiry, fee reminder and attendance alert into whatever you already run. Point us at your ERP, or a shared spreadsheet — we configure the sync. Calendar and WhatsApp are wired in from day one.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip on">Google Calendar</span><span class="chip on">WhatsApp Business</span>
+      <span class="chip">Classplus</span><span class="chip">Teachmint</span><span class="chip">Vidyalaya ERP</span>
+      <span class="chip">Fedena</span><span class="chip">Entab</span><span class="chip">Excel / Sheets</span>
+    </div>
+    <div class="head reveal" style="margin-top:64px">
+      <span class="eyebrow">Tuned per program</span>
+      <h2 style="font-size:clamp(26px,3.4vw,36px)">The questions differ by program</h2>
+      <p>A NEET aspirant's parent asks about faculty and past results. A play-school parent asks about safety and pickup policy. Each build ships with the script for yours.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip">JEE / NEET coaching</span><span class="chip">UPSC / Civil services</span><span class="chip">Banking &amp; SSC</span>
+      <span class="chip">K-12 school admissions</span><span class="chip">Foundation courses (6-10)</span><span class="chip">Skill &amp; vocational institutes</span><span class="chip">Play school / preschool</span>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="pricing">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2>Cheaper than the admissions you're losing</h2>
+      <p>70% of enquiries go cold within 24 hours without follow-up, and most institutes convert only 6–10% of leads to admissions. Fix the response time and one recovered admission pays for a year of this.</p>
+    </div>
+    <div class="plans reveal stagger">
+      <div class="plan">
+        <span class="kicker">Single center</span>
+        <div class="price">₹2,999<s> /month</s></div>
+        <ul>
+          <li>One branch, one number</li>
+          <li>500 call minutes included</li>
+          <li>Admission enquiries, fees &amp; batch Q&amp;A</li>
+          <li>WhatsApp confirmations</li>
+        </ul>
+        <a class="btn btn-ghost" href="#calendar-booking" data-open-calendar>Book Trial Demo</a>
+      </div>
+      <div class="plan feature">
+        <span class="kicker">Multi-branch institute · most chosen</span>
+        <div class="price">₹7,999<s> /month</s></div>
+        <ul>
+          <li>Up to 6 branches</li>
+          <li>1,500 call minutes included</li>
+          <li>ERP/CRM sync, both ways</li>
+          <li>Outbound fee &amp; attendance reminders</li>
+          <li>Safety escalation to principal's mobile</li>
+        </ul>
+        <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Start Free Trial</a>
+      </div>
+      <div class="plan">
+        <span class="kicker">Institute chain / franchise</span>
+        <div class="price">Let's talk</div>
+        <ul>
+          <li>Multiple centers and boards</li>
+          <li>Routing by branch and counsellor</li>
+          <li>Call recordings, retention on your terms</li>
+          <li>Named onboarding engineer</li>
+        </ul>
+        <a class="btn btn-ghost" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close" id="demo">
+  <div class="wrap">
+    <div class="close-in reveal">
+      <span class="eyebrow">Schedule a Demo</span>
+      <h2>Book a personalized demo<br>via Google Meet</h2>
+      <p>Our team will walk you through how Aigenetic works for your admissions office, answer questions, and help you get started.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Schedule via Calendar →</a>
+        <a class="btn btn-ghost btn-lg" href="tel:+917428497033" data-phone-link>📞 Call Now</a>
+      </div>
+      <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top"><img src="logo/logoMedium.png" alt="Aigenetic" />Aigenetic <small>for institutes</small></a>
+        <p>An AI phone assistant built for Indian coaching institutes and schools — answers admission enquiries, shares fees and batch timing, sends fee and attendance reminders, and books demo classes in the caller's own language, 24/7.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="#top">Home</a>
+        <a href="#handles">What it handles</a>
+        <a href="#limits">What it won't do</a>
+        <a href="#setup">Setup</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#demo">Book a Demo</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:connect@aigenetic.in" data-email-link>connect@aigenetic.in</a>
+        <a href="tel:+917428497033" data-phone-link><span data-phone-display>+91 742849 7033</span></a>
+        <a href="#" data-whatsapp-link target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy-policy.html?mode=coaching">Privacy Policy</a>
+        <a href="terms-of-service.html?mode=coaching">Terms of Service</a>
+        <a href="refund-policy.html?mode=coaching">Refund Policy</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.</span>
+      <span class="sp">Student and parent data stays in India, deleted on your schedule.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Calendar Booking Modal -->
+<div id="calendar-modal" class="calendar-modal" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-title">
+  <div class="calendar-modal-content">
+    <button class="calendar-close" onclick="closeCalendarModal()" aria-label="Close booking dialog">✕</button>
+    <h2 id="calendar-modal-title">Schedule Your Demo</h2>
+    <p>Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
+
+    <!-- Google Calendar Appointment Scheduling begin -->
+    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0" width="100%" height="600" frameborder="0" title="Book a demo with Aigenetic"></iframe>
+    <!-- end Google Calendar Appointment Scheduling -->
+  </div>
+</div>
+
+<script>
+  // Calendar Modal Functions
+  function openCalendarModal() {
+    document.getElementById('calendar-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCalendarModal() {
+    document.getElementById('calendar-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Handle calendar modal toggle
+  document.querySelectorAll('[data-open-calendar]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCalendarModal();
+    });
+  });
+
+  // Close modal when clicking outside
+  document.getElementById('calendar-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'calendar-modal') {
+      closeCalendarModal();
+    }
+  });
+
+  // Close modal on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCalendarModal();
+  });
+
+  // Sticky nav shadow + mobile menu
+  (function navBehavior() {
+    const nav = document.getElementById('site-nav');
+    const toggle = document.getElementById('nav-toggle');
+    const panel = document.getElementById('nav-panel');
+    if (nav) {
+      const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    if (toggle && panel) {
+      toggle.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        panel.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open menu');
+      }));
+    }
+  })();
+
+  // "Live Call to Voice Assistant" buttons — flash a coming-soon message, then reset
+  document.querySelectorAll('[data-live-voice-call]').forEach(btn => {
+    const originalText = btn.textContent;
+    btn.addEventListener('click', () => {
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = '1';
+      btn.textContent = 'Call to voice assistant coming soon';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        delete btn.dataset.busy;
+      }, 1000);
+    });
+  });
+</script>
+
+
+<script>
+  (function applySharedContactData() {
+    const company = (window.CONFIG && window.CONFIG.company) || {
+      phoneDisplay: '+91 742849 7033',
+      phoneDial: '+917428497033',
+      whatsappNumber: '917428497033',
+      email: 'connect@aigenetic.in'
+    };
+
+    document.querySelectorAll('[data-phone-display]').forEach((el) => {
+      el.textContent = company.phoneDisplay;
+    });
+
+    document.querySelectorAll('[data-phone-link]').forEach((el) => {
+      el.href = `tel:${company.phoneDial}`;
+      el.setAttribute('aria-label', `Call ${company.phoneDisplay}`);
+    });
+
+    document.querySelectorAll('[data-whatsapp-link]').forEach((el) => {
+      el.href = `https://wa.me/${company.whatsappNumber}`;
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
+      el.setAttribute('aria-label', 'Chat on WhatsApp');
+    });
+
+    document.querySelectorAll('[data-email-link]').forEach((el) => {
+      el.href = `mailto:${company.email}`;
+      el.textContent = company.email;
+    });
+  })();
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

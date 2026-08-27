@@ -480,9 +480,10 @@
   <script src="config.js"></script>
 
   <!-- ---------- vertical mode router ----------
-       aigenetic.in/healthcare.html and aigenetic.in/realestate.html redirect
-       here with ?mode=healthcare / ?mode=realestate (see the redirect script
-       at the top of those files) so the whole site lives under one URL.
+       aigenetic.in/healthcare.html, aigenetic.in/realestate.html and
+       aigenetic.in/coaching.html redirect here with ?mode=healthcare /
+       ?mode=realestate / ?mode=coaching (see the redirect script at the top
+       of those files) so the whole site lives under one URL.
        Instead of re-authoring their content as JSX, this fetches that page's
        own markup — still the single source of truth for its copy — and
        swaps it into #mode-root. See CLAUDE.md's "vertical mode router" note. -->
@@ -490,12 +491,12 @@
     function getAigeneticMode() {
       var params = new URLSearchParams(location.search);
       var mode = params.get('mode');
-      return (mode === 'healthcare' || mode === 'realestate') ? mode : 'home';
+      return (mode === 'healthcare' || mode === 'realestate' || mode === 'coaching') ? mode : 'home';
     }
     window.__AIGENETIC_MODE__ = getAigeneticMode();
 
     async function loadModeContent(mode) {
-      var file = mode === 'healthcare' ? 'healthcare.html' : 'realestate.html';
+      var file = mode === 'healthcare' ? 'healthcare.html' : (mode === 'coaching' ? 'coaching.html' : 'realestate.html');
       try {
         var res = await fetch(file);
         if (!res.ok) throw new Error('fetch failed: ' + res.status);
