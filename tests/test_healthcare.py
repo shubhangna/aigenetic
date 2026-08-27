@@ -114,6 +114,183 @@ class TestHealthcarePage(WebsiteTestCase):
             # click must not navigate the SPA away or throw.
             self.assertIn("mode=healthcare", page.url)
 
+    def test_healthcare_page_extended_content(self):
+        """Content coverage beyond test_healthcare_page's happy path, folded
+        into a single page load as subTests (see module docstring) rather
+        than as 14 separate test methods with 14 separate navigations.
+
+        One originally proposed test (floating FABs) was dropped: this page
+        has no floating action buttons anywhere in its markup.
+        """
+        page = self.page
+        self.page.set_viewport_size({"width": 1280, "height": 900})
+        self.open_healthcare_page()
+
+        with self.subTest("hero clinic counter is visible above the fold"):
+            counter = page.get_by_text("Answering for 240+ clinics right now")
+            expect(counter).to_be_visible()
+            expect(counter).to_contain_text("240+")
+            expect(counter).to_contain_text("clinics")
+            self.assertLess(counter.bounding_box()["y"], page.viewport_size["height"])
+
+        with self.subTest("call log demo section shows the full mock conversation"):
+            demo = page.locator(".callsheet-sec .sheet")
+            expect(demo).to_contain_text("+91 98••• ••412")
+            expect(demo).to_contain_text("हिन्दी / English")
+            expect(demo).to_contain_text("1:12")
+            expect(demo).to_contain_text("Handled by assistant")
+            turns = demo.locator(".turn")
+            turn_text = " ".join(turns.nth(i).inner_text().lower() for i in range(turns.count()))
+            self.assertIn("caller", turn_text)
+            self.assertIn("aigenetic", turn_text)
+            self.assertIn("appointment lena tha", turn_text)
+            self.assertIn("dr. rao", turn_text)
+            expect(demo).to_contain_text("Sunita Sharma")
+            expect(demo).to_contain_text("11:30 AM")
+            expect(demo).to_contain_text("Follow-up")
+            expect(demo).to_contain_text("Dr. Rao")
+            expect(demo).to_contain_text("written to Practo Ray")
+            expect(demo).to_contain_text("WhatsApp confirmation delivered")
+
+        with self.subTest("six feature cards under handles"):
+            handles = page.locator("#handles")
+            cards = handles.locator(".cell")
+            self.assertEqual(cards.count(), 6)
+            expected_titles = [
+                "Books the slot",
+                "Reschedules and cancels",
+                "Quotes fees and timings",
+                "Gives directions",
+                "Reports and readiness",
+                "Screens the reps",
+            ]
+            for index, title in enumerate(expected_titles):
+                with self.subTest(card=title):
+                    card = cards.nth(index)
+                    expect(card).to_contain_text(f"{index + 1:02d}")
+                    expect(card).to_contain_text(title)
+                    expect(card.locator(".quote")).to_be_visible()
+
+        with self.subTest("three refusal items under limits"):
+            limits = page.locator("#limits")
+            expect(limits).to_contain_text("Hard limits", ignore_case=True)
+            items = limits.locator(".limit-list li")
+            self.assertEqual(items.count(), 3)
+            expected_refusals = {
+                "No diagnosis, no advice": "earliest slot",
+                "No medicine names, no dosages": "Not even repeats",
+                "No results read over the phone": "Ready for collection",
+            }
+            for title, snippet in expected_refusals.items():
+                with self.subTest(refusal=title):
+                    item = limits.locator(".limit-list li", has_text=title)
+                    expect(item).to_contain_text(snippet)
+
+        with self.subTest("emergency escalation notice"):
+            escalate = page.locator("#limits .escalate")
+            expect(escalate).to_contain_text("And one thing it always does")
+            for trigger in ("chest pain", "breathlessness", "heavy bleeding", "seizure", "unresponsive patient"):
+                expect(escalate).to_contain_text(trigger)
+            expect(escalate).to_contain_text("emergency number")
+            expect(escalate).to_contain_text("on-duty mobile")
+            escalation_line = escalate.locator(".line")
+            expect(escalation_line).to_contain_text("ESCALATION")
+            expect(escalation_line).to_contain_text("chest pain")
+            expect(escalation_line).to_contain_text("108 read aloud")
+            expect(escalation_line).to_contain_text("Dr. Rao paged")
+            expect(escalation_line).to_contain_text("call transferred")
+
+        with self.subTest("setup integrations list has all 8 entries"):
+            setup = page.locator("#setup")
+            for integration in (
+                "Practo Ray", "HealthPlix", "Bajaj Health", "DocPulse",
+                "Google Calendar", "WhatsApp Business", "Excel", "Paper register",
+            ):
+                expect(setup).to_contain_text(integration)
+
+        with self.subTest("specialty tags list has all 9 entries"):
+            setup = page.locator("#setup")
+            for specialty in (
+                "Dental", "Paediatrics", "Dermatology", "Orthopaedics", "Gynaecology",
+                "Physiotherapy", "Eye care", "Diagnostic labs", "Multi-speciality",
+            ):
+                expect(setup).to_contain_text(specialty)
+
+        with self.subTest("pricing section has all three tiers"):
+            pricing = page.locator("#pricing")
+            plans = pricing.locator(".plan")
+            self.assertEqual(plans.count(), 3)
+
+            solo = plans.nth(0)
+            expect(solo).to_contain_text("Solo practice", ignore_case=True)
+            expect(solo).to_contain_text("2,999")
+            expect(solo).to_contain_text("Book Trial Demo")
+
+            multi = plans.nth(1)
+            expect(multi).to_contain_text("Multi-doctor clinic", ignore_case=True)
+            expect(multi).to_contain_text("most chosen", ignore_case=True)
+            expect(multi).to_contain_text("7,999")
+            expect(multi).to_contain_text("Emergency escalation to on-duty mobile")
+            expect(multi).to_contain_text("Waitlist fill on cancellation")
+            expect(multi).to_contain_text("Start Free Trial")
+
+            hospital = plans.nth(2)
+            expect(hospital).to_contain_text("Hospital or chain", ignore_case=True)
+            expect(hospital).to_contain_text("Let's talk")
+            expect(hospital).to_contain_text("Named onboarding engineer")
+            expect(hospital).to_contain_text("Contact Sales")
+
+        with self.subTest("desktop nav links are present and Pricing scrolls into view"):
+            nav = page.locator("#site-nav .nav-links")
+            expect(nav).to_be_visible()
+            for label in ("What it handles", "What it won't do", "Setup", "Pricing"):
+                expect(nav.get_by_text(label, exact=True)).to_be_visible()
+            nav.get_by_text("Pricing", exact=True).click()
+            expect(page.locator("#pricing")).to_be_in_viewport()
+
+        with self.subTest("hero feature badges"):
+            rail = page.locator(".rail")
+            expected_badges = {
+                "Live in 48–72 hours": "We forward your current number",
+                "31+ Indian languages": "Switches mid-call if the caller does",
+                "Answers at 2 AM": "Sunday, holidays, OPD hours",
+                "Priced per minute": "Not per receptionist seat",
+            }
+            for title, description in expected_badges.items():
+                with self.subTest(badge=title):
+                    expect(rail).to_contain_text(title)
+                    expect(rail).to_contain_text(description)
+
+        with self.subTest("footer data residency and legal notices"):
+            footer = page.locator("footer")
+            footer.scroll_into_view_if_needed()
+            expect(footer).to_contain_text("AI phone assistant built for Indian clinics")
+            expect(footer).to_contain_text("Patient data stays in India, deleted on your schedule")
+            expect(footer).to_contain_text("© 2026 Aigenetic (OPC) Pvt Ltd")
+
+        with self.subTest("footer quick links stay within healthcare mode"):
+            footer = page.locator("footer")
+            for label in ("Home", "What it handles", "What it won't do", "Setup", "Pricing", "Book a Demo"):
+                expect(footer.get_by_role("link", name=label, exact=True)).to_be_visible()
+            # "Home" intentionally stays in ?mode=healthcare and scrolls to
+            # #top rather than leaving the vertical (see index.html's
+            # loadModeContent comment on deliberately not rewriting this link).
+            footer.get_by_role("link", name="Home", exact=True).click()
+            self.assertIn("mode=healthcare", page.url)
+            expect(page.locator("#top")).to_be_in_viewport()
+
+        with self.subTest("schedule a demo section"):
+            demo_section = page.locator("#demo")
+            expect(demo_section).to_contain_text("Book a personalized demo")
+            expect(demo_section).to_contain_text("Google Meet")
+            expect(demo_section).to_contain_text("Schedule via Calendar")
+            expect(demo_section.locator("[data-open-calendar]")).to_be_visible()
+            call_now = demo_section.locator("[data-phone-link]")
+            expect(call_now).to_be_visible()
+            expect(call_now).to_contain_text("Call Now")
+            self.assertTrue((call_now.get_attribute("href") or "").startswith("tel:"))
+            expect(demo_section).to_contain_text("WhatsApp")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
