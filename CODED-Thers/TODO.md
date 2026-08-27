@@ -5,6 +5,9 @@ passed	tests/test_smoke.py::TestSmoke::test_realestate_page_is_up	setup	0.00s
 passed	tests/test_smoke.py::TestSmoke::test_realestate_page_is_up	call	0.91s	
 passed	tests/test_smoke.py::TestSmoke::test_realestate_page_is_up	teardown	0.28s	
 
+# TODO
+header and footer should be visible for policies page also so our branding is visible and it doesn't feel like a seperate page
+
 # Create a new site
 Fix pages back to home link for policy pages navigating back to index instead of mode page like healthcare page
 

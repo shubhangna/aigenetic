@@ -145,13 +145,56 @@ def pytest_runtest_logreport(report):
     )
 
 
+_OUTCOME_RANK = {"passed": 0, "skipped": 1, "failed": 2}
+
+
+def _group_phases_by_test(results):
+    """Fold each test's setup/call/teardown phase reports into one row.
+
+    setup and teardown are plumbing, not something the reader normally cares
+    about -- collapsing them keeps the report at one line per test (or
+    subTest), while still surfacing a setup/teardown failure's details and
+    screenshot if one actually occurs.
+    """
+    grouped = {}
+    order = []
+    for item in results:
+        key = item["nodeid"]
+        if key not in grouped:
+            grouped[key] = {
+                "nodeid": key,
+                "outcome": "passed",
+                "duration": 0.0,
+                "details": [],
+                "screenshot": None,
+            }
+            order.append(key)
+
+        entry = grouped[key]
+        entry["duration"] += item["duration"]
+        if _OUTCOME_RANK[item["outcome"]] > _OUTCOME_RANK[entry["outcome"]]:
+            entry["outcome"] = item["outcome"]
+
+        if item["details"]:
+            prefix = f"[{item['phase']}] " if item["phase"] != "call" else ""
+            entry["details"].append(prefix + item["details"])
+
+        if item["screenshot"] and not entry["screenshot"]:
+            entry["screenshot"] = item["screenshot"]
+
+    return [
+        {**grouped[key], "details": "\n\n".join(grouped[key]["details"])}
+        for key in order
+    ]
+
+
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     report_path = Path(config.getoption("--html-report")).resolve()
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     started_at = _HTML_REPORT_STARTED_AT or datetime.now()
     finished_at = datetime.now()
-    results = _HTML_REPORT_RESULTS
+    results = _group_phases_by_test(_HTML_REPORT_RESULTS)
 
     totals = {
         "passed": sum(1 for item in results if item["outcome"] == "passed"),
@@ -329,9 +372,9 @@ def _render_report(started_at, finished_at, exitstatus, base_url, totals, result
     </header>
 
     <section class="summary">
-      <div class="metric"><strong>{totals["passed"]}</strong><span class="muted">Passed phases</span></div>
-      <div class="metric"><strong>{totals["failed"]}</strong><span class="muted">Failed phases</span></div>
-      <div class="metric"><strong>{totals["skipped"]}</strong><span class="muted">Skipped phases</span></div>
+      <div class="metric"><strong>{totals["passed"]}</strong><span class="muted">Passed</span></div>
+      <div class="metric"><strong>{totals["failed"]}</strong><span class="muted">Failed</span></div>
+      <div class="metric"><strong>{totals["skipped"]}</strong><span class="muted">Skipped</span></div>
       <div class="metric"><strong>{duration:.2f}s</strong><span class="muted">Duration</span></div>
     </section>
 
@@ -340,7 +383,6 @@ def _render_report(started_at, finished_at, exitstatus, base_url, totals, result
         <tr>
           <th>Outcome</th>
           <th>Test</th>
-          <th>Phase</th>
           <th>Duration</th>
           <th>Details</th>
         </tr>
@@ -374,7 +416,6 @@ def _render_result_row(item):
     return f"""<tr>
   <td><span class="pill {outcome}">{outcome}</span></td>
   <td>{escape(item["nodeid"])}</td>
-  <td>{escape(item["phase"])}</td>
   <td>{item["duration"]:.2f}s</td>
   <td>{details_html}</td>
 </tr>"""
