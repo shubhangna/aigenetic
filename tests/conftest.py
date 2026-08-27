@@ -7,16 +7,21 @@ easy-to-open report after every run.
 
 from __future__ import annotations
 
+import base64
 from datetime import datetime
 from html import escape
 import os
 from pathlib import Path
+import re
 import sys
 import webbrowser
+
+import pytest
 
 
 _HTML_REPORT_RESULTS = []
 _HTML_REPORT_STARTED_AT = None
+_SCREENSHOT_DIR_NAME = "screenshots"
 
 
 def pytest_addoption(parser):
@@ -54,17 +59,88 @@ def pytest_configure(config):
         os.environ["BASE_URL"] = site_urls[config.getoption("--site")]
 
 
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when != "call" or not report.failed:
+        return
+
+    page = getattr(item.instance, "page", None)
+    if page is None:
+        return
+
+    try:
+        screenshot_dir = Path(item.config.getoption("--html-report")).resolve().parent / _SCREENSHOT_DIR_NAME
+        screenshot_dir.mkdir(parents=True, exist_ok=True)
+
+        safe_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", _display_nodeid(report))
+        screenshot_path = screenshot_dir / f"{safe_name}.png"
+        page.screenshot(path=str(screenshot_path), full_page=True)
+        report.screenshot_path = screenshot_path
+    except Exception as exc:  # pragma: no cover - best-effort diagnostics
+        print(f"Could not capture failure screenshot for {report.nodeid}: {exc}")
+
+
+def pytest_runtest_teardown(item):
+    # The page is deliberately left open by WebsiteTestCase.tearDown() so
+    # that pytest_runtest_makereport (above) can screenshot it while it is
+    # still live. Close it here, once the "call" phase report (and any
+    # screenshot) has already been captured.
+    page = getattr(item.instance, "page", None)
+    if page is not None:
+        try:
+            page.close()
+        except Exception as exc:  # pragma: no cover - best-effort cleanup
+            print(f"Could not close page for {item.nodeid}: {exc}")
+
+
+def _display_nodeid(report):
+    """The report's nodeid, with a subTest's own label appended if present.
+
+    pytest logs each unittest subTest as its own report sharing the parent
+    test's nodeid, so without this they're indistinguishable in the report.
+    """
+    context = getattr(report, "context", None)
+    if context is None:
+        return report.nodeid
+
+    parts = []
+    msg = getattr(context, "msg", None)
+    if msg:
+        parts.append(str(msg))
+    kwargs = getattr(context, "kwargs", None)
+    if kwargs:
+        parts.append(", ".join(f"{k}={v!r}" for k, v in kwargs.items()))
+    label = " ".join(parts) or "<subtest>"
+    return f"{report.nodeid} [{label}]"
+
+
 def pytest_runtest_logreport(report):
     if report.when not in {"setup", "call", "teardown"}:
         return
 
+    screenshot_path = getattr(report, "screenshot_path", None)
+    screenshot_data_uri = None
+    if screenshot_path is not None:
+        try:
+            # For unittest subTests, pytest rebuilds the report via a JSON
+            # round-trip (SubtestReport._new), which turns our Path back
+            # into a plain string.
+            encoded = base64.b64encode(Path(screenshot_path).read_bytes()).decode("ascii")
+            screenshot_data_uri = f"data:image/png;base64,{encoded}"
+        except OSError as exc:  # pragma: no cover - best-effort diagnostics
+            print(f"Could not read failure screenshot for {report.nodeid}: {exc}")
+
     _HTML_REPORT_RESULTS.append(
         {
-            "nodeid": report.nodeid,
+            "nodeid": _display_nodeid(report),
             "phase": report.when,
             "outcome": report.outcome,
             "duration": report.duration,
             "details": getattr(report, "longreprtext", "") or "",
+            "screenshot": screenshot_data_uri,
         }
     )
 
@@ -282,10 +358,17 @@ def _render_report(started_at, finished_at, exitstatus, base_url, totals, result
 def _render_result_row(item):
     outcome = escape(item["outcome"])
     details = escape(item["details"])
+    screenshot_html = ""
+    if item.get("screenshot"):
+        screenshot_html = (
+            f'<details><summary>View screenshot</summary>'
+            f'<img src="{item["screenshot"]}" alt="Failure screenshot for {escape(item["nodeid"])}" '
+            f'style="max-width:480px;border:1px solid var(--border);margin-top:8px;"></details>'
+        )
     details_html = (
-        f"<details><summary>View failure</summary><pre>{details}</pre></details>"
+        f"<details><summary>View failure</summary><pre>{details}</pre></details>{screenshot_html}"
         if details
-        else ""
+        else screenshot_html
     )
 
     return f"""<tr>

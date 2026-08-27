@@ -36,7 +36,11 @@ class WebsiteTestCase(unittest.TestCase):
         self.page.on("console", self._collect_console_error)
 
     def tearDown(self):
-        self.page.close()
+        # The page is intentionally left open here (and closed later, from
+        # conftest.py's pytest_runtest_teardown) so that a failure screenshot
+        # can still be taken from a live page after this test's outcome is
+        # known. Closing eagerly here would leave nothing to screenshot.
+        pass
 
     # Console errors known to originate from third-party embeds (not our code)
     # rather than a real defect on the page.
