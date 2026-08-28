@@ -422,6 +422,33 @@
        product direction, unlike the .rise/.reveal/.stagger entrance
        animations below which still respect the reduced-motion opt-out. */
 
+    /* On phone widths the old min(82vw, 300px) card only left room for ~1.2
+       cards on screen at once. Shrink the card (and trim its content) so at
+       least 3 cards are visible together at any point in the scroll. */
+    @media (max-width: 640px) {
+      .usecase-track { gap: 12px; }
+      .usecase-card-wrap { width: min(30vw, 132px); }
+      .usecase-card-wrap .minimal-card.p-8 { padding: 14px !important; }
+      .usecase-card-wrap .feature-icon-box {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+        border-radius: 8px;
+      }
+      .usecase-card-wrap .feature-icon-box.mb-6 { margin-bottom: 8px !important; }
+      .usecase-card-wrap h3 {
+        font-size: 12px !important;
+        line-height: 1.25;
+        margin-bottom: 0 !important;
+      }
+      .usecase-card-wrap .card-idx { font-size: 10px; margin-bottom: 4px; }
+      .usecase-card-wrap p,
+      .usecase-card-wrap ul,
+      .usecase-card-wrap .coming-soon-pill {
+        display: none;
+      }
+    }
+
     /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
     .closing-panel {
       background: var(--primary);

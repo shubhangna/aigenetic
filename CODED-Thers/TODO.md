@@ -1,8 +1,10 @@
 # TODO
+Make the marque interactable by clicking or tapping and dragging left or right
 # TODO LATER
 - Record a real coaching-institute admission-enquiry/demo-class-booking audio sample and add the voice-sample player back into education.html (same gap as realestate.html — see newSite/template.json assets.audio.pages.education.note)
 
 #Done
+- Made the use-case marquee resize for phones so at least 3 cards are visible at once — done 2026-08-28: added an `@media (max-width: 640px)` block in index.html shrinking `.usecase-card-wrap` from `min(82vw, 300px)` to `min(30vw, 132px)` and the track gap from 24px to 12px (3 cards + 2 gaps ≈ 312–420px, fits any phone viewport), plus compacted the card itself (smaller icon box/title, index badge, and dropped the description/feature-list/coming-soon-pill) so the shrunk card stays legible instead of just clipping content. Desktop/tablet layout (>640px) untouched. Verified via `pytest tests/test_main_page.py` (10 passed).
 - Moved the use-case marquee carousel to the hero section of index.html, right under the call/WhatsApp/Schedule Demo/Live Call CTA buttons, so it's visible on the first screen without scrolling — done 2026-08-28: relocated the `id="use-cases"` block (header + `<UseCaseMarquee />`) from its own section further down the page into the hero, and removed the now-duplicate section lower on the page. Nav's `#use-cases` anchor and the "Perfect for Any Business" heading (checked by test_main_page.py) still resolve correctly since the id/heading moved with it.
 - Removed the Salons & Spas use-case card from index.html (config.js CONFIG.useCases) — done 2026-08-28.
 - Use-case carousel now moves faster with constant (linear, no easing) motion, only pausing on hover/focus — done 2026-08-28: usecase-scroll keyframe simplified to a two-stop 0%→-50% linear tween at 32s (was a 4-stop cubic-bezier ease at 60s); pause behavior via React state on hover/focus unchanged.
