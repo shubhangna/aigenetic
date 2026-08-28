@@ -406,8 +406,18 @@
          pause below. Faster than the old 60s/loop pass. */
       animation: usecase-scroll 32s linear infinite;
       will-change: transform;
+      /* Click-and-drag / touch-and-drag support (see UseCaseMarquee): the
+         track is grabbable, claims horizontal panning for JS while still
+         letting the page scroll vertically, and doesn't let a drag select
+         text or trigger the browser's native link/image drag-ghost. */
+      cursor: grab;
+      touch-action: pan-y;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
     }
     .usecase-track.paused { animation-play-state: paused; }
+    .usecase-track.dragging { cursor: grabbing; }
     .usecase-card-wrap {
       flex: 0 0 auto;
       width: min(82vw, 300px);
@@ -1008,25 +1018,114 @@
       );
     }
 
+    // Reads the track's current animated position (in px) straight off its
+    // computed transform matrix, so a drag can pick up exactly where the
+    // auto-drift left off instead of snapping back to 0.
+    function getTrackTranslateX(el) {
+      const transform = window.getComputedStyle(el).transform;
+      if (!transform || transform === 'none') return 0;
+      const match = /matrix\(([^)]+)\)/.exec(transform);
+      if (!match) return 0;
+      const parts = match[1].split(',').map(parseFloat);
+      return parts[4] || 0;
+    }
+
     // Use Cases: a continuously-drifting horizontal strip rather than a static
     // grid. The card list is rendered twice back-to-back and the track drifts
     // exactly -50% on a linear infinite loop, so it wraps seamlessly. Paused
     // via React state on hover/focus (see .usecase-track.paused in the <style>
     // block) so keyboard users and anyone hovering a card get a stable target.
+    //
+    // It's also click-and-drag / touch-and-drag interactive: dragging freezes
+    // the CSS animation (via a direct, non-React-managed inline style so it
+    // doesn't fight React's re-renders) and follows the pointer one-to-one;
+    // releasing hands back to the auto-drift with a negative animation-delay
+    // computed from the dropped position, so playback resumes from exactly
+    // where the drag left it rather than jumping back to the start.
     function UseCaseMarquee() {
       const [paused, setPaused] = useState(false);
       const count = CONFIG.useCases.length;
       const cards = [...CONFIG.useCases, ...CONFIG.useCases];
+      const trackRef = useRef(null);
+      const dragRef = useRef({ dragging: false, startX: 0, startOffset: 0, offset: 0, moved: false });
+
+      // Dragging only actually engages (freezing the animation, capturing the
+      // pointer, pausing) once the pointer has moved past a small threshold.
+      // A plain tap/click never crosses that threshold, so it falls through
+      // untouched — no capture, no style changes — and normal link
+      // navigation on a card keeps working exactly as before.
+      function handlePointerDown(e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        const track = trackRef.current;
+        if (!track) return;
+        const startOffset = -getTrackTranslateX(track);
+        dragRef.current = { dragging: true, startX: e.clientX, startOffset, offset: startOffset, moved: false, captured: false };
+      }
+
+      function handlePointerMove(e) {
+        const drag = dragRef.current;
+        const track = trackRef.current;
+        if (!drag.dragging || !track) return;
+        const dx = e.clientX - drag.startX;
+        if (!drag.moved) {
+          if (Math.abs(dx) <= 6) return;
+          drag.moved = true;
+          track.style.animation = 'none';
+          setPaused(true);
+          try { track.setPointerCapture(e.pointerId); drag.captured = true; } catch (err) { /* unsupported, drag still works */ }
+        }
+        const loopWidth = track.scrollWidth / 2 || 1;
+        const offset = (((drag.startOffset - dx) % loopWidth) + loopWidth) % loopWidth;
+        drag.offset = offset;
+        track.style.transform = `translateX(${-offset}px)`;
+      }
+
+      function endDrag(e) {
+        const drag = dragRef.current;
+        const track = trackRef.current;
+        if (!drag.dragging) return;
+        drag.dragging = false;
+        if (!drag.moved) return; // plain tap/click — nothing was ever touched
+        if (track) {
+          const loopWidth = track.scrollWidth / 2 || 1;
+          const fraction = drag.offset / loopWidth;
+          track.style.transform = '';
+          track.style.animation = ''; // restores the CSS-defined usecase-scroll animation
+          track.style.animationDelay = `${-(fraction * 32)}s`;
+          if (drag.captured) {
+            try { if (e && e.pointerId != null) track.releasePointerCapture(e.pointerId); } catch (err) { /* noop */ }
+          }
+        }
+        setPaused(false);
+        // Only the click that immediately follows a drag should be suppressed.
+        setTimeout(() => { drag.moved = false; }, 0);
+      }
+
+      function handleClickCapture(e) {
+        if (dragRef.current.moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
 
       return (
         <div
           className="usecase-marquee"
           onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          onMouseLeave={() => { if (!dragRef.current.dragging) setPaused(false); }}
           onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
+          onBlur={() => { if (!dragRef.current.dragging) setPaused(false); }}
         >
-          <div className={`usecase-track${paused ? ' paused' : ''}`}>
+          <div
+            ref={trackRef}
+            className={`usecase-track${paused ? ' paused' : ''}`}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onClickCapture={handleClickCapture}
+            onDragStart={(e) => e.preventDefault()}
+          >
             {cards.map((useCase, idx) => {
               const duplicate = idx >= count;
               const CardTag = useCase.link ? 'a' : 'div';
