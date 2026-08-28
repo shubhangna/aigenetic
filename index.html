@@ -653,7 +653,7 @@
 
           {/* Hero */}
           <section className="relative min-h-screen flex items-center justify-center hero-grid-wash" style={{background: 'var(--secondary)'}}>
-            <div className="relative max-w-7xl mx-auto px-8 py-32 text-center">
+            <div className="relative max-w-7xl mx-auto px-8 py-32 text-center min-w-0">
               <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
                   <span className="relative flex h-2 w-2">
@@ -689,6 +689,16 @@
                     onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}}
                     onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}
                   />
+                </div>
+
+                {/* Use Cases marquee — moved here so it's visible on the first
+                    screen, right under the call/WhatsApp/etc CTA buttons. */}
+                <div id="use-cases" className="pt-16">
+                  <div className="section-label mb-4">Use Cases</div>
+                  <h2 className="text-3xl font-semibold mb-8" style={{letterSpacing: '-1px', color: 'var(--primary)'}}>Perfect for Any Business</h2>
+                  <Reveal as="div">
+                    <UseCaseMarquee />
+                  </Reveal>
                 </div>
 
                 <Reveal as="div" stagger className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
@@ -738,21 +748,6 @@
                     <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{item.desc}</div>
                   </div>
                 ))}
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Use Cases */}
-          <section id="use-cases" className="py-32 section-divide" style={{background: 'white'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-20">
-                <div className="section-label mb-6">Use Cases</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Perfect for Any Business</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Trusted by Indian SMEs across industries</p>
-              </div>
-
-              <Reveal as="div">
-                <UseCaseMarquee />
               </Reveal>
             </div>
           </section>

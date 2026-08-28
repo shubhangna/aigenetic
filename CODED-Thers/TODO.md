@@ -3,6 +3,7 @@
 - Record a real coaching-institute admission-enquiry/demo-class-booking audio sample and add the voice-sample player back into education.html (same gap as realestate.html — see newSite/template.json assets.audio.pages.education.note)
 
 #Done
+- Moved the use-case marquee carousel to the hero section of index.html, right under the call/WhatsApp/Schedule Demo/Live Call CTA buttons, so it's visible on the first screen without scrolling — done 2026-08-28: relocated the `id="use-cases"` block (header + `<UseCaseMarquee />`) from its own section further down the page into the hero, and removed the now-duplicate section lower on the page. Nav's `#use-cases` anchor and the "Perfect for Any Business" heading (checked by test_main_page.py) still resolve correctly since the id/heading moved with it.
 - Removed the Salons & Spas use-case card from index.html (config.js CONFIG.useCases) — done 2026-08-28.
 - Use-case carousel now moves faster with constant (linear, no easing) motion, only pausing on hover/focus — done 2026-08-28: usecase-scroll keyframe simplified to a two-stop 0%→-50% linear tween at 32s (was a 4-stop cubic-bezier ease at 60s); pause behavior via React state on hover/focus unchanged.
 - move github pages test cases to smoke from main test 
