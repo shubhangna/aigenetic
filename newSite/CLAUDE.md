@@ -126,7 +126,7 @@ template as the shared source of truth. That means:
 
 ## Resolved (kept for history)
 
-- ~~"Create a new site for Coaching & Schools using same pattern and templates as current 2 sites"~~ — done 2026-08-28: `coaching.html` built as the third `pages.*` instance (after healthcare, realestate), preceded by web research into coaching-institute and school pain points (missed enquiry calls, no follow-up within the golden 5-minute window, manual fee-due/attendance phone calls, 6–10% industry-average lead-to-admission conversion — see `pages.coaching.pricingSection.researchNote`). Wired into `index.html`'s vertical mode router (`?mode=coaching`), `config.js`'s Use Cases card (previously "Offices & Schools" with `comingSoon: true`, now linked), and `sitemap.xml`. See `pages.coaching.$builtNote`.
+- ~~"Create a new site for Coaching & Schools using same pattern and templates as current 2 sites"~~ — done 2026-08-28: `education.html` built as the third `pages.*` instance (after healthcare, realestate), preceded by web research into coaching-institute and school pain points (missed enquiry calls, no follow-up within the golden 5-minute window, manual fee-due/attendance phone calls, 6–10% industry-average lead-to-admission conversion — see `pages.education.pricingSection.researchNote`). Wired into `index.html`'s vertical mode router (`?mode=education`), `config.js`'s Use Cases card (previously "Offices & Schools" with `comingSoon: true`, now linked), and `sitemap.xml`. See `pages.education.$builtNote`. (The URL mode/filename is `education`; the card copy and file content still say "Coaching & Schools" — renamed 2026-08-28, see below.)
 
 - ~~`healthcare.html` had no meta description / Open Graph tags~~ — fixed
   2026-08-23; see `pages.healthcare.seo.note`.

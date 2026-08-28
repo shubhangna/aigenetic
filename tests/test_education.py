@@ -1,5 +1,9 @@
 """Functional tests for the Aigenetic coaching & schools landing page.
 
+The page's visual identity (title, copy, "Schools and Coaching" card on the
+main page) is unchanged -- only the underlying mode/filename is "education"
+(renamed from "coaching" 2026-08-28, see CODED-Thers/TODO.md).
+
 Mirrors tests/test_realestate.py's structure: one page load, everything
 checked via subTests end-to-end rather than presence-only assertions
 scattered across many separate tests.
@@ -12,23 +16,23 @@ from playwright.sync_api import expect
 from utilities import WebsiteTestCase
 
 
-class TestCoachingPage(WebsiteTestCase):
-    def open_coaching_page(self):
-        # coaching.html now redirects to /?mode=coaching (see index.html's
+class TestEducationPage(WebsiteTestCase):
+    def open_education_page(self):
+        # education.html now redirects to /?mode=education (see index.html's
         # vertical mode router); open the consolidated URL directly.
-        return self.open_page("/?mode=coaching", ready_selector="h1")
+        return self.open_page("/?mode=education", ready_selector="h1")
 
-    def test_coaching_html_redirects_to_consolidated_url(self):
-        self.page.goto(self.page_url("coaching.html"), wait_until="load", timeout=45000)
+    def test_education_html_redirects_to_consolidated_url(self):
+        self.page.goto(self.page_url("education.html"), wait_until="load", timeout=45000)
         self.page.locator("h1").wait_for(state="visible", timeout=15000)
-        self.assertIn("mode=coaching", self.page.url)
+        self.assertIn("mode=education", self.page.url)
         expect(self.page.locator("h1")).to_contain_text("institute")
 
-    def test_coaching_page(self):
+    def test_education_page(self):
         page = self.page
 
         with self.subTest("page loads with institute positioning"):
-            response = self.open_coaching_page()
+            response = self.open_education_page()
             self.assert_successful_response(response)
             self.assertIn("coaching", page.title().lower())
             expect(page.locator("h1")).to_contain_text("institute")
@@ -104,19 +108,21 @@ class TestCoachingPage(WebsiteTestCase):
             phone.click()
             # tel: is an unsupported scheme for the browser tab itself, so the
             # click must not navigate the SPA away or throw.
-            self.assertIn("mode=coaching", page.url)
+            self.assertIn("mode=education", page.url)
 
 
-class TestMainPageLinksToCoaching(WebsiteTestCase):
-    def test_use_case_card_links_to_coaching_with_its_own_label(self):
+class TestMainPageLinksToEducation(WebsiteTestCase):
+    def test_use_case_card_links_to_education_with_its_own_label(self):
         self.open_page(ready_selector="h1.hero-title")
         # The Use Cases marquee (UseCaseMarquee in index.html) renders the card
         # list twice back-to-back for a seamless scroll loop, so two matching
         # anchors exist -- .first is the real, tab-reachable one; its duplicate
         # is aria-hidden with tabindex="-1".
-        card = self.page.locator('a[href="/?mode=coaching"]').first
+        card = self.page.locator('a[href="/?mode=education"]').first
         expect(card).to_be_visible()
         expect(card).to_contain_text("Explore for institutes")
+        # The card's own title/copy is unaffected by the mode rename.
+        expect(card).to_contain_text("Schools and Coaching")
 
 
 if __name__ == "__main__":

@@ -116,9 +116,9 @@
           "clip": null,
           "note": "No real-estate-specific demo clip exists in mp3/ yet (only Healthcare/Ecommerce/BFSI/EdTech/HRTech/Hospitality). realestate.html was built without the voice-sample player section rather than play a mismatched clip under a 'Hear the assistant' banner. TODO: record a real-estate site-visit/price-enquiry call sample, add it under assets/common/audio/ + assets/pages/realestate/audio/, then add the voice-sample block back into realestate.html and this entry (see CODED-Thers/TODO.md)."
         },
-        "coaching": {
+        "education": {
           "clip": null,
-          "note": "No coaching/school-admissions-specific demo clip exists in mp3/ yet — the closest existing clip (edtech-lead-qualification) is a different scenario (EdTech platform lead qualification, not a coaching-institute admissions call), so coaching.html was built without the voice-sample player section, same as realestate.html. TODO: record a coaching-institute admission-enquiry/demo-class-booking call sample, add it under assets/common/audio/ + assets/pages/coaching/audio/, then add the voice-sample block back into coaching.html and this entry."
+          "note": "No coaching/school-admissions-specific demo clip exists in mp3/ yet — the closest existing clip (edtech-lead-qualification) is a different scenario (EdTech platform lead qualification, not a coaching-institute admissions call), so education.html was built without the voice-sample player section, same as realestate.html. TODO: record a coaching-institute admission-enquiry/demo-class-booking call sample, add it under assets/common/audio/ + assets/pages/education/audio/, then add the voice-sample block back into education.html and this entry."
         }
       }
     },
@@ -207,7 +207,7 @@
         { "icon": "🏥", "title": "Clinics & Doctors", "desc": "Appointment booking, rescheduling, follow-ups", "features": ["24/7 booking", "Patient reminders", "Prescription follow-ups"], "gradient": "from-blue-500 to-cyan-500", "link": "/healthcare.html", "linkCtaLabel": "Explore for clinics →" },
         { "icon": "💇", "title": "Salons & Spas", "desc": "Service bookings, offers, cancellations", "features": ["Service bookings", "Package promotions", "Membership renewals"], "gradient": "from-pink-500 to-rose-500" },
         { "icon": "🏢", "title": "Real Estate", "desc": "Site visit scheduling, lead capture", "features": ["Site visit booking", "Lead qualification", "Property inquiries"], "gradient": "from-orange-500 to-amber-500", "link": "/realestate.html", "linkCtaLabel": "Explore for developers →" },
-        { "icon": "🏫", "title": "Schools and Coaching", "desc": "Admission enquiries, fee & attendance reminders", "features": ["Admission inquiries", "Demo class booking", "Fee & attendance reminders"], "gradient": "from-purple-500 to-indigo-500", "link": "/coaching.html", "linkCtaLabel": "Explore for institutes →" }
+        { "icon": "🏫", "title": "Schools and Coaching", "desc": "Admission enquiries, fee & attendance reminders", "features": ["Admission inquiries", "Demo class booking", "Fee & attendance reminders"], "gradient": "from-purple-500 to-indigo-500", "link": "/education.html", "linkCtaLabel": "Explore for institutes →" }
       ]
     },
     "audioShowcase": {
@@ -697,15 +697,15 @@
         "disclaimer": "Buyer data stays in India, deleted on your schedule. Not a substitute for official RERA disclosures."
       }
     },
-    "coaching": {
-      "sourceFile": "coaching.html",
+    "education": {
+      "sourceFile": "education.html",
       "theme": "clinicalTeal",
-      "$builtNote": "Built 2026-08-28 as the third instance of the pages.* pattern (after healthcare, realestate), preceded by web research into coaching-institute and school pain points (see researchNote in pricingSection below for the sourced stats). Segment = coaching institutes (JEE/NEET/UPSC/banking/SSC) AND K-12 schools/play schools, combined under one 'admissions desk + parent communication' framing since both share the same core pain: missed enquiry calls, no follow-up, and manual fee/attendance phone calls. Like realestate.html, built without the voice-sample player section (no coaching-specific demo clip exists yet — see assets.audio.pages.coaching.note). Pricing reuses the same ₹2,999/₹7,999/Custom price points as healthcare and realestate with institute-specific tier names/features. ERP/CRM chip names (Classplus, Teachmint, Vidyalaya ERP, Fedena, Entab) are shown as plain 'attach whatever you use' chips, NOT marked active/on — only Google Calendar and WhatsApp Business are marked .chip.on, same honesty rule as realestate.html's integrationsHonestyNote.",
+      "$builtNote": "Built 2026-08-28 as the third instance of the pages.* pattern (after healthcare, realestate), preceded by web research into coaching-institute and school pain points (see researchNote in pricingSection below for the sourced stats). Segment = coaching institutes (JEE/NEET/UPSC/banking/SSC) AND K-12 schools/play schools, combined under one 'admissions desk + parent communication' framing since both share the same core pain: missed enquiry calls, no follow-up, and manual fee/attendance phone calls. Like realestate.html, built without the voice-sample player section (no coaching-specific demo clip exists yet — see assets.audio.pages.education.note). Pricing reuses the same ₹2,999/₹7,999/Custom price points as healthcare and realestate with institute-specific tier names/features. ERP/CRM chip names (Classplus, Teachmint, Vidyalaya ERP, Fedena, Entab) are shown as plain 'attach whatever you use' chips, NOT marked active/on — only Google Calendar and WhatsApp Business are marked .chip.on, same honesty rule as realestate.html's integrationsHonestyNote.",
       "seo": {
         "title": "Aigenetic for Coaching & Schools — the voice of your institute",
         "description": "Aigenetic is an AI phone assistant for Indian coaching institutes and schools. It answers every admission enquiry, shares fees and batch timing, sends fee and attendance reminders, and books demo classes — in 31+ Indian languages, 24/7.",
         "keywords": "AI receptionist for coaching institute, school admission enquiry automation, AI phone assistant India, coaching institute lead management, missed admission calls, fee reminder automation, attendance call automation",
-        "canonical": "https://aigenetic.in/coaching.html",
+        "canonical": "https://aigenetic.in/education.html",
         "ogTitle": "Aigenetic for Coaching & Schools — the voice of your institute",
         "ogDescription": "You're mid-lecture. The phone rings anyway. Aigenetic answers, shares fees and batch timing, and books the demo class — in 31+ Indian languages.",
         "ogImage": "https://aigenetic.in/logo/logoMedium.png"

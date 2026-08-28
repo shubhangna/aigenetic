@@ -45,8 +45,8 @@ class TestSmoke(WebsiteTestCase):
         expect(self.page.locator("h1")).to_contain_text("listings")
         expect(self.page.locator("a[data-email-link]:visible").first).to_be_visible()
 
-    def test_coaching_page_is_up(self):
-        response = self.open_page("/?mode=coaching", ready_selector="h1")
+    def test_education_page_is_up(self):
+        response = self.open_page("/?mode=education", ready_selector="h1")
         self.assert_successful_response(response)
         self.assertIn("coaching", self.page.title().lower())
         expect(self.page.locator("h1")).to_contain_text("institute")

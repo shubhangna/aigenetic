@@ -37,8 +37,7 @@ window.CONFIG = {
   useCases: [
     { icon: '🏥', title: 'Clinics & Doctors', desc: 'Appointment booking, rescheduling, follow-ups', features: ['24/7 booking', 'Patient reminders', 'Prescription follow-ups'], gradient: 'from-blue-500 to-cyan-500', link: '/?mode=healthcare', linkCtaLabel: 'Explore for clinics →' },
     { icon: '🏢', title: 'Real Estate', desc: 'Site visit scheduling, lead capture', features: ['Site visit booking', 'Lead qualification', 'Property inquiries'], gradient: 'from-orange-500 to-amber-500', link: '/?mode=realestate', linkCtaLabel: 'Explore for developers →' },
-    { icon: '💇', title: 'Salons & Spas', desc: 'Service bookings, offers, cancellations', features: ['Service bookings', 'Package promotions', 'Membership renewals'], gradient: 'from-pink-500 to-rose-500', comingSoon: true },
-    { icon: '🏫', title: 'Schools and Coaching', desc: 'Admission enquiries, fee & attendance reminders', features: ['Admission inquiries', 'Demo class booking', 'Fee & attendance reminders'], gradient: 'from-purple-500 to-indigo-500', link: '/?mode=coaching', linkCtaLabel: 'Explore for institutes →' }
+    { icon: '🏫', title: 'Schools and Coaching', desc: 'Admission enquiries, fee & attendance reminders', features: ['Admission inquiries', 'Demo class booking', 'Fee & attendance reminders'], gradient: 'from-purple-500 to-indigo-500', link: '/?mode=education', linkCtaLabel: 'Explore for institutes →' }
   ],
   audioShowcase: {
     label: 'Audio Demos',

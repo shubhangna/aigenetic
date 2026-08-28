@@ -1,15 +1,17 @@
-## TODO
-- Animate the use cases like health care realestate etc to move right to left slowly
-
 # TODO
-
-- Record a real coaching-institute admission-enquiry/demo-class-booking audio sample and add the voice-sample player back into coaching.html (same gap as realestate.html — see newSite/template.json assets.audio.pages.coaching.note)
-
-
+# TODO LATER
+- Record a real coaching-institute admission-enquiry/demo-class-booking audio sample and add the voice-sample player back into education.html (same gap as realestate.html — see newSite/template.json assets.audio.pages.education.note)
 
 #Done
+- Removed the Salons & Spas use-case card from index.html (config.js CONFIG.useCases) — done 2026-08-28.
+- Use-case carousel now moves faster with constant (linear, no easing) motion, only pausing on hover/focus — done 2026-08-28: usecase-scroll keyframe simplified to a two-stop 0%→-50% linear tween at 32s (was a 4-stop cubic-bezier ease at 60s); pause behavior via React state on hover/focus unchanged.
+- move github pages test cases to smoke from main test 
 
--Create a new site for Coaching & Schools using same pattern and templates as current 2 sites healthcare and realestate — done 2026-08-28: coaching.html built after researching coaching-institute/school pain points (missed enquiry calls, no follow-up, manual fee/attendance calls), wired into index.html's mode router (?mode=coaching), config.js Use Cases card, sitemap.xml, and newSite/template.json's pages.coaching. See newSite/CLAUDE.md's Resolved section.
+-Animate the use cases cards like health care realestate etc to move right to left slowly — already implemented: index.html's UseCaseMarquee renders the CONFIG.useCases cards twice back-to-back in a `.usecase-track` that drifts via the `usecase-scroll` keyframe (translateX 0 → -50%, 60s ease-in-out, infinite loop) for a seamless right-to-left crawl. Pauses on hover/focus (React state, not `:hover`, so keyboard focus pauses it too) and disables entirely under `prefers-reduced-motion: reduce`. Verified 2026-08-28 via a headless Playwright check: `animationName: usecase-scroll`, `duration: 60s`, 8 card-wraps rendered (4 use cases × 2 for the loop).
+
+-Create a new site for Coaching & Schools using same pattern and templates as current 2 sites healthcare and realestate — done 2026-08-28: coaching.html built after researching coaching-institute/school pain points (missed enquiry calls, no follow-up, manual fee/attendance calls), wired into index.html's mode router, config.js Use Cases card, sitemap.xml, and newSite/template.json's pages.education. See newSite/CLAUDE.md's Resolved section.
+
+-Renamed the mode/filename from coaching to education (?mode=coaching -> ?mode=education, coaching.html -> education.html) — done 2026-08-28. The visual card on the main page ('Schools and Coaching' title, icon, copy) was left unchanged; only the underlying URL/file identifier changed.
 -header and footer should be visible for policies page also so our branding is visible and it doesn't feel like a seperate page
 
 -Fix pages back to home link for policy pages navigating back to index instead of mode page like healthcare page

@@ -1,5 +1,6 @@
 """Functional tests for the main Aigenetic landing page."""
 
+import re
 import socket
 import unittest
 
@@ -63,6 +64,33 @@ class TestMainPage(WebsiteTestCase):
         self.open_main_page()
         self.page.reload(wait_until="domcontentloaded", timeout=45000)
         self.assert_no_console_errors()
+
+    def test_use_cases_marquee_drifts_right_to_left_and_pauses_on_hover(self):
+        self.open_main_page()
+        track = self.page.locator(".usecase-track")
+        expect(track).to_be_visible()
+
+        with self.subTest("card list is duplicated for a seamless loop"):
+            use_case_count = self.page.evaluate("() => window.CONFIG.useCases.length")
+            self.assertEqual(self.page.locator(".usecase-card-wrap").count(), use_case_count * 2)
+            # Only the first (non-duplicate) copy stays tab-reachable.
+            self.assertEqual(self.page.locator(".usecase-card-wrap[aria-hidden='true']").count(), use_case_count)
+
+        with self.subTest("track animates right-to-left on an infinite loop"):
+            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationName"), "usecase-scroll")
+            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationIterationCount"), "infinite")
+            # translateX drifts toward -50%, i.e. leftward, never positive/rightward.
+            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
+
+        with self.subTest("hovering a card pauses the drift"):
+            self.page.locator(".usecase-marquee").hover()
+            expect(track).to_have_class(re.compile("paused"))
+            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "paused")
+
+        with self.subTest("moving away resumes the drift"):
+            self.page.locator("h1.hero-title").hover()
+            expect(track).not_to_have_class(re.compile("paused"))
+            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
 
     def test_github_domain_resolves_to_expected_ips(self):
         try:

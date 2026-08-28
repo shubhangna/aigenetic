@@ -401,11 +401,10 @@
       display: flex;
       gap: 24px;
       width: max-content;
-      /* Slow, weighted drift rather than a conveyor-belt scroll: an ease-in-out
-         curve repeated across several keyframe stops (not just two endpoints)
-         so speed swells and eases within each leg, like a hydraulic ram under
-         pressure rather than a motor spinning at constant RPM. */
-      animation: usecase-scroll 60s cubic-bezier(.65,0,.35,1) infinite;
+      /* Constant-speed conveyor drift (linear timing, no easing) so motion
+         never swells or slows mid-leg — the only stop is the hover/focus
+         pause below. Faster than the old 60s/loop pass. */
+      animation: usecase-scroll 32s linear infinite;
       will-change: transform;
     }
     .usecase-track.paused { animation-play-state: paused; }
@@ -415,15 +414,13 @@
     }
     @keyframes usecase-scroll {
       0%   { transform: translateX(0); }
-      25%  { transform: translateX(-14%); }
-      50%  { transform: translateX(-25%); }
-      75%  { transform: translateX(-36%); }
       100% { transform: translateX(-50%); }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .usecase-track { animation: none; }
-      .usecase-marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    }
+    /* Deliberately NOT opted out under prefers-reduced-motion: this marquee
+       is a constant-speed (32s/loop), user-pausable (hover/focus) drift, not
+       a jarring auto-scroll — kept animating for every visitor per explicit
+       product direction, unlike the .rise/.reveal/.stagger entrance
+       animations below which still respect the reduced-motion opt-out. */
 
     /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
     .closing-panel {
@@ -481,9 +478,11 @@
 
   <!-- ---------- vertical mode router ----------
        aigenetic.in/healthcare.html, aigenetic.in/realestate.html and
-       aigenetic.in/coaching.html redirect here with ?mode=healthcare /
-       ?mode=realestate / ?mode=coaching (see the redirect script at the top
-       of those files) so the whole site lives under one URL.
+       aigenetic.in/education.html redirect here with ?mode=healthcare /
+       ?mode=realestate / ?mode=education (see the redirect script at the top
+       of those files) so the whole site lives under one URL. The Coaching &
+       Schools use-case card links here too — "education" is the mode/file
+       name, the card's own title/copy is unrelated and unchanged.
        Instead of re-authoring their content as JSX, this fetches that page's
        own markup — still the single source of truth for its copy — and
        swaps it into #mode-root. See CLAUDE.md's "vertical mode router" note. -->
@@ -491,12 +490,12 @@
     function getAigeneticMode() {
       var params = new URLSearchParams(location.search);
       var mode = params.get('mode');
-      return (mode === 'healthcare' || mode === 'realestate' || mode === 'coaching') ? mode : 'home';
+      return (mode === 'healthcare' || mode === 'realestate' || mode === 'education') ? mode : 'home';
     }
     window.__AIGENETIC_MODE__ = getAigeneticMode();
 
     async function loadModeContent(mode) {
-      var file = mode === 'healthcare' ? 'healthcare.html' : (mode === 'coaching' ? 'coaching.html' : 'realestate.html');
+      var file = mode === 'healthcare' ? 'healthcare.html' : (mode === 'education' ? 'education.html' : 'realestate.html');
       try {
         var res = await fetch(file);
         if (!res.ok) throw new Error('fetch failed: ' + res.status);
