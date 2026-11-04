@@ -137,6 +137,13 @@
   .btn-ghost:hover{border-color:var(--teal);color:var(--teal-deep);box-shadow:0 14px 30px -22px rgba(12,107,92,.8)}
   .btn-lg{font-size:16.5px;padding:16px 30px}
   .nav .btn{font-size:14px;padding:10px 18px}
+  .icon{width:18px;height:18px;display:block;flex:none}
+  .btn .icon{width:16px;height:16px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  [data-play-icon] .icon{width:18px;height:18px}
+  [data-play-icon] .icon-pause{display:none}
+  .playing [data-play-icon] .icon-play{display:none}
+  .playing [data-play-icon] .icon-pause{display:block}
 
   /* hamburger (mobile) */
   .nav-toggle{
@@ -491,6 +498,12 @@
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+</svg>
 
 <nav class="nav" id="site-nav">
   <div class="wrap nav-in">
@@ -502,7 +515,7 @@
       <a href="#pricing">Pricing</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-ghost" href="#demo" data-phone-link>📞 Call</a>
+      <a class="btn btn-ghost" href="#demo" data-phone-link><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg> Call</a>
       <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Book Demo</a>
       <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Open menu">
         <i></i><i></i><i></i>
@@ -516,7 +529,7 @@
       <a href="#setup">Setup</a>
       <a href="#pricing">Pricing</a>
       <div class="panel-cta">
-        <a class="btn btn-ghost" href="#demo" data-phone-link>📞 Call</a>
+        <a class="btn btn-ghost" href="#demo" data-phone-link><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg> Call</a>
         <a class="btn btn-primary" href="#calendar-booking" data-open-calendar>Book Demo</a>
       </div>
     </div>
@@ -529,9 +542,9 @@
     <h1 class="rise">The voice of<br>your <em>clinic</em></h1>
     <p class="sub rise">You're with a patient. The phone rings anyway. Aigenetic picks up on the second ring, books the slot in your register, and sends the confirmation on WhatsApp — in Hindi, Marathi, Tamil and 28 more.</p>
     <div class="cta-row rise">
-      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Book Demo with Calendar</a>
-      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
-      <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call>🎙️ Live Call to Voice Assistant</button>
+      <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg> Book Demo with Calendar</a>
+      <a class="btn btn-ghost btn-lg" href="#demo" data-whatsapp-link target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp Us</a>
+      <button type="button" class="btn btn-ghost btn-lg" data-live-voice-call><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg> Live Call to Voice Assistant</button>
     </div>
     <p class="cta-note rise">Free 14-day trial on your existing clinic number. No new hardware.</p>
 
@@ -583,7 +596,7 @@
         </div>
         <div class="call-player" data-call-player>
           <button type="button" class="play-btn" data-play-audio="mp3/HealthCare-onboarding_cEIUBM4Y%20(1).mp3" aria-label="Play a sample of the assistant's voice">
-            <span data-play-icon>▶</span>
+            <span data-play-icon aria-hidden="true"><svg class="icon icon-play" viewBox="0 0 24 24"><polygon points="9,6 18,12 9,18" fill="currentColor"/></svg><svg class="icon icon-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg></span>
           </button>
           <div class="waveform" data-waveform aria-hidden="true"></div>
           <span class="player-time"><span data-time-current>0:00</span> / <span data-time-total>0:00</span></span>
@@ -711,8 +724,8 @@
       <h2>Book a personalized demo<br>via Google Meet</h2>
       <p>Our team will walk you through how Aigenetic works for your clinic, answer questions, and help you get started.</p>
       <div class="cta-row">
-        <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar>📅 Schedule via Calendar →</a>
-        <a class="btn btn-ghost btn-lg" href="tel:+917428497033" data-phone-link>📞 Call Now</a>
+        <a class="btn btn-primary btn-lg" href="#calendar-booking" data-open-calendar><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg> Schedule via Calendar →</a>
+        <a class="btn btn-ghost btn-lg" href="tel:+917428497033" data-phone-link><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg> Call Now</a>
       </div>
       <p class="cta-note">Or chat with us on <a href="#" data-whatsapp-link target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:600">WhatsApp</a> for quick questions</p>
     </div>
@@ -847,7 +860,6 @@
     const src = btn.getAttribute('data-play-audio');
     const container = btn.closest('[data-call-player]') || btn.parentElement;
     const audio = container.querySelector('[data-audio-player]');
-    const icon = btn.querySelector('[data-play-icon]');
     const timeCurrent = container.querySelector('[data-time-current]');
     const timeTotal = container.querySelector('[data-time-total]');
     if (!audio) return;
@@ -861,7 +873,6 @@
     };
 
     const setIcon = (playing) => {
-      if (icon) icon.textContent = playing ? '⏸' : '▶';
       container.classList.toggle('playing', playing);
     };
 
@@ -893,13 +904,13 @@
 
   // "Live Call to Voice Assistant" buttons — flash a coming-soon message, then reset
   document.querySelectorAll('[data-live-voice-call]').forEach(btn => {
-    const originalText = btn.textContent;
+    const originalHTML = btn.innerHTML;
     btn.addEventListener('click', () => {
       if (btn.dataset.busy) return;
       btn.dataset.busy = '1';
       btn.textContent = 'Call to voice assistant coming soon';
       setTimeout(() => {
-        btn.textContent = originalText;
+        btn.innerHTML = originalHTML;
         delete btn.dataset.busy;
       }, 1000);
     });
