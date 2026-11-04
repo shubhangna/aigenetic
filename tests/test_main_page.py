@@ -1,6 +1,5 @@
 """Functional tests for the main Aigenetic landing page."""
 
-import re
 import socket
 import unittest
 
@@ -65,32 +64,37 @@ class TestMainPage(WebsiteTestCase):
         self.page.reload(wait_until="domcontentloaded", timeout=45000)
         self.assert_no_console_errors()
 
-    def test_use_cases_marquee_drifts_right_to_left_and_pauses_on_hover(self):
+    def test_use_case_cards_render_once_with_explore_links(self):
         self.open_main_page()
-        track = self.page.locator(".usecase-track")
-        expect(track).to_be_visible()
+        section = self.page.locator("#use-cases")
+        section.scroll_into_view_if_needed()
 
-        with self.subTest("card list is duplicated for a seamless loop"):
+        with self.subTest("each industry card is rendered once"):
             use_case_count = self.page.evaluate("() => window.CONFIG.useCases.length")
-            self.assertEqual(self.page.locator(".usecase-card-wrap").count(), use_case_count * 2)
-            # Only the first (non-duplicate) copy stays tab-reachable.
-            self.assertEqual(self.page.locator(".usecase-card-wrap[aria-hidden='true']").count(), use_case_count)
+            cards = self.page.locator("#use-cases .usecase-card")
+            self.assertEqual(cards.count(), use_case_count)
+            self.assertEqual(self.page.locator(".usecase-card-wrap").count(), 0)
+            titles = [cards.nth(i).inner_text() for i in range(cards.count())]
+            self.assertEqual(sum("Clinics & Doctors" in text for text in titles), 1)
+            self.assertEqual(sum("Real Estate" in text for text in titles), 1)
+            self.assertEqual(sum("Schools and Coaching" in text for text in titles), 1)
 
-        with self.subTest("track animates right-to-left on an infinite loop"):
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationName"), "usecase-scroll")
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationIterationCount"), "infinite")
-            # translateX drifts toward -50%, i.e. leftward, never positive/rightward.
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
-
-        with self.subTest("hovering a card pauses the drift"):
-            self.page.locator(".usecase-marquee").hover()
-            expect(track).to_have_class(re.compile("paused"))
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "paused")
-
-        with self.subTest("moving away resumes the drift"):
-            self.page.locator("h1.hero-title").hover()
-            expect(track).not_to_have_class(re.compile("paused"))
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
+        expectations = (
+            ("/?mode=healthcare", "Explore for clinics"),
+            ("/?mode=realestate", "Explore for developers"),
+            ("/?mode=education", "Explore for institutes"),
+        )
+        for href, label in expectations:
+            with self.subTest(href=href):
+                link = self.page.locator(f'#use-cases a[href="{href}"]')
+                self.assertEqual(link.count(), 1)
+                expect(link).to_be_visible()
+                expect(link).to_contain_text(label)
+                explore = link.locator(".usecase-explore")
+                box = explore.bounding_box()
+                self.assertIsNotNone(box)
+                self.assertGreater(box["width"], 80)
+                self.assertGreater(box["height"], 12)
 
     def test_github_domain_resolves_to_expected_ips(self):
         try:

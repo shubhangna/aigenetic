@@ -1,0 +1,61 @@
+/* Shared chrome for the policy pages. Copy stays in each HTML file. */
+body.legal-page {
+  background: #FAFAF7 !important;
+  color: #0E1B1E;
+  font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.legal-page header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(250, 250, 247, .92) !important;
+  border-color: #E3E5E0 !important;
+  backdrop-filter: saturate(1.4) blur(14px);
+}
+
+.legal-page header a {
+  color: #0E1B1E !important;
+  text-decoration: none;
+  font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.legal-page h1,
+.legal-page h2 {
+  font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -.03em;
+  color: #0E1B1E !important;
+}
+
+.legal-page .bg-white {
+  background: #fff !important;
+  border: 1px solid #E3E5E0;
+  border-radius: 22px !important;
+  box-shadow: 0 18px 44px -34px rgba(14, 27, 30, .55);
+}
+
+.legal-page a { color: #084A40; }
+.legal-page a:hover { color: #0C6B5C; }
+
+.legal-page .bg-gray-50,
+.legal-page .bg-green-50,
+.legal-page .bg-yellow-50,
+.legal-page .bg-red-50,
+.legal-page .bg-blue-50 {
+  border-radius: 12px;
+}
+
+.legal-page footer {
+  background: #E9F3F0 !important;
+  border-color: #D3E8E1 !important;
+}
+
+.legal-page footer a { text-decoration: none; font-weight: 600; }
+
+.legal-page :focus-visible {
+  outline: 2px solid #0C6B5C;
+  outline-offset: 3px;
+}
