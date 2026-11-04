@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aigenetic — homepage mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,620;1,9..144,520&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F1EA;
+    --ink: #17211C;
+    --muted: #5E6963;
+    --line: #E3DDD2;
+    --sage: #E5F0EA;
+    --forest: #0E6B52;
+    --deep: #0A4A38;
+    --card: #FFFcf8;
+    --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --sans: "Outfit", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button, .btn { font-family: inherit; }
+  .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+  .proposal {
+    background: var(--ink);
+    color: #E7F3EE;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 8px 16px;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    height: 72px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 650;
+    letter-spacing: -.03em;
+    font-size: 18px;
+  }
+  .mark {
+    width: 28px; height: 28px; border-radius: 9px;
+    background: var(--forest);
+    display: grid; place-items: center;
+  }
+  .mark svg { display: block; }
+  .links { display: flex; gap: 22px; margin-left: auto; color: var(--muted); font-size: 15px; font-weight: 500; }
+  .links a:hover { color: var(--ink); }
+  .nav-cta { display: flex; gap: 8px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 999px; padding: 12px 18px; font-weight: 600; font-size: 15px;
+    border: 1px solid transparent; cursor: pointer; background: transparent;
+  }
+  .btn-fill { background: var(--forest); color: #F4FFF9; }
+  .btn-fill:hover { background: var(--deep); }
+  .btn-line { border-color: #CFC8BB; background: transparent; color: var(--ink); }
+  .btn-line:hover { border-color: var(--ink); }
+  .btn-lg { padding: 15px 22px; font-size: 16px; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 48px;
+    align-items: end;
+    padding: 28px 0 20px;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--deep); font-size: 13px; font-weight: 600; letter-spacing: .02em;
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--forest);
+    box-shadow: 0 0 0 5px rgba(14,107,82,.15);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 560;
+    font-size: clamp(4.2rem, 6.6vw, 6.15rem);
+    line-height: .9;
+    letter-spacing: -.035em;
+    margin: 16px 0 18px;
+  }
+  h1 em { font-style: italic; font-weight: 520; color: var(--forest); }
+  .sub { max-width: 38rem; color: var(--muted); font-size: 1.12rem; margin: 0 0 26px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .facts {
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+    margin-top: 22px; padding: 0; list-style: none;
+    color: var(--muted); font-size: 14px;
+  }
+  .facts strong { color: var(--ink); font-weight: 620; }
+
+  .stage {
+    background: var(--sage);
+    border-radius: 28px;
+    padding: 22px 22px 18px;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+  }
+  .phone {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid #D5E4DB;
+    border-radius: 22px;
+    padding: 16px 16px 14px;
+  }
+  .phone-top, .sheet-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .phone-top { font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--deep); }
+  .time { font-family: var(--sans); letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 500; }
+  .lang { margin: 10px 0 14px; font-size: 13px; color: var(--muted); }
+  .turn { margin: 0 0 10px; max-width: 92%; }
+  .turn b { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 650; margin-bottom: 4px; }
+  .turn p { margin: 0; background: #F6F3EC; border-radius: 14px; padding: 10px 12px; font-size: 14.5px; }
+  .turn.agent { margin-left: auto; }
+  .turn.agent p { background: #E7F5EF; }
+  .gloss { display: block; margin-top: 4px; color: var(--muted); font-size: 12.5px; }
+  .booked {
+    margin-top: 8px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    display: flex; justify-content: space-between; gap: 12px; align-items: center;
+  }
+  .booked b { display: block; font-size: 15px; }
+  .booked span { color: var(--muted); font-size: 13px; }
+  .pill {
+    flex: none;
+    background: var(--forest); color: #F3FFF8;
+    border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 650;
+  }
+  .caption { margin: 10px 2px 0; color: #3E6B59; font-size: 12.5px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 28px auto 0;
+  }
+  .stat { padding: 22px 8px 20px; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat b {
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 560;
+    letter-spacing: -.03em;
+    line-height: 1;
+  }
+  .stat span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+
+  section { padding: 84px 0; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--forest); font-weight: 650; margin: 0 0 10px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 560;
+    font-size: clamp(2.2rem, 4vw, 3.3rem);
+    letter-spacing: -.03em;
+    line-height: 1.02;
+    margin: 0;
+  }
+  .lede { color: var(--muted); max-width: 38rem; margin: 12px 0 0; }
+
+  .industries { display: flex; flex-direction: column; }
+  .industry {
+    display: grid;
+    grid-template-columns: 72px 1.1fr 1.3fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+  }
+  .industry:last-child { border-bottom: 1px solid var(--line); }
+  .idx { font-family: var(--serif); font-size: 1.4rem; color: var(--forest); }
+  .industry h3 { margin: 0; font-size: 1.35rem; letter-spacing: -.02em; }
+  .industry p { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; font-size: 13px; color: var(--muted); background: var(--card); }
+  .explore { font-weight: 650; color: var(--deep); white-space: nowrap; }
+  .explore:hover { color: var(--forest); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    margin-top: 36px;
+  }
+  .step { padding-top: 14px; border-top: 2px solid var(--ink); }
+  .step em { font-style: normal; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--forest); font-weight: 650; }
+  .step h3 { margin: 8px 0 6px; font-size: 1.05rem; }
+  .step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .audio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .clip {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 16px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+    align-items: center;
+  }
+  .clip small { grid-column: 1; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; color: var(--forest); font-weight: 650; }
+  .clip strong { grid-column: 1; font-size: 1.02rem; }
+  .clip span { grid-column: 1; color: var(--muted); font-size: 13.5px; }
+  .play {
+    grid-row: 1 / span 3; grid-column: 2;
+    width: 42px; height: 42px; border-radius: 50%; border: 0;
+    background: var(--ink); color: white; cursor: pointer;
+  }
+
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .why article { padding: 22px 22px 22px 0; border-bottom: 1px solid var(--line); }
+  .why article:nth-child(odd) { padding-right: 32px; border-right: 1px solid var(--line); }
+  .why article:nth-child(even) { padding-left: 32px; }
+  .why h3 { margin: 0 0 6px; font-size: 1.15rem; }
+  .why p { margin: 0; color: var(--muted); }
+
+  .quotes {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .quote {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px;
+    border: 1px solid var(--line);
+  }
+  .quote:first-child { background: var(--ink); color: #F4F7F5; border-color: var(--ink); }
+  .quote:first-child .who { color: #C9D7D1; }
+  blockquote { margin: 0 0 18px; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.35; letter-spacing: -.02em; }
+  .who { color: var(--muted); font-size: 13.5px; }
+  .who b { display: block; color: var(--ink); font-family: var(--sans); }
+  .quote:first-child .who b { color: #F4F7F5; }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .plan {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .plan.hot { background: var(--ink); color: #F4F7F5; border-color: var(--ink); }
+  .plan .name { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--forest); font-weight: 700; }
+  .plan.hot .name { color: #8ED9BE; }
+  .plan .price { font-family: var(--serif); font-size: 2.6rem; letter-spacing: -.03em; line-height: 1; }
+  .plan .price s { font-family: var(--sans); font-size: .4em; text-decoration: none; color: var(--muted); letter-spacing: 0; }
+  .plan.hot .price s { color: #C5D4CE; }
+  .plan .usage { color: var(--muted); font-size: 14px; min-height: 2.6em; }
+  .plan.hot .usage { color: #C5D4CE; }
+  .plan ul { margin: 8px 0 16px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+  .plan li::before { content: "–  "; color: var(--forest); }
+  .plan.hot li::before { color: #8ED9BE; }
+  .plan .btn { margin-top: auto; }
+  .plan.hot .btn-fill { background: #F4F7F5; color: var(--ink); }
+  .help { margin-top: 16px; color: var(--muted); font-size: 15px; }
+
+  .close {
+    background: var(--sage);
+    border-radius: 28px;
+    padding: 56px 32px;
+    text-align: center;
+  }
+  .close .cta-row { justify-content: center; margin-top: 22px; }
+  footer {
+    display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+    padding: 28px 0 40px; color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--line);
+  }
+  footer a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .links, .nav-cta .btn-line { display: none; }
+    .hero, .stats, .steps, .audio, .why, .quotes, .plans { grid-template-columns: 1fr; }
+    .industry { grid-template-columns: 48px 1fr; }
+    .chips, .explore { grid-column: 2; }
+    .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
+    .why article, .why article:nth-child(odd), .why article:nth-child(even) {
+      border-right: 0; padding: 18px 0;
+    }
+    .stage { min-height: 0; }
+    .booked { flex-direction: column; align-items: flex-start; }
+    h1 { font-size: clamp(3.3rem, 14vw, 4.4rem); }
+    section { padding: 56px 0; }
+    .cta-row .btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+  <div class="proposal">Design mockup · only features and copy already on aigenetic.in</div>
+  <header class="wrap">
+    <nav>
+      <a class="logo" href="#top">
+        <span class="mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 7.2c2.2-3.4 7.8-3.4 10 0" stroke="#F4FFF9" stroke-width="1.6" stroke-linecap="round"/><path d="M5 9.2c1.3-1.8 4.7-1.8 6 0" stroke="#F4FFF9" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="11.2" r="1" fill="#F4FFF9"/></svg>
+        </span>
+        Aigenetic
+      </a>
+      <div class="links">
+        <a href="#industries">Industries</a>
+        <a href="#how">How it works</a>
+        <a href="#listen">Listen</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn btn-line" href="tel:+917428497033">Call</a>
+        <a class="btn btn-fill" href="#book">Book a demo</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="wrap">
+    <div class="hero">
+      <div>
+        <div class="kicker"><span class="pulse" aria-hidden="true"></span> Live AI assistants handling calls now</div>
+        <h1>The <em>voice</em><br>of your business.</h1>
+        <p class="sub">Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically for your business—in Indian languages.</p>
+        <div class="cta-row">
+          <a class="btn btn-fill btn-lg" href="#book">Book a demo</a>
+          <a class="btn btn-line btn-lg" href="https://wa.me/917428497033">WhatsApp us</a>
+        </div>
+        <ul class="facts">
+          <li><strong>48–72 hours</strong> to go live</li>
+          <li><strong>31+ languages</strong> and local accents</li>
+          <li><strong>24×7</strong>, including holidays</li>
+          <li><strong>Pay per use</strong></li>
+        </ul>
+      </div>
+      <div class="stage">
+        <div class="phone">
+          <div class="phone-top"><span>On a call</span><span class="time">1:12</span></div>
+          <div class="lang">Language detected · हिन्दी / English</div>
+          <div class="turn caller">
+            <b>Caller</b>
+            <p>Hello, doctor sahab se appointment lena tha. Kal mil sakta hai?
+              <span class="gloss">I need an appointment. Is tomorrow possible?</span>
+            </p>
+          </div>
+          <div class="turn agent">
+            <b>Aigenetic</b>
+            <p>11:30 khaali hai. Sunita ji, pehli baar aa rahi hain ya follow-up hai?
+              <span class="gloss">11:30 is free. First visit or a follow-up?</span>
+            </p>
+          </div>
+          <div class="booked">
+            <div>
+              <b>Sunita Sharma · 11:30 AM</b>
+              <span>Follow-up · Dr. Rao · written to the register</span>
+            </div>
+            <span class="pill">WhatsApp sent</span>
+          </div>
+          <p class="caption">Sample from the clinic page already on the site.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats" aria-label="Results">
+      <div class="stat"><b>10,000+</b><span>Calls handled</span></div>
+      <div class="stat"><b>95%</b><span>Booking success</span></div>
+      <div class="stat"><b>2 min</b><span>Avg call duration</span></div>
+      <div class="stat"><b>100+</b><span>Happy businesses</span></div>
+    </div>
+
+    <section id="industries">
+      <p class="eyebrow">Industries</p>
+      <h2>Built for the calls Indian businesses actually get.</h2>
+      <div class="industries" style="margin-top:28px">
+        <a class="industry" href="/?mode=healthcare">
+          <span class="idx">01</span>
+          <div>
+            <h3>Clinics &amp; Doctors</h3>
+            <p>Appointment booking, rescheduling, follow-ups</p>
+          </div>
+          <div class="chips"><span class="chip">24/7 booking</span><span class="chip">Patient reminders</span><span class="chip">Prescription follow-ups</span></div>
+          <span class="explore">Explore for clinics →</span>
+        </a>
+        <a class="industry" href="/?mode=realestate">
+          <span class="idx">02</span>
+          <div>
+            <h3>Real Estate</h3>
+            <p>Site visit scheduling, lead capture</p>
+          </div>
+          <div class="chips"><span class="chip">Site visit booking</span><span class="chip">Lead qualification</span><span class="chip">Property inquiries</span></div>
+          <span class="explore">Explore for developers →</span>
+        </a>
+        <a class="industry" href="/?mode=education">
+          <span class="idx">03</span>
+          <div>
+            <h3>Schools and Coaching</h3>
+            <p>Admission enquiries, fee &amp; attendance reminders</p>
+          </div>
+          <div class="chips"><span class="chip">Admission inquiries</span><span class="chip">Demo class booking</span><span class="chip">Fee &amp; attendance reminders</span></div>
+          <span class="explore">Explore for institutes →</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="how">
+      <p class="eyebrow">How it works</p>
+      <h2>A simple, reliable flow.</h2>
+      <p class="lede">That handles every customer call with precision.</p>
+      <div class="steps">
+        <article class="step"><em>Step 1</em><h3>Customer calls</h3><p>Customer dials your business number.</p></article>
+        <article class="step"><em>Step 2</em><h3>AI answers</h3><p>AI voice assistant answers instantly.</p></article>
+        <article class="step"><em>Step 3</em><h3>Understands intent</h3><p>AI understands the customer's request in their language.</p></article>
+        <article class="step"><em>Step 4</em><h3>Takes action</h3><p>Books the appointment or answers the query.</p></article>
+        <article class="step"><em>Step 5</em><h3>Confirms</h3><p>Confirms the booking and ends the call.</p></article>
+      </div>
+    </section>
+
+    <section id="listen">
+      <p class="eyebrow">Audio demos</p>
+      <h2>Hear the agents in action.</h2>
+      <p class="lede">Listen to real-world scenarios across industries with natural, contextual responses.</p>
+      <div class="audio">
+        <article class="clip"><small>Healthcare</small><strong>Healthcare support</strong><span>Patient inquiries and support</span><button class="play" type="button" aria-label="Play Healthcare support">▶</button></article>
+        <article class="clip"><small>E-commerce</small><strong>E-commerce support</strong><span>Customer service for online stores</span><button class="play" type="button" aria-label="Play E-commerce support">▶</button></article>
+        <article class="clip"><small>BFSI</small><strong>Payment reminders</strong><span>Automated payment reminder calls</span><button class="play" type="button" aria-label="Play Payment reminders">▶</button></article>
+        <article class="clip"><small>EdTech</small><strong>Lead qualification</strong><span>Edtech lead qualification</span><button class="play" type="button" aria-label="Play Lead qualification">▶</button></article>
+        <article class="clip"><small>HR Tech</small><strong>Recruitment</strong><span>Candidate screening and recruitment</span><button class="play" type="button" aria-label="Play Recruitment">▶</button></article>
+        <article class="clip"><small>Hospitality</small><strong>Hospitality front desk</strong><span>Front desk inquiries and support</span><button class="play" type="button" aria-label="Play Hospitality front desk">▶</button></article>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Why Aigenetic</p>
+      <h2>Fully managed, for Indian businesses.</h2>
+      <div class="why">
+        <article><h3>Fully managed</h3><p>We handle everything from setup to maintenance.</p></article>
+        <article><h3>31+ languages</h3><p>Understands major Indian languages and accents.</p></article>
+        <article><h3>Works 24/7</h3><p>Never miss a call, even on holidays.</p></article>
+        <article><h3>Affordable</h3><p>Pay-per-use pricing for small businesses.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Testimonials</p>
+      <h2>Trusted by 100+ businesses.</h2>
+      <div class="quotes">
+        <article class="quote">
+          <blockquote>“Aigenetic has been a game-changer. We don't miss appointments anymore, and patients love the 24/7 booking facility.”</blockquote>
+          <div class="who"><b>Dr. Priya Sharma</b>Skin Clinic, Mumbai</div>
+        </article>
+        <article class="quote">
+          <blockquote>“The bot handles Hindi and Marathi perfectly. Our booking rate increased by 40% in just 2 months!”</blockquote>
+          <div class="who"><b>Rahul Desai</b>Salon Owner, Pune</div>
+        </article>
+        <article class="quote">
+          <blockquote>“Best investment we made. Saves us ₹25,000/month compared to hiring a receptionist. Plus it never takes a day off!”</blockquote>
+          <div class="who"><b>Anjali Reddy</b>Real Estate Agency, Bangalore</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <p class="eyebrow">Pricing</p>
+      <h2>Simple pricing.</h2>
+      <p class="lede">No hidden fees. Pay only for what you use.</p>
+      <div class="plans">
+        <article class="plan">
+          <div class="name">Flex</div>
+          <div class="price">₹2,999<s>/month</s></div>
+          <p class="usage">500 call minutes included, then ₹6/minute</p>
+          <ul>
+            <li>Dedicated phone number</li>
+            <li>AI voice agent configured</li>
+            <li>500 call minutes included</li>
+            <li>Appointment booking &amp; rescheduling</li>
+            <li>Basic analytics</li>
+            <li>Email support</li>
+          </ul>
+          <a class="btn btn-line" href="tel:+917428497033">Get Started</a>
+        </article>
+        <article class="plan hot">
+          <div class="name">Pro · Most popular</div>
+          <div class="price">₹7,999<s>/month</s></div>
+          <p class="usage">1,500 call minutes included, then ₹6/minute</p>
+          <ul>
+            <li>Everything in Flex</li>
+            <li>Outbound calling campaigns</li>
+            <li>1,500 call minutes included</li>
+            <li>Advanced analytics</li>
+            <li>Custom conversation flows</li>
+            <li>Priority WhatsApp support</li>
+          </ul>
+          <a class="btn btn-fill" href="tel:+917428497033">Get Started</a>
+        </article>
+        <article class="plan">
+          <div class="name">Enterprise</div>
+          <div class="price">Custom</div>
+          <p class="usage">Volume-based per-minute pricing</p>
+          <ul>
+            <li>Everything in Pro</li>
+            <li>Multiple phone numbers</li>
+            <li>API access &amp; integrations</li>
+            <li>White-label option</li>
+            <li>Dedicated account manager</li>
+            <li>24/7 priority support</li>
+          </ul>
+          <a class="btn btn-line" href="https://wa.me/917428497033">Contact Sales</a>
+        </article>
+      </div>
+      <p class="help" id="book">Need help choosing? Book a free demo and we'll recommend the best plan based on your monthly call volume. Most businesses save 60–70% compared to hiring a receptionist.</p>
+    </section>
+
+    <section class="close">
+      <p class="eyebrow">Get started</p>
+      <h2>Ready to stop missing calls?</h2>
+      <p class="lede" style="margin-left:auto;margin-right:auto">See Aigenetic answer, understand, and book appointments for your business — live, in a short demo.</p>
+      <div class="cta-row">
+        <a class="btn btn-fill btn-lg" href="#book">Book a demo</a>
+        <a class="btn btn-line btn-lg" href="https://wa.me/917428497033">WhatsApp us</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>Aigenetic (OPC) Pvt Ltd · Rajiv Gandhi Infotech Park, Pune</span>
+      <span><a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a> · <a href="tel:+917428497033">+91 742849 7033</a></span>
+    </footer>
+  </main>
+</body>
+</html>
