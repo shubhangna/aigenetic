@@ -24,7 +24,7 @@ class TestSmoke(WebsiteTestCase):
         response = self.open_page(ready_selector="h1.hero-title")
         self.assert_successful_response(response)
         self.assertIn("Aigenetic", self.page.title())
-        expect(self.page.locator("h1.hero-title")).to_contain_text("The Voice of Your Business")
+        expect(self.page.locator("h1.hero-title")).to_contain_text("Appointments on autopilot.")
         self.assert_contact_links(
             'a[href^="tel:"]:visible',
             'a[href^="https://wa.me/"]:visible',

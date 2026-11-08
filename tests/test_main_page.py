@@ -1,6 +1,5 @@
 """Functional tests for the main Aigenetic landing page."""
 
-import re
 import socket
 import unittest
 
@@ -17,14 +16,18 @@ class TestMainPage(WebsiteTestCase):
         response = self.open_main_page()
         self.assert_successful_response(response)
         self.assertIn("Aigenetic", self.page.title())
-        expect(self.page.locator("h1.hero-title")).to_contain_text("The Voice of Your Business")
+        expect(self.page.locator("h1.hero-title")).to_contain_text("Appointments on autopilot.")
+        expect(self.page.get_by_text("FRONT DESK AS A SERVICE", exact=True)).to_be_visible()
+        expect(self.page.get_by_text("Try the autopilot").first).to_be_visible()
 
     def test_sections_and_pricing_are_visible(self):
         self.open_main_page()
-        expect(self.page.locator("#features .section-label")).to_contain_text("How It Works")
-        expect(self.page.get_by_role("heading", name="Perfect for Any Business")).to_be_visible()
-        expect(self.page.get_by_role("heading", name="Simple Pricing")).to_be_visible()
-        self.assertGreaterEqual(self.page.locator("#pricing .minimal-card").count(), 4)
+        expect(self.page.locator("#system")).to_contain_text("From first contact")
+        expect(self.page.locator("#samples")).to_contain_text("Hear a sample call.")
+        expect(self.page.locator("#pricing")).to_contain_text("A clear starting point.")
+        expect(self.page.locator("#pricing")).to_contain_text("₹2,999")
+        expect(self.page.locator("#pricing")).to_contain_text("₹7,999")
+        self.assertEqual(self.page.locator("#pricing .price").count(), 3)
 
     def test_contact_ctas_have_configured_links(self):
         self.open_main_page()
@@ -38,59 +41,41 @@ class TestMainPage(WebsiteTestCase):
         self.open_main_page()
         assert_calendar_modal(
             self,
-            'a[href="#"]:visible',
+            "[data-open-calendar]:visible",
             "#calendar-modal-main",
         )
 
     def test_audio_demo_controls_are_bound(self):
         self.open_main_page()
-        audio = self.page.locator("#audio-demos audio").first
-        play_button = self.page.locator("#audio-demos .audio-play").first
+        player = self.page.locator("[data-player]").first
+        audio = player.locator("audio")
+        play_button = player.locator("[data-play]")
         expect(play_button).to_be_visible()
-        self.assertIn("mp3/", audio.get_attribute("src") or "")
+        self.assertIn("audio/samples/", audio.get_attribute("src") or "")
+        expect(player).to_contain_text("Demo audio")
         play_button.click()
-        audio_wave_class = self.page.locator("#audio-demos .audio-wave").first.get_attribute("class") or ""
-        self.assertIn("wave-active", audio_wave_class)
+        expect(play_button).to_have_attribute("aria-pressed", "true")
+        self.assertFalse(audio.evaluate("el => el.paused"))
 
     def test_footer_policies_and_testimonials_are_present(self):
         self.open_main_page()
         self.page.locator("footer").scroll_into_view_if_needed()
         expect(self.page.get_by_role("link", name="Privacy Policy")).to_be_visible()
         expect(self.page.get_by_role("link", name="Terms of Service")).to_be_visible()
-        expect(self.page.get_by_role("heading", name="Trusted by 100+ Businesses")).to_be_visible()
-        self.assertGreater(self.page.get_by_text("★").count(), 0)
+        expect(self.page.get_by_role("link", name="Refund Policy")).to_be_visible()
 
     def test_page_has_no_critical_console_errors(self):
         self.open_main_page()
         self.page.reload(wait_until="domcontentloaded", timeout=45000)
         self.assert_no_console_errors()
 
-    def test_use_cases_marquee_drifts_right_to_left_and_pauses_on_hover(self):
+    def test_locked_hero_copy(self):
         self.open_main_page()
-        track = self.page.locator(".usecase-track")
-        expect(track).to_be_visible()
-
-        with self.subTest("card list is duplicated for a seamless loop"):
-            use_case_count = self.page.evaluate("() => window.CONFIG.useCases.length")
-            self.assertEqual(self.page.locator(".usecase-card-wrap").count(), use_case_count * 2)
-            # Only the first (non-duplicate) copy stays tab-reachable.
-            self.assertEqual(self.page.locator(".usecase-card-wrap[aria-hidden='true']").count(), use_case_count)
-
-        with self.subTest("track animates right-to-left on an infinite loop"):
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationName"), "usecase-scroll")
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationIterationCount"), "infinite")
-            # translateX drifts toward -50%, i.e. leftward, never positive/rightward.
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
-
-        with self.subTest("hovering a card pauses the drift"):
-            self.page.locator(".usecase-marquee").hover()
-            expect(track).to_have_class(re.compile("paused"))
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "paused")
-
-        with self.subTest("moving away resumes the drift"):
-            self.page.locator("h1.hero-title").hover()
-            expect(track).not_to_have_class(re.compile("paused"))
-            self.assertEqual(track.evaluate("el => getComputedStyle(el).animationPlayState"), "running")
+        tagline = self.page.locator(".autopilot-tagline")
+        expect(tagline).to_have_attribute("aria-label", "Talk. Text. Follow up. Slot booking.")
+        expect(self.page.locator(".subhead")).to_contain_text(
+            "Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7."
+        )
 
     def test_github_domain_resolves_to_expected_ips(self):
         try:

@@ -121,8 +121,8 @@ class TestMainPageLinksToEducation(WebsiteTestCase):
         card = self.page.locator('a[href="/?mode=education"]').first
         expect(card).to_be_visible()
         expect(card).to_contain_text("Explore for institutes")
-        # The card's own title/copy is unaffected by the mode rename.
-        expect(card).to_contain_text("Schools and Coaching")
+        expect(card).to_contain_text("Schools & coaching")
+        expect(card).not_to_contain_text("Explore for clinics")
 
 
 if __name__ == "__main__":
