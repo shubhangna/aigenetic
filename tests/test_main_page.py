@@ -5,7 +5,7 @@ import unittest
 
 from playwright.sync_api import expect
 
-from utilities import EXPECTED_GITHUB_IPS, WebsiteTestCase, assert_calendar_modal, resolve_domain_ips
+from utilities import EXPECTED_GITHUB_IPS, WebsiteTestCase, resolve_domain_ips
 
 
 class TestMainPage(WebsiteTestCase):
@@ -39,11 +39,21 @@ class TestMainPage(WebsiteTestCase):
 
     def test_book_demo_modal_opens_and_closes(self):
         self.open_main_page()
-        assert_calendar_modal(
-            self,
-            "[data-open-calendar]:visible",
-            "#calendar-modal-main",
+        schedule = (
+            "https://calendar.google.com/calendar/appointments/schedules/"
+            "AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true"
         )
+        iframe = self.page.locator("#calendar-modal-main iframe")
+        self.assertEqual(iframe.get_attribute("src"), schedule)
+        self.page.locator("[data-open-calendar]:visible").first.click()
+        modal = self.page.locator("#calendar-modal-main")
+        expect(modal).to_be_visible()
+        expect(iframe).to_be_visible()
+        self.page.frame_locator("#calendar-modal-main iframe").locator("body").wait_for(
+            state="attached", timeout=20000
+        )
+        modal.locator("button").first.click()
+        expect(modal).not_to_be_visible()
 
     def test_audio_demo_controls_are_bound(self):
         self.open_main_page()
@@ -51,7 +61,8 @@ class TestMainPage(WebsiteTestCase):
         audio = player.locator("audio")
         play_button = player.locator("[data-play]")
         expect(play_button).to_be_visible()
-        self.assertIn("audio/samples/", audio.get_attribute("src") or "")
+        src = audio.get_attribute("src") or ""
+        self.assertTrue(src.startswith("mp3/"), src)
         expect(player).to_contain_text("Demo audio")
         play_button.click()
         expect(play_button).to_have_attribute("aria-pressed", "true")

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f5f6f8">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05070f">
   <title>Aigenetic — Appointments on autopilot.</title>
   <meta name="description" content="Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.">
   <meta name="keywords" content="AI phone assistant, front desk as a service, WhatsApp booking, appointment booking India, Hindi English Hinglish">
@@ -28,15 +28,7 @@
   <link rel="icon" href="logo/logo.png" type="image/png">
   <link rel="apple-touch-icon" href="logo/logoMedium.png">
   <link rel="stylesheet" href="assets/css/home.css">
-  <style>html.mode-pending #root{display:none!important}</style>
-  <script>
-    (function () {
-      var mode = new URLSearchParams(location.search).get("mode");
-      if (mode === "healthcare" || mode === "realestate" || mode === "education") {
-        document.documentElement.classList.add("mode-pending");
-      }
-    })();
-  </script>
+  <script>document.documentElement.classList.add("motion");</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -57,28 +49,28 @@
   </script>
 </head>
 <body>
-  <div id="mode-root" style="display:none"></div>
+  <canvas id="aurora" aria-hidden="true"></canvas>
   <div id="root">
     <a class="skip" href="#main">Skip to content</a>
     <div class="top" id="top">
       <header class="wrap">
         <a class="brand" href="#top" aria-label="Aigenetic home">
-          <img src="logo/logoMedium.png" alt="" class="original-logo" width="44" height="44" decoding="async">
+          <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
           Aigenetic
         </a>
         <nav class="primary" aria-label="Main">
           <a href="#system">The system</a>
-          <a href="#industries">Industries</a>
           <a href="#samples">Samples</a>
+          <a href="#conversation">Journey</a>
           <a href="#pricing">Pricing</a>
           <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span class="arrow" aria-hidden="true">↗</span></a>
         </nav>
         <div class="mobile-nav">
           <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">Menu</button>
-          <div id="mobile-nav-panel" class="links" hidden>
+          <div id="mobile-nav-panel" class="links glass" hidden>
             <a href="#system">The system</a>
-            <a href="#industries">Industries</a>
             <a href="#samples">Samples</a>
+            <a href="#conversation">Journey</a>
             <a href="#pricing">Pricing</a>
             <a href="#calendar-booking" data-open-calendar>Try the autopilot ↗</a>
           </div>
@@ -118,7 +110,7 @@
             <p class="small hero-note">Hindi · English · Hinglish &nbsp; / &nbsp; Fully managed</p>
           </div>
 
-          <div class="desk" aria-label="Illustrative customer journey across calls, WhatsApp and calendar">
+          <div class="desk glass" data-reveal style="--reveal: 120ms" aria-label="Illustrative customer journey across calls, WhatsApp and calendar">
             <div class="desk-top">
               <span>Your managed front desk</span>
               <span class="status"><i class="dot" aria-hidden="true"></i> Connected</span>
@@ -164,10 +156,10 @@
           </div>
         </div>
         <div class="coverage">
-          <div><strong>AI calls</strong><p>Answer &amp; understand</p></div>
-          <div><strong>WhatsApp</strong><p>Chat &amp; keep customers updated</p></div>
-          <div><strong>Calendar booking</strong><p>Turn intent into appointments</p></div>
-          <div><strong>Follow-ups</strong><p>Keep the next step moving</p></div>
+          <div data-reveal><strong>AI calls</strong><p>Answer &amp; understand</p></div>
+          <div data-reveal style="--reveal: 70ms"><strong>WhatsApp</strong><p>Chat &amp; keep customers updated</p></div>
+          <div data-reveal style="--reveal: 140ms"><strong>Calendar booking</strong><p>Turn intent into appointments</p></div>
+          <div data-reveal style="--reveal: 210ms"><strong>Follow-ups</strong><p>Keep the next step moving</p></div>
         </div>
       </section>
 
@@ -180,28 +172,28 @@
               <p class="eyebrow">The whole front desk. Not just the phone.</p>
               <h2>From first contact <br>to follow-through.</h2>
             </div>
-            <p>Calls, WhatsApp, calendar bookings and follow-ups — managed as one front-desk service, with your team in control.</p>
+            <p>Calls, WhatsApp, calendar bookings and follow-ups — one continuous front desk, with your team in control.</p>
           </div>
           <div class="four">
-            <article class="function">
+            <article class="function glass" data-reveal>
               <p class="tag">AI calls</p>
               <h3>Start with a conversation.</h3>
               <p>Answer enquiries, understand what customers need and handle callbacks in Hindi, English or Hinglish.</p>
               <div class="outcome">Voice → Intent <span aria-hidden="true">↗</span></div>
             </article>
-            <article class="function">
+            <article class="function glass" data-reveal style="--reveal: 80ms">
               <p class="tag">WhatsApp chat &amp; updates</p>
               <h3>Keep the conversation open.</h3>
               <p>Answer questions in chat, share appointment details and keep customers updated after the call ends.</p>
               <div class="outcome">Chat → Clarity <span aria-hidden="true">↗</span></div>
             </article>
-            <article class="function">
+            <article class="function glass" data-reveal style="--reveal: 160ms">
               <p class="tag">Appointments &amp; calendars</p>
               <h3>Make the next step real.</h3>
               <p>Coordinate suitable slots, book appointments into a calendar and support changes to existing bookings.</p>
               <div class="outcome">Intent → Appointment <span aria-hidden="true">↗</span></div>
             </article>
-            <article class="function">
+            <article class="function glass" data-reveal style="--reveal: 240ms">
               <p class="tag">Follow-ups &amp; reminders</p>
               <h3>Carry the commitment through.</h3>
               <p>Send reminders, follow up on open enquiries and bring your team in when a customer needs a person.</p>
@@ -211,89 +203,169 @@
         </div>
       </section>
 
-      <!-- Demo audio. Replace files in audio/samples/ (same filenames) with real recordings. See audio/samples/README.md. -->
       <section id="samples" class="section" aria-labelledby="samples-title">
         <span id="audio-demos" class="alias"></span>
         <div class="wrap">
           <div class="section-head">
             <div>
-              <p class="eyebrow">Demo audio</p>
+              <p class="eyebrow">Original demo audio</p>
               <h2 id="samples-title">Hear a sample call.</h2>
             </div>
-            <p>Synthesized placeholders for a Hinglish clinic booking, a missed-call recovery, and a follow-up reminder. Not live calls. Drop a real recording on the same file path to replace one.</p>
+            <p>These are the demo recordings the live site already ships: healthcare, commerce, payment reminders, education, hiring and hospitality.</p>
           </div>
           <div class="players">
-            <article class="player" data-player lang="hi">
-              <audio preload="none" src="audio/samples/clinic-booking-hinglish.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="clinic booking in Hinglish" aria-pressed="false" aria-label="Play clinic booking in Hinglish">
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/HealthCare-onboarding_cEIUBM4Y (1).mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Healthcare Support" aria-pressed="false" aria-label="Play Healthcare Support">
                 <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                 <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
               </button>
               <div class="player-copy">
-                <h3>Clinic booking in Hinglish</h3>
-                <p>A caller asks for tomorrow morning. The assistant offers 11:30 and confirms on WhatsApp.</p>
+                <p class="tag">Healthcare</p>
+                <h3>Healthcare Support</h3>
+                <p>AI agent handling patient inquiries and support</p>
               </div>
-              <p class="demo-pill">Demo audio · synthesized placeholder</p>
+              <p class="demo-pill">Demo audio</p>
               <div class="wave-wrap">
                 <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
               </div>
               <div class="player-times">
                 <span data-current>0:00</span>
                 <label class="scrub">
-                  <span class="visually-hidden">Seek clinic booking in Hinglish</span>
+                  <span class="visually-hidden">Seek Healthcare Support</span>
                   <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
                 </label>
-                <span data-duration>0:26</span>
+                <span data-duration>0:00</span>
               </div>
               <p class="player-error" data-error hidden>This demo file could not be played.</p>
             </article>
 
-            <article class="player" data-player lang="hi">
-              <audio preload="none" src="audio/samples/missed-call-recovery.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="missed-call recovery" aria-pressed="false" aria-label="Play missed-call recovery">
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/Ecom-customer-support_IRqJbynE.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="E-commerce Support" aria-pressed="false" aria-label="Play E-commerce Support">
                 <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                 <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
               </button>
               <div class="player-copy">
-                <h3>Missed-call recovery</h3>
-                <p>An outbound call after a missed ring, offering to book the same morning slot.</p>
+                <p class="tag">E-commerce</p>
+                <h3>E-commerce Support</h3>
+                <p>AI-powered customer service for online stores</p>
               </div>
-              <p class="demo-pill">Demo audio · synthesized placeholder</p>
+              <p class="demo-pill">Demo audio</p>
               <div class="wave-wrap">
                 <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
               </div>
               <div class="player-times">
                 <span data-current>0:00</span>
                 <label class="scrub">
-                  <span class="visually-hidden">Seek missed-call recovery</span>
+                  <span class="visually-hidden">Seek E-commerce Support</span>
                   <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
                 </label>
-                <span data-duration>0:14</span>
+                <span data-duration>0:00</span>
               </div>
               <p class="player-error" data-error hidden>This demo file could not be played.</p>
             </article>
 
-            <article class="player" data-player lang="hi">
-              <audio preload="none" src="audio/samples/follow-up-reminder.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="follow-up reminder" aria-pressed="false" aria-label="Play follow-up reminder">
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/BFSI-reminder_dztcIGvN.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Payment Reminders" aria-pressed="false" aria-label="Play Payment Reminders">
                 <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                 <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
               </button>
               <div class="player-copy">
-                <h3>Follow-up reminder</h3>
-                <p>A reminder that tomorrow’s 11:30 clinic slot is confirmed, with a way to change it.</p>
+                <p class="tag">BFSI</p>
+                <h3>Payment Reminders</h3>
+                <p>Automated payment reminder calls</p>
               </div>
-              <p class="demo-pill">Demo audio · synthesized placeholder</p>
+              <p class="demo-pill">Demo audio</p>
               <div class="wave-wrap">
                 <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
               </div>
               <div class="player-times">
                 <span data-current>0:00</span>
                 <label class="scrub">
-                  <span class="visually-hidden">Seek follow-up reminder</span>
+                  <span class="visually-hidden">Seek Payment Reminders</span>
                   <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
                 </label>
-                <span data-duration>0:15</span>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/Edtech-lead-qualification_KTkZSGKj.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Lead Qualification" aria-pressed="false" aria-label="Play Lead Qualification">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">EdTech</p>
+                <h3>Lead Qualification</h3>
+                <p>Edtech lead qualification</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Lead Qualification</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/recruitment_eczAKBnf.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Recruitment" aria-pressed="false" aria-label="Play Recruitment">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">HR Tech</p>
+                <h3>Recruitment</h3>
+                <p>AI-powered candidate screening and recruitment</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Recruitment</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/hospitality-front-desk_CVZtKlFn.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Hospitality Front Desk" aria-pressed="false" aria-label="Play Hospitality Front Desk">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">Hospitality</p>
+                <h3>Hospitality Front Desk</h3>
+                <p>AI agent handling front desk inquiries and support</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Hospitality Front Desk</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
               </div>
               <p class="player-error" data-error hidden>This demo file could not be played.</p>
             </article>
@@ -301,7 +373,7 @@
         </div>
       </section>
 
-      <section id="conversation" class="section showcase">
+      <section id="conversation" class="section">
         <div class="wrap">
           <div class="section-head">
             <div>
@@ -311,20 +383,20 @@
             <p>A clinic enquiry moves from a phone call to WhatsApp, into the calendar and on to a reminder. Your team sees what comes next.</p>
           </div>
           <ol class="journey">
-            <li><span class="journey-label">01 / AI CALL</span><h3>Understand the enquiry</h3><p>Capture the request and the preferred appointment time.</p></li>
-            <li><span class="journey-label">02 / WHATSAPP</span><h3>Confirm the details</h3><p>Share the chosen slot and keep the chat open for questions.</p></li>
-            <li><span class="journey-label">03 / CALENDAR</span><h3>Record the booking</h3><p>Add the appointment to the team’s connected calendar.</p></li>
-            <li><span class="journey-label">04 / FOLLOW-UP</span><h3>Send the reminder</h3><p>Keep the appointment on track and route changes to your team.</p></li>
+            <li class="glass" data-reveal><span class="journey-label">01 / AI CALL</span><h3>Understand the enquiry</h3><p>Capture the request and the preferred appointment time.</p></li>
+            <li class="glass" data-reveal style="--reveal: 70ms"><span class="journey-label">02 / WHATSAPP</span><h3>Confirm the details</h3><p>Share the chosen slot and keep the chat open for questions.</p></li>
+            <li class="glass" data-reveal style="--reveal: 140ms"><span class="journey-label">03 / CALENDAR</span><h3>Record the booking</h3><p>Add the appointment to the team’s connected calendar.</p></li>
+            <li class="glass" data-reveal style="--reveal: 210ms"><span class="journey-label">04 / FOLLOW-UP</span><h3>Send the reminder</h3><p>Keep the appointment on track and route changes to your team.</p></li>
           </ol>
           <div class="sample">
-            <div class="transcript">
+            <div class="transcript glass" data-reveal>
               <div class="transcript-head"><span>WHATSAPP CHAT / HINGLISH</span><span>ILLUSTRATIVE</span></div>
               <div class="dialogue"><span>Customer</span><p>“Kal 11:30 ka slot theek hai. Location bhi bhej dijiye.”</p></div>
               <div class="dialogue"><span>Assistant</span><p>“Ji. Aapke visit details aur clinic location yahin share kar rahe hain.”</p></div>
               <div class="dialogue"><span>System</span><p><em>Slot confirmed → calendar booking → reminder scheduled.</em></p></div>
               <p class="small">All conversations, timings and records are illustrative. No real message, booking or reminder is sent.</p>
             </div>
-            <div class="phone-note">
+            <div class="phone-note glass" data-reveal style="--reveal: 100ms">
               <div class="note-head"><span>TEAM CALENDAR · SAMPLE EVENT</span><span>Illustrative</span></div>
               <div class="message">
                 <p class="small">Clinic appointment</p>
@@ -339,59 +411,17 @@
         </div>
       </section>
 
-      <section id="industries" class="section">
-        <span id="use-cases" class="alias"></span>
-        <div class="wrap">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">Designed around your business</p>
-              <h2>Different businesses. <br>The right boundaries.</h2>
-            </div>
-            <p>Calls, WhatsApp and appointments should follow your business process — with clear boundaries and human handoffs.</p>
-          </div>
-          <div class="three">
-            <a class="industry" href="/?mode=healthcare">
-              <span class="use">HEALTHCARE</span>
-              <h3>Clinics &amp; care teams</h3>
-              <p>Handle call and WhatsApp enquiries, book calendar appointments and send visit reminders.</p>
-              <p class="rule">Bookings, not diagnoses.<br>Medical questions go to your team.</p>
-              <span class="explore">Explore for clinics <span aria-hidden="true">↗</span></span>
-            </a>
-            <a class="industry" href="/?mode=realestate">
-              <span class="use">REAL ESTATE</span>
-              <h3>Developers &amp; brokers</h3>
-              <p>Qualify enquiries by call or chat, share visit details on WhatsApp and coordinate site-visit bookings.</p>
-              <p class="rule">Information, not promises.<br>No invented availability or returns.</p>
-              <span class="explore">Explore for developers <span aria-hidden="true">↗</span></span>
-            </a>
-            <a class="industry" href="/?mode=education">
-              <span class="use">EDUCATION</span>
-              <h3>Schools &amp; coaching</h3>
-              <p>Answer admission questions, book counselling or demo-class slots and follow up with families on WhatsApp.</p>
-              <p class="rule">Guidance, not guarantees.<br>No promises of ranks or admission.</p>
-              <span class="explore">Explore for institutes <span aria-hidden="true">↗</span></span>
-            </a>
-          </div>
-          <div class="trust-band">
-            <strong>Human oversight, by design.</strong>
-            <span>Approved answers</span>
-            <span>Defined escalation paths</span>
-            <span>Reviewable customer journeys</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
+      <section class="section" id="setup">
         <div class="wrap setup">
-          <div>
+          <div data-reveal>
             <p class="eyebrow">We run it for you</p>
             <h2>Your process. <br>Our setup. <br>Your final say.</h2>
             <p>We map your front-desk work, configure the service and review the experience with you. Your team provides the business details, calendar rules and escalation contacts.</p>
           </div>
           <ol class="steps">
-            <li><span class="step-num">1</span><div><h3>Map the customer journey</h3><p>Agree on channels, hours, languages, booking rules and handoffs.</p></div></li>
-            <li><span class="step-num">2</span><div><h3>Configure and test</h3><p>Review call and chat responses, calendar connections and reminder rules.</p></div></li>
-            <li><span class="step-num">3</span><div><h3>Approve before going live</h3><p>Test the full journey. You approve before go-live; we agree how monitoring, updates and handoffs are managed.</p></div></li>
+            <li class="glass" data-reveal><span class="step-num">1</span><div><h3>Map the customer journey</h3><p>Agree on channels, hours, languages, booking rules and handoffs.</p></div></li>
+            <li class="glass" data-reveal style="--reveal: 80ms"><span class="step-num">2</span><div><h3>Configure and test</h3><p>Review call and chat responses, calendar connections and reminder rules.</p></div></li>
+            <li class="glass" data-reveal style="--reveal: 160ms"><span class="step-num">3</span><div><h3>Approve before going live</h3><p>Test the full journey. You approve before go-live; we agree how monitoring, updates and handoffs are managed.</p></div></li>
           </ol>
         </div>
       </section>
@@ -406,7 +436,7 @@
             <p>Published calling plans below are a reference. WhatsApp, calendar booking and follow-up scope will be quoted around your complete workflow.</p>
           </div>
           <div class="three">
-            <article class="price">
+            <article class="price glass" data-reveal>
               <div class="plan-label">Flex <small>FOR EVERYDAY ENQUIRIES</small></div>
               <div class="amount">₹2,999 <span>/ month</span></div>
               <p>500 call minutes included.<br>Then ₹6 per minute.</p>
@@ -418,7 +448,7 @@
               </ul>
               <a href="#calendar-booking" class="btn secondary" data-open-calendar>Discuss Flex <span aria-hidden="true">↗</span></a>
             </article>
-            <article class="price featured">
+            <article class="price glass featured" data-reveal style="--reveal: 80ms">
               <div class="plan-label">Pro <small>FOR CALLING CONTINUITY</small></div>
               <div class="amount">₹7,999 <span>/ month</span></div>
               <p>1,500 call minutes included.<br>Then ₹6 per minute.</p>
@@ -430,7 +460,7 @@
               </ul>
               <a href="#calendar-booking" class="btn" data-open-calendar>Discuss Pro <span aria-hidden="true">↗</span></a>
             </article>
-            <article class="price">
+            <article class="price glass" data-reveal style="--reveal: 160ms">
               <div class="plan-label">Enterprise <small>FOR LARGER OPERATIONS</small></div>
               <div class="amount">Let’s talk</div>
               <p>Volume-based pricing.<br>Designed around your operation.</p>
@@ -447,13 +477,13 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="questions">
         <div class="wrap faq">
           <div>
             <p class="eyebrow">Before you get started</p>
             <h2>A few practical questions.</h2>
           </div>
-          <div>
+          <div class="glass faq-list" data-reveal>
             <details>
               <summary>What does Front Desk as a Service include?</summary>
               <p>Aigenetic brings AI calls, WhatsApp chat and updates, appointment/calendar booking and follow-ups together as one managed front-desk service. Your approved rules define what it handles and when your team steps in.</p>
@@ -509,7 +539,7 @@
       <div class="wrap">
         <div class="footer-row">
           <a href="#top" class="brand" aria-label="Aigenetic home">
-            <img src="logo/logoMedium.png" alt="" class="original-logo" width="44" height="44" decoding="async">
+            <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
             Aigenetic
           </a>
           <span>Front Desk as a Service for Indian businesses.</span>
@@ -523,114 +553,52 @@
           <a href="terms-of-service.html">Terms of Service</a>
           <a href="refund-policy.html">Refund Policy</a>
         </nav>
-        <p class="prototype">Sample journeys on this page are illustrative. The audio clips are labeled demo audio and are synthesized placeholders until a real recording replaces the file.</p>
+        <p class="prototype">Sample journeys on this page are illustrative. The audio clips are the original demo recordings from the live site.</p>
       </div>
     </footer>
-
-    <div id="calendar-modal-main" class="calendar-modal" hidden>
-      <div class="calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="calendar-dialog-title">
-        <button type="button" class="calendar-close" data-close-calendar>Close</button>
-        <h2 id="calendar-dialog-title">Try the autopilot</h2>
-        <p>Pick a time for a short walkthrough. Nothing is booked until you confirm in Google Calendar.</p>
-        <iframe title="Book a demo with Aigenetic" data-src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true"></iframe>
-      </div>
-    </div>
-    <script>
-      if (document.documentElement.classList.contains("mode-pending")) {
-        var home = document.getElementById("root");
-        if (home) home.remove();
-      }
-    </script>
   </div>
 
-  <script src="config.js"></script>
+  <!-- Calendar Booking Modal for Main Site. Same Google Calendar appointment
+       schedule as the live homepage: provider, URL and open/close flow unchanged. -->
+  <div id="calendar-modal-main" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-main-title" style="display:none">
+    <div class="calendar-modal-main-content glass">
+      <button type="button" class="calendar-close" onclick="closeCalendarModalMain()" aria-label="Close booking dialog">Close</button>
+      <h2 id="calendar-modal-main-title">Schedule Your Demo</h2>
+      <p>Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
+
+      <!-- Google Calendar Appointment Scheduling begin -->
+      <iframe class="calendar-modal-main-iframe" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0" width="100%" height="600" frameborder="0" title="Book a demo with Aigenetic"></iframe>
+      <!-- end Google Calendar Appointment Scheduling -->
+    </div>
+  </div>
+
   <script src="assets/js/home.js" defer></script>
   <script>
-    function getAigeneticMode() {
-      var params = new URLSearchParams(location.search);
-      var mode = params.get("mode");
-      return (mode === "healthcare" || mode === "realestate" || mode === "education") ? mode : "home";
-    }
-    window.__AIGENETIC_MODE__ = getAigeneticMode();
-
-    function ensureModeFonts() {
-      if (document.getElementById("mode-fonts")) return;
-      var preconnect = document.createElement("link");
-      preconnect.rel = "preconnect";
-      preconnect.href = "https://fonts.googleapis.com";
-      var preconnectStatic = document.createElement("link");
-      preconnectStatic.rel = "preconnect";
-      preconnectStatic.href = "https://fonts.gstatic.com";
-      preconnectStatic.crossOrigin = "anonymous";
-      var link = document.createElement("link");
-      link.id = "mode-fonts";
-      link.rel = "stylesheet";
-      link.href = "https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap";
-      document.head.appendChild(preconnect);
-      document.head.appendChild(preconnectStatic);
-      document.head.appendChild(link);
+    function openCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
-    async function loadModeContent(mode) {
-      var file = mode === "healthcare" ? "healthcare.html" : (mode === "education" ? "education.html" : "realestate.html");
-      ensureModeFonts();
-      try {
-        var res = await fetch(file);
-        if (!res.ok) throw new Error("fetch failed: " + res.status);
-        var html = await res.text();
-        var doc = new DOMParser().parseFromString(html, "text/html");
-
-        if (doc.title) document.title = doc.title;
-        ["description", "keywords", "og:title", "og:description", "og:url",
-         "twitter:title", "twitter:description"].forEach(function (name) {
-          var selector = name.indexOf(":") > -1
-            ? 'meta[property="' + name + '"]'
-            : 'meta[name="' + name + '"]';
-          var src = doc.querySelector(selector);
-          var dest = document.querySelector(selector);
-          if (src && dest) dest.setAttribute("content", src.getAttribute("content"));
-        });
-        var canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = "https://aigenetic.in/?mode=" + mode;
-
-        var styleTag = document.getElementById("mode-style");
-        if (!styleTag) {
-          styleTag = document.createElement("style");
-          styleTag.id = "mode-style";
-          document.head.appendChild(styleTag);
-        }
-        styleTag.textContent = Array.from(doc.querySelectorAll("style"))
-          .map(function (s) { return s.textContent; })
-          .join("\n");
-
-        var home = document.getElementById("root");
-        if (home) home.remove();
-        var modeRoot = document.getElementById("mode-root");
-        modeRoot.innerHTML = doc.body.innerHTML;
-        modeRoot.style.display = "";
-
-        // Deliberately NOT rewriting the injected page's logo / "Home" links:
-        // they keep their original href="#top" (scroll within this vertical)
-        // rather than pointing back at the main site — clicking the logo
-        // while in healthcare/realestate/education mode should stay in that mode.
-
-        // innerHTML does not execute <script> tags — recreate them so the
-        // page's own calendar-modal / waveform / nav behavior comes alive.
-        modeRoot.querySelectorAll("script").forEach(function (oldScript) {
-          var newScript = document.createElement("script");
-          if (oldScript.src) newScript.src = oldScript.src;
-          else newScript.textContent = oldScript.textContent;
-          oldScript.replaceWith(newScript);
-        });
-      } catch (err) {
-        console.error("Failed to load " + mode + " content inline, falling back to its own page.", err);
-        location.href = file;
-      }
+    function closeCalendarModalMain() {
+      document.getElementById('calendar-modal-main').style.display = 'none';
+      document.body.style.overflow = '';
     }
 
-    if (window.__AIGENETIC_MODE__ !== "home") {
-      loadModeContent(window.__AIGENETIC_MODE__);
-    }
+    document.getElementById('calendar-modal-main').addEventListener('click', function (e) {
+      if (e.target.id === 'calendar-modal-main') closeCalendarModalMain();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeCalendarModalMain();
+    });
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest && e.target.closest('[data-open-calendar]');
+      if (!trigger) return;
+      e.preventDefault();
+      openCalendarModalMain();
+    });
   </script>
+  <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
 </body>
 </html>

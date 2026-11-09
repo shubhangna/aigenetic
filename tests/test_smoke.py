@@ -32,21 +32,21 @@ class TestSmoke(WebsiteTestCase):
         )
 
     def test_healthcare_page_is_up(self):
-        response = self.open_page("/?mode=healthcare", ready_selector="h1")
+        response = self.open_page("healthcare.html", ready_selector="h1")
         self.assert_successful_response(response)
         self.assertIn("clinic", self.page.title().lower())
         expect(self.page.locator("h1")).to_contain_text("clinic")
         expect(self.page.locator("a[data-email-link]:visible").first).to_be_visible()
 
     def test_realestate_page_is_up(self):
-        response = self.open_page("/?mode=realestate", ready_selector="h1")
+        response = self.open_page("realestate.html", ready_selector="h1")
         self.assert_successful_response(response)
         self.assertIn("real estate", self.page.title().lower())
         expect(self.page.locator("h1")).to_contain_text("listings")
         expect(self.page.locator("a[data-email-link]:visible").first).to_be_visible()
 
     def test_education_page_is_up(self):
-        response = self.open_page("/?mode=education", ready_selector="h1")
+        response = self.open_page("education.html", ready_selector="h1")
         self.assert_successful_response(response)
         self.assertIn("coaching", self.page.title().lower())
         expect(self.page.locator("h1")).to_contain_text("institute")
