@@ -1,0 +1,13 @@
+# GitHub Pages builds this repo with Jekyll. The site itself is plain static
+# HTML (no front matter, no Liquid), so this file only controls what gets
+# published.
+#
+# Everything below is kept in the repo but must not be reachable on
+# aigenetic.in. Names starting with "_" or "." (___Archive/, .vscode/,
+# .playwright-mcp/, ...) are already skipped by Jekyll.
+exclude:
+  - CODED-Thers/     # internal notes, TODOs, WhatsApp template drafts
+  - newSite/         # design-time template system, not a deployed page
+  - tests/           # Playwright suites
+  - localServer.bat
+  - testsNpush.bat

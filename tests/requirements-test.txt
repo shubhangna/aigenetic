@@ -1,5 +1,8 @@
 # Test dependencies for Aigenetic website testing
 
+# Test runner (9.0+ reports unittest subTests natively)
+pytest>=9.0
+
 # Playwright for E2E browser testing
 playwright>=1.40.0
 

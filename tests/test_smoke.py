@@ -14,12 +14,27 @@ deeper.
 
 import socket
 import unittest
+import xml.etree.ElementTree as ET
+from urllib.parse import urlsplit
 
 from playwright.sync_api import expect
 
-from utilities import EXPECTED_GITHUB_IPS, WebsiteTestCase, resolve_domain_ips
+from utilities import BASE_URL, EXPECTED_GITHUB_IPS, PROJECT_ROOT, WebsiteTestCase, resolve_domain_ips
 
 RETIRED_PAGES = ("healthcare.html", "realestate.html", "education.html", "summary.html")
+
+# One file from each path _config.yml excludes from the GitHub Pages build.
+# They exist in the repo, so a local `python -m http.server` still serves
+# them; only the real deploy can prove they're hidden.
+UNPUBLISHED_PATHS = (
+    "CODED-Thers/messages.html",
+    "newSite/templates/vertical-page.template.html",
+    "tests/issues.md",
+    "localServer.bat",
+    "testsNpush.bat",
+)
+
+SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
 class TestSmoke(WebsiteTestCase):
@@ -47,6 +62,36 @@ class TestSmoke(WebsiteTestCase):
                 response = self.page.goto(self.page_url(path), wait_until="domcontentloaded", timeout=45000)
                 self.assertIsNotNone(response)
                 self.assertEqual(response.status, 404, f"{path} should be retired but is still served")
+
+    def test_sitemap_lists_exactly_the_live_pages(self):
+        root = ET.parse(PROJECT_ROOT / "sitemap.xml").getroot()
+        locs = [loc.text.strip() for loc in root.findall("sm:url/sm:loc", SITEMAP_NS)]
+        paths = []
+        for loc in locs:
+            parts = urlsplit(loc)
+            self.assertEqual(parts.netloc, "aigenetic.in", f"{loc} is not on the production domain")
+            self.assertFalse(parts.query or parts.fragment, f"{loc}: sitemaps should not list ?query or #anchor URLs")
+            paths.append(parts.path.lstrip("/"))
+
+        # Every root-level HTML page except the 404 page should be listed, and nothing else.
+        expected = {"" if p.name == "index.html" else p.name for p in PROJECT_ROOT.glob("*.html") if p.name != "404.html"}
+        self.assertEqual(sorted(paths), sorted(expected))
+
+        for path in paths:
+            with self.subTest(page=path or "/"):
+                response = self.page.request.get(self.page_url(path))
+                self.assertEqual(response.status, 200, f"sitemap entry /{path} does not load")
+
+    @unittest.skipIf(
+        urlsplit(BASE_URL).hostname in {"localhost", "127.0.0.1"},
+        "Jekyll's exclude list only applies to the GitHub Pages build; run with --site remote",
+    )
+    def test_unpublished_repo_files_are_not_served(self):
+        for path in UNPUBLISHED_PATHS:
+            with self.subTest(path=path):
+                self.assertTrue((PROJECT_ROOT / path).exists(), f"{path} no longer exists; update UNPUBLISHED_PATHS")
+                response = self.page.request.get(self.page_url(path))
+                self.assertEqual(response.status, 404, f"{path} is still published on {BASE_URL}")
 
     def test_github_domain_resolves_to_expected_ips(self):
         try:

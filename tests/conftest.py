@@ -1,8 +1,11 @@
 """
-Lightweight HTML report generation for the website test suite.
+Test-session setup for the website test suite:
 
-This avoids an extra pytest plugin dependency while still producing an
-easy-to-open report after every run.
+* for ``--site local`` runs, waits for the local static server that
+  localServer.bat starts (testsNpush.bat launches it), and stops the run
+  early if it never comes up;
+* writes a lightweight HTML report, avoiding an extra pytest plugin
+  dependency while still producing an easy-to-open report after every run.
 """
 
 from __future__ import annotations
@@ -13,7 +16,10 @@ from html import escape
 import os
 from pathlib import Path
 import re
+import socket
 import sys
+import time
+from urllib.parse import urlsplit
 import webbrowser
 
 import pytest
@@ -57,6 +63,31 @@ def pytest_configure(config):
             "remote": "https://aigenetic.in",
         }
         os.environ["BASE_URL"] = site_urls[config.getoption("--site")]
+
+
+def _is_listening(host, port):
+    try:
+        with socket.create_connection((host, port), timeout=1):
+            return True
+    except OSError:
+        return False
+
+
+def pytest_sessionstart(session):
+    """Wait for the local server when BASE_URL is a localhost URL.
+
+    The server is started by localServer.bat (testsNpush.bat launches it just
+    before pytest), so give it up to 10 seconds to start accepting connections.
+    """
+    url = urlsplit(os.environ.get("BASE_URL", ""))
+    if url.hostname not in {"localhost", "127.0.0.1"}:
+        return
+    port = url.port or 80
+    deadline = time.monotonic() + 10
+    while not _is_listening(url.hostname, port):
+        if time.monotonic() > deadline:
+            pytest.exit(f"No local server on {url.geturl()}. Run localServer.bat first.", returncode=3)
+        time.sleep(0.25)
 
 
 @pytest.hookimpl(hookwrapper=True)

@@ -1,74 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <!-- Homepage -->
   <url>
     <loc>https://aigenetic.in/</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-11-12</lastmod>
   </url>
-  
-  <!-- How It Works Section -->
   <url>
-    <loc>https://aigenetic.in/#how-it-works</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://aigenetic.in/privacy-policy.html</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
-  
-  <!-- Use Cases Section -->
   <url>
-    <loc>https://aigenetic.in/#use-cases</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://aigenetic.in/terms-of-service.html</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
-  
-  <!-- Pricing Section -->
   <url>
-    <loc>https://aigenetic.in/#pricing</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://aigenetic.in/refund-policy.html</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
-  
-  <!-- Demo/Contact Section -->
-  <url>
-    <loc>https://aigenetic.in/#demo</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Healthcare vertical (consolidated into the main site as a mode; the
-       old /healthcare.html URL now redirects here) -->
-  <url>
-    <loc>https://aigenetic.in/?mode=healthcare</loc>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Real Estate vertical (consolidated into the main site as a mode; the
-       old /realestate.html URL now redirects here) -->
-  <url>
-    <loc>https://aigenetic.in/?mode=realestate</loc>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Coaching & Schools vertical (consolidated into the main site as a
-       mode; the old /education.html URL redirects here) -->
-  <url>
-    <loc>https://aigenetic.in/?mode=education</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Add more URLs here as your site grows -->
-  <!-- Example for blog posts, case studies, etc. -->
-
 </urlset>
