@@ -265,6 +265,11 @@ nav.primary a:not(.btn):hover { color: #fff; }
   padding: 10px;
   border-radius: 18px;
   display: grid;
+  /* Near-opaque: the panel sits inside the blurred .top bar, and a nested
+     backdrop-filter can't blur the page behind it, so headings bled through. */
+  background:
+    radial-gradient(160px circle at var(--gx) var(--gy), rgba(255, 255, 255, .16), transparent 46%),
+    linear-gradient(180deg, rgba(22, 28, 50, .97), rgba(10, 14, 28, .97));
 }
 
 #mobile-nav-panel[hidden] { display: none !important; }

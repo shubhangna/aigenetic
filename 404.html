@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05070f">
+  <title>Page not found — Aigenetic</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/logo/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/logo/logoMedium.png">
+  <link rel="stylesheet" href="/assets/css/home.css">
+
+  <style>
+    /* ── 404-specific layout only ── */
+    .page-404 {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-404 header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .page-404 .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .page-404 .brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .page-404 main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .error-card {
+      text-align: center;
+      max-width: 520px;
+    }
+
+    .error-code {
+      font-size: clamp(96px, 20vw, 160px);
+      font-weight: 800;
+      line-height: 1;
+      margin: 0 0 8px;
+      /* gradient text matching site action colour */
+      background: linear-gradient(135deg, #9ad7ff 0%, #c8b4ff 60%, #ff9ad7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -.04em;
+    }
+
+    .error-label {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 16px;
+    }
+
+    .error-desc {
+      color: var(--muted);
+      margin: 0 0 36px;
+      line-height: 1.65;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .error-actions .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 24px;
+      background: var(--action);
+      color: #05070f;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+
+    .error-actions .btn-primary:hover { opacity: .85; }
+
+    .error-actions .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 24px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: border-color .15s, background .15s;
+    }
+
+    .error-actions .btn-ghost:hover {
+      border-color: rgba(255,255,255,.35);
+      background: rgba(255,255,255,.05);
+    }
+
+    .page-404 footer {
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .page-404 footer a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .page-404 footer a:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <canvas id="aurora" aria-hidden="true"></canvas>
+
+  <div id="root">
+    <div class="page-404">
+
+      <header>
+        <div class="wrap">
+          <a class="brand" href="/">
+            <img src="/logo/logoMedium.png" alt="" width="32" height="32" decoding="async">
+            Aigenetic
+          </a>
+        </div>
+      </header>
+
+      <main>
+        <div class="error-card" data-reveal>
+          <p class="error-code" aria-label="Error 404">404</p>
+          <h1 class="error-label">Page not found</h1>
+          <p class="error-desc">
+            Looks like this page went off-script.<br>
+            The URL may have changed or the page no longer exists.
+          </p>
+          <div class="error-actions">
+            <a href="/" class="btn-primary">
+              ← Back to home
+            </a>
+            <a href="mailto:connect@aigenetic.in" class="btn-ghost">
+              Contact us
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="wrap">
+          <span>© Aigenetic (OPC) Pvt Ltd &nbsp;·&nbsp;
+            <a href="/privacy-policy.html">Privacy</a> &nbsp;·&nbsp;
+            <a href="/terms-of-service.html">Terms</a>
+          </span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="/assets/js/home.js" defer></script>
+</body>
+</html>

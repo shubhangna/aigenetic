@@ -1,4 +1,10 @@
 # TODO
+- Policy pages' "Contact" blocks list +91 88263 23693, but the homepage, its JSON-LD and every site footer use +91 742849 7033. Confirm which number is correct for legal/support contact (found 2026-11-12)
+- Policy pricing is out of date vs the homepage: terms-of-service.html §3 and refund-policy.html §3 say monthly ₹4,999–₹9,999 (+ ₹10,000 setup), homepage pricing shows Flex ₹2,999 / Pro ₹7,999 (found 2026-11-12)
+- sitemap.xml still lists retired `?mode=healthcare|realestate|education` URLs and old anchors (#how-it-works, #use-cases, #demo), and doesn't list the three policy pages (found 2026-11-12)
+- Homepage hero sits 32px left of the header and sections on desktop: `.hero { padding: 72px 0 28px }` overrides `.wrap`'s side padding (found 2026-11-12)
+- .vscode/CLAUDE.md still describes the old React/Babel + config.js homepage and the vertical-mode router; the site is now static HTML + assets/css/home.css + assets/js/home.js (found 2026-11-12)
+
 # TODO LATER
 - Record a real coaching-institute admission-enquiry/demo-class-booking audio sample and add the voice-sample player back into education.html (same gap as realestate.html — see newSite/template.json assets.audio.pages.education.note)
 
@@ -15,9 +21,9 @@
 -Create a new site for Coaching & Schools using same pattern and templates as current 2 sites healthcare and realestate — done 2026-08-28: coaching.html built after researching coaching-institute/school pain points (missed enquiry calls, no follow-up, manual fee/attendance calls), wired into index.html's mode router, config.js Use Cases card, sitemap.xml, and newSite/template.json's pages.education. See newSite/CLAUDE.md's Resolved section.
 
 -Renamed the mode/filename from coaching to education (?mode=coaching -> ?mode=education, coaching.html -> education.html) — done 2026-08-28. The visual card on the main page ('Schools and Coaching' title, icon, copy) was left unchanged; only the underlying URL/file identifier changed.
--header and footer should be visible for policies page also so our branding is visible and it doesn't feel like a seperate page
+-header and footer should be visible for policies page also so our branding is visible and it doesn't feel like a seperate page — done 2026-11-12: privacy/terms/refund pages now use the homepage's header, footer, aurora and glass theme (assets/css/home.css + new assets/css/legal.css + assets/js/home.js), with a policy switcher and a sticky "On this page" index; covered by tests/test_policy_pages.py. Comment - claude moved
 
--Fix pages back to home link for policy pages navigating back to index instead of mode page like healthcare page
+-Fix pages back to home link for policy pages navigating back to index instead of mode page like healthcare page — obsolete 2026-11-12: the vertical modes were retired to ___Archive/, so the policy pages' mode-preserving script was removed and home links go to /. Comment - claude moved
 
 -Whey do we get results for setup and tear down if its not a standard functionality can we hide the setup and tear down so we have one line in report for each test
 -

@@ -1,250 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Refund Policy - Aigenetic</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>body { font-family: 'Inter', sans-serif; }</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05070f">
+  <title>Refund Policy — Aigenetic</title>
+  <meta name="description" content="When and how Aigenetic (OPC) Pvt Ltd refunds setup fees, subscriptions and per-minute call charges.">
+  <link rel="canonical" href="https://aigenetic.in/refund-policy.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="logo/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo/logoMedium.png">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/legal.css">
 </head>
-<body class="bg-gray-50">
-  <header class="border-b border-gray-200 bg-white">
-    <div class="max-w-4xl mx-auto px-4 py-4">
-      <a href="/" id="brand-home-link" class="inline-flex items-center gap-2 text-gray-900 font-semibold text-lg hover:text-indigo-600">
-        <img src="logo/logoMedium.png" alt="Aigenetic" class="h-8 w-auto">
-        Aigenetic
-      </a>
+<body>
+  <canvas id="aurora" aria-hidden="true"></canvas>
+  <div id="root">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="top" id="top">
+      <header class="wrap">
+        <a class="brand" href="/" aria-label="Aigenetic home">
+          <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+          Aigenetic
+        </a>
+        <nav class="primary" aria-label="Main">
+          <a href="/#system">The system</a>
+          <a href="/#samples">Samples</a>
+          <a href="/#conversation">Journey</a>
+          <a href="/#pricing">Pricing</a>
+          <a class="btn" href="/#calendar-booking">Try the autopilot <span class="arrow" aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="mobile-nav">
+          <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">Menu</button>
+          <div id="mobile-nav-panel" class="links glass" hidden>
+            <a href="/#system">The system</a>
+            <a href="/#samples">Samples</a>
+            <a href="/#conversation">Journey</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="/#calendar-booking">Try the autopilot ↗</a>
+          </div>
+        </div>
+      </header>
     </div>
-  </header>
-  <div class="max-w-4xl mx-auto px-4 py-12">
-    <div class="bg-white rounded-lg shadow-sm p-8">
-      <a href="/" id="back-home-link" class="text-indigo-600 hover:text-indigo-700 mb-6 inline-block">&larr; Back to Home</a>
 
-      <h1 class="text-4xl font-bold text-gray-900 mb-4">Refund Policy</h1>
-      <p class="text-gray-600 mb-8">Last updated: January 26, 2026</p>
+    <main id="main">
+      <section class="legal-hero wrap">
+        <a class="back-link" href="/"><span aria-hidden="true">←</span> Back to home</a>
+        <p class="eyebrow">Legal</p>
+        <h1>Refund Policy</h1>
+        <p class="legal-meta">Last updated: January 26, 2026</p>
+        <nav class="policy-switch" aria-label="Policies">
+          <a class="btn secondary" href="privacy-policy.html">Privacy</a>
+          <a class="btn secondary" href="terms-of-service.html">Terms</a>
+          <a class="btn" href="refund-policy.html" aria-current="page">Refunds</a>
+        </nav>
+      </section>
 
-      <div class="prose prose-lg max-w-none space-y-6 text-gray-700">
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">1. Overview</h2>
-          <p>Aigenetic (OPC) Pvt Ltd is committed to customer satisfaction. This Refund Policy outlines the circumstances under which refunds are provided for our AI phone assistant services.</p>
-          <p class="mt-3"><strong>Important:</strong> Our services are custom-configured for each client, and refund eligibility depends on the service stage and reason for dissatisfaction.</p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">2. Setup Fee Refund</h2>
-          <p><strong>One-Time Setup Fee: ₹10,000</strong></p>
-          
-          <div class="bg-green-50 border-l-4 border-green-500 p-4 my-4">
-            <p class="font-semibold text-green-900">✓ Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-green-800">
-              <li>Full refund if requested within 24 hours of payment (before setup begins)</li>
-              <li>50% refund if setup is in progress but service not activated</li>
-            </ul>
-          </div>
-
-          <div class="bg-red-50 border-l-4 border-red-500 p-4 my-4">
-            <p class="font-semibold text-red-900">✗ Not Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-red-800">
-              <li>After service activation (phone number assigned and AI configured)</li>
-              <li>After first customer call is handled by the AI</li>
-              <li>After 7 days from payment date</li>
-            </ul>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">3. Monthly Subscription Fee Refund</h2>
-          <p><strong>Monthly Plans (Flex/Pro): ₹4,999 - ₹9,999</strong></p>
-          
-          <div class="bg-green-50 border-l-4 border-green-500 p-4 my-4">
-            <p class="font-semibold text-green-900">✓ Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-green-800">
-              <li><strong>Pro-rated refund</strong> if service downtime exceeds 5% in a month (excluding planned maintenance)</li>
-              <li><strong>Full refund</strong> if we fail to activate service within promised 72-hour window</li>
-              <li><strong>Pro-rated refund</strong> for unused days if we terminate service due to our fault</li>
-            </ul>
-          </div>
-
-          <div class="bg-red-50 border-l-4 border-red-500 p-4 my-4">
-            <p class="font-semibold text-red-900">✗ Not Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-red-800">
-              <li>If client cancels mid-month (no pro-rating for voluntary cancellation)</li>
-              <li>Dissatisfaction with AI performance (we offer free optimization instead)</li>
-              <li>Changes in business requirements or strategy</li>
-              <li>Months where subscription was already consumed</li>
-            </ul>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">4. Per-Minute Usage Charges Refund</h2>
-          <p><strong>Call Charges: ₹6 per minute</strong></p>
-          
-          <div class="bg-green-50 border-l-4 border-green-500 p-4 my-4">
-            <p class="font-semibold text-green-900">✓ Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-green-800">
-              <li>Billing errors or duplicate charges (refunded within 7 days of notification)</li>
-              <li>System errors causing incorrect call handling (verified through logs)</li>
-              <li>Calls where AI completely failed to respond (technical issue on our end)</li>
-            </ul>
-          </div>
-
-          <div class="bg-red-50 border-l-4 border-red-500 p-4 my-4">
-            <p class="font-semibold text-red-900">✗ Not Eligible for Refund:</p>
-            <ul class="list-disc pl-6 space-y-1 mt-2 text-red-800">
-              <li>Calls where AI attempted to help but customer was dissatisfied</li>
-              <li>Wrong numbers or spam calls received (industry standard)</li>
-              <li>Call count disputes (verified through telecom logs)</li>
-              <li>Customer miscommunication or unclear requests</li>
-            </ul>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">5. Money-Back Guarantee (First Month)</h2>
-          <p><strong>7-Day Money-Back Guarantee</strong></p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>Available only for first-time customers on Flex or Pro plans</li>
-            <li>Request must be made within 7 days of service activation</li>
-            <li>Requires detailed feedback on why service didn't meet expectations</li>
-            <li>Refunds: Monthly fee + usage charges (setup fee not refunded)</li>
-            <li>Limit: Maximum 50 calls handled during trial period</li>
-          </ul>
-          <p class="mt-3 bg-yellow-50 border-l-4 border-yellow-500 p-4">
-            <strong>Note:</strong> This guarantee is void if you violate our Terms of Service or use the service fraudulently.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">6. Refund Request Process</h2>
-          <p><strong>How to Request a Refund:</strong></p>
-          <ol class="list-decimal pl-6 space-y-2">
-            <li>Email <a href="mailto:connect@aigenetic.in" class="text-indigo-600 hover:underline">connect@aigenetic.in</a> with "Refund Request" in subject line</li>
-            <li>Include:
-              <ul class="list-disc pl-6 mt-2">
-                <li>Your business name and registered phone number</li>
-                <li>Invoice number and payment details</li>
-                <li>Reason for refund request (detailed explanation)</li>
-                <li>Supporting evidence (if applicable)</li>
-              </ul>
-            </li>
-            <li>We review requests within 3-5 business days</li>
-            <li>If approved, refunds processed within 7-10 business days</li>
+      <div class="wrap legal-layout">
+        <nav class="toc glass" aria-label="On this page">
+          <p class="toc-label">On this page</p>
+          <ol>
+            <li><a href="#overview"><span>01</span>Overview</a></li>
+            <li><a href="#setup-fee-refund"><span>02</span>Setup Fee Refund</a></li>
+            <li><a href="#monthly-subscription-fee-refund"><span>03</span>Monthly Subscription Fee Refund</a></li>
+            <li><a href="#per-minute-usage-charges-refund"><span>04</span>Per-Minute Usage Charges Refund</a></li>
+            <li><a href="#money-back-guarantee"><span>05</span>Money-Back Guarantee (First Month)</a></li>
+            <li><a href="#refund-request-process"><span>06</span>Refund Request Process</a></li>
+            <li><a href="#service-credit"><span>07</span>Service Credit (Alternative to Refund)</a></li>
+            <li><a href="#non-refundable-items"><span>08</span>Non-Refundable Items</a></li>
+            <li><a href="#chargebacks-and-disputes"><span>09</span>Chargebacks and Disputes</a></li>
+            <li><a href="#cancellation-vs-refund"><span>10</span>Cancellation vs. Refund</a></li>
+            <li><a href="#questions-and-support"><span>11</span>Questions and Support</a></li>
+            <li><a href="#contact-us"><span>12</span>Contact Us</a></li>
           </ol>
+        </nav>
 
-          <p class="mt-4"><strong>Refund Methods:</strong></p>
-          <ul class="list-disc pl-6 space-y-1">
-            <li>Original payment method (bank transfer, UPI, credit card)</li>
-            <li>Account credit for future services (if preferred)</li>
-            <li>Processing time: 7-10 business days from approval</li>
-          </ul>
-        </section>
+        <article class="legal-body">
+          <section id="overview">
+            <h2><span class="num">01</span>Overview</h2>
+            <p>Aigenetic (OPC) Pvt Ltd is committed to customer satisfaction. This Refund Policy outlines the circumstances under which refunds are provided for our AI phone assistant services.</p>
+            <div class="callout note">
+              <p><strong>Important:</strong> Our services are custom-configured for each client, and refund eligibility depends on the service stage and reason for dissatisfaction.</p>
+            </div>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">7. Service Credit (Alternative to Refund)</h2>
-          <p>In some cases, we offer service credits instead of refunds:</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong>Performance Issues:</strong> Free extra month if AI accuracy drops below 85%</li>
-            <li><strong>Downtime:</strong> Service credit equal to 2x downtime duration</li>
-            <li><strong>Missed Commitments:</strong> Credit for delayed features or integrations</li>
-            <li><strong>Goodwill Gestures:</strong> Credits for reported bugs or improvement suggestions</li>
-          </ul>
-          <p class="mt-3">Service credits have no cash value and must be used within 12 months.</p>
-        </section>
+          <section id="setup-fee-refund">
+            <h2><span class="num">02</span>Setup Fee Refund</h2>
+            <p><strong>One-Time Setup Fee: ₹10,000</strong></p>
+            <div class="callout ok">
+              <p class="callout-title">✓ Eligible for Refund:</p>
+              <ul>
+                <li>Full refund if requested within 24 hours of payment (before setup begins)</li>
+                <li>50% refund if setup is in progress but service not activated</li>
+              </ul>
+            </div>
+            <div class="callout no">
+              <p class="callout-title">✗ Not Eligible for Refund:</p>
+              <ul>
+                <li>After service activation (phone number assigned and AI configured)</li>
+                <li>After first customer call is handled by the AI</li>
+                <li>After 7 days from payment date</li>
+              </ul>
+            </div>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">8. Non-Refundable Items</h2>
-          <p>The following are <strong>never refundable under any circumstances:</strong></p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>Third-party charges (telecom, SMS, WhatsApp API fees)</li>
-            <li>Custom development work beyond standard service</li>
-            <li>Training sessions or consultations already delivered</li>
-            <li>Services consumed during notice period after cancellation</li>
-            <li>Penalties or late fees incurred due to non-payment</li>
-          </ul>
-        </section>
+          <section id="monthly-subscription-fee-refund">
+            <h2><span class="num">03</span>Monthly Subscription Fee Refund</h2>
+            <p><strong>Monthly Plans (Flex/Pro): ₹4,999 - ₹9,999</strong></p>
+            <div class="callout ok">
+              <p class="callout-title">✓ Eligible for Refund:</p>
+              <ul>
+                <li><strong>Pro-rated refund</strong> if service downtime exceeds 5% in a month (excluding planned maintenance)</li>
+                <li><strong>Full refund</strong> if we fail to activate service within promised 72-hour window</li>
+                <li><strong>Pro-rated refund</strong> for unused days if we terminate service due to our fault</li>
+              </ul>
+            </div>
+            <div class="callout no">
+              <p class="callout-title">✗ Not Eligible for Refund:</p>
+              <ul>
+                <li>If client cancels mid-month (no pro-rating for voluntary cancellation)</li>
+                <li>Dissatisfaction with AI performance (we offer free optimization instead)</li>
+                <li>Changes in business requirements or strategy</li>
+                <li>Months where subscription was already consumed</li>
+              </ul>
+            </div>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">9. Chargebacks and Disputes</h2>
-          <p><strong>Important:</strong> Please contact us before initiating a chargeback with your bank.</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>We're committed to resolving disputes directly and fairly</li>
-            <li>Chargebacks result in immediate service suspension</li>
-            <li>If chargeback is reversed, a ₹2,000 administrative fee applies</li>
-            <li>Fraudulent chargebacks may result in legal action</li>
-          </ul>
-        </section>
+          <section id="per-minute-usage-charges-refund">
+            <h2><span class="num">04</span>Per-Minute Usage Charges Refund</h2>
+            <p><strong>Call Charges: ₹6 per minute</strong></p>
+            <div class="callout ok">
+              <p class="callout-title">✓ Eligible for Refund:</p>
+              <ul>
+                <li>Billing errors or duplicate charges (refunded within 7 days of notification)</li>
+                <li>System errors causing incorrect call handling (verified through logs)</li>
+                <li>Calls where AI completely failed to respond (technical issue on our end)</li>
+              </ul>
+            </div>
+            <div class="callout no">
+              <p class="callout-title">✗ Not Eligible for Refund:</p>
+              <ul>
+                <li>Calls where AI attempted to help but customer was dissatisfied</li>
+                <li>Wrong numbers or spam calls received (industry standard)</li>
+                <li>Call count disputes (verified through telecom logs)</li>
+                <li>Customer miscommunication or unclear requests</li>
+              </ul>
+            </div>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">10. Cancellation vs. Refund</h2>
-          <p><strong>Cancellation Policy:</strong></p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>You can cancel anytime with 30 days' notice</li>
-            <li>No refunds for current month's subscription (already consumed)</li>
-            <li>Outstanding usage charges must be paid</li>
-            <li>After cancellation, data retained for 90 days then deleted</li>
-          </ul>
-        </section>
+          <section id="money-back-guarantee">
+            <h2><span class="num">05</span>Money-Back Guarantee (First Month)</h2>
+            <p><strong>7-Day Money-Back Guarantee</strong></p>
+            <ul>
+              <li>Available only for first-time customers on Flex or Pro plans</li>
+              <li>Request must be made within 7 days of service activation</li>
+              <li>Requires detailed feedback on why service didn't meet expectations</li>
+              <li>Refunds: Monthly fee + usage charges (setup fee not refunded)</li>
+              <li>Limit: Maximum 50 calls handled during trial period</li>
+            </ul>
+            <div class="callout note">
+              <p><strong>Note:</strong> This guarantee is void if you violate our Terms of Service or use the service fraudulently.</p>
+            </div>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">11. Questions and Support</h2>
-          <p>If you're unhappy with our service, please reach out <strong>before</strong> requesting a refund. We offer:</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>Free AI optimization and reconfiguration</li>
-            <li>Custom conversation flow adjustments</li>
-            <li>Hands-on training and troubleshooting</li>
-            <li>Plan downgrades or feature modifications</li>
-          </ul>
-          <p class="mt-4">We're committed to making Aigenetic work for your business!</p>
-        </section>
+          <section id="refund-request-process">
+            <h2><span class="num">06</span>Refund Request Process</h2>
+            <p><strong>How to Request a Refund:</strong></p>
+            <ol>
+              <li>Email <a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a> with "Refund Request" in subject line</li>
+              <li>Include:
+                <ul>
+                  <li>Your business name and registered phone number</li>
+                  <li>Invoice number and payment details</li>
+                  <li>Reason for refund request (detailed explanation)</li>
+                  <li>Supporting evidence (if applicable)</li>
+                </ul>
+              </li>
+              <li>We review requests within 3-5 business days</li>
+              <li>If approved, refunds processed within 7-10 business days</li>
+            </ol>
+            <p><strong>Refund Methods:</strong></p>
+            <ul>
+              <li>Original payment method (bank transfer, UPI, credit card)</li>
+              <li>Account credit for future services (if preferred)</li>
+              <li>Processing time: 7-10 business days from approval</li>
+            </ul>
+          </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold text-gray-900 mb-3">12. Contact Us</h2>
-          <p>For refund requests or questions:</p>
-          <div class="bg-gray-50 p-4 rounded-lg mt-3">
-            <p><strong>Aigenetic (OPC) Pvt Ltd</strong></p>
-            <p>Rajiv Gandhi Infotech Park, Pune, India</p>
-            <p>Email: <a href="mailto:connect@aigenetic.in" class="text-indigo-600 hover:underline">connect@aigenetic.in</a></p>
-            <p>Phone: <a href="tel:+918826323693" class="text-indigo-600 hover:underline">+91 88263 23693</a></p>
-            <p>WhatsApp: <a href="https://wa.me/918826323693" class="text-indigo-600 hover:underline">+91 88263 23693</a></p>
-            <p class="mt-2 text-sm text-gray-600">Response time: Within 24 hours on business days</p>
-          </div>
-        </section>
+          <section id="service-credit">
+            <h2><span class="num">07</span>Service Credit (Alternative to Refund)</h2>
+            <p>In some cases, we offer service credits instead of refunds:</p>
+            <ul>
+              <li><strong>Performance Issues:</strong> Free extra month if AI accuracy drops below 85%</li>
+              <li><strong>Downtime:</strong> Service credit equal to 2x downtime duration</li>
+              <li><strong>Missed Commitments:</strong> Credit for delayed features or integrations</li>
+              <li><strong>Goodwill Gestures:</strong> Credits for reported bugs or improvement suggestions</li>
+            </ul>
+            <p>Service credits have no cash value and must be used within 12 months.</p>
+          </section>
+
+          <section id="non-refundable-items">
+            <h2><span class="num">08</span>Non-Refundable Items</h2>
+            <p>The following are <strong>never refundable under any circumstances:</strong></p>
+            <ul>
+              <li>Third-party charges (telecom, SMS, WhatsApp API fees)</li>
+              <li>Custom development work beyond standard service</li>
+              <li>Training sessions or consultations already delivered</li>
+              <li>Services consumed during notice period after cancellation</li>
+              <li>Penalties or late fees incurred due to non-payment</li>
+            </ul>
+          </section>
+
+          <section id="chargebacks-and-disputes">
+            <h2><span class="num">09</span>Chargebacks and Disputes</h2>
+            <p><strong>Important:</strong> Please contact us before initiating a chargeback with your bank.</p>
+            <ul>
+              <li>We're committed to resolving disputes directly and fairly</li>
+              <li>Chargebacks result in immediate service suspension</li>
+              <li>If chargeback is reversed, a ₹2,000 administrative fee applies</li>
+              <li>Fraudulent chargebacks may result in legal action</li>
+            </ul>
+          </section>
+
+          <section id="cancellation-vs-refund">
+            <h2><span class="num">10</span>Cancellation vs. Refund</h2>
+            <p><strong>Cancellation Policy:</strong></p>
+            <ul>
+              <li>You can cancel anytime with 30 days' notice</li>
+              <li>No refunds for current month's subscription (already consumed)</li>
+              <li>Outstanding usage charges must be paid</li>
+              <li>After cancellation, data retained for 90 days then deleted</li>
+            </ul>
+          </section>
+
+          <section id="questions-and-support">
+            <h2><span class="num">11</span>Questions and Support</h2>
+            <p>If you're unhappy with our service, please reach out <strong>before</strong> requesting a refund. We offer:</p>
+            <ul>
+              <li>Free AI optimization and reconfiguration</li>
+              <li>Custom conversation flow adjustments</li>
+              <li>Hands-on training and troubleshooting</li>
+              <li>Plan downgrades or feature modifications</li>
+            </ul>
+            <p>We're committed to making Aigenetic work for your business!</p>
+          </section>
+
+          <section id="contact-us">
+            <h2><span class="num">12</span>Contact Us</h2>
+            <p>For refund requests or questions:</p>
+            <div class="legal-contact">
+              <div class="detail-row"><span>Company</span><strong>Aigenetic (OPC) Pvt Ltd</strong></div>
+              <div class="detail-row"><span>Address</span><strong>Rajiv Gandhi Infotech Park, Pune, India</strong></div>
+              <div class="detail-row"><span>Email</span><strong><a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a></strong></div>
+              <div class="detail-row"><span>Phone</span><strong><a href="tel:+918826323693">+91 88263 23693</a></strong></div>
+              <div class="detail-row"><span>WhatsApp</span><strong><a href="https://wa.me/918826323693" target="_blank" rel="noopener noreferrer">+91 88263 23693</a></strong></div>
+            </div>
+            <p class="legal-contact-note">Response time: Within 24 hours on business days</p>
+          </section>
+        </article>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="footer-row">
+          <a href="/" class="brand" aria-label="Aigenetic home">
+            <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+            Aigenetic
+          </a>
+          <span>Front Desk as a Service for Indian businesses.</span>
+          <span>Aigenetic (OPC) Pvt Ltd · Pune, India</span>
+        </div>
+        <nav class="footer-nav footer-links" aria-label="Contact and policies">
+          <a href="tel:+917428497033">Call +91 742849 7033</a>
+          <a href="https://wa.me/917428497033" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="refund-policy.html" aria-current="page">Refund Policy</a>
+        </nav>
+        <p class="prototype">&copy; 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.</p>
+      </div>
+    </footer>
   </div>
 
-  <footer class="border-t border-gray-200 bg-white mt-12">
-    <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-      <span>&copy; 2026 Aigenetic (OPC) Pvt Ltd. All rights reserved.</span>
-      <nav class="flex gap-4">
-        <a href="privacy-policy.html" data-policy-link class="hover:text-indigo-600">Privacy Policy</a>
-        <a href="terms-of-service.html" data-policy-link class="hover:text-indigo-600">Terms of Service</a>
-        <a href="refund-policy.html" data-policy-link class="hover:text-indigo-600">Refund Policy</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script>
-    // Preserve the vertical mode (healthcare/realestate) the visitor came
-    // from across the site chrome on this policy page, so the logo, "Back
-    // to Home", and the other policy links stay in that mode instead of
-    // always dropping to the generic home page. See CLAUDE.md's "vertical
-    // mode router" note.
-    (function () {
-      var mode = new URLSearchParams(location.search).get('mode');
-      var suffix = (mode === 'healthcare' || mode === 'realestate') ? ('?mode=' + mode) : '';
-      var homeHref = '/' + suffix;
-      ['brand-home-link', 'back-home-link'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) el.href = homeHref;
-      });
-      document.querySelectorAll('[data-policy-link]').forEach(function (a) {
-        a.href = a.getAttribute('href') + suffix;
-      });
-    })();
-  </script>
+  <script src="assets/js/home.js" defer></script>
 </body>
 </html>
