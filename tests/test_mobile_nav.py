@@ -54,12 +54,19 @@ class TestMainPageMobileNav(MobileNavTestCase):
         expect(panel).to_be_hidden()
         self.assertIn("#pricing", self.page.url)
 
+    def test_no_horizontal_overflow_from_320_to_desktop(self):
+        self.open_page(ready_selector="h1.hero-title")
+        for width in (320, 390, 768, 1024, 1440):
+            with self.subTest(width=width):
+                self.page.set_viewport_size({"width": width, "height": 900})
+                scroll_width = self.page.evaluate("document.documentElement.scrollWidth")
+                client_width = self.page.evaluate("document.documentElement.clientWidth")
+                self.assertLessEqual(scroll_width, client_width + 1, f"overflow at {width}px")
+
 
 class TestHealthcareMobileNav(MobileNavTestCase):
     def test_hamburger_opens_and_closes_on_healthcare(self):
-        # healthcare.html now redirects to /?mode=healthcare (see index.html's
-        # vertical mode router); open the consolidated URL directly.
-        self.open_page("/?mode=healthcare", ready_selector="h1")
+        self.open_page("healthcare.html", ready_selector="h1")
         self.assert_no_horizontal_overflow()
 
         toggle = self.page.locator("#nav-toggle")
@@ -78,9 +85,7 @@ class TestHealthcareMobileNav(MobileNavTestCase):
 
 class TestRealEstateMobileNav(MobileNavTestCase):
     def test_hamburger_opens_and_closes_on_realestate(self):
-        # realestate.html now redirects to /?mode=realestate (see index.html's
-        # vertical mode router); open the consolidated URL directly.
-        self.open_page("/?mode=realestate", ready_selector="h1")
+        self.open_page("realestate.html", ready_selector="h1")
         self.assert_no_horizontal_overflow()
 
         toggle = self.page.locator("#nav-toggle")

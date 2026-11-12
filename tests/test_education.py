@@ -18,14 +18,13 @@ from utilities import WebsiteTestCase
 
 class TestEducationPage(WebsiteTestCase):
     def open_education_page(self):
-        # education.html now redirects to /?mode=education (see index.html's
-        # vertical mode router); open the consolidated URL directly.
-        return self.open_page("/?mode=education", ready_selector="h1")
+        return self.open_page("education.html", ready_selector="h1")
 
-    def test_education_html_redirects_to_consolidated_url(self):
+    def test_education_html_renders_as_its_own_page(self):
         self.page.goto(self.page_url("education.html"), wait_until="load", timeout=45000)
         self.page.locator("h1").wait_for(state="visible", timeout=15000)
-        self.assertIn("mode=education", self.page.url)
+        self.assertIn("education.html", self.page.url)
+        self.assertNotIn("mode=", self.page.url)
         expect(self.page.locator("h1")).to_contain_text("institute")
 
     def test_education_page(self):
@@ -108,21 +107,16 @@ class TestEducationPage(WebsiteTestCase):
             phone.click()
             # tel: is an unsupported scheme for the browser tab itself, so the
             # click must not navigate the SPA away or throw.
-            self.assertIn("mode=education", page.url)
+            self.assertIn("education.html", page.url)
+            self.assertNotIn("mode=", page.url)
 
 
 class TestMainPageLinksToEducation(WebsiteTestCase):
-    def test_use_case_card_links_to_education_with_its_own_label(self):
+    def test_homepage_has_no_education_mode(self):
         self.open_page(ready_selector="h1.hero-title")
-        # The Use Cases marquee (UseCaseMarquee in index.html) renders the card
-        # list twice back-to-back for a seamless scroll loop, so two matching
-        # anchors exist -- .first is the real, tab-reachable one; its duplicate
-        # is aria-hidden with tabindex="-1".
-        card = self.page.locator('a[href="/?mode=education"]').first
-        expect(card).to_be_visible()
-        expect(card).to_contain_text("Explore for institutes")
-        # The card's own title/copy is unaffected by the mode rename.
-        expect(card).to_contain_text("Schools and Coaching")
+        self.assertEqual(self.page.locator('a[href*="mode=education"]').count(), 0)
+        expect(self.page.locator("#system")).to_contain_text("WhatsApp")
+        expect(self.page.locator("#system")).to_contain_text("Follow")
 
 
 if __name__ == "__main__":

@@ -1,1301 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Aigenetic - AI-powered phone assistants for Indian SMEs. Never miss a customer call. 24/7 appointment booking in 31+ Indian languages.">
-  <meta name="keywords" content="AI phone assistant, voice agent India, appointment booking, SME automation, Indian languages">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05070f">
+  <title>Aigenetic — Appointments on autopilot.</title>
+  <meta name="description" content="Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.">
+  <meta name="keywords" content="AI phone assistant, front desk as a service, WhatsApp booking, appointment booking India, Hindi English Hinglish">
   <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
-  <meta name="theme-color" content="#0E1B1E">
   <link rel="canonical" href="https://aigenetic.in/">
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Aigenetic">
-  <meta property="og:title" content="Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls">
-  <meta property="og:description" content="Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically.">
-  <meta property="og:url" content="https://aigenetic.in">
+  <meta property="og:title" content="Aigenetic — Appointments on autopilot.">
+  <meta property="og:description" content="Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.">
+  <meta property="og:url" content="https://aigenetic.in/">
   <meta property="og:image" content="https://aigenetic.in/logo/logoMedium.png">
+  <meta property="og:image:alt" content="Aigenetic logo">
+  <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls">
-  <meta name="twitter:description" content="Never miss a customer call again. Aigenetic answers, understands, and books appointments automatically.">
+  <meta name="twitter:title" content="Aigenetic — Appointments on autopilot.">
+  <meta name="twitter:description" content="Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.">
   <meta name="twitter:image" content="https://aigenetic.in/logo/logoMedium.png">
 
-  <title>Aigenetic - Your AI Phone Assistant for 24×7 Customer Calls</title>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/png" href="/logo/logo.png">
-  <link rel="apple-touch-icon" href="/logo/logoMedium.png">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Schibsted+Grotesk:wght@400;500;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    window.tailwind = window.tailwind || {};
-    tailwind.config = { darkMode: 'class' };
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="logo/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo/logoMedium.png">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <script>document.documentElement.classList.add("motion");</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Aigenetic",
+    "legalName": "Aigenetic (OPC) Pvt Ltd",
+    "url": "https://aigenetic.in/",
+    "logo": "https://aigenetic.in/logo/logoMedium.png",
+    "email": "connect@aigenetic.in",
+    "telephone": "+917428497033",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rajiv Gandhi Infotech Park",
+      "addressLocality": "Pune",
+      "addressCountry": "IN"
+    }
+  }
   </script>
-  
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=calendar-mobile">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #0E1B1E;
-      --secondary: #FAFAF7;
-      --accent: #0C6B5C;
-      --accent-deep: #084A40;
-      --mint: #E9F3F0;
-      --text-primary: #0E1B1E;
-      --text-secondary: #546567;
-      --border: #E3E5E0;
-
-      /* Shared design system tokens matching healthcare.html / realestate.html */
-      --ink: #0E1B1E;
-      --paper: #FAFAF7;
-      --teal: #0C6B5C;
-      --teal-deep: #084A40;
-      --line: #E3E5E0;
-      --muted: #546567;
-      --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
-      --body: "Instrument Sans", system-ui, -apple-system, Segoe UI, sans-serif;
-      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      --wrap: 1180px;
-
-      /* derived surface + motion tokens — mirrors healthcare.html's
-         theme.clinicalTeal additions; no new brand hues introduced.
-         See newSite/template.json theme.default for the source of truth. */
-      --card: #FFFFFF;
-      --line-soft: #EDEEEA;
-      --mint-deep: #DCEDE7;
-      --r-sm: 12px;
-      --r-md: 18px;
-      --r-lg: 26px;
-      --sh-1: 0 1px 2px rgba(14,27,30,.05), 0 8px 24px -18px rgba(14,27,30,.35);
-      --sh-2: 0 2px 6px rgba(14,27,30,.05), 0 26px 60px -38px rgba(14,27,30,.45);
-      --sh-3: 0 30px 80px -46px rgba(12,107,92,.55);
-      --ease: cubic-bezier(.2,.7,.3,1);
-    }
-
-    body {
-      background: var(--secondary);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
-      color: var(--text-primary);
-      overflow-x: hidden;
-    }
-
-    /* ambient wash — sits behind everything, costs nothing (same pattern as healthcare.html) */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(760px 520px at 78% -6%, rgba(23,179,127,.10), transparent 62%),
-        radial-gradient(620px 460px at 6% 2%, rgba(12,107,92,.08), transparent 60%);
-    }
-    #root { position: relative; z-index: 1; }
-
-    .text-gradient {
-      background: linear-gradient(135deg, #0E1B1E, #0C6B5C);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .accent-gradient {
-      background: linear-gradient(135deg, #0C6B5C, #084A40);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .hover-rise {
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .hover-rise:hover {
-      transform: translateY(-8px);
-    }
-    
-    .line-accent {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .line-accent::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 80px;
-      height: 2px;
-      background: var(--primary);
-    }
-    
-    .minimal-card {
-      background: white;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-    
-    .minimal-card:hover {
-      border-color: var(--text-primary);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .fade-in-up {
-      animation: fadeInUp 0.8s ease-out;
-    }
-    
-    .section-divide {
-      position: relative;
-    }
-    
-    .section-divide::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-label {
-      text-align: center;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 600;
-      letter-spacing: -3px;
-      line-height: 1.1;
-    }
-
-    .feature-icon-box {
-      width: 56px;
-      height: 56px;
-      background: var(--primary);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-    }
-
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
-
-    /* ---------- nav: header matching vertical pages ---------- */
-    .nav {
-      position: sticky; top: 0; z-index: 60; background: rgba(250, 250, 247, .72);
-      backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
-      border-bottom: 1px solid transparent;
-      transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
-    }
-    .nav.scrolled {
-      border-bottom-color: var(--border);
-      background: rgba(250, 250, 247, .92);
-      box-shadow: 0 10px 30px -28px rgba(14, 27, 30, .7);
-    }
-    .nav-in {
-      display: flex; align-items: center; gap: 28px; height: 72px;
-      max-width: var(--wrap); margin: 0 auto; padding: 0 24px;
-      transition: height .3s var(--ease);
-    }
-    .nav.scrolled .nav-in { height: 64px; }
-    .brand {
-      display: flex; align-items: center; gap: 11px;
-      font-family: var(--display); font-weight: 800; font-size: 19px;
-      letter-spacing: -.025em; text-decoration: none; color: var(--primary);
-    }
-    .brand img { height: 32px; width: auto; display: block; }
-    .brand small {
-      font-family: var(--body); font-weight: 600; font-size: 11px;
-      color: var(--accent-deep); letter-spacing: .1em; text-transform: uppercase;
-      padding: 4px 9px; border-radius: 999px; background: var(--mint);
-      border: 1px solid var(--mint-deep); line-height: 1;
-    }
-    .nav-links { margin-left: auto; display: flex; gap: 6px; font-size: 15px; font-weight: 500; }
-    .nav-links a {
-      text-decoration: none; color: var(--text-secondary); padding: 8px 14px;
-      border-radius: 999px; transition: color .2s var(--ease), background .2s var(--ease);
-    }
-    .nav-links a:hover { color: var(--text-primary); background: rgba(233, 243, 240, .85); }
-    .nav-cta { display: flex; gap: 10px; margin-left: auto; align-items: center; }
-    .nav-links + .nav-cta { margin-left: 22px; }
-
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      font-family: var(--body); font-weight: 600; font-size: 15px; padding: 12px 22px;
-      border-radius: 999px; text-decoration: none; border: 1px solid transparent;
-      transition: transform .18s var(--ease), background .2s var(--ease), box-shadow .25s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
-      cursor: pointer; line-height: 1.15; white-space: nowrap;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
-    .btn-primary { background: var(--primary); color: var(--secondary); box-shadow: 0 10px 24px -16px rgba(14, 27, 30, .9); }
-    .btn-primary:hover { background: var(--accent-deep); box-shadow: 0 16px 34px -16px rgba(8, 74, 64, .75); color: white; }
-    .btn-ghost { background: #fff; color: var(--primary); border-color: var(--border); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-deep); box-shadow: 0 14px 30px -22px rgba(12, 107, 92, .8); }
-    .btn-lg { font-size: 16.5px; padding: 16px 30px; }
-    .nav .btn { font-size: 14px; padding: 10px 18px; }
-
-    .nav-toggle {
-      display: none; width: 42px; height: 42px; border-radius: 12px;
-      border: 1px solid var(--border); background: #fff; cursor: pointer;
-      padding: 0; align-items: center; justify-content: center; flex-direction: column; gap: 4px;
-    }
-    .nav-toggle i { display: block; width: 16px; height: 2px; background: var(--primary); border-radius: 2px; transition: transform .25s var(--ease), opacity .2s var(--ease); }
-    .nav-toggle.open i:nth-child(1), .nav-toggle[aria-expanded="true"] i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-    .nav-toggle.open i:nth-child(2), .nav-toggle[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
-    .nav-toggle.open i:nth-child(3), .nav-toggle[aria-expanded="true"] i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-    .nav-panel { border-top: 1px solid var(--border); background: rgba(250, 250, 247, .98); padding: 10px 0 18px; }
-    .nav-panel a { display: block; padding: 12px 4px; text-decoration: none; color: var(--primary); font-weight: 500; border-bottom: 1px solid var(--line-soft); }
-    .nav-panel a:last-child { border-bottom: 0; }
-    .nav-panel .panel-cta { display: flex; gap: 10px; margin-top: 16px; }
-    .nav-panel .panel-cta .btn { display: inline-flex; flex: 1; border-bottom: 0; padding: 13px 14px; font-size: 15px; }
-
-    /* ---------- site footer (matches healthcare.html & realestate.html) ---------- */
-    .site-footer { border-top: 1px solid var(--border); background: var(--mint); padding: 64px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 44px; }
-    .footer-brand p { margin-top: 16px; color: var(--text-secondary); font-size: 14px; max-width: 340px; line-height: 1.65; }
-    .footer-col h5 { font-family: var(--display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--accent-deep); margin: 0 0 16px; font-weight: 700; }
-    .footer-col a { display: block; color: var(--text-secondary); font-size: 14.5px; text-decoration: none; margin-bottom: 11px; width: fit-content; transition: color .2s var(--ease), transform .2s var(--ease); }
-    .footer-col a:hover { color: var(--accent-deep); transform: translateX(3px); }
-    .footer-bottom { margin-top: 48px; padding-top: 26px; border-top: 1px solid var(--mint-deep); display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; font-size: 13px; color: var(--text-secondary); }
-    .footer-bottom .sp { margin-left: auto; text-align: right; }
-
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .nav-toggle { display: flex; }
-      .nav-cta { margin-left: auto; }
-    }
-    @media (max-width: 820px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px 24px; }
-      .footer-brand { grid-column: 1 / -1; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .footer-bottom .sp { margin-left: 0; text-align: left; }
-    }
-    @media (max-width: 680px) {
-      .nav-cta > .btn { display: none; }
-    }
-    @media (max-width: 560px) {
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ---------- hero: masked grid wash (mirrors healthcare.html .hero::after) ---------- */
-    .hero-grid-wash::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background-image:
-        linear-gradient(rgba(14,27,30,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(14,27,30,.04) 1px, transparent 1px);
-      background-size: 64px 64px;
-      -webkit-mask-image: radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
-              mask-image: radial-gradient(720px 420px at 50% 8%, #000 0%, transparent 78%);
-    }
-
-    /* ---------- hero key-feature rail as hover-lift cards (mirrors healthcare.html .rail) ---------- */
-    .stat-card {
-      position: relative;
-      padding: 20px 18px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      box-shadow: var(--sh-1);
-      overflow: hidden;
-      transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
-    }
-    .stat-card::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform .35s var(--ease);
-    }
-    .stat-card:hover { transform: translateY(-4px); border-color: var(--mint-deep); box-shadow: var(--sh-2); }
-    .stat-card:hover::before { transform: scaleY(1); }
-
-    /* ---------- use-case card index badge (mirrors healthcare.html .cell .idx) ---------- */
-    .card-idx {
-      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
-      font-size: 11.5px;
-      letter-spacing: .14em;
-      color: var(--accent);
-      opacity: .75;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    /* ---------- use-case card: disabled / coming-soon state ---------- */
-    .use-case-disabled {
-      position: relative;
-      opacity: .55;
-      filter: grayscale(.4);
-      cursor: not-allowed;
-    }
-    .use-case-disabled .card-idx { opacity: .4; }
-    .coming-soon-pill {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      background: var(--secondary);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px 10px;
-    }
-
-    /* ---------- use-case marquee: continuous horizontal rolling strip ----------
-       The card list is rendered twice back-to-back (UseCaseMarquee in the JSX
-       below) and the track drifts by exactly -50% so the loop is seamless.
-       Paused via React state (onMouseEnter/onFocus) rather than a CSS :hover,
-       so keyboard focus pauses it too without relying on :has() support. */
-    .usecase-marquee {
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
-    }
-    .usecase-track {
-      display: flex;
-      gap: 24px;
-      width: max-content;
-      /* Constant-speed conveyor drift (linear timing, no easing) so motion
-         never swells or slows mid-leg — the only stop is the hover/focus
-         pause below. Faster than the old 60s/loop pass. */
-      animation: usecase-scroll 32s linear infinite;
-      will-change: transform;
-      /* Click-and-drag / touch-and-drag support (see UseCaseMarquee): the
-         track is grabbable, claims horizontal panning for JS while still
-         letting the page scroll vertically, and doesn't let a drag select
-         text or trigger the browser's native link/image drag-ghost. */
-      cursor: grab;
-      touch-action: pan-y;
-      -webkit-user-select: none;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-    .usecase-track.paused { animation-play-state: paused; }
-    .usecase-track.dragging { cursor: grabbing; }
-    .usecase-card-wrap {
-      flex: 0 0 auto;
-      width: min(82vw, 300px);
-    }
-    @keyframes usecase-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    /* Deliberately NOT opted out under prefers-reduced-motion: this marquee
-       is a constant-speed (32s/loop), user-pausable (hover/focus) drift, not
-       a jarring auto-scroll — kept animating for every visitor per explicit
-       product direction, unlike the .rise/.reveal/.stagger entrance
-       animations below which still respect the reduced-motion opt-out. */
-
-    /* On phone widths the old min(82vw, 300px) card only left room for ~1.2
-       cards on screen at once. Shrink the card (and trim its content) so at
-       least 3 cards are visible together at any point in the scroll. */
-    @media (max-width: 640px) {
-      .usecase-track { gap: 12px; }
-      .usecase-card-wrap { width: min(30vw, 132px); }
-      .usecase-card-wrap .minimal-card.p-8 { padding: 14px !important; }
-      .usecase-card-wrap .feature-icon-box {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
-        border-radius: 8px;
-      }
-      .usecase-card-wrap .feature-icon-box.mb-6 { margin-bottom: 8px !important; }
-      .usecase-card-wrap h3 {
-        font-size: 12px !important;
-        line-height: 1.25;
-        margin-bottom: 0 !important;
-      }
-      .usecase-card-wrap .card-idx { font-size: 10px; margin-bottom: 4px; }
-      .usecase-card-wrap p,
-      .usecase-card-wrap ul,
-      .usecase-card-wrap .coming-soon-pill {
-        display: none;
-      }
-    }
-
-    /* ---------- closing CTA: dark rounded panel (mirrors healthcare.html .close-in) ---------- */
-    .closing-panel {
-      background: var(--primary);
-      color: #EAF2F0;
-      border-radius: 34px;
-      padding: 88px 32px 76px;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-    .closing-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(620px 320px at 50% 0%, rgba(23,179,127,.22), transparent 66%),
-        radial-gradient(420px 260px at 12% 100%, rgba(12,107,92,.3), transparent 70%);
-    }
-    .closing-panel > * { position: relative; }
-    @media (max-width: 900px) { .closing-panel { padding: 64px 22px 56px; border-radius: 26px; } }
-
-    /* ---------- scroll-reveal motion (mirrors healthcare.html .reveal / .stagger) ---------- */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-    .reveal.in { opacity: 1; transform: none; }
-    .stagger > * { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-    .stagger.in > * { opacity: 1; transform: none; }
-    .stagger.in > *:nth-child(1) { transition-delay: .04s; }
-    .stagger.in > *:nth-child(2) { transition-delay: .10s; }
-    .stagger.in > *:nth-child(3) { transition-delay: .16s; }
-    .stagger.in > *:nth-child(4) { transition-delay: .22s; }
-    .stagger.in > *:nth-child(5) { transition-delay: .28s; }
-    .stagger.in > *:nth-child(6) { transition-delay: .34s; }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal, .stagger > * { transition: none !important; opacity: 1 !important; transform: none !important; }
-      .stat-card:hover, .hover-rise:hover { transform: none !important; }
-    }
-
-    /* ---------- calendar modal polish ---------- */
-    #calendar-modal-main { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-    .calendar-modal-main-content { animation: modal-in .35s var(--ease); }
-    @keyframes modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
-  </style>
 </head>
-<body class="antialiased text-slate-900 custom-scrollbar">
-    
-  <div id="root"></div>
-  <div id="mode-root" style="display:none"></div>
-
-  <!-- React & ReactDOM -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="config.js"></script>
-
-  <!-- ---------- vertical mode router ----------
-       aigenetic.in/healthcare.html, aigenetic.in/realestate.html and
-       aigenetic.in/education.html redirect here with ?mode=healthcare /
-       ?mode=realestate / ?mode=education (see the redirect script at the top
-       of those files) so the whole site lives under one URL. The Coaching &
-       Schools use-case card links here too — "education" is the mode/file
-       name, the card's own title/copy is unrelated and unchanged.
-       Instead of re-authoring their content as JSX, this fetches that page's
-       own markup — still the single source of truth for its copy — and
-       swaps it into #mode-root. See CLAUDE.md's "vertical mode router" note. -->
-  <script>
-    function getAigeneticMode() {
-      var params = new URLSearchParams(location.search);
-      var mode = params.get('mode');
-      return (mode === 'healthcare' || mode === 'realestate' || mode === 'education') ? mode : 'home';
-    }
-    window.__AIGENETIC_MODE__ = getAigeneticMode();
-
-    async function loadModeContent(mode) {
-      var file = mode === 'healthcare' ? 'healthcare.html' : (mode === 'education' ? 'education.html' : 'realestate.html');
-      try {
-        var res = await fetch(file);
-        if (!res.ok) throw new Error('fetch failed: ' + res.status);
-        var html = await res.text();
-        var doc = new DOMParser().parseFromString(html, 'text/html');
-
-        if (doc.title) document.title = doc.title;
-        ['description', 'keywords', 'og:title', 'og:description', 'og:url',
-         'twitter:title', 'twitter:description'].forEach(function (name) {
-          var selector = name.indexOf(':') > -1
-            ? 'meta[property="' + name + '"]'
-            : 'meta[name="' + name + '"]';
-          var src = doc.querySelector(selector);
-          var dest = document.querySelector(selector);
-          if (src && dest) dest.setAttribute('content', src.getAttribute('content'));
-        });
-        var canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.href = 'https://aigenetic.in/?mode=' + mode;
-
-        var styleTag = document.getElementById('mode-style');
-        if (!styleTag) {
-          styleTag = document.createElement('style');
-          styleTag.id = 'mode-style';
-          document.head.appendChild(styleTag);
-        }
-        styleTag.textContent = Array.from(doc.querySelectorAll('style'))
-          .map(function (s) { return s.textContent; })
-          .join('\n');
-
-        var root = document.getElementById('root');
-        if (root) root.style.display = 'none';
-        var modeRoot = document.getElementById('mode-root');
-        modeRoot.innerHTML = doc.body.innerHTML;
-        modeRoot.style.display = '';
-
-        // Deliberately NOT rewriting the injected page's logo / "Home" links:
-        // they keep their original href="#top" (scroll within this vertical)
-        // rather than pointing back at the main site — clicking the logo
-        // while in healthcare/realestate mode should stay in that mode.
-
-        // innerHTML does not execute <script> tags — recreate them so the
-        // page's own calendar-modal / waveform / nav behavior comes alive.
-        modeRoot.querySelectorAll('script').forEach(function (oldScript) {
-          var newScript = document.createElement('script');
-          if (oldScript.src) {
-            newScript.src = oldScript.src;
-          } else {
-            newScript.textContent = oldScript.textContent;
-          }
-          oldScript.replaceWith(newScript);
-        });
-      } catch (err) {
-        console.error('Failed to load ' + mode + ' content inline, falling back to its own page.', err);
-        location.href = file;
-      }
-    }
-  </script>
-
-  <!-- Babel Standalone for JSX -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
-
-    // Scroll-reveal wrapper — mirrors healthcare.html's IntersectionObserver-driven
-    // .reveal / .stagger classes, reimplemented as a React component since index.html
-    // is JSX. `stagger` reveals direct children one-by-one via the .stagger CSS rules.
-    function Reveal({ as: Tag = 'div', stagger = false, className = '', children, ...rest }) {
-      const ref = useRef(null);
-      const [inView, setInView] = useState(false);
-
-      useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setInView(true);
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
-        io.observe(el);
-        return () => io.disconnect();
-      }, []);
-
-      const cls = `${stagger ? 'stagger' : 'reveal'} ${inView ? 'in' : ''} ${className}`.trim();
-      return <Tag ref={ref} className={cls} {...rest}>{children}</Tag>;
-    }
-
-    function App() {
-      const phoneLink = `tel:${CONFIG.company.phoneDial}`;
-      const whatsappLink = `https://wa.me/${CONFIG.company.whatsappNumber}`;
-      const whatsappLinkWithText = `https://wa.me/${CONFIG.company.whatsappNumber}?text=${encodeURIComponent('Hi! I\'m interested in ' + CONFIG.company.name)}`;
-      const featureIcons = ['⚡', '🌐', '⏰', '💰'];
-      const [scrolled, setScrolled] = useState(false);
-      const [menuOpen, setMenuOpen] = useState(false);
-
-      // Sticky nav shadow/background once the page scrolls — mirrors
-      // healthcare.html's .nav.scrolled behavior.
-      useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 8);
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-      }, []);
-
-      return (
-        <div className="min-h-screen" style={{background: 'var(--secondary)'}}>
-          {/* Header */}
-          <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="site-nav">
-            <div className="wrap nav-in">
-              <a className="brand" href="#top">
-                <img src="logo/logoMedium.png" alt={CONFIG.company.name} />
-                {CONFIG.company.name} <small>for Businesses</small>
-              </a>
-
-              <div className="nav-links">
-                <a href="#features">Features</a>
-                <a href="#use-cases">Use Cases</a>
-                <a href="#pricing">Pricing</a>
-              </div>
-
-              <div className="nav-cta">
-                <a className="btn btn-ghost" href={phoneLink} data-phone-link>📞 Call</a>
-                <a className="btn btn-primary" href="#calendar-booking" data-open-calendar onClick={(e) => {e.preventDefault(); openCalendarModalMain();}}>Book Demo</a>
-                <button
-                  type="button"
-                  className={`nav-toggle${menuOpen ? ' open' : ''}`}
-                  id="nav-toggle"
-                  aria-expanded={menuOpen}
-                  aria-controls="mobile-nav-panel"
-                  aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                  onClick={() => setMenuOpen((open) => !open)}
-                >
-                  <i></i><i></i><i></i>
-                </button>
-              </div>
-            </div>
-
-            {menuOpen && (
-              <div className="nav-panel open" id="mobile-nav-panel">
-                <div className="wrap">
-                  <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
-                  <a href="#use-cases" onClick={() => setMenuOpen(false)}>Use Cases</a>
-                  <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
-                  <div className="panel-cta">
-                    <a className="btn btn-ghost" href={phoneLink} data-phone-link>📞 Call</a>
-                    <a className="btn btn-primary" href="#calendar-booking" onClick={(e) => {e.preventDefault(); setMenuOpen(false); openCalendarModalMain();}}>Book Demo</a>
-                  </div>
-                </div>
-              </div>
-            )}
-          </nav>
-
-          {/* Hero */}
-          <section className="relative min-h-screen flex items-center justify-center hero-grid-wash" style={{background: 'var(--secondary)'}}>
-            <div className="relative max-w-7xl mx-auto px-8 py-32 text-center min-w-0">
-              <div className="max-w-5xl mx-auto space-y-10 fade-in-up">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{background: 'white', border: '1px solid var(--border)', color: 'var(--text-secondary)'}}>
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2" style={{background: 'var(--accent)'}}></span>
-                  </span>
-                  {CONFIG.hero.badge}
-                </div>
-
-                <h1 className="hero-title" style={{color: 'var(--primary)'}}>
-                  {CONFIG.hero.heading}
-                </h1>
-
-                <p className="text-xl leading-relaxed max-w-3xl mx-auto" style={{color: 'var(--text-secondary)'}}>
-                  {CONFIG.hero.subheading}
-                </p>
-
-                <div className="flex flex-wrap justify-center gap-4 pt-6">
-                  <a href={phoneLink} className="group px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: 'var(--primary)', color: 'white'}} onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'translateY(0)'}}>
-                    {CONFIG.hero.ctaPrimary}
-                    <span className="transition-transform">→</span>
-                  </a>
-                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--text-primary)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
-                    {CONFIG.hero.ctaSecondary}
-                  </a>
-                  <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}} onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}} onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}>
-                    📅 Schedule Demo
-                  </a>
-                  <LiveVoiceCallButton
-                    label="🎙️ Live Call to Voice Assistant"
-                    className="px-10 py-4 rounded-lg font-medium text-lg transition-all"
-                    style={{background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)', cursor: 'pointer'}}
-                    onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)'}}
-                    onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'}}
-                  />
-                </div>
-
-                {/* Use Cases marquee — moved here so it's visible on the first
-                    screen, right under the call/WhatsApp/etc CTA buttons. */}
-                <div id="use-cases" className="pt-16">
-                  <div className="section-label mb-4">Use Cases</div>
-                  <h2 className="text-3xl font-semibold mb-8" style={{letterSpacing: '-1px', color: 'var(--primary)'}}>Perfect for Any Business</h2>
-                  <Reveal as="div">
-                    <UseCaseMarquee />
-                  </Reveal>
-                </div>
-
-                <Reveal as="div" stagger className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
-                  {CONFIG.hero.keyFeatures.map((feature, idx) => (
-                    <div key={feature.title + idx} className="stat-card">
-                      <div className="text-3xl mb-3">{featureIcons[idx] || '✓'}</div>
-                      <div className="font-semibold text-sm mb-1" style={{color: 'var(--text-primary)'}}>{feature.title}</div>
-                      <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{feature.subtitle}</div>
-                    </div>
-                  ))}
-                </Reveal>
-              </div>
-            </div>
-          </section>
-
-          {/* Stats */}
-          <section className="py-24" style={{background: 'white'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <Reveal as="div" stagger className="grid md:grid-cols-4 gap-12">
-                {CONFIG.stats.map((stat, idx) => (
-                  <div key={stat.label + idx} className="text-center">
-                    <div className="text-6xl font-semibold mb-3" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{stat.number}</div>
-                    <div className="text-sm font-medium" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{stat.label}</div>
-                  </div>
-                ))}
-              </Reveal>
-            </div>
-          </section>
-
-          {/* How It Works */}
-          <section id="features" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-20">
-                <div className="section-label mb-6">How It Works</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>A simple, reliable flow</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>that handles every customer call with precision</p>
-              </div>
-
-              <Reveal as="div" stagger className="grid md:grid-cols-5 gap-8">
-                {CONFIG.howItWorks.map((item, idx) => (
-                  <div key={item.title + idx} className="text-center">
-                    <div className="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-2xl text-4xl" style={{background: 'white', border: '1px solid var(--border)'}}>
-                      {item.icon}
-                    </div>
-                    <div className="text-xs font-semibold mb-3" style={{color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1.5px'}}>Step {item.step}</div>
-                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{item.title}</div>
-                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{item.desc}</div>
-                  </div>
-                ))}
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Audio Showcase */}
-          <section id="audio-demos" className="py-32 section-divide audio-showcase">
-            <div className="max-w-7xl mx-auto px-8">
-              <Reveal className="text-center max-w-4xl mx-auto mb-20">
-                <div className="section-label mb-6">{CONFIG.audioShowcase.label}</div>
-                <h2 className="text-5xl font-semibold mb-6 audio-showcase-title">{CONFIG.audioShowcase.title}</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>{CONFIG.audioShowcase.subtitle}</p>
-              </Reveal>
-
-              <AudioShowcase />
-            </div>
-          </section>
-
-          {/* Why / USPs */}
-          <section className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-20">
-                <div className="section-label mb-6">Why Choose Us</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Why Choose {CONFIG.company.name}</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>Fully managed AI phone service designed for Indian businesses</p>
-              </div>
-
-              <Reveal as="div" stagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {CONFIG.usps.map((usp, idx) => (
-                  <div key={usp.title + idx} className="text-center">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl text-3xl mb-6" style={{background: 'white', border: '1px solid var(--border)'}}>
-                      {usp.icon}
-                    </div>
-                    <div className="font-semibold text-lg mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{usp.title}</div>
-                    <div className="text-sm leading-relaxed" style={{color: 'var(--text-secondary)'}}>{usp.desc}</div>
-                  </div>
-                ))}
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Testimonials */}
-          <section className="py-32 section-divide" style={{background: 'white'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-20">
-                <div className="section-label mb-6">Testimonials</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Trusted by 100+ Businesses</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>See how {CONFIG.company.name} is transforming customer communication</p>
-              </div>
-
-              <Reveal as="div" stagger className="grid md:grid-cols-3 gap-8">
-                {CONFIG.testimonials.map((testimonial, idx) => (
-                  <div key={testimonial.name + idx} className="minimal-card p-8 rounded-2xl hover-rise">
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, jdx) => (
-                        <span key={jdx} className="text-yellow-400 text-lg">★</span>
-                      ))}
-                    </div>
-                    <p className="text-sm leading-relaxed mb-8" style={{color: 'var(--text-secondary)'}}>"{testimonial.quote}"</p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg" style={{background: 'var(--primary)'}}>
-                        {testimonial.name.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-sm" style={{color: 'var(--text-primary)'}}>{testimonial.name}</div>
-                        <div className="text-xs" style={{color: 'var(--text-secondary)'}}>{testimonial.role}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Pricing */}
-          <section id="pricing" className="py-32 section-divide" style={{background: 'var(--secondary)'}}>
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="text-center max-w-3xl mx-auto mb-20">
-                <div className="section-label mb-6">Pricing</div>
-                <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>Simple Pricing</h2>
-                <p className="text-lg" style={{color: 'var(--text-secondary)'}}>No hidden fees. Pay only for what you use.</p>
-              </div>
-
-              <Reveal as="div" stagger className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
-                {CONFIG.pricing.map((plan, idx) => (
-                  <div key={plan.name + idx} className={`relative minimal-card p-10 rounded-2xl ${plan.highlighted ? 'hover-rise' : ''}`} style={plan.highlighted ? {borderColor: 'var(--primary)', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'} : {}}>
-                    {plan.badge && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold" style={{background: 'var(--primary)', color: 'white'}}>
-                        {plan.badge}
-                      </div>
-                    )}
-                    <div className="text-sm font-semibold mb-3" style={{color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px'}}>{plan.name}</div>
-                    <div className="text-6xl font-semibold mb-2" style={{letterSpacing: '-2px', color: 'var(--primary)'}}>{plan.price}<span className="text-lg font-normal" style={{color: 'var(--text-secondary)'}}>{plan.period}</span></div>
-                    <div className="text-sm mb-10" style={{color: 'var(--text-secondary)'}}>{plan.usage}</div>
-                    <ul className="space-y-4 mb-10">
-                      {plan.features.map((feature, jdx) => (
-                        <li key={feature + jdx} className="flex items-start gap-3 text-sm" style={{color: 'var(--text-secondary)'}}>
-                          <span style={{color: 'var(--primary)'}}>✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href={plan.name === 'Enterprise' ? whatsappLink : phoneLink}
-                      target={plan.name === 'Enterprise' ? '_blank' : undefined}
-                      rel={plan.name === 'Enterprise' ? 'noopener noreferrer' : undefined}
-                      className="block w-full text-center px-6 py-4 rounded-lg font-medium transition-all"
-                      style={plan.highlighted ? {background: 'var(--primary)', color: 'white'} : {background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border)'}}
-                      onMouseEnter={(e) => plan.highlighted ? e.currentTarget.style.background = '#084A40' : e.currentTarget.style.borderColor = 'var(--text-primary)'}
-                      onMouseLeave={(e) => plan.highlighted ? e.currentTarget.style.background = 'var(--primary)' : e.currentTarget.style.borderColor = 'var(--border)'}
-                    >
-                      {plan.cta}
-                    </a>
-                  </div>
-                ))}
-              </Reveal>
-
-              <div className="max-w-4xl mx-auto">
-                <div className="minimal-card p-8 rounded-2xl">
-                  <div className="flex items-start gap-4">
-                    <span className="text-3xl">💡</span>
-                    <div>
-                      <div className="font-semibold mb-2" style={{color: 'var(--text-primary)'}}>{CONFIG.ctaMessages.pricingHelp.title}</div>
-                      <div className="text-sm mb-4" style={{color: 'var(--text-secondary)'}}>{CONFIG.ctaMessages.pricingHelp.description}</div>
-                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all" style={{background: '#10b981', color: 'white'}} onMouseEnter={(e) => e.currentTarget.style.background = '#059669'} onMouseLeave={(e) => e.currentTarget.style.background = '#10b981'}>
-                        Chat on WhatsApp
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Closing CTA — dark rounded panel, mirrors healthcare.html's .close-in.
-              Reuses hero's own CTA labels (phone / WhatsApp / calendar), no new
-              marketing copy added to config.js. */}
-          <section className="py-20 px-8">
-            <Reveal as="div" className="max-w-6xl mx-auto closing-panel">
-              <div className="section-label mb-6" style={{color: '#8FE3C6'}}>Get Started</div>
-              <h2 className="text-5xl font-semibold mb-6" style={{letterSpacing: '-2px', color: '#fff'}}>Ready to stop missing calls?</h2>
-              <p className="text-lg max-w-xl mx-auto" style={{color: '#B6C7C4'}}>See Aigenetic answer, understand, and book appointments for your business — live, in a short demo.</p>
-              <div className="flex flex-wrap justify-center gap-4 pt-10">
-                <a href={phoneLink} className="px-10 py-4 rounded-lg font-medium text-lg transition-all inline-flex items-center gap-2" style={{background: '#fff', color: 'var(--primary)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'var(--mint)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#fff'}}>
-                  {CONFIG.hero.ctaPrimary}
-                </a>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.24)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'rgba(255,255,255,.08)'; e.currentTarget.style.borderColor = '#8FE3C6'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.24)'}}>
-                  {CONFIG.hero.ctaSecondary}
-                </a>
-                <a href="#" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}} className="px-10 py-4 rounded-lg font-medium text-lg transition-all" style={{background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.24)'}} onMouseEnter={(e) => {e.currentTarget.style.background = 'rgba(255,255,255,.08)'; e.currentTarget.style.borderColor = '#8FE3C6'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.24)'}}>
-                  📅 Schedule Demo
-                </a>
-              </div>
-            </Reveal>
-          </section>
-
-          {/* Footer */}
-          <footer className="site-footer">
-            <div className="wrap">
-              <div className="footer-grid">
-                <div className="footer-brand">
-                  <a className="brand" href="#top">
-                    <img src="logo/logoMedium.png" alt={CONFIG.company.name} />
-                    {CONFIG.company.name} <small>for Businesses</small>
-                  </a>
-                  <p>
-                    {CONFIG.company.legalName} provides fully managed AI-powered phone assistants for Indian SMEs — answers customer calls 24/7, books appointments, and helps businesses never miss an opportunity.
-                  </p>
-                </div>
-
-                <div className="footer-col">
-                  <h5>Quick Links</h5>
-                  <a href="#top">Home</a>
-                  <a href="#features">How It Works</a>
-                  <a href="#use-cases">Use Cases</a>
-                  <a href="#pricing">Pricing</a>
-                  <a href="#calendar-booking" onClick={(e) => {e.preventDefault(); openCalendarModalMain();}}>Book a Demo</a>
-                </div>
-
-                <div className="footer-col">
-                  <h5>Contact</h5>
-                  <a href={`mailto:${CONFIG.company.email}`} data-email-link>{CONFIG.company.email}</a>
-                  <a href={phoneLink} data-phone-link><span data-phone-display>{CONFIG.company.phoneDisplay}</span></a>
-                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer" data-whatsapp-link>WhatsApp Support</a>
-                </div>
-
-                <div className="footer-col">
-                  <h5>Legal</h5>
-                  <a href="privacy-policy.html">Privacy Policy</a>
-                  <a href="terms-of-service.html">Terms of Service</a>
-                  <a href="refund-policy.html">Refund Policy</a>
-                </div>
-              </div>
-
-              <div className="footer-bottom">
-                <span>© 2026 {CONFIG.company.legalName}. All rights reserved.</span>
-                <span className="sp">Enterprise data stays in India, deleted on your schedule.</span>
-              </div>
-            </div>
-          </footer>
-
-          {/* Floating Action Buttons */}
-          <div className="fixed bottom-8 right-8 flex flex-col gap-3 z-50">
-            <a href={whatsappLinkWithText} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: '#10b981'}} title="WhatsApp us" onMouseEnter={(e) => {e.currentTarget.style.background = '#059669'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = '#10b981'; e.currentTarget.style.transform = 'scale(1)'}}>
-              <span className="text-2xl">💬</span>
-            </a>
-            <a href={phoneLink} className="flex items-center justify-center w-16 h-16 rounded-2xl text-white shadow-lg transition-all" style={{background: 'var(--primary)'}} title="Call us" onMouseEnter={(e) => {e.currentTarget.style.background = '#084A40'; e.currentTarget.style.transform = 'scale(1.1)'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.transform = 'scale(1)'}}>
-              <span className="text-2xl">📞</span>
-            </a>
+<body>
+  <canvas id="aurora" aria-hidden="true"></canvas>
+  <div id="root">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="top" id="top">
+      <header class="wrap">
+        <a class="brand" href="#top" aria-label="Aigenetic home">
+          <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+          Aigenetic
+        </a>
+        <nav class="primary" aria-label="Main">
+          <a href="#system">The system</a>
+          <a href="#samples">Samples</a>
+          <a href="#conversation">Journey</a>
+          <a href="#pricing">Pricing</a>
+          <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span class="arrow" aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="mobile-nav">
+          <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">Menu</button>
+          <div id="mobile-nav-panel" class="links glass" hidden>
+            <a href="#system">The system</a>
+            <a href="#samples">Samples</a>
+            <a href="#conversation">Journey</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#calendar-booking" data-open-calendar>Try the autopilot ↗</a>
           </div>
         </div>
-      );
-    }
+      </header>
+    </div>
 
-    function LiveVoiceCallButton({ label, className, style, onMouseEnter, onMouseLeave }) {
-      const [text, setText] = useState(label);
-      const timeoutRef = React.useRef(null);
-
-      const handleClick = () => {
-        if (timeoutRef.current) return;
-        setText('Call to voice assistant coming soon');
-        timeoutRef.current = setTimeout(() => {
-          setText(label);
-          timeoutRef.current = null;
-        }, 1000);
-      };
-
-      return (
-        <button type="button" onClick={handleClick} className={className} style={style} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-          {text}
-        </button>
-      );
-    }
-
-    // Reads the track's current animated position (in px) straight off its
-    // computed transform matrix, so a drag can pick up exactly where the
-    // auto-drift left off instead of snapping back to 0.
-    function getTrackTranslateX(el) {
-      const transform = window.getComputedStyle(el).transform;
-      if (!transform || transform === 'none') return 0;
-      const match = /matrix\(([^)]+)\)/.exec(transform);
-      if (!match) return 0;
-      const parts = match[1].split(',').map(parseFloat);
-      return parts[4] || 0;
-    }
-
-    // Use Cases: a continuously-drifting horizontal strip rather than a static
-    // grid. The card list is rendered twice back-to-back and the track drifts
-    // exactly -50% on a linear infinite loop, so it wraps seamlessly. Paused
-    // via React state on hover/focus (see .usecase-track.paused in the <style>
-    // block) so keyboard users and anyone hovering a card get a stable target.
-    //
-    // It's also click-and-drag / touch-and-drag interactive: dragging freezes
-    // the CSS animation (via a direct, non-React-managed inline style so it
-    // doesn't fight React's re-renders) and follows the pointer one-to-one;
-    // releasing hands back to the auto-drift with a negative animation-delay
-    // computed from the dropped position, so playback resumes from exactly
-    // where the drag left it rather than jumping back to the start.
-    function UseCaseMarquee() {
-      const [paused, setPaused] = useState(false);
-      const count = CONFIG.useCases.length;
-      const cards = [...CONFIG.useCases, ...CONFIG.useCases];
-      const trackRef = useRef(null);
-      const dragRef = useRef({ dragging: false, startX: 0, startOffset: 0, offset: 0, moved: false });
-
-      // Dragging only actually engages (freezing the animation, capturing the
-      // pointer, pausing) once the pointer has moved past a small threshold.
-      // A plain tap/click never crosses that threshold, so it falls through
-      // untouched — no capture, no style changes — and normal link
-      // navigation on a card keeps working exactly as before.
-      function handlePointerDown(e) {
-        if (e.pointerType === 'mouse' && e.button !== 0) return;
-        const track = trackRef.current;
-        if (!track) return;
-        const startOffset = -getTrackTranslateX(track);
-        dragRef.current = { dragging: true, startX: e.clientX, startOffset, offset: startOffset, moved: false, captured: false };
-      }
-
-      function handlePointerMove(e) {
-        const drag = dragRef.current;
-        const track = trackRef.current;
-        if (!drag.dragging || !track) return;
-        const dx = e.clientX - drag.startX;
-        if (!drag.moved) {
-          if (Math.abs(dx) <= 6) return;
-          drag.moved = true;
-          track.style.animation = 'none';
-          setPaused(true);
-          try { track.setPointerCapture(e.pointerId); drag.captured = true; } catch (err) { /* unsupported, drag still works */ }
-        }
-        const loopWidth = track.scrollWidth / 2 || 1;
-        const offset = (((drag.startOffset - dx) % loopWidth) + loopWidth) % loopWidth;
-        drag.offset = offset;
-        track.style.transform = `translateX(${-offset}px)`;
-      }
-
-      function endDrag(e) {
-        const drag = dragRef.current;
-        const track = trackRef.current;
-        if (!drag.dragging) return;
-        drag.dragging = false;
-        if (!drag.moved) return; // plain tap/click — nothing was ever touched
-        if (track) {
-          const loopWidth = track.scrollWidth / 2 || 1;
-          const fraction = drag.offset / loopWidth;
-          track.style.transform = '';
-          track.style.animation = ''; // restores the CSS-defined usecase-scroll animation
-          track.style.animationDelay = `${-(fraction * 32)}s`;
-          if (drag.captured) {
-            try { if (e && e.pointerId != null) track.releasePointerCapture(e.pointerId); } catch (err) { /* noop */ }
-          }
-        }
-        setPaused(false);
-        // Only the click that immediately follows a drag should be suppressed.
-        setTimeout(() => { drag.moved = false; }, 0);
-      }
-
-      function handleClickCapture(e) {
-        if (dragRef.current.moved) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }
-
-      return (
-        <div
-          className="usecase-marquee"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => { if (!dragRef.current.dragging) setPaused(false); }}
-          onFocus={() => setPaused(true)}
-          onBlur={() => { if (!dragRef.current.dragging) setPaused(false); }}
-        >
-          <div
-            ref={trackRef}
-            className={`usecase-track${paused ? ' paused' : ''}`}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onClickCapture={handleClickCapture}
-            onDragStart={(e) => e.preventDefault()}
-          >
-            {cards.map((useCase, idx) => {
-              const duplicate = idx >= count;
-              const CardTag = useCase.link ? 'a' : 'div';
-              const cardProps = useCase.link
-                ? {
-                    href: useCase.link,
-                    className: 'minimal-card p-8 rounded-2xl hover-rise block',
-                    style: {textDecoration: 'none'},
-                    'aria-label': `${useCase.title} — see the dedicated page`,
-                    tabIndex: duplicate ? -1 : undefined
-                  }
-                : {
-                    className: `minimal-card p-8 rounded-2xl${useCase.comingSoon ? ' use-case-disabled' : ' hover-rise'}`,
-                    'aria-disabled': useCase.comingSoon ? 'true' : undefined
-                  };
-              return (
-                <div className="usecase-card-wrap" key={useCase.title + idx} aria-hidden={duplicate ? 'true' : undefined}>
-                  <CardTag {...cardProps}>
-                    <span className="card-idx">{String((idx % count) + 1).padStart(2, '0')}</span>
-                    {useCase.comingSoon && (
-                      <span className="coming-soon-pill">Coming Soon</span>
-                    )}
-                    <div className="feature-icon-box mb-6">
-                      <span style={{filter: 'grayscale(1) brightness(10)'}}>{useCase.icon}</span>
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3" style={{letterSpacing: '-0.5px', color: 'var(--text-primary)'}}>{useCase.title}</h3>
-                    <p className="text-sm mb-6 leading-relaxed" style={{color: 'var(--text-secondary)'}}>{useCase.desc}</p>
-                    <ul className="space-y-2 text-sm" style={{color: 'var(--text-secondary)'}}>
-                      {useCase.features.map((feature, jdx) => (
-                        <li key={feature + jdx} className="flex items-start gap-2">
-                          <span style={{color: 'var(--primary)'}}>✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    {useCase.link && (
-                      <div className="text-sm font-semibold mt-6" style={{color: 'var(--primary)'}}>{useCase.linkCtaLabel || 'Explore →'}</div>
-                    )}
-                  </CardTag>
-                </div>
-              );
-            })}
+    <main id="main">
+      <section class="hero wrap">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">FRONT DESK AS A SERVICE</p>
+            <h1 class="hero-title">Appointments <br>on autopilot.</h1>
+            <p class="autopilot-tagline" aria-label="Talk. Text. Follow up. Slot booking.">
+              <span class="tag-word tag-talk">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="micro-icon"><g class="ring-handset"><path d="M5 3h4l2 5-3 2c1 3 3 5 6 6l2-3 5 2v4c0 1-1 2-2 2C10 21 3 14 3 5c0-1 1-2 2-2Z"/></g><path class="ring-rays" d="M15 3c3 0 6 3 6 6M15 7c1 0 2 1 2 2"/></svg>
+                <span>Talk.</span>
+              </span>
+              <span class="tag-word tag-text">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="micro-icon"><g class="text-bubble"><path d="M21 11c0 5-4 9-9 9-2 0-3 0-5-1l-4 2 1-5c-1-1-2-3-2-5 0-5 4-9 10-9s9 4 9 9Z"/><path class="text-lines" d="M7 9h9M7 13h6"/></g></svg>
+                <span>Text.</span>
+              </span>
+              <span class="tag-word tag-follow">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="micro-icon"><path d="M7 4H4v16h14v-5M8 4h6"/><g class="follow-nudge"><path d="M10 10h11m-4-4 4 4-4 4"/></g></svg>
+                <span>Follow up.</span>
+              </span>
+              <span class="tag-word tag-slot">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="micro-icon"><path d="M3 5h18v16H3zM3 9h18M7 2v5M17 2v5"/><rect class="calendar-slot" x="7" y="12" width="10" height="6" rx="1"/><path class="slot-check" d="m9 15 2 2 4-4"/></svg>
+                <span>Slot booking.</span>
+              </span>
+            </p>
+            <p class="subhead">Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.</p>
+            <div class="actions">
+              <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span aria-hidden="true">↗</span></a>
+              <a class="btn secondary" href="#conversation">See the journey <span aria-hidden="true">↓</span></a>
+            </div>
+            <p class="small hero-note">Hindi · English · Hinglish &nbsp; / &nbsp; Fully managed</p>
           </div>
-        </div>
-      );
-    }
 
-    function AudioShowcase() {
-      const audioRefs = React.useRef([]);
-      const [playingIndex, setPlayingIndex] = React.useState(null);
-      const [timeData, setTimeData] = React.useState(
-        CONFIG.audioDemos.map(() => ({ current: 0, duration: 0 }))
-      );
-      const waveBase = [6, 14, 10, 18, 12, 20, 8, 16, 11, 22, 9, 17, 13, 19, 7, 15, 10, 18, 12, 20, 9, 16];
-
-      const formatTime = (timeValue) => {
-        if (!timeValue || Number.isNaN(timeValue)) return '0:00';
-        const minutes = Math.floor(timeValue / 60);
-        const seconds = Math.floor(timeValue % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
-      };
-
-      const getWaveHeights = (index) =>
-        waveBase.map((height, i) => height + ((index + i) % 4));
-
-      const togglePlay = (index) => {
-        const audio = audioRefs.current[index];
-        if (!audio) return;
-        if (playingIndex !== null && playingIndex !== index) {
-          const activeAudio = audioRefs.current[playingIndex];
-          if (activeAudio) activeAudio.pause();
-        }
-        if (audio.paused) {
-          audio.play();
-          setPlayingIndex(index);
-        } else {
-          audio.pause();
-          setPlayingIndex(null);
-        }
-      };
-
-      const updateTime = (index) => {
-        const audio = audioRefs.current[index];
-        if (!audio) return;
-        setTimeData((prev) => {
-          const next = [...prev];
-          next[index] = { current: audio.currentTime, duration: audio.duration || 0 };
-          return next;
-        });
-      };
-
-      const handleEnded = (index) => {
-        setPlayingIndex((prev) => (prev === index ? null : prev));
-      };
-
-      return (
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {CONFIG.audioDemos.map((demo, index) => (
-            <div key={demo.title + index} className="audio-card p-8 rounded-2xl flex flex-col gap-6">
-              <div className="flex items-start justify-between gap-4">
+          <div class="desk glass" data-reveal style="--reveal: 120ms" aria-label="Illustrative customer journey across calls, WhatsApp and calendar">
+            <div class="desk-top">
+              <span>Your managed front desk</span>
+              <span class="status"><i class="dot" aria-hidden="true"></i> Connected</span>
+            </div>
+            <div class="desk-body">
+              <div class="call-title">
+                <div class="call-icon" aria-hidden="true">↗</div>
                 <div>
-                  <div className="audio-pill text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full inline-flex">
-                    {demo.category}
-                  </div>
-                  <h3 className="text-xl font-semibold mt-4" style={{color: 'var(--text-primary)'}}>{demo.title}</h3>
-                  <p className="text-sm mt-2" style={{color: 'var(--text-secondary)'}}>{demo.desc}</p>
+                  <strong>One enquiry. A connected journey.</strong>
+                  <small>Clinic appointment · Illustrative workflow</small>
                 </div>
-                <button
-                  type="button"
-                  className="audio-play w-12 h-12 rounded-full flex items-center justify-center text-white text-xs font-semibold"
-                  onClick={() => togglePlay(index)}
-                  aria-label={playingIndex === index ? `Pause ${demo.title}` : `Play ${demo.title}`}
-                >
-                  {playingIndex === index ? 'Pause' : 'Play'}
-                </button>
               </div>
-
-              <div className={`audio-wave ${playingIndex === index ? 'wave-active' : ''}`}>
-                {getWaveHeights(index).map((height, waveIndex) => (
-                  <span
-                    key={`${demo.title}-wave-${waveIndex}`}
-                    style={{
-                      height: `${height}px`,
-                      animationDelay: `${waveIndex * 0.08}s`
-                    }}
-                  />
-                ))}
+              <div class="channels" aria-label="Channels in this workflow">
+                <span>AI calls</span><span>WhatsApp</span><span>Calendar</span><span>Follow-up</span>
               </div>
-
-              <div className="flex items-center justify-between text-xs audio-time">
-                <span>{formatTime(timeData[index].current)}</span>
-                <span>{formatTime(timeData[index].duration)}</span>
+              <div class="timeline">
+                <div class="event">
+                  <div class="event-line">Call · Enquiry understood <span class="time">21:47 IST</span></div>
+                  <p>Caller asks for tomorrow’s consultation.</p>
+                </div>
+                <div class="event">
+                  <div class="event-line">WhatsApp · Details confirmed <span class="time">21:49 IST</span></div>
+                  <p>Chosen slot and visit details shared in chat.</p>
+                </div>
+                <div class="event">
+                  <div class="event-line">Calendar · Appointment booked <span class="time">21:50 IST</span></div>
+                  <p>Tomorrow, 11:30 AM · Added to the team calendar.</p>
+                </div>
+                <div class="event">
+                  <div class="event-line">Follow-up · Reminder scheduled <span class="time">Next day</span></div>
+                  <p>WhatsApp reminder before the appointment.</p>
+                </div>
               </div>
-
-              <audio
-                ref={(el) => { audioRefs.current[index] = el; }}
-                src={encodeURI(demo.file)}
-                preload="metadata"
-                onTimeUpdate={() => updateTime(index)}
-                onLoadedMetadata={() => updateTime(index)}
-                onEnded={() => handleEnded(index)}
-              />
+              <div class="receipt">
+                <span>Call → Chat → Booking → Reminder</span>
+                <strong>✓ Connected</strong>
+              </div>
             </div>
-          ))}
+            <div class="desk-foot">
+              <span>ONE CUSTOMER JOURNEY</span>
+              <span>Illustrative, not live data</span>
+            </div>
+          </div>
         </div>
-      );
-    }
+        <div class="coverage">
+          <div data-reveal><strong>AI calls</strong><p>Answer &amp; understand</p></div>
+          <div data-reveal style="--reveal: 70ms"><strong>WhatsApp</strong><p>Chat &amp; keep customers updated</p></div>
+          <div data-reveal style="--reveal: 140ms"><strong>Calendar booking</strong><p>Turn intent into appointments</p></div>
+          <div data-reveal style="--reveal: 210ms"><strong>Follow-ups</strong><p>Keep the next step moving</p></div>
+        </div>
+      </section>
 
-    if (window.__AIGENETIC_MODE__ === 'home') {
-      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-    } else {
-      loadModeContent(window.__AIGENETIC_MODE__);
-    }
-  </script>
+      <section id="system" class="section">
+        <span id="features" class="alias"></span>
+        <span id="how-it-works" class="alias"></span>
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">The whole front desk. Not just the phone.</p>
+              <h2>From first contact <br>to follow-through.</h2>
+            </div>
+            <p>Calls, WhatsApp, calendar bookings and follow-ups — one continuous front desk, with your team in control.</p>
+          </div>
+          <div class="four">
+            <article class="function glass" data-reveal>
+              <p class="tag">AI calls</p>
+              <h3>Start with a conversation.</h3>
+              <p>Answer enquiries, understand what customers need and handle callbacks in Hindi, English or Hinglish.</p>
+              <div class="outcome">Voice → Intent <span aria-hidden="true">↗</span></div>
+            </article>
+            <article class="function glass" data-reveal style="--reveal: 80ms">
+              <p class="tag">WhatsApp chat &amp; updates</p>
+              <h3>Keep the conversation open.</h3>
+              <p>Answer questions in chat, share appointment details and keep customers updated after the call ends.</p>
+              <div class="outcome">Chat → Clarity <span aria-hidden="true">↗</span></div>
+            </article>
+            <article class="function glass" data-reveal style="--reveal: 160ms">
+              <p class="tag">Appointments &amp; calendars</p>
+              <h3>Make the next step real.</h3>
+              <p>Coordinate suitable slots, book appointments into a calendar and support changes to existing bookings.</p>
+              <div class="outcome">Intent → Appointment <span aria-hidden="true">↗</span></div>
+            </article>
+            <article class="function glass" data-reveal style="--reveal: 240ms">
+              <p class="tag">Follow-ups &amp; reminders</p>
+              <h3>Carry the commitment through.</h3>
+              <p>Send reminders, follow up on open enquiries and bring your team in when a customer needs a person.</p>
+              <div class="outcome">Next step → Follow-through <span aria-hidden="true">↗</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
 
-  <!-- Calendar Booking Modal for Main Site -->
-  <div id="calendar-modal-main" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-main-title" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
-    <div class="calendar-modal-main-content" style="background:#fff;border-radius:20px;padding:32px;max-width:680px;width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);position:relative">
-      <button onclick="closeCalendarModalMain()" aria-label="Close booking dialog" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:24px;color:#666">✕</button>
-      <h2 id="calendar-modal-main-title" style="font-size:28px;margin-bottom:8px;color:var(--primary)">Schedule Your Demo</h2>
-      <p style="color:var(--text-secondary);margin-bottom:24px">Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
+      <section id="samples" class="section" aria-labelledby="samples-title">
+        <span id="audio-demos" class="alias"></span>
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Original demo audio</p>
+              <h2 id="samples-title">Hear a sample call.</h2>
+            </div>
+            <p>These are the demo recordings the live site already ships: healthcare, commerce, payment reminders, education, hiring and hospitality.</p>
+          </div>
+          <div class="players">
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/HealthCare-onboarding_cEIUBM4Y (1).mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Healthcare Support" aria-pressed="false" aria-label="Play Healthcare Support">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">Healthcare</p>
+                <h3>Healthcare Support</h3>
+                <p>AI agent handling patient inquiries and support</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Healthcare Support</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/Ecom-customer-support_IRqJbynE.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="E-commerce Support" aria-pressed="false" aria-label="Play E-commerce Support">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">E-commerce</p>
+                <h3>E-commerce Support</h3>
+                <p>AI-powered customer service for online stores</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek E-commerce Support</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/BFSI-reminder_dztcIGvN.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Payment Reminders" aria-pressed="false" aria-label="Play Payment Reminders">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">BFSI</p>
+                <h3>Payment Reminders</h3>
+                <p>Automated payment reminder calls</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Payment Reminders</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/Edtech-lead-qualification_KTkZSGKj.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Lead Qualification" aria-pressed="false" aria-label="Play Lead Qualification">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">EdTech</p>
+                <h3>Lead Qualification</h3>
+                <p>Edtech lead qualification</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Lead Qualification</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/recruitment_eczAKBnf.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Recruitment" aria-pressed="false" aria-label="Play Recruitment">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">HR Tech</p>
+                <h3>Recruitment</h3>
+                <p>AI-powered candidate screening and recruitment</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Recruitment</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/hospitality-front-desk_CVZtKlFn.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Hospitality Front Desk" aria-pressed="false" aria-label="Play Hospitality Front Desk">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">Hospitality</p>
+                <h3>Hospitality Front Desk</h3>
+                <p>AI agent handling front desk inquiries and support</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>0:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Hospitality Front Desk</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>0:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="conversation" class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">An illustrative customer journey</p>
+              <h2>Different channels. <br>One continuous conversation.</h2>
+            </div>
+            <p>A clinic enquiry moves from a phone call to WhatsApp, into the calendar and on to a reminder. Your team sees what comes next.</p>
+          </div>
+          <ol class="journey">
+            <li class="glass" data-reveal><span class="journey-label">01 / AI CALL</span><h3>Understand the enquiry</h3><p>Capture the request and the preferred appointment time.</p></li>
+            <li class="glass" data-reveal style="--reveal: 70ms"><span class="journey-label">02 / WHATSAPP</span><h3>Confirm the details</h3><p>Share the chosen slot and keep the chat open for questions.</p></li>
+            <li class="glass" data-reveal style="--reveal: 140ms"><span class="journey-label">03 / CALENDAR</span><h3>Record the booking</h3><p>Add the appointment to the team’s connected calendar.</p></li>
+            <li class="glass" data-reveal style="--reveal: 210ms"><span class="journey-label">04 / FOLLOW-UP</span><h3>Send the reminder</h3><p>Keep the appointment on track and route changes to your team.</p></li>
+          </ol>
+          <div class="sample">
+            <div class="transcript glass" data-reveal>
+              <div class="transcript-head"><span>WHATSAPP CHAT / HINGLISH</span><span>ILLUSTRATIVE</span></div>
+              <div class="dialogue"><span>Customer</span><p>“Kal 11:30 ka slot theek hai. Location bhi bhej dijiye.”</p></div>
+              <div class="dialogue"><span>Assistant</span><p>“Ji. Aapke visit details aur clinic location yahin share kar rahe hain.”</p></div>
+              <div class="dialogue"><span>System</span><p><em>Slot confirmed → calendar booking → reminder scheduled.</em></p></div>
+              <p class="small">All conversations, timings and records are illustrative. No real message, booking or reminder is sent.</p>
+            </div>
+            <div class="phone-note glass" data-reveal style="--reveal: 100ms">
+              <div class="note-head"><span>TEAM CALENDAR · SAMPLE EVENT</span><span>Illustrative</span></div>
+              <div class="message">
+                <p class="small">Clinic appointment</p>
+                <h3>A conversation becomes a booking.</h3>
+                <div class="detail-row"><span>Appointment</span><strong>Tomorrow · 11:30 AM</strong></div>
+                <div class="detail-row"><span>Enquiry source</span><strong>AI call → WhatsApp</strong></div>
+                <div class="detail-row"><span>Follow-up</span><strong>WhatsApp reminder</strong></div>
+                <div class="message-footer">✓ Slot recorded. Customer updated. Team informed.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="setup">
+        <div class="wrap setup">
+          <div data-reveal>
+            <p class="eyebrow">We run it for you</p>
+            <h2>Your process. <br>Our setup. <br>Your final say.</h2>
+            <p>We map your front-desk work, configure the service and review the experience with you. Your team provides the business details, calendar rules and escalation contacts.</p>
+          </div>
+          <ol class="steps">
+            <li class="glass" data-reveal><span class="step-num">1</span><div><h3>Map the customer journey</h3><p>Agree on channels, hours, languages, booking rules and handoffs.</p></div></li>
+            <li class="glass" data-reveal style="--reveal: 80ms"><span class="step-num">2</span><div><h3>Configure and test</h3><p>Review call and chat responses, calendar connections and reminder rules.</p></div></li>
+            <li class="glass" data-reveal style="--reveal: 160ms"><span class="step-num">3</span><div><h3>Approve before going live</h3><p>Test the full journey. You approve before go-live; we agree how monitoring, updates and handoffs are managed.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="pricing" class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Scope &amp; pricing</p>
+              <h2>A clear starting point.</h2>
+            </div>
+            <p>Published calling plans below are a reference. WhatsApp, calendar booking and follow-up scope will be quoted around your complete workflow.</p>
+          </div>
+          <div class="three">
+            <article class="price glass" data-reveal>
+              <div class="plan-label">Flex <small>FOR EVERYDAY ENQUIRIES</small></div>
+              <div class="amount">₹2,999 <span>/ month</span></div>
+              <p>500 call minutes included.<br>Then ₹6 per minute.</p>
+              <ul>
+                <li>Configured AI voice assistant</li>
+                <li>Booking &amp; rescheduling</li>
+                <li>Basic analytics</li>
+                <li>Email support</li>
+              </ul>
+              <a href="#calendar-booking" class="btn secondary" data-open-calendar>Discuss Flex <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="price glass featured" data-reveal style="--reveal: 80ms">
+              <div class="plan-label">Pro <small>FOR CALLING CONTINUITY</small></div>
+              <div class="amount">₹7,999 <span>/ month</span></div>
+              <p>1,500 call minutes included.<br>Then ₹6 per minute.</p>
+              <ul>
+                <li>Everything in Flex</li>
+                <li>Outbound calling campaigns</li>
+                <li>Custom conversation flows</li>
+                <li>Priority WhatsApp support</li>
+              </ul>
+              <a href="#calendar-booking" class="btn" data-open-calendar>Discuss Pro <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="price glass" data-reveal style="--reveal: 160ms">
+              <div class="plan-label">Enterprise <small>FOR LARGER OPERATIONS</small></div>
+              <div class="amount">Let’s talk</div>
+              <p>Volume-based pricing.<br>Designed around your operation.</p>
+              <ul>
+                <li>Multiple phone numbers</li>
+                <li>API access &amp; integrations</li>
+                <li>Dedicated account manager</li>
+                <li>Priority support</li>
+              </ul>
+              <a href="#calendar-booking" class="btn secondary" data-open-calendar>Discuss your setup <span aria-hidden="true">↗</span></a>
+            </article>
+          </div>
+          <p class="small pricing-note">Illustrative pricing presentation: these are published calling-plan references, not an all-channel bundle. Confirm WhatsApp charges, calendar integration, follow-up scope, taxes, telephony and plan inclusions before treating them as a quote.</p>
+        </div>
+      </section>
+
+      <section class="section" id="questions">
+        <div class="wrap faq">
+          <div>
+            <p class="eyebrow">Before you get started</p>
+            <h2>A few practical questions.</h2>
+          </div>
+          <div class="glass faq-list" data-reveal>
+            <details>
+              <summary>What does Front Desk as a Service include?</summary>
+              <p>Aigenetic brings AI calls, WhatsApp chat and updates, appointment/calendar booking and follow-ups together as one managed front-desk service. Your approved rules define what it handles and when your team steps in.</p>
+            </details>
+            <details>
+              <summary>Can customers start on WhatsApp instead?</summary>
+              <p>Customers can enquire through WhatsApp as well as by phone. We map the relevant answers, booking steps and human handoffs to your business during setup.</p>
+            </details>
+            <details>
+              <summary>Which calendar can we connect?</summary>
+              <p>We confirm your calendar provider, availability rules, booking permissions and rescheduling process before setup. No specific calendar integration is assumed until that conversation.</p>
+            </details>
+            <details>
+              <summary>How are reminders and follow-ups controlled?</summary>
+              <p>Review channel consent, message templates, timing, retry limits and stop rules with your team. The exact workflow and escalation path are agreed before launch.</p>
+            </details>
+            <details>
+              <summary>Can we keep our business number?</summary>
+              <p>We check your current phone and WhatsApp setup, including forwarding, number provisioning and account eligibility. No number change or caller-ID capability is assumed until that check.</p>
+            </details>
+            <details>
+              <summary>What does 24×7 cover?</summary>
+              <p>The service is positioned for always-on AI handling of calls, WhatsApp enquiries, bookings and follow-ups. Human support hours, calendar availability, escalation ownership and outage procedures are agreed separately; 24×7 does not mean round-the-clock human staffing.</p>
+            </details>
+            <details>
+              <summary>What happens when a customer needs a person?</summary>
+              <p>Requests outside the approved scope follow agreed handoff rules. Your team reviews how calls, chats and booking issues are escalated before going live.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="preview" class="closing">
+        <span id="demo" class="alias"></span>
+        <span id="calendar-booking" class="alias"></span>
+        <div class="wrap">
+          <div>
+            <p class="eyebrow">Your front desk. As a service.</p>
+            <h2>Put your front desk <br>on autopilot.</h2>
+            <p>Talk. Text. Follow up. Slot booking. One managed service.</p>
+            <p class="contact-line">
+              <a data-phone-link data-phone-display href="tel:+917428497033">+91 742849 7033</a>
+              <a data-whatsapp-link href="https://wa.me/917428497033" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a data-email-link href="mailto:connect@aigenetic.in">connect@aigenetic.in</a>
+            </p>
+          </div>
+          <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="footer-row">
+          <a href="#top" class="brand" aria-label="Aigenetic home">
+            <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+            Aigenetic
+          </a>
+          <span>Front Desk as a Service for Indian businesses.</span>
+          <span>Aigenetic (OPC) Pvt Ltd · Pune, India</span>
+        </div>
+        <nav class="footer-nav footer-links" aria-label="Contact and policies">
+          <a data-phone-link href="tel:+917428497033">Call +91 742849 7033</a>
+          <a data-whatsapp-link href="https://wa.me/917428497033" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a data-email-link href="mailto:connect@aigenetic.in">connect@aigenetic.in</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="refund-policy.html">Refund Policy</a>
+        </nav>
+        <p class="prototype">Sample journeys on this page are illustrative. The audio clips are the original demo recordings from the live site.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Calendar Booking Modal for Main Site. Same Google Calendar appointment
+       schedule as the live homepage: provider, URL and open/close flow unchanged. -->
+  <div id="calendar-modal-main" role="dialog" aria-modal="true" aria-labelledby="calendar-modal-main-title" style="display:none">
+    <div class="calendar-modal-main-content glass">
+      <button type="button" class="calendar-close" onclick="closeCalendarModalMain()" aria-label="Close booking dialog">Close</button>
+      <h2 id="calendar-modal-main-title">Schedule Your Demo</h2>
+      <p>Pick a time that works for you — Google Calendar takes care of the invite and the Meet link.</p>
 
       <!-- Google Calendar Appointment Scheduling begin -->
-      <iframe class="calendar-modal-main-iframe" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0;display:block;width:100%;height:600px;max-height:calc(100dvh - 180px)" frameborder="0" title="Book a demo with Aigenetic"></iframe>
+      <iframe class="calendar-modal-main-iframe" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true" style="border: 0" width="100%" height="600" frameborder="0" title="Book a demo with Aigenetic"></iframe>
       <!-- end Google Calendar Appointment Scheduling -->
     </div>
   </div>
 
+  <script src="assets/js/home.js" defer></script>
   <script>
-    // Calendar Modal Functions for Main Site
     function openCalendarModalMain() {
       document.getElementById('calendar-modal-main').style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -1306,28 +584,21 @@
       document.body.style.overflow = '';
     }
 
-    document.getElementById('calendar-modal-main').addEventListener('click', (e) => {
-      if (e.target.id === 'calendar-modal-main') {
-        closeCalendarModalMain();
-      }
+    document.getElementById('calendar-modal-main').addEventListener('click', function (e) {
+      if (e.target.id === 'calendar-modal-main') closeCalendarModalMain();
     });
 
-    // Close modal on Escape (matches healthcare.html)
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeCalendarModalMain();
     });
 
-    // Set up calendar modal triggers. Skipped outside 'home' mode: healthcare.html
-    // and realestate.html's own injected script wires up [data-open-calendar]
-    // itself against their own #calendar-modal — this delegated handler would
-    // otherwise also fire and pop open this page's #calendar-modal-main on top of it.
-    document.addEventListener('click', (e) => {
-      if (window.__AIGENETIC_MODE__ !== 'home') return;
-      if (e.target.matches('[data-open-calendar]')) {
-        e.preventDefault();
-        openCalendarModalMain();
-      }
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest && e.target.closest('[data-open-calendar]');
+      if (!trigger) return;
+      e.preventDefault();
+      openCalendarModalMain();
     });
   </script>
+  <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
 </body>
 </html>

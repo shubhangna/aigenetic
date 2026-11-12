@@ -14,14 +14,13 @@ from utilities import WebsiteTestCase
 
 class TestHealthcarePage(WebsiteTestCase):
     def open_healthcare_page(self):
-        # healthcare.html now redirects to /?mode=healthcare (see index.html's
-        # vertical mode router); open the consolidated URL directly.
-        return self.open_page("/?mode=healthcare", ready_selector="h1")
+        return self.open_page("healthcare.html", ready_selector="h1")
 
-    def test_healthcare_html_redirects_to_consolidated_url(self):
+    def test_healthcare_html_renders_as_its_own_page(self):
         self.page.goto(self.page_url("healthcare.html"), wait_until="load", timeout=45000)
         self.page.locator("h1").wait_for(state="visible", timeout=15000)
-        self.assertIn("mode=healthcare", self.page.url)
+        self.assertIn("healthcare.html", self.page.url)
+        self.assertNotIn("mode=", self.page.url)
         expect(self.page.locator("h1")).to_contain_text("clinic")
 
     def test_healthcare_page(self):
@@ -112,7 +111,8 @@ class TestHealthcarePage(WebsiteTestCase):
             phone.click()
             # tel: is an unsupported scheme for the browser tab itself, so the
             # click must not navigate the SPA away or throw.
-            self.assertIn("mode=healthcare", page.url)
+            self.assertIn("healthcare.html", page.url)
+            self.assertNotIn("mode=", page.url)
 
     def test_healthcare_page_extended_content(self):
         """Content coverage beyond test_healthcare_page's happy path, folded
@@ -276,7 +276,8 @@ class TestHealthcarePage(WebsiteTestCase):
             # #top rather than leaving the vertical (see index.html's
             # loadModeContent comment on deliberately not rewriting this link).
             footer.get_by_role("link", name="Home", exact=True).click()
-            self.assertIn("mode=healthcare", page.url)
+            self.assertIn("healthcare.html", page.url)
+            self.assertNotIn("mode=", page.url)
             expect(page.locator("#top")).to_be_in_viewport()
 
         with self.subTest("schedule a demo section"):
