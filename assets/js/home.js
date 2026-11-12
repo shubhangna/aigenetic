@@ -337,22 +337,13 @@
     canvas.parentNode.appendChild(chip);
 
     var ctx2d = canvas.getContext("2d");
-    var bars = 40;
-    var rest = new Float32Array(bars);
-    var levels = new Float32Array(bars);
-    var targets = new Float32Array(bars);
-    var seed = 1.7 + index * 2.3;
-    for (var i = 0; i < bars; i++) {
-      var a = Math.abs(Math.sin(seed + i * 0.47));
-      var b = Math.abs(Math.sin(seed * 1.3 + i * 0.19));
-      var c = Math.abs(Math.sin(seed * 0.4 + i * 0.91));
-      rest[i] = 0.16 + 0.55 * (0.5 * a + 0.3 * b + 0.2 * c);
-      levels[i] = rest[i] * 0.22;
-      targets[i] = levels[i];
-    }
-
-    var peaks = new Float32Array(bars);
-    for (var peakIndex = 0; peakIndex < bars; peakIndex++) peaks[peakIndex] = levels[peakIndex];
+    var track = document.createElement("canvas");
+    track.className = "track-canvas";
+    track.setAttribute("aria-hidden", "true");
+    canvas.insertAdjacentElement("afterend", track);
+    var trackCtx = track.getContext("2d");
+    var bands = { bass: 0.08, mid: 0.06, treble: 0.04, level: 0.14 };
+    var bandTargets = { bass: 0.08, mid: 0.06, treble: 0.04, level: 0.14 };
     var player = {
       analyser: null,
       graphTried: false,
@@ -362,17 +353,25 @@
       dpr: 1,
       hot: false,
       bass: 0,
-      last: 0
+      last: 0,
+      phase: index * 1.3
     };
 
     function resize() {
       var rect = canvas.getBoundingClientRect();
       player.dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       var w = Math.max(1, Math.round(rect.width * player.dpr));
-      var h = Math.max(1, Math.round((rect.height || 108) * player.dpr));
+      var h = Math.max(1, Math.round((rect.height || 92) * player.dpr));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
+      }
+      var trackRect = track.getBoundingClientRect();
+      var tw = Math.max(1, Math.round((trackRect.width || rect.width) * player.dpr));
+      var th = Math.max(1, Math.round((trackRect.height || 40) * player.dpr));
+      if (track.width !== tw || track.height !== th) {
+        track.width = tw;
+        track.height = th;
       }
       var ringSize = Math.round(76 * player.dpr);
       if (ring.width !== ringSize) {
@@ -386,130 +385,148 @@
       return !audio.paused && !audio.ended;
     }
 
-    function drawRing(energy, now) {
+    function drawRing(energy) {
       var size = ring.width;
       var c = ringCtx;
       c.clearRect(0, 0, size, size);
       var cx = size / 2;
       var cy = size / 2;
-      var bins = 32;
-      var inner = size * 0.36;
-      c.lineCap = "round";
-      for (var i = 0; i < bins; i++) {
-        var ang = -Math.PI / 2 + (i / bins) * Math.PI * 2;
-        var amp = player.ring && player.ring[i] ? player.ring[i] : 0.16;
-        if (!isLive()) {
-          amp = reduced.matches ? 0.14 : 0.12 + 0.05 * Math.sin(now / 520 + i * 0.45);
-        }
-        var outer = inner + amp * size * (0.1 + energy * 0.08);
-        var hue = i / bins;
-        c.strokeStyle = hue < 0.5 ? "rgba(90, 236, 255, 0.9)" : "rgba(176, 112, 255, 0.9)";
-        c.globalAlpha = 0.28 + amp * 0.7;
-        c.lineWidth = Math.max(1.25, 1.6 * player.dpr);
+      var radius = size * (0.39 + energy * 0.035);
+      c.beginPath();
+      c.arc(cx, cy, radius, 0, Math.PI * 2);
+      c.strokeStyle = "rgba(120, 220, 255, 0.28)";
+      c.lineWidth = Math.max(1, 1.25 * player.dpr);
+      c.stroke();
+      if (energy > 0.04) {
         c.beginPath();
-        c.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner);
-        c.lineTo(cx + Math.cos(ang) * outer, cy + Math.sin(ang) * outer);
+        c.arc(cx, cy, radius + energy * size * 0.05, 0, Math.PI * 2);
+        c.strokeStyle = "rgba(180, 120, 255, 0.18)";
         c.stroke();
       }
-      c.globalAlpha = 1;
     }
 
-    function draw(now) {
+    function taper(t) {
+      var edge = Math.min(t, 1 - t) / 0.16;
+      if (edge >= 1) return 1;
+      if (edge <= 0) return 0;
+      return edge * edge * (3 - 2 * edge);
+    }
+
+    function strokeWave(color, glow, width, points) {
+      ctx2d.beginPath();
+      ctx2d.moveTo(points[0], points[1]);
+      for (var i = 2; i < points.length; i += 2) ctx2d.lineTo(points[i], points[i + 1]);
+      ctx2d.strokeStyle = glow;
+      ctx2d.lineWidth = width * 3.2;
+      ctx2d.stroke();
+      ctx2d.strokeStyle = color;
+      ctx2d.lineWidth = width;
+      ctx2d.stroke();
+    }
+
+    function drawFlow(now) {
       var w = canvas.width;
       var h = canvas.height;
       var dpr = player.dpr || 1;
       var live = isLive();
-      var mid = h * 0.52;
-      var duration = audio.duration;
-      var progress = duration ? Math.min(1, audio.currentTime / duration) : 0;
+      var mid = h * 0.5;
       ctx2d.clearRect(0, 0, w, h);
-      ctx2d.strokeStyle = "rgba(140, 210, 255, 0.16)";
-      ctx2d.lineWidth = 1;
-      ctx2d.beginPath();
-      ctx2d.moveTo(0, mid);
-      ctx2d.lineTo(w, mid);
-      ctx2d.stroke();
-
-      var gap = 2.2 * dpr;
-      var barW = Math.max(1.6 * dpr, (w - gap * (bars - 1)) / bars);
-      var gradient = ctx2d.createLinearGradient(0, 0, 0, h);
-      gradient.addColorStop(0, "rgba(176, 96, 255, 0.95)");
-      gradient.addColorStop(0.45, "rgba(70, 230, 255, 1)");
-      gradient.addColorStop(0.55, "rgba(70, 230, 255, 1)");
-      gradient.addColorStop(1, "rgba(150, 90, 255, 0.9)");
-      ctx2d.fillStyle = gradient;
-      for (var n = 0; n < bars; n++) {
-        var amp = levels[n];
-        var bh = Math.max(2 * dpr, amp * h * 0.42);
-        var x = n * (barW + gap);
-        ctx2d.globalAlpha = 0.22;
-        roundRect(ctx2d, x - dpr, mid - bh - 2 * dpr, barW + dpr * 2, bh * 2 + 4 * dpr, barW);
-        ctx2d.fill();
-        ctx2d.globalAlpha = live || amp > 0.2 ? 0.95 : 0.55;
-        roundRect(ctx2d, x, mid - bh, barW, bh * 2, barW / 2);
-        ctx2d.fill();
-        var cap = Math.max(amp, peaks[n]);
-        var capY = mid - Math.max(2 * dpr, cap * h * 0.42);
-        ctx2d.globalAlpha = 0.9;
-        ctx2d.fillStyle = "rgba(230, 250, 255, 0.95)";
-        ctx2d.fillRect(x, capY, barW, Math.max(1.5 * dpr, 2));
-        ctx2d.fillRect(x, mid + (mid - capY) - Math.max(1.5 * dpr, 2), barW, Math.max(1.5 * dpr, 2));
-        ctx2d.fillStyle = gradient;
-      }
-      ctx2d.globalAlpha = 1;
-
-      if (player.time && (live || player.hot) && !reduced.matches) {
-        ctx2d.beginPath();
-        var step = Math.max(2, Math.floor(player.dpr));
-        for (var s = 0; s <= w; s += step) {
-          var idx = Math.min(player.time.length - 1, Math.floor((s / w) * player.time.length));
-          var sample = player.time[idx];
-          var y = live ? mid + ((sample - 128) / 128) * h * 0.3 : mid + Math.sin(s * 0.05 + (now || 0) / 280) * h * 0.05;
-          if (s === 0) ctx2d.moveTo(s, y);
-          else ctx2d.lineTo(s, y);
+      ctx2d.lineCap = "round";
+      ctx2d.lineJoin = "round";
+      ctx2d.globalCompositeOperation = "lighter";
+      var layers = [
+        { color: "rgba(94, 240, 255, 0.92)", glow: "rgba(94, 240, 255, 0.28)", freq: 1.7, phase: 0.2, speed: 1, drive: 0.42 + bands.bass * 1.15 + bands.level * 0.35 },
+        { color: "rgba(90, 150, 255, 0.88)", glow: "rgba(90, 150, 255, 0.26)", freq: 2.5, phase: 1.4, speed: 1.25, drive: 0.34 + bands.mid * 1.05 + bands.level * 0.22 },
+        { color: "rgba(176, 112, 255, 0.86)", glow: "rgba(176, 112, 255, 0.24)", freq: 3.4, phase: 2.5, speed: 0.85, drive: 0.28 + bands.treble * 1.1 + bands.mid * 0.2 },
+        { color: "rgba(255, 96, 196, 0.8)", glow: "rgba(255, 96, 196, 0.22)", freq: 4.3, phase: 3.7, speed: 1.45, drive: 0.24 + bands.bass * 0.35 + bands.treble * 0.7 }
+      ];
+      var steps = 72;
+      for (var layer = 0; layer < layers.length; layer++) {
+        var spec = layers[layer];
+        var freq = spec.freq * (1 + bands.treble * 0.28 + bands.level * 0.12);
+        var points = new Array((steps + 1) * 2);
+        for (var s = 0; s <= steps; s++) {
+          var t = s / steps;
+          var wave = Math.sin(t * Math.PI * 2 * freq + spec.phase + player.phase * spec.speed) * 0.66;
+          wave += Math.sin(t * Math.PI * 2 * freq * 1.65 + spec.phase * 1.3 + player.phase * 0.6) * 0.24;
+          var shaped = 0;
+          if (live && player.time && player.time.length) {
+            var idx = Math.min(player.time.length - 1, Math.floor(t * (player.time.length - 1)));
+            shaped = (player.time[idx] - 128) / 128;
+          }
+          var amp = Math.min(1.15, spec.drive) * taper(t);
+          var y = mid + (wave * amp + shaped * bands.level * 0.55) * h * 0.34;
+          points[s * 2] = t * w;
+          points[s * 2 + 1] = y;
         }
-        ctx2d.lineWidth = 3.2 * dpr;
-        ctx2d.strokeStyle = "rgba(120, 230, 255, 0.28)";
-        ctx2d.stroke();
-        ctx2d.lineWidth = 1.35 * dpr;
-        ctx2d.strokeStyle = "rgba(236, 252, 255, 0.92)";
-        ctx2d.stroke();
+        strokeWave(spec.color, spec.glow, Math.max(1.1, 1.35 * dpr), points);
       }
-
-      if (duration) {
-        var px = progress * w;
-        ctx2d.fillStyle = "rgba(190, 140, 255, 0.35)";
-        ctx2d.fillRect(px - 3 * dpr, h * 0.08, 6 * dpr, h * 0.84);
-        ctx2d.fillStyle = "#f4fbff";
-        ctx2d.fillRect(px - dpr, h * 0.08, Math.max(1.5 * dpr, 2), h * 0.84);
-      }
-      drawRing(player.bass, now || 0);
+      ctx2d.globalCompositeOperation = "source-over";
     }
 
-    function sampleSpectrum() {
+    function drawTrack() {
+      var w = track.width;
+      var h = track.height;
+      var dpr = player.dpr || 1;
+      var peaks = player.track;
+      var count = peaks ? peaks.length : 120;
+      var gap = Math.max(1, 1.15 * dpr);
+      var barW = Math.max(dpr, (w - gap * (count - 1)) / count);
+      var progress = audio.duration ? Math.min(1, audio.currentTime / audio.duration) : 0;
+      var mid = h * 0.5;
+      trackCtx.clearRect(0, 0, w, h);
+      var played = trackCtx.createLinearGradient(0, 0, w, 0);
+      played.addColorStop(0, "#5ef0ff");
+      played.addColorStop(0.5, "#6aa6ff");
+      played.addColorStop(1, "#e15cff");
+      for (var i = 0; i < count; i++) {
+        var amp = peaks ? Math.max(0.06, peaks[i]) : 0.1;
+        var bh = Math.max(dpr * 1.4, amp * h * 0.88);
+        var x = i * (barW + gap);
+        var lit = (i + 0.5) / count <= progress;
+        trackCtx.fillStyle = lit ? played : "rgba(176, 190, 220, 0.28)";
+        roundRect(trackCtx, x, mid - bh / 2, barW, bh, barW / 2);
+        trackCtx.fill();
+      }
+      if (audio.duration) {
+        var px = progress * w;
+        trackCtx.fillStyle = "rgba(170, 230, 255, 0.4)";
+        trackCtx.fillRect(px - 2.4 * dpr, dpr, 4.8 * dpr, h - dpr * 2);
+        trackCtx.fillStyle = "#f7fdff";
+        trackCtx.fillRect(px - 0.7 * dpr, 0, Math.max(1.2 * dpr, 1.5), h);
+      }
+    }
+
+    function draw(now) {
+      drawFlow(now || 0);
+      drawTrack();
+      drawRing(player.bass);
+    }
+
+    function readBands() {
       var freq = player.freq;
-      var used = Math.floor(freq.length * 0.55);
-      var bass = 0;
-      var bassCount = Math.min(6, used);
-      for (var b = 0; b < bassCount; b++) bass += freq[b];
-      player.bass = bassCount ? bass / (bassCount * 255) : 0;
-      if (!player.ring) player.ring = new Float32Array(32);
-      for (var i = 0; i < 32; i++) {
-        var start = Math.floor(Math.pow(i / 32, 1.45) * used);
-        var end = Math.max(start + 1, Math.floor(Math.pow((i + 1) / 32, 1.45) * used));
+      var bins = freq.length;
+      function avg(from, to) {
+        var start = Math.max(1, Math.floor(from * bins));
+        var end = Math.max(start + 1, Math.floor(to * bins));
         var sum = 0;
-        for (var j = start; j < end; j++) sum += freq[j];
-        player.ring[i] = Math.min(1, (sum / (end - start)) / 220);
+        for (var i = start; i < end; i++) sum += freq[i];
+        return sum / ((end - start) * 255);
       }
-      for (var n = 0; n < bars; n++) {
-        var a = Math.floor(Math.pow(n / bars, 1.5) * used);
-        var z = Math.max(a + 1, Math.floor(Math.pow((n + 1) / bars, 1.5) * used));
-        var total = 0;
-        for (var q = a; q < z; q++) total += freq[q];
-        var mag = (total / (z - a)) / 255;
-        var shaped = player.envelope ? player.envelope[Math.min(bars - 1, n)] : 0.4;
-        targets[n] = Math.min(1, Math.max(mag * 1.35, shaped * mag * 1.6));
+      bandTargets.bass = avg(0, 0.08);
+      bandTargets.mid = avg(0.08, 0.32);
+      bandTargets.treble = avg(0.32, 0.75);
+      var rms = 0;
+      var count = 0;
+      if (player.time) {
+        for (var p = 0; p < player.time.length; p += 8) {
+          var sample = (player.time[p] - 128) / 128;
+          rms += sample * sample;
+          count += 1;
+        }
       }
+      bandTargets.level = Math.min(1, count ? Math.sqrt(rms / count) * 3.4 : 0);
+      player.bass = bandTargets.bass;
     }
 
     function tick(now) {
@@ -519,43 +536,33 @@
       var engaged = playing || player.hot || card.matches(":focus-within");
       if (playing && !player.seeking) keepVisInSync();
       if (reduced.matches) {
-        for (var frozen = 0; frozen < bars; frozen++) {
-          levels[frozen] = rest[frozen] * 0.28;
-          peaks[frozen] = levels[frozen];
-        }
-        player.bass = 0;
-        if (chip) chip.hidden = true;
-        draw(now);
+        player.bass = 0.08;
+        bands.level = 0.16;
+        if (chip) chip.hidden = !playing;
+        draw(0);
         player.raf = 0;
         return;
       }
       if (player.analyser && playing && player.freq) {
         player.analyser.getByteFrequencyData(player.freq);
         if (player.time) player.analyser.getByteTimeDomainData(player.time);
-        var loud = 0;
-        if (player.time) {
-          for (var probe = 0; probe < player.time.length; probe += 16) loud += Math.abs(player.time[probe] - 128);
-        }
-        if (loud < 8 && player.envelope) {
-          for (var env = 0; env < bars; env++) targets[env] = player.envelope[env] * 0.72;
-        } else {
-          sampleSpectrum();
-        }
+        readBands();
       } else {
-        player.bass *= 0.9;
-        for (var r = 0; r < bars; r++) {
-          var wobble = 0.2 + 0.07 * Math.sin(now / 680 + r * 0.42 + index);
-          targets[r] = rest[r] * wobble;
-        }
+        bandTargets.bass = 0.1 + 0.035 * Math.sin(now / 980 + index);
+        bandTargets.mid = 0.07 + 0.03 * Math.sin(now / 1240 + index * 0.7);
+        bandTargets.treble = 0.04 + 0.02 * Math.sin(now / 860 + 1.4);
+        bandTargets.level = 0.15;
+        player.bass += (bandTargets.bass - player.bass) * 0.08;
       }
-      var ease = playing ? 0.42 : 0.16;
+      var ease = playing ? 0.22 : 0.08;
       var delta = 0;
-      for (var k = 0; k < bars; k++) {
-        delta += Math.abs(targets[k] - levels[k]);
-        levels[k] += (targets[k] - levels[k]) * ease;
-        if (levels[k] >= peaks[k]) peaks[k] = levels[k];
-        else peaks[k] = Math.max(levels[k], peaks[k] - 0.008 * frame);
+      var keys = ["bass", "mid", "treble", "level"];
+      for (var k = 0; k < keys.length; k++) {
+        var key = keys[k];
+        delta += Math.abs(bandTargets[key] - bands[key]);
+        bands[key] += (bandTargets[key] - bands[key]) * ease;
       }
+      player.phase += (playing ? 0.05 + bands.level * 0.07 : 0.012) * frame;
       if (!player.seeking && scrub && audio.duration) {
         scrub.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
       }
@@ -563,7 +570,7 @@
       if (durationEl && audio.duration) durationEl.textContent = formatTime(audio.duration);
       if (chip) chip.hidden = !playing;
       draw(now);
-      if (engaged || delta > 0.2) player.raf = requestAnimationFrame(tick);
+      if (engaged || delta > 0.03) player.raf = requestAnimationFrame(tick);
       else player.raf = 0;
     }
 
@@ -594,19 +601,24 @@
 
     function rebuildEnvelope(buffer) {
       var channel = buffer.getChannelData(0);
-      var envelope = new Float32Array(bars);
-      var chunk = Math.max(1, Math.floor(channel.length / bars));
-      for (var i = 0; i < bars; i++) {
+      var count = 160;
+      var peaks = new Float32Array(count);
+      var chunk = Math.max(1, Math.floor(channel.length / count));
+      var max = 0.0001;
+      for (var i = 0; i < count; i++) {
         var peak = 0;
         var from = i * chunk;
         var to = Math.min(channel.length, from + chunk);
-        for (var j = from; j < to; j += 12) {
+        var step = Math.max(1, Math.floor((to - from) / 40));
+        for (var j = from; j < to; j += step) {
           var sample = Math.abs(channel[j]);
           if (sample > peak) peak = sample;
         }
-        envelope[i] = Math.min(1, 0.12 + peak * 1.65);
+        peaks[i] = peak;
+        if (peak > max) max = peak;
       }
-      player.envelope = envelope;
+      for (var n = 0; n < count; n++) peaks[n] = Math.min(1, peaks[n] / max);
+      player.track = peaks;
     }
 
     function restartVis() {
@@ -694,6 +706,16 @@
       stopVis();
       startLoop();
     });
+    audio.addEventListener("timeupdate", function () {
+      if (!reduced.matches) return;
+      if (currentEl) currentEl.textContent = formatTime(audio.currentTime || 0);
+      if (durationEl && audio.duration) durationEl.textContent = formatTime(audio.duration);
+      if (!player.seeking && scrub && audio.duration) {
+        scrub.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+      }
+      if (chip) chip.hidden = audio.paused || audio.ended;
+      draw(0);
+    });
     audio.addEventListener("loadedmetadata", function () {
       if (durationEl) durationEl.textContent = formatTime(audio.duration);
       if (scrub) scrub.disabled = false;
@@ -720,7 +742,7 @@
 
     function seekAt(clientX) {
       if (!audio.duration) return;
-      var rect = canvas.getBoundingClientRect();
+      var rect = track.getBoundingClientRect();
       var ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
       audio.currentTime = ratio * audio.duration;
       if (scrub) scrub.value = String(Math.round(ratio * 1000));
@@ -728,27 +750,28 @@
       draw();
     }
 
-    canvas.addEventListener("pointerdown", function (event) {
+    track.addEventListener("pointerdown", function (event) {
       player.dragging = true;
       player.seeking = true;
-      try { canvas.setPointerCapture(event.pointerId); } catch (err) { /* ignore */ }
+      try { track.setPointerCapture(event.pointerId); } catch (err) { /* ignore */ }
       seekAt(event.clientX);
     });
-    canvas.addEventListener("pointermove", function (event) {
+    track.addEventListener("pointermove", function (event) {
       if (!player.dragging) return;
       seekAt(event.clientX);
     });
-    canvas.addEventListener("pointerup", function () {
+    track.addEventListener("pointerup", function () {
       player.dragging = false;
       player.seeking = false;
       if (!audio.paused) restartVis();
     });
-    canvas.addEventListener("pointercancel", function () {
+    track.addEventListener("pointercancel", function () {
       player.dragging = false;
       player.seeking = false;
     });
 
     function arm() {
+      if (!player.audioBuffer) decodeClip();
       if (reduced.matches) return;
       player.hot = true;
       startLoop();

@@ -592,7 +592,15 @@ h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.2; }
   animation: live-blink 1.1s steps(1) infinite;
 }
 @keyframes live-blink { 50% { opacity: .2; } }
-.wave-canvas { width: 100%; height: 108px; display: block; cursor: pointer; touch-action: none; }
+.wave-canvas { width: 100%; height: 92px; display: block; touch-action: none; }
+.track-canvas {
+  width: 100%;
+  height: 40px;
+  display: block;
+  cursor: pointer;
+  touch-action: none;
+  border-top: 1px solid rgba(140, 210, 255, .12);
+}
 .player-times {
   grid-area: time;
   display: grid;
