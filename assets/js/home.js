@@ -292,10 +292,10 @@
   }
 
   function formatTime(value) {
-    if (!isFinite(value) || value < 0) return "0:00";
+    if (!isFinite(value) || value < 0) return "00:00";
     var minutes = Math.floor(value / 60);
     var seconds = Math.floor(value % 60).toString().padStart(2, "0");
-    return minutes + ":" + seconds;
+    return String(minutes).padStart(2, "0") + ":" + seconds;
   }
 
   function roundRect(ctx, x, y, w, h, r) {
@@ -319,8 +319,25 @@
     var errorEl = card.querySelector("[data-error]");
     if (!audio || !canvas || !button) return;
 
+    var slot = document.createElement("div");
+    slot.className = "play-slot";
+    button.parentNode.insertBefore(slot, button);
+    slot.appendChild(button);
+    var ring = document.createElement("canvas");
+    ring.className = "ring-canvas";
+    ring.setAttribute("aria-hidden", "true");
+    slot.insertBefore(ring, button);
+    var ringCtx = ring.getContext("2d");
+    var chip = document.createElement("p");
+    chip.className = "live-chip";
+    chip.setAttribute("data-live", "");
+    chip.setAttribute("aria-hidden", "true");
+    chip.hidden = true;
+    chip.innerHTML = "<i></i>LIVE · AI CALL";
+    canvas.parentNode.appendChild(chip);
+
     var ctx2d = canvas.getContext("2d");
-    var bars = 56;
+    var bars = 40;
     var rest = new Float32Array(bars);
     var levels = new Float32Array(bars);
     var targets = new Float32Array(bars);
@@ -330,80 +347,223 @@
       var b = Math.abs(Math.sin(seed * 1.3 + i * 0.19));
       var c = Math.abs(Math.sin(seed * 0.4 + i * 0.91));
       rest[i] = 0.16 + 0.55 * (0.5 * a + 0.3 * b + 0.2 * c);
-      levels[i] = rest[i];
-      targets[i] = rest[i];
+      levels[i] = rest[i] * 0.22;
+      targets[i] = levels[i];
     }
 
-    var player = { analyser: null, graphTried: false, raf: 0, seeking: false, dragging: false, dpr: 1 };
+    var peaks = new Float32Array(bars);
+    for (var peakIndex = 0; peakIndex < bars; peakIndex++) peaks[peakIndex] = levels[peakIndex];
+    var player = {
+      analyser: null,
+      graphTried: false,
+      raf: 0,
+      seeking: false,
+      dragging: false,
+      dpr: 1,
+      hot: false,
+      bass: 0,
+      last: 0
+    };
 
     function resize() {
       var rect = canvas.getBoundingClientRect();
-      player.dpr = Math.min(window.devicePixelRatio || 1, 2);
+      player.dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       var w = Math.max(1, Math.round(rect.width * player.dpr));
-      var h = Math.max(1, Math.round((rect.height || 84) * player.dpr));
+      var h = Math.max(1, Math.round((rect.height || 108) * player.dpr));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
       }
+      var ringSize = Math.round(76 * player.dpr);
+      if (ring.width !== ringSize) {
+        ring.width = ringSize;
+        ring.height = ringSize;
+      }
       draw();
     }
 
-    function draw() {
+    function isLive() {
+      return !audio.paused && !audio.ended;
+    }
+
+    function drawRing(energy, now) {
+      var size = ring.width;
+      var c = ringCtx;
+      c.clearRect(0, 0, size, size);
+      var cx = size / 2;
+      var cy = size / 2;
+      var bins = 32;
+      var inner = size * 0.36;
+      c.lineCap = "round";
+      for (var i = 0; i < bins; i++) {
+        var ang = -Math.PI / 2 + (i / bins) * Math.PI * 2;
+        var amp = player.ring && player.ring[i] ? player.ring[i] : 0.16;
+        if (!isLive()) {
+          amp = reduced.matches ? 0.14 : 0.12 + 0.05 * Math.sin(now / 520 + i * 0.45);
+        }
+        var outer = inner + amp * size * (0.1 + energy * 0.08);
+        var hue = i / bins;
+        c.strokeStyle = hue < 0.5 ? "rgba(90, 236, 255, 0.9)" : "rgba(176, 112, 255, 0.9)";
+        c.globalAlpha = 0.28 + amp * 0.7;
+        c.lineWidth = Math.max(1.25, 1.6 * player.dpr);
+        c.beginPath();
+        c.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner);
+        c.lineTo(cx + Math.cos(ang) * outer, cy + Math.sin(ang) * outer);
+        c.stroke();
+      }
+      c.globalAlpha = 1;
+    }
+
+    function draw(now) {
       var w = canvas.width;
       var h = canvas.height;
       var dpr = player.dpr || 1;
-      ctx2d.clearRect(0, 0, w, h);
-      var gap = 3 * dpr;
-      var barW = Math.max(2 * dpr, (w - gap * (bars - 1)) / bars);
+      var live = isLive();
+      var mid = h * 0.52;
       var duration = audio.duration;
       var progress = duration ? Math.min(1, audio.currentTime / duration) : 0;
-      var live = !audio.paused && !audio.ended;
-      var baseline = h * 0.62;
+      ctx2d.clearRect(0, 0, w, h);
+      ctx2d.strokeStyle = "rgba(140, 210, 255, 0.16)";
+      ctx2d.lineWidth = 1;
+      ctx2d.beginPath();
+      ctx2d.moveTo(0, mid);
+      ctx2d.lineTo(w, mid);
+      ctx2d.stroke();
+
+      var gap = 2.2 * dpr;
+      var barW = Math.max(1.6 * dpr, (w - gap * (bars - 1)) / bars);
+      var gradient = ctx2d.createLinearGradient(0, 0, 0, h);
+      gradient.addColorStop(0, "rgba(176, 96, 255, 0.95)");
+      gradient.addColorStop(0.45, "rgba(70, 230, 255, 1)");
+      gradient.addColorStop(0.55, "rgba(70, 230, 255, 1)");
+      gradient.addColorStop(1, "rgba(150, 90, 255, 0.9)");
+      ctx2d.fillStyle = gradient;
       for (var n = 0; n < bars; n++) {
         var amp = levels[n];
-        var bh = Math.max(2.5 * dpr, amp * h * 0.78);
+        var bh = Math.max(2 * dpr, amp * h * 0.42);
         var x = n * (barW + gap);
-        var played = (n + 0.5) / bars <= progress + (live ? 0.02 : 0.01);
-        ctx2d.fillStyle = played ? "rgba(158, 236, 255, 0.95)" : "rgba(176, 186, 230, 0.32)";
-        roundRect(ctx2d, x, baseline - bh, barW, bh, barW / 2);
+        ctx2d.globalAlpha = 0.22;
+        roundRect(ctx2d, x - dpr, mid - bh - 2 * dpr, barW + dpr * 2, bh * 2 + 4 * dpr, barW);
         ctx2d.fill();
+        ctx2d.globalAlpha = live || amp > 0.2 ? 0.95 : 0.55;
+        roundRect(ctx2d, x, mid - bh, barW, bh * 2, barW / 2);
+        ctx2d.fill();
+        var cap = Math.max(amp, peaks[n]);
+        var capY = mid - Math.max(2 * dpr, cap * h * 0.42);
+        ctx2d.globalAlpha = 0.9;
+        ctx2d.fillStyle = "rgba(230, 250, 255, 0.95)";
+        ctx2d.fillRect(x, capY, barW, Math.max(1.5 * dpr, 2));
+        ctx2d.fillRect(x, mid + (mid - capY) - Math.max(1.5 * dpr, 2), barW, Math.max(1.5 * dpr, 2));
+        ctx2d.fillStyle = gradient;
       }
+      ctx2d.globalAlpha = 1;
+
+      if (player.time && (live || player.hot) && !reduced.matches) {
+        ctx2d.beginPath();
+        var step = Math.max(2, Math.floor(player.dpr));
+        for (var s = 0; s <= w; s += step) {
+          var idx = Math.min(player.time.length - 1, Math.floor((s / w) * player.time.length));
+          var sample = player.time[idx];
+          var y = live ? mid + ((sample - 128) / 128) * h * 0.3 : mid + Math.sin(s * 0.05 + (now || 0) / 280) * h * 0.05;
+          if (s === 0) ctx2d.moveTo(s, y);
+          else ctx2d.lineTo(s, y);
+        }
+        ctx2d.lineWidth = 3.2 * dpr;
+        ctx2d.strokeStyle = "rgba(120, 230, 255, 0.28)";
+        ctx2d.stroke();
+        ctx2d.lineWidth = 1.35 * dpr;
+        ctx2d.strokeStyle = "rgba(236, 252, 255, 0.92)";
+        ctx2d.stroke();
+      }
+
       if (duration) {
-        ctx2d.fillStyle = "rgba(255,255,255,.85)";
-        ctx2d.fillRect(progress * w, h * 0.18, Math.max(1.5 * dpr, 2), h * 0.64);
+        var px = progress * w;
+        ctx2d.fillStyle = "rgba(190, 140, 255, 0.35)";
+        ctx2d.fillRect(px - 3 * dpr, h * 0.08, 6 * dpr, h * 0.84);
+        ctx2d.fillStyle = "#f4fbff";
+        ctx2d.fillRect(px - dpr, h * 0.08, Math.max(1.5 * dpr, 2), h * 0.84);
+      }
+      drawRing(player.bass, now || 0);
+    }
+
+    function sampleSpectrum() {
+      var freq = player.freq;
+      var used = Math.floor(freq.length * 0.55);
+      var bass = 0;
+      var bassCount = Math.min(6, used);
+      for (var b = 0; b < bassCount; b++) bass += freq[b];
+      player.bass = bassCount ? bass / (bassCount * 255) : 0;
+      if (!player.ring) player.ring = new Float32Array(32);
+      for (var i = 0; i < 32; i++) {
+        var start = Math.floor(Math.pow(i / 32, 1.45) * used);
+        var end = Math.max(start + 1, Math.floor(Math.pow((i + 1) / 32, 1.45) * used));
+        var sum = 0;
+        for (var j = start; j < end; j++) sum += freq[j];
+        player.ring[i] = Math.min(1, (sum / (end - start)) / 220);
+      }
+      for (var n = 0; n < bars; n++) {
+        var a = Math.floor(Math.pow(n / bars, 1.5) * used);
+        var z = Math.max(a + 1, Math.floor(Math.pow((n + 1) / bars, 1.5) * used));
+        var total = 0;
+        for (var q = a; q < z; q++) total += freq[q];
+        var mag = (total / (z - a)) / 255;
+        var shaped = player.envelope ? player.envelope[Math.min(bars - 1, n)] : 0.4;
+        targets[n] = Math.min(1, Math.max(mag * 1.35, shaped * mag * 1.6));
       }
     }
 
-    function tick() {
-      var playing = !audio.paused && !audio.ended;
+    function tick(now) {
+      var playing = isLive();
+      var frame = player.last ? Math.min(2, (now - player.last) / 16.67) : 1;
+      player.last = now;
+      var engaged = playing || player.hot || card.matches(":focus-within");
       if (playing && !player.seeking) keepVisInSync();
-      if (player.analyser && playing && player.time && player.envelope) {
-        player.analyser.getByteTimeDomainData(player.time);
-        var energy = 0;
-        var samples = 0;
-        for (var probe = 0; probe < player.time.length; probe += 8) {
-          energy += Math.abs(player.time[probe] - 128);
-          samples += 1;
+      if (reduced.matches) {
+        for (var frozen = 0; frozen < bars; frozen++) {
+          levels[frozen] = rest[frozen] * 0.28;
+          peaks[frozen] = levels[frozen];
         }
-        var loudness = samples ? Math.min(1, (energy / samples) / 22) : 0;
-        for (var n = 0; n < bars; n++) targets[n] = Math.min(1, player.envelope[n] * (0.78 + loudness * 0.7));
-      } else if (player.envelope) {
-        for (var env = 0; env < bars; env++) targets[env] = player.envelope[env];
-      } else {
-        for (var r = 0; r < bars; r++) targets[r] = rest[r];
+        player.bass = 0;
+        if (chip) chip.hidden = true;
+        draw(now);
+        player.raf = 0;
+        return;
       }
-      var ease = reduced.matches ? 1 : (playing ? 0.7 : 0.22);
+      if (player.analyser && playing && player.freq) {
+        player.analyser.getByteFrequencyData(player.freq);
+        if (player.time) player.analyser.getByteTimeDomainData(player.time);
+        var loud = 0;
+        if (player.time) {
+          for (var probe = 0; probe < player.time.length; probe += 16) loud += Math.abs(player.time[probe] - 128);
+        }
+        if (loud < 8 && player.envelope) {
+          for (var env = 0; env < bars; env++) targets[env] = player.envelope[env] * 0.72;
+        } else {
+          sampleSpectrum();
+        }
+      } else {
+        player.bass *= 0.9;
+        for (var r = 0; r < bars; r++) {
+          var wobble = 0.2 + 0.07 * Math.sin(now / 680 + r * 0.42 + index);
+          targets[r] = rest[r] * wobble;
+        }
+      }
+      var ease = playing ? 0.42 : 0.16;
       var delta = 0;
       for (var k = 0; k < bars; k++) {
         delta += Math.abs(targets[k] - levels[k]);
         levels[k] += (targets[k] - levels[k]) * ease;
+        if (levels[k] >= peaks[k]) peaks[k] = levels[k];
+        else peaks[k] = Math.max(levels[k], peaks[k] - 0.008 * frame);
       }
       if (!player.seeking && scrub && audio.duration) {
         scrub.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
       }
-      if (currentEl) currentEl.textContent = formatTime(audio.currentTime);
-      draw();
-      if (playing || delta > 0.35) player.raf = requestAnimationFrame(tick);
+      if (currentEl) currentEl.textContent = formatTime(audio.currentTime || 0);
+      if (durationEl && audio.duration) durationEl.textContent = formatTime(audio.duration);
+      if (chip) chip.hidden = !playing;
+      draw(now);
+      if (engaged || delta > 0.2) player.raf = requestAnimationFrame(tick);
       else player.raf = 0;
     }
 
@@ -421,14 +581,15 @@
         source.connect(context.destination);
       } catch (err) { /* element audio still plays */ }
       var analyser = context.createAnalyser();
-      analyser.fftSize = 2048;
-      analyser.smoothingTimeConstant = 0.62;
+      analyser.fftSize = 1024;
+      analyser.smoothingTimeConstant = 0.72;
       var silent = context.createGain();
       silent.gain.value = 0;
       analyser.connect(silent);
       silent.connect(context.destination);
       player.analyser = analyser;
       player.time = new Uint8Array(analyser.fftSize);
+      player.freq = new Uint8Array(analyser.frequencyBinCount);
     }
 
     function rebuildEnvelope(buffer) {
@@ -587,8 +748,24 @@
       player.seeking = false;
     });
 
+    function arm() {
+      if (reduced.matches) return;
+      player.hot = true;
+      startLoop();
+    }
+    function disarm() {
+      player.hot = card.matches(":hover") || card.matches(":focus-within");
+      if (!player.hot && audio.paused) startLoop();
+    }
+    card.addEventListener("pointerenter", arm);
+    card.addEventListener("pointerleave", disarm);
+    card.addEventListener("focusin", arm);
+    card.addEventListener("focusout", disarm);
+
     if (typeof ResizeObserver === "function") new ResizeObserver(resize).observe(canvas);
     else window.addEventListener("resize", resize);
+    if (currentEl) currentEl.textContent = "00:00";
+    if (durationEl) durationEl.textContent = "00:00";
     resize();
   });
 })();
