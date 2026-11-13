@@ -281,6 +281,168 @@
     });
   }
 
+  /* Policy pages: "On this page" feedback. A click always flashes the target
+     heading and moves focus to it, even when the section is already on screen
+     and the page can't scroll. The link is marked current (.active +
+     aria-current) and a scroll-spy keeps that mark in step while reading.
+     A mark set by a click or a #hash arrival holds until the reader scrolls. */
+  var toc = root.querySelector(".toc");
+  if (toc) {
+    var tocItems = [];
+    toc.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      var section = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+      var heading = section && section.querySelector("h2");
+      if (!heading) return;
+      heading.setAttribute("tabindex", "-1");
+      var item = { link: link, section: section, heading: heading, timer: 0, inBand: false };
+      heading.addEventListener("animationend", function (event) {
+        if (event.target === heading && event.animationName === "heading-flash") {
+          heading.classList.remove("flash");
+        }
+      });
+      tocItems.push(item);
+    });
+
+    var activeItem = null;
+    var locked = false;   /* a click or hash arrival owns the mark */
+    var settling = false; /* ...and the browser is still carrying out that jump */
+    var settledY = 0;
+    var jumpId = 0;
+    var clickedHash = null;
+    var spyOffset = tocItems.length ? parseFloat(getComputedStyle(tocItems[0].section).scrollMarginTop) || 0 : 0;
+
+    var itemFor = function (hash) {
+      for (var i = 0; i < tocItems.length; i++) {
+        if (tocItems[i].link.hash === hash) return tocItems[i];
+      }
+      return null;
+    };
+
+    var setActive = function (item) {
+      if (item === activeItem) return;
+      if (activeItem) {
+        activeItem.link.classList.remove("active");
+        activeItem.link.removeAttribute("aria-current");
+      }
+      activeItem = item;
+      if (!item) return;
+      item.link.classList.add("active");
+      item.link.setAttribute("aria-current", "true");
+      /* On short screens the panel scrolls: keep the current link in view
+         (move the panel itself; scrollIntoView would move the page too). */
+      if (toc.scrollHeight > toc.clientHeight) {
+        var lr = item.link.getBoundingClientRect();
+        var tr = toc.getBoundingClientRect();
+        if (lr.top < tr.top || lr.bottom > tr.bottom) {
+          toc.scrollTop += lr.top - tr.top - (tr.height - lr.height) / 2;
+        }
+      }
+    };
+
+    var flash = function (item) {
+      var heading = item.heading;
+      clearTimeout(item.timer);
+      heading.classList.remove("flash");
+      void heading.offsetWidth; /* restart the animation on a repeat click */
+      heading.classList.add("flash");
+      /* animationend clears it; the timer covers reduced motion (no animation). */
+      item.timer = setTimeout(function () { heading.classList.remove("flash"); }, 1250);
+    };
+
+    /* Where the page comes to rest for this section: scroll-margin-top
+       applied, clamped to the scrollable range (the last sections can't reach the top). */
+    var restingY = function (section) {
+      var margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var y = section.getBoundingClientRect().top + window.scrollY - margin;
+      return Math.max(0, Math.min(max, y));
+    };
+
+    /* Mark the item now. Flash once the jump has finished: right away when
+       nothing needs to scroll, or after the smooth scroll arrives. */
+    var arrive = function (item, minDelay) {
+      var id = ++jumpId;
+      var start = 0;
+      var lastY = NaN;
+      var still = 0;
+      locked = true;
+      settling = true;
+      setActive(item);
+      requestAnimationFrame(function check(now) {
+        if (id !== jumpId) return;
+        if (!start) start = now;
+        var y = window.scrollY;
+        still = Math.abs(y - lastY) < 0.5 ? still + 1 : 0;
+        lastY = y;
+        var waited = now - start;
+        var there = Math.abs(y - restingY(item.section)) < 2;
+        if (waited < minDelay || !((there && still >= 1) || still >= 8 || waited > 2500)) {
+          requestAnimationFrame(check);
+          return;
+        }
+        settling = false;
+        settledY = y;
+        flash(item);
+      });
+    };
+
+    var spyApply = function () {
+      if (locked) return;
+      for (var i = 0; i < tocItems.length; i++) {
+        if (tocItems[i].inBand) {
+          setActive(tocItems[i]);
+          return;
+        }
+      }
+      setActive(null); /* above the first section */
+    };
+
+    tocItems.forEach(function (item) {
+      item.link.addEventListener("click", function (event) {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        /* The default jump still runs (hash, history, smooth scroll); this only adds feedback.
+           hashchange fires only if the hash differs; remember it so it isn't handled twice. */
+        clickedHash = item.link.hash !== location.hash ? item.link.hash : null;
+        item.heading.focus({ preventScroll: true });
+        arrive(item, 0);
+      });
+    });
+
+    window.addEventListener("hashchange", function () {
+      var own = location.hash === clickedHash;
+      clickedHash = null;
+      if (own) return;
+      var item = itemFor(location.hash);
+      if (item) arrive(item, 150); /* back/forward: let the browser restore the scroll first */
+    });
+
+    window.addEventListener("scroll", function () {
+      if (locked && !settling && Math.abs(window.scrollY - settledY) > 2) {
+        locked = false;
+        spyApply();
+      }
+    }, { passive: true });
+
+    /* Reading band: from just under the sticky header (scroll-margin-top, plus a
+       few px so the section above a jump target, whose edge only touches the band, doesn't count)
+       down to 45% of the viewport. The first section in the band is the current one. */
+    if ("IntersectionObserver" in window && tocItems.length) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          tocItems.forEach(function (item) {
+            if (item.section === entry.target) item.inBand = entry.isIntersecting;
+          });
+        });
+        spyApply();
+      }, { rootMargin: "-" + Math.round(spyOffset + 8) + "px 0px -55% 0px" });
+      tocItems.forEach(function (item) { spy.observe(item.section); });
+    }
+
+    /* Arriving with a #hash (shared link or reload): flash once the jump has settled. */
+    var landing = itemFor(location.hash);
+    if (landing) arrive(landing, 450);
+  }
+
   var audioCtx = null;
   var activeAudio = null;
 

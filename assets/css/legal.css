@@ -75,6 +75,15 @@
   font: 11px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
   color: var(--action);
 }
+/* "You are here": set by home.js on click and kept in step by its scroll-spy.
+   Accent tint plus an inset accent bar, so it reads differently from hover. */
+#root .toc a { transition: background-color .2s ease, box-shadow .2s ease, color .2s ease; }
+#root .toc a.active {
+  color: #fff;
+  background: rgba(154, 215, 255, .12);
+  box-shadow: inset 2px 0 0 var(--action);
+}
+#root .toc a.active:hover { background: rgba(154, 215, 255, .18); }
 
 /* Reading panel: near-opaque rather than blurred glass, so long text stays crisp
    and the browser isn't re-blurring a page-tall area on every aurora frame. */
@@ -107,6 +116,49 @@
   font: 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: .08em;
   color: var(--action);
+}
+
+/* TOC jump feedback. home.js gives each target heading tabindex="-1", focuses it
+   and adds .flash for 1.2s. That works even when the section is already on screen
+   and nothing scrolls. The pill is a pseudo-element, so the heading never shifts.
+   fit-content only shrinks the box to its text; wrapping stays the same. */
+.legal-body h2 {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+}
+.legal-body h2:focus { outline: none; }
+#root .legal-body h2:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 8px;
+  border-radius: 12px;
+}
+.legal-body h2.flash { animation: heading-flash 1.2s ease-out both; }
+.legal-body h2.flash .num { animation: heading-flash-num 1.2s ease-out both; }
+.legal-body h2.flash::before {
+  content: "";
+  position: absolute;
+  inset: -6px -12px;
+  z-index: -1;
+  border-radius: 16px;
+  border: 1px solid rgba(154, 215, 255, .42);
+  background: linear-gradient(90deg, rgba(154, 215, 255, .2), rgba(154, 215, 255, .07));
+  box-shadow: 0 0 28px rgba(154, 215, 255, .22);
+  pointer-events: none;
+  animation: heading-flash-pill 1.2s ease-out both;
+}
+/* No 100% keyframe: each fades back to the heading's own colours. */
+@keyframes heading-flash {
+  0%, 50% { color: var(--action); text-shadow: 0 0 16px rgba(154, 215, 255, .6); }
+}
+@keyframes heading-flash-num {
+  0%, 50% { color: #fff; text-shadow: 0 0 10px rgba(154, 215, 255, .9); }
+}
+@keyframes heading-flash-pill {
+  0% { opacity: 0; transform: scale(.97); }
+  12% { opacity: 1; transform: none; }
+  55% { opacity: 1; }
+  100% { opacity: 0; }
 }
 .legal-body p,
 .legal-body ul,
@@ -205,6 +257,17 @@
 @media (max-width: 980px) {
   .legal-layout { grid-template-columns: 1fr; }
   .toc { display: none; }
+}
+
+/* Reduced motion: the same highlight, static and without glow; home.js still
+   removes it after 1.2s. */
+@media (prefers-reduced-motion: reduce) {
+  #root .toc a { transition: none; }
+  .legal-body h2.flash,
+  .legal-body h2.flash .num,
+  .legal-body h2.flash::before { animation: none; }
+  .legal-body h2.flash { color: var(--action); }
+  .legal-body h2.flash::before { box-shadow: none; }
 }
 
 @media (max-width: 760px) {
