@@ -1,15 +1,14 @@
-"""High-level smoke tests for the Aigenetic site.
+"""Smoke tests for the Aigenetic site.
 
-Not a substitute for the in-depth suites (test_main_page.py,
-test_mobile_nav.py). The site is now a single page; the old vertical pages
-(healthcare/realestate/education) were retired to ___Archive/.
-This file is a single, fast pass that answers one question per site: "is it
-up and roughly right?" (200 response, correct title/H1, key CTA present).
-It also carries the infra-level GitHub Pages DNS/IP checks, so the whole
-"is production reachable" story lives in one place.
+The site is a single landing page plus three policy pages; the old vertical
+pages (healthcare/realestate/education) were retired to ___Archive/. This file
+covers all of it except mobile navigation (see test_mobile_nav.py):
 
-Run this first when triaging a deploy; run the full suites for anything
-deeper.
+* site-level: pages up, retired pages gone, sitemap, unpublished files hidden;
+* main page: hero, sections, pricing, contact CTAs, demo modal, audio players;
+* policy pages: shared header/footer, section index, switcher, phone layout;
+* infra: GitHub Pages DNS/IP checks, so the whole "is production reachable"
+  story lives in one place.
 """
 
 import socket
@@ -22,6 +21,12 @@ from playwright.sync_api import expect
 from utilities import BASE_URL, EXPECTED_GITHUB_IPS, PROJECT_ROOT, WebsiteTestCase, resolve_domain_ips
 
 RETIRED_PAGES = ("healthcare.html", "realestate.html", "education.html", "summary.html")
+
+POLICY_PAGES = {
+    "privacy-policy.html": "Privacy Policy",
+    "terms-of-service.html": "Terms of Service",
+    "refund-policy.html": "Refund Policy",
+}
 
 # One file from each path _config.yml excludes from the GitHub Pages build.
 # They exist in the repo, so a local `python -m http.server` still serves
@@ -38,23 +43,7 @@ SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
 class TestSmoke(WebsiteTestCase):
-    def test_main_page_is_up(self):
-        response = self.open_page(ready_selector="h1.hero-title")
-        self.assert_successful_response(response)
-        self.assertIn("Aigenetic", self.page.title())
-        expect(self.page.locator("h1.hero-title")).to_contain_text("Appointments on autopilot.")
-        self.assert_contact_links(
-            'a[href^="tel:"]:visible',
-            'a[href^="https://wa.me/"]:visible',
-            'a[href^="mailto:"]:visible',
-        )
-
-    def test_policy_pages_are_up(self):
-        for path in ("privacy-policy.html", "terms-of-service.html", "refund-policy.html"):
-            with self.subTest(page=path):
-                response = self.open_page(path, ready_selector="body")
-                self.assert_successful_response(response)
-                self.assertIn("Aigenetic", self.page.title())
+    # --- Site-level -------------------------------------------------------
 
     def test_retired_pages_are_not_served(self):
         for path in RETIRED_PAGES:
@@ -92,6 +81,156 @@ class TestSmoke(WebsiteTestCase):
                 self.assertTrue((PROJECT_ROOT / path).exists(), f"{path} no longer exists; update UNPUBLISHED_PATHS")
                 response = self.page.request.get(self.page_url(path))
                 self.assertEqual(response.status, 404, f"{path} is still published on {BASE_URL}")
+
+    # --- Main page --------------------------------------------------------
+
+    def test_main_page(self):
+        """Every homepage check, in one page load.
+
+        Read-only checks run first, then the console check, then the
+        interactions that change page state (audio playback, the booking
+        modal) last, so they can't affect anything before them. Each check is
+        its own subTest, so one failure doesn't hide the rest.
+        """
+        page = self.page
+        response = self.open_page(ready_selector="h1.hero-title")
+        # If the page itself didn't load, nothing below is meaningful: fail hard.
+        self.assert_successful_response(response)
+        self.assertIn("Aigenetic", page.title())
+
+        with self.subTest("hero and branding"):
+            expect(page.locator("h1.hero-title")).to_contain_text("Appointments on autopilot.")
+            expect(page.get_by_text("FRONT DESK AS A SERVICE", exact=True)).to_be_visible()
+            expect(page.get_by_text("Try the autopilot").first).to_be_visible()
+
+        with self.subTest("locked hero copy"):
+            expect(page.locator(".autopilot-tagline")).to_have_attribute(
+                "aria-label", "Talk. Text. Follow up. Slot booking."
+            )
+            expect(page.locator(".subhead")).to_contain_text(
+                "Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7."
+            )
+
+        with self.subTest("contact CTAs have configured links"):
+            self.assert_contact_links(
+                'a[href^="tel:"]:visible',
+                'a[href^="https://wa.me/"]:visible',
+                'a[href^="mailto:"]:visible',
+            )
+
+        with self.subTest("header contact buttons hide the number"):
+            contact = page.locator("header .header-contact")
+            expect(contact.locator('a[href="tel:+917428497033"]')).to_be_visible()
+            expect(contact.locator('a[href="https://wa.me/917428497033"]')).to_be_visible()
+            expect(contact.locator('a[href="mailto:connect@aigenetic.in"]')).to_be_visible()
+            self.assertNotIn("742849", page.locator("body").inner_text())
+
+        with self.subTest("sections and pricing"):
+            expect(page.locator("#system")).to_contain_text("From first contact")
+            expect(page.locator("#samples")).to_contain_text("Hear a sample call.")
+            pricing = page.locator("#pricing")
+            expect(pricing).to_contain_text("A clear starting point.")
+            expect(pricing).to_contain_text("₹2,999")
+            expect(pricing).to_contain_text("₹7,999")
+            self.assertEqual(pricing.locator(".price").count(), 3)
+
+        with self.subTest("footer policy links"):
+            page.locator("footer").scroll_into_view_if_needed()
+            for name in POLICY_PAGES.values():
+                expect(page.get_by_role("link", name=name)).to_be_visible()
+
+        with self.subTest("no console errors on load"):
+            page.wait_for_load_state("load")
+            self.assert_no_console_errors()
+
+        with self.subTest("audio demo plays"):
+            player = page.locator("[data-player]").first
+            audio = player.locator("audio")
+            play_button = player.locator("[data-play]")
+            expect(play_button).to_be_visible()
+            src = audio.get_attribute("src") or ""
+            self.assertTrue(src.startswith("mp3/"), src)
+            expect(player).to_contain_text("Demo audio")
+            play_button.click()
+            expect(play_button).to_have_attribute("aria-pressed", "true")
+            self.assertFalse(audio.evaluate("el => el.paused"))
+
+        with self.subTest("book-demo modal opens and closes"):
+            schedule = (
+                "https://calendar.google.com/calendar/appointments/schedules/"
+                "AcZssZ2-oLNDtD7wJRTQhnQ4WwsQE_f0x_wePzs82A2ihrxI7WZJb-XRed0ak2ltUfH1zohb-16awYx4?gv=true"
+            )
+            modal = page.locator("#calendar-modal-main")
+            iframe = modal.locator("iframe")
+            self.assertEqual(iframe.get_attribute("src"), schedule)
+            page.locator("[data-open-calendar]:visible").first.click()
+            expect(modal).to_be_visible()
+            expect(iframe).to_be_visible()
+            page.frame_locator("#calendar-modal-main iframe").locator("body").wait_for(
+                state="attached", timeout=20000
+            )
+            modal.locator("button").first.click()
+            expect(modal).not_to_be_visible()
+
+    # --- Policy pages -----------------------------------------------------
+
+    def test_policy_pages(self):
+        """Every policy-page check, in one load per page.
+
+        Desktop checks run first, then the console check, then the page is
+        narrowed to 320px for the phone layout and menu (no reload needed: the
+        layout is pure CSS media queries). The viewport is restored before
+        the next page.
+        """
+        page = self.page
+        desktop_viewport = page.viewport_size
+        for path, heading in POLICY_PAGES.items():
+            with self.subTest(page=path):
+                page.set_viewport_size(desktop_viewport)
+                self.console_errors = []
+                response = self.open_page(path, ready_selector="h1")
+                # If this page didn't load, skip its checks and move to the next page.
+                self.assert_successful_response(response)
+                self.assertIn("Aigenetic", page.title())
+
+                with self.subTest("shares homepage header and footer"):
+                    expect(page.locator("h1")).to_have_text(heading)
+                    brand = page.locator(".top .brand")
+                    expect(brand).to_be_visible()
+                    self.assertEqual(brand.get_attribute("href"), "/")
+                    expect(page.locator("#aurora")).to_be_attached()
+                    footer = page.locator("footer")
+                    for name in POLICY_PAGES.values():
+                        expect(footer.get_by_role("link", name=name)).to_be_visible()
+                    expect(footer.locator('a[aria-current="page"]')).to_have_text(heading)
+
+                with self.subTest("section index links resolve"):
+                    hrefs = page.locator(".toc a").evaluate_all("els => els.map(a => a.getAttribute('href'))")
+                    self.assertGreater(len(hrefs), 0)
+                    for href in hrefs:
+                        self.assertEqual(page.locator(f"section{href}").count(), 1, f"{href} has no section")
+
+                with self.subTest("policy switch marks current page"):
+                    current = page.locator('.policy-switch a[aria-current="page"]')
+                    expect(current).to_have_count(1)
+                    self.assertEqual(current.get_attribute("href"), path)
+
+                with self.subTest("no console errors"):
+                    page.wait_for_load_state("networkidle")
+                    self.assert_no_console_errors()
+
+                with self.subTest("phone width layout and menu"):
+                    page.set_viewport_size({"width": 320, "height": 800})
+                    scroll_width = page.evaluate("document.documentElement.scrollWidth")
+                    client_width = page.evaluate("document.documentElement.clientWidth")
+                    self.assertLessEqual(scroll_width, client_width + 1, f"overflow at 320px on {path}")
+                    panel = page.locator("#mobile-nav-panel")
+                    expect(panel).to_be_hidden()
+                    page.locator(".nav-toggle").click()
+                    expect(panel).to_be_visible()
+                    expect(panel.get_by_text("Pricing", exact=True)).to_be_visible()
+
+    # --- Infra (GitHub Pages) ---------------------------------------------
 
     def test_github_domain_resolves_to_expected_ips(self):
         try:

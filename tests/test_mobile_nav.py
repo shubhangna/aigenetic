@@ -54,6 +54,12 @@ class TestMainPageMobileNav(MobileNavTestCase):
         expect(panel).to_be_hidden()
         self.assertIn("#pricing", self.page.url)
 
+    def test_call_and_whatsapp_buttons_stay_in_phone_header(self):
+        self.open_page(ready_selector="h1.hero-title")
+        contact = self.page.locator("header .header-contact")
+        expect(contact.locator('a[href^="tel:"]')).to_be_visible()
+        expect(contact.locator('a[href^="https://wa.me/"]')).to_be_visible()
+
     def test_no_horizontal_overflow_from_320_to_desktop(self):
         self.open_page(ready_selector="h1.hero-title")
         for width in (320, 390, 768, 1024, 1440):

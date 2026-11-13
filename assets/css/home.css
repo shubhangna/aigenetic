@@ -255,6 +255,21 @@ nav.primary a:not(.btn) {
 
 nav.primary a:not(.btn):hover { color: #fff; }
 
+/* Call / WhatsApp / Email as icon buttons, so the number itself is never shown. */
+header .brand { margin-right: auto; }
+.header-contact { display: flex; align-items: center; gap: 8px; }
+.icon-btn { flex: none; width: 44px; height: 44px; min-height: 44px; padding: 0; }
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--action);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-btn.whatsapp svg { stroke: var(--success); }
+
 .mobile-nav { display: none; position: relative; }
 
 #mobile-nav-panel {
@@ -904,12 +919,28 @@ html.no-glass .btn, html.no-glass .play-btn { background: #1c2744; }
   .footer-row .brand { margin-bottom: 8px; }
 }
 
+/* Phones: logo, Call, WhatsApp and Menu have to share one row. Email stays
+   reachable from the closing section. */
+@media (max-width: 480px) {
+  .has-contact { gap: 10px; }
+  .has-contact .brand { gap: 8px; font-size: 19px; }
+  .has-contact .original-logo { width: 36px; }
+  .has-contact .header-contact { gap: 6px; }
+  .has-contact .header-contact [data-email-link] { display: none; }
+  .has-contact .nav-toggle { padding: 12px 14px; }
+}
+
 @media (max-width: 380px) {
   .wrap { padding: 0 16px; }
   h1 { font-size: 40px; }
   .actions { flex-direction: column; }
   .actions .btn { width: 100%; }
   .autopilot-tagline { font-size: 14px; }
+}
+
+/* Too narrow for the wordmark next to the contact buttons: keep the logo. */
+@media (max-width: 349px) {
+  .has-contact .brand { gap: 0; font-size: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
