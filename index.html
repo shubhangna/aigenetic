@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#05070f">
   <title>Aigenetic — Appointments on autopilot.</title>
   <meta name="description" content="Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.">
-  <meta name="keywords" content="AI phone assistant, front desk as a service, WhatsApp booking, appointment booking India, Hindi English Hinglish">
+  <meta name="keywords" content="AI receptionist for clinics India, WhatsApp appointment booking bot, AI call answering Hindi, AI phone assistant, front desk as a service, appointment booking India, Hindi English Hinglish">
   <meta name="author" content="Aigenetic (OPC) Pvt Ltd">
   <link rel="canonical" href="https://aigenetic.in/">
 
@@ -47,6 +47,49 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does Front Desk as a Service include?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Aigenetic brings AI calls, WhatsApp chat and updates, appointment/calendar booking and follow-ups together as one managed front-desk service. Your approved rules define what it handles and when your team steps in." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can customers start on WhatsApp instead?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Customers can enquire through WhatsApp as well as by phone. We map the relevant answers, booking steps and human handoffs to your business during setup." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which calendar can we connect?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We confirm your calendar provider, availability rules, booking permissions and rescheduling process before setup. No specific calendar integration is assumed until that conversation." }
+      },
+      {
+        "@type": "Question",
+        "name": "How are reminders and follow-ups controlled?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Review channel consent, message templates, timing, retry limits and stop rules with your team. The exact workflow and escalation path are agreed before launch." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can we keep our business number?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We check your current phone and WhatsApp setup, including forwarding, number provisioning and account eligibility. No number change or caller-ID capability is assumed until that check." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 24×7 cover?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The service is positioned for always-on AI handling of calls, WhatsApp enquiries, bookings and follow-ups. Human support hours, calendar availability, escalation ownership and outage procedures are agreed separately; 24×7 does not mean round-the-clock human staffing." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens when a customer needs a person?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Requests outside the approved scope follow agreed handoff rules. Your team reviews how calls, chats and booking issues are escalated before going live." }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <canvas id="aurora" aria-hidden="true"></canvas>
@@ -55,7 +98,7 @@
     <div class="top" id="top">
       <header class="wrap has-contact">
         <a class="brand" href="#top" aria-label="Aigenetic home">
-          <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+          <img src="logo/logo.png" alt="Aigenetic logo" class="original-logo" width="133" height="123" decoding="async">
           Aigenetic
         </a>
         <nav class="primary" aria-label="Main">
@@ -63,7 +106,7 @@
           <a href="#samples">Samples</a>
           <a href="#conversation">Journey</a>
           <a href="#pricing">Pricing</a>
-          <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn" href="#calendar-booking" data-open-calendar>Book a demo <span class="arrow" aria-hidden="true">↗</span></a>
         </nav>
         <div class="header-contact" role="group" aria-label="Contact Aigenetic">
           <a class="btn icon-btn" data-phone-link href="tel:+917428497033" aria-label="Call Aigenetic" title="Call">
@@ -83,7 +126,7 @@
             <a href="#samples">Samples</a>
             <a href="#conversation">Journey</a>
             <a href="#pricing">Pricing</a>
-            <a href="#calendar-booking" data-open-calendar>Try the autopilot ↗</a>
+            <a href="#calendar-booking" data-open-calendar>Book a demo ↗</a>
           </div>
         </div>
       </header>
@@ -115,54 +158,61 @@
             </p>
             <p class="subhead">Aigenetic answers your calls, replies on WhatsApp, books appointments and follows up, 24×7.</p>
             <div class="actions">
-              <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span aria-hidden="true">↗</span></a>
+              <a class="btn" href="#calendar-booking" data-open-calendar>Book a demo <span aria-hidden="true">↗</span></a>
+              <a class="btn secondary whatsapp-cta" data-whatsapp-link href="https://wa.me/917428497033?text=Hi%20Aigenetic%2C%20I%20would%20like%20a%20demo%20of%20the%20AI%20front%20desk." target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span aria-hidden="true">↗</span></a>
               <a class="btn secondary" href="#conversation">See the journey <span aria-hidden="true">↓</span></a>
             </div>
             <p class="small hero-note">Hindi · English · Hinglish &nbsp; / &nbsp; Fully managed</p>
           </div>
 
-          <div class="desk glass" data-reveal style="--reveal: 120ms" aria-label="Illustrative customer journey across calls, WhatsApp and calendar">
+          <div class="desk glass" data-reveal style="--reveal: 120ms" aria-label="Sample customer journey across calls, WhatsApp and calendar">
             <div class="desk-top">
               <span>Your managed front desk</span>
               <span class="status"><i class="dot" aria-hidden="true"></i> Connected</span>
             </div>
             <div class="desk-body">
+              <div class="vertical-tabs" role="group" aria-label="See the journey for your business">
+                <button type="button" data-vertical="clinic" aria-pressed="true">Clinic</button>
+                <button type="button" data-vertical="salon" aria-pressed="false">Salon</button>
+                <button type="button" data-vertical="realestate" aria-pressed="false">Real estate</button>
+                <button type="button" data-vertical="coaching" aria-pressed="false">Coaching</button>
+              </div>
               <div class="call-title">
                 <div class="call-icon" aria-hidden="true">↗</div>
                 <div>
                   <strong>One enquiry. A connected journey.</strong>
-                  <small>Clinic appointment · Illustrative workflow</small>
+                  <small data-journey-label>Clinic appointment</small>
                 </div>
               </div>
               <div class="channels" aria-label="Channels in this workflow">
                 <span>AI calls</span><span>WhatsApp</span><span>Calendar</span><span>Follow-up</span>
               </div>
-              <div class="timeline">
+              <div class="timeline" aria-live="polite">
                 <div class="event">
                   <div class="event-line">Call · Enquiry understood <span class="time">21:47 IST</span></div>
-                  <p>Caller asks for tomorrow’s consultation.</p>
+                  <p data-journey-step>Caller asks for tomorrow’s consultation.</p>
                 </div>
                 <div class="event">
                   <div class="event-line">WhatsApp · Details confirmed <span class="time">21:49 IST</span></div>
-                  <p>Chosen slot and visit details shared in chat.</p>
+                  <p data-journey-step>Chosen slot and visit details shared in chat.</p>
                 </div>
                 <div class="event">
-                  <div class="event-line">Calendar · Appointment booked <span class="time">21:50 IST</span></div>
-                  <p>Tomorrow, 11:30 AM · Added to the team calendar.</p>
+                  <div class="event-line"><span data-journey-booked>Calendar · Appointment booked</span> <span class="time">21:50 IST</span></div>
+                  <p data-journey-step>Tomorrow, 11:30 AM · Added to the team calendar.</p>
                 </div>
                 <div class="event">
                   <div class="event-line">Follow-up · Reminder scheduled <span class="time">Next day</span></div>
-                  <p>WhatsApp reminder before the appointment.</p>
+                  <p data-journey-step>WhatsApp reminder before the appointment.</p>
                 </div>
               </div>
               <div class="receipt">
-                <span>Call → Chat → Booking → Reminder</span>
+                <span>Customer updated · Team informed</span>
                 <strong>✓ Connected</strong>
               </div>
             </div>
             <div class="desk-foot">
               <span>ONE CUSTOMER JOURNEY</span>
-              <span>Illustrative, not live data</span>
+              <span>Call → Chat → Booking → Reminder</span>
             </div>
           </div>
         </div>
@@ -190,25 +240,55 @@
               <p class="tag">AI calls</p>
               <h3>Start with a conversation.</h3>
               <p>Answer enquiries, understand what customers need and handle callbacks in Hindi, English or Hinglish.</p>
-              <div class="outcome">Voice → Intent <span aria-hidden="true">↗</span></div>
+              <div class="outcome">Voice → Intent</div>
             </article>
             <article class="function glass" data-reveal style="--reveal: 80ms">
               <p class="tag">WhatsApp chat &amp; updates</p>
               <h3>Keep the conversation open.</h3>
               <p>Answer questions in chat, share appointment details and keep customers updated after the call ends.</p>
-              <div class="outcome">Chat → Clarity <span aria-hidden="true">↗</span></div>
+              <div class="outcome">Chat → Clarity</div>
             </article>
             <article class="function glass" data-reveal style="--reveal: 160ms">
               <p class="tag">Appointments &amp; calendars</p>
               <h3>Make the next step real.</h3>
               <p>Coordinate suitable slots, book appointments into a calendar and support changes to existing bookings.</p>
-              <div class="outcome">Intent → Appointment <span aria-hidden="true">↗</span></div>
+              <div class="outcome">Intent → Appointment</div>
             </article>
             <article class="function glass" data-reveal style="--reveal: 240ms">
               <p class="tag">Follow-ups &amp; reminders</p>
               <h3>Carry the commitment through.</h3>
               <p>Send reminders, follow up on open enquiries and bring your team in when a customer needs a person.</p>
-              <div class="outcome">Next step → Follow-through <span aria-hidden="true">↗</span></div>
+              <div class="outcome">Next step → Follow-through</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="who" class="section" aria-labelledby="who-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Who it’s for</p>
+              <h2 id="who-title">An AI receptionist for appointment-led businesses.</h2>
+            </div>
+            <p>If your day runs on bookings, Aigenetic answers every call in Hindi, English or Hinglish and books appointments on WhatsApp.</p>
+          </div>
+          <div class="four who">
+            <article class="glass" data-reveal>
+              <h3>Clinics &amp; hospitals</h3>
+              <p>An AI receptionist for clinics in India: patient calls answered, consultations booked, reminders sent.</p>
+            </article>
+            <article class="glass" data-reveal style="--reveal: 80ms">
+              <h3>Salons &amp; spas</h3>
+              <p>A WhatsApp appointment booking bot that confirms the stylist and slot while your team is with clients.</p>
+            </article>
+            <article class="glass" data-reveal style="--reveal: 160ms">
+              <h3>Real estate</h3>
+              <p>AI call answering in Hindi and English for property enquiries, with site visits put on the sales calendar.</p>
+            </article>
+            <article class="glass" data-reveal style="--reveal: 240ms">
+              <h3>Coaching &amp; schools</h3>
+              <p>Admission enquiries answered after hours, demo classes booked and parents followed up on WhatsApp.</p>
             </article>
           </div>
         </div>
@@ -219,10 +299,10 @@
         <div class="wrap">
           <div class="section-head">
             <div>
-              <p class="eyebrow">Original demo audio</p>
+              <p class="eyebrow">Sample calls</p>
               <h2 id="samples-title">Hear a sample call.</h2>
             </div>
-            <p>These are the demo recordings the live site already ships: healthcare, commerce, payment reminders, education, hiring and hospitality.</p>
+            <p>Hear how it sounds in six industries: healthcare, hospitality, education, commerce, payment reminders and hiring.</p>
           </div>
           <div class="players">
             <article class="player glass" data-player data-reveal>
@@ -244,110 +324,6 @@
                 <span data-current>00:00</span>
                 <label class="scrub">
                   <span class="visually-hidden">Seek Healthcare Support</span>
-                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
-                </label>
-                <span data-duration>00:00</span>
-              </div>
-              <p class="player-error" data-error hidden>This demo file could not be played.</p>
-            </article>
-
-            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
-              <audio preload="none" src="mp3/Edtech-lead-qualification_KTkZSGKj.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="Lead Qualification" aria-pressed="false" aria-label="Play Lead Qualification">
-                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-              </button>
-              <div class="player-copy">
-                <p class="tag">EdTech</p>
-                <h3>Lead Qualification</h3>
-                <p>Edtech lead qualification</p>
-              </div>
-              <p class="demo-pill">Demo audio</p>
-              <div class="wave-wrap">
-                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
-              </div>
-              <div class="player-times">
-                <span data-current>00:00</span>
-                <label class="scrub">
-                  <span class="visually-hidden">Seek Lead Qualification</span>
-                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
-                </label>
-                <span data-duration>00:00</span>
-              </div>
-              <p class="player-error" data-error hidden>This demo file could not be played.</p>
-            </article>
-
-            <article class="player glass" data-player data-reveal>
-              <audio preload="none" src="mp3/Ecom-customer-support_IRqJbynE.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="E-commerce Support" aria-pressed="false" aria-label="Play E-commerce Support">
-                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-              </button>
-              <div class="player-copy">
-                <p class="tag">E-commerce</p>
-                <h3>E-commerce Support</h3>
-                <p>AI-powered customer service for online stores</p>
-              </div>
-              <p class="demo-pill">Demo audio</p>
-              <div class="wave-wrap">
-                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
-              </div>
-              <div class="player-times">
-                <span data-current>00:00</span>
-                <label class="scrub">
-                  <span class="visually-hidden">Seek E-commerce Support</span>
-                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
-                </label>
-                <span data-duration>00:00</span>
-              </div>
-              <p class="player-error" data-error hidden>This demo file could not be played.</p>
-            </article>
-
-            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
-              <audio preload="none" src="mp3/BFSI-reminder_dztcIGvN.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="Payment Reminders" aria-pressed="false" aria-label="Play Payment Reminders">
-                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-              </button>
-              <div class="player-copy">
-                <p class="tag">BFSI</p>
-                <h3>Payment Reminders</h3>
-                <p>Automated payment reminder calls</p>
-              </div>
-              <p class="demo-pill">Demo audio</p>
-              <div class="wave-wrap">
-                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
-              </div>
-              <div class="player-times">
-                <span data-current>00:00</span>
-                <label class="scrub">
-                  <span class="visually-hidden">Seek Payment Reminders</span>
-                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
-                </label>
-                <span data-duration>00:00</span>
-              </div>
-              <p class="player-error" data-error hidden>This demo file could not be played.</p>
-            </article>
-
-            <article class="player glass" data-player data-reveal>
-              <audio preload="none" src="mp3/recruitment_eczAKBnf.mp3"></audio>
-              <button type="button" class="play-btn" data-play data-label="Recruitment" aria-pressed="false" aria-label="Play Recruitment">
-                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-              </button>
-              <div class="player-copy">
-                <p class="tag">HR Tech</p>
-                <h3>Recruitment</h3>
-                <p>AI-powered candidate screening and recruitment</p>
-              </div>
-              <p class="demo-pill">Demo audio</p>
-              <div class="wave-wrap">
-                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
-              </div>
-              <div class="player-times">
-                <span data-current>00:00</span>
-                <label class="scrub">
-                  <span class="visually-hidden">Seek Recruitment</span>
                   <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
                 </label>
                 <span data-duration>00:00</span>
@@ -380,6 +356,110 @@
               </div>
               <p class="player-error" data-error hidden>This demo file could not be played.</p>
             </article>
+
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/Edtech-lead-qualification_KTkZSGKj.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Lead Qualification" aria-pressed="false" aria-label="Play Lead Qualification">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">EdTech</p>
+                <h3>Lead Qualification</h3>
+                <p>Edtech lead qualification</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>00:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Lead Qualification</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>00:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/Ecom-customer-support_IRqJbynE.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="E-commerce Support" aria-pressed="false" aria-label="Play E-commerce Support">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">E-commerce</p>
+                <h3>E-commerce Support</h3>
+                <p>AI-powered customer service for online stores</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>00:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek E-commerce Support</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>00:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal>
+              <audio preload="none" src="mp3/BFSI-reminder_dztcIGvN.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Payment Reminders" aria-pressed="false" aria-label="Play Payment Reminders">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">BFSI</p>
+                <h3>Payment Reminders</h3>
+                <p>Automated payment reminder calls</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>00:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Payment Reminders</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>00:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
+
+            <article class="player glass" data-player data-reveal style="--reveal: 80ms">
+              <audio preload="none" src="mp3/recruitment_eczAKBnf.mp3"></audio>
+              <button type="button" class="play-btn" data-play data-label="Recruitment" aria-pressed="false" aria-label="Play Recruitment">
+                <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <div class="player-copy">
+                <p class="tag">HR Tech</p>
+                <h3>Recruitment</h3>
+                <p>AI-powered candidate screening and recruitment</p>
+              </div>
+              <p class="demo-pill">Demo audio</p>
+              <div class="wave-wrap">
+                <canvas class="wave-canvas" width="640" height="84" aria-hidden="true"></canvas>
+              </div>
+              <div class="player-times">
+                <span data-current>00:00</span>
+                <label class="scrub">
+                  <span class="visually-hidden">Seek Recruitment</span>
+                  <input type="range" min="0" max="1000" value="0" step="1" data-scrub disabled>
+                </label>
+                <span data-duration>00:00</span>
+              </div>
+              <p class="player-error" data-error hidden>This demo file could not be played.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -388,7 +468,7 @@
         <div class="wrap">
           <div class="section-head">
             <div>
-              <p class="eyebrow">An illustrative customer journey</p>
+              <p class="eyebrow">One customer journey</p>
               <h2>Different channels. <br>One continuous conversation.</h2>
             </div>
             <p>A clinic enquiry moves from a phone call to WhatsApp, into the calendar and on to a reminder. Your team sees what comes next.</p>
@@ -401,14 +481,14 @@
           </ol>
           <div class="sample">
             <div class="transcript glass" data-reveal>
-              <div class="transcript-head"><span>WHATSAPP CHAT / HINGLISH</span><span>ILLUSTRATIVE</span></div>
+              <div class="transcript-head"><span>WHATSAPP CHAT</span><span>HINGLISH</span></div>
               <div class="dialogue"><span>Customer</span><p>“Kal 11:30 ka slot theek hai. Location bhi bhej dijiye.”</p></div>
               <div class="dialogue"><span>Assistant</span><p>“Ji. Aapke visit details aur clinic location yahin share kar rahe hain.”</p></div>
               <div class="dialogue"><span>System</span><p><em>Slot confirmed → calendar booking → reminder scheduled.</em></p></div>
-              <p class="small">All conversations, timings and records are illustrative. No real message, booking or reminder is sent.</p>
+              <p class="small">Sample scenario, shown for illustration.</p>
             </div>
             <div class="phone-note glass" data-reveal style="--reveal: 100ms">
-              <div class="note-head"><span>TEAM CALENDAR · SAMPLE EVENT</span><span>Illustrative</span></div>
+              <div class="note-head"><span>TEAM CALENDAR</span><span>BOOKED</span></div>
               <div class="message">
                 <p class="small">Clinic appointment</p>
                 <h3>A conversation becomes a booking.</h3>
@@ -444,7 +524,7 @@
               <p class="eyebrow">Scope &amp; pricing</p>
               <h2>A clear starting point.</h2>
             </div>
-            <p>Published calling plans below are a reference. WhatsApp, calendar booking and follow-up scope will be quoted around your complete workflow.</p>
+            <p>Calling plans start here. WhatsApp, calendar booking and follow-ups are scoped to your workflow and added to your quote.</p>
           </div>
           <div class="three">
             <article class="price glass" data-reveal>
@@ -460,6 +540,7 @@
               <a href="#calendar-booking" class="btn secondary" data-open-calendar>Discuss Flex <span aria-hidden="true">↗</span></a>
             </article>
             <article class="price glass featured" data-reveal style="--reveal: 80ms">
+              <p class="plan-badge">Recommended</p>
               <div class="plan-label">Pro <small>FOR CALLING CONTINUITY</small></div>
               <div class="amount">₹7,999 <span>/ month</span></div>
               <p>1,500 call minutes included.<br>Then ₹6 per minute.</p>
@@ -484,7 +565,7 @@
               <a href="#calendar-booking" class="btn secondary" data-open-calendar>Discuss your setup <span aria-hidden="true">↗</span></a>
             </article>
           </div>
-          <p class="small pricing-note">Illustrative pricing presentation: these are published calling-plan references, not an all-channel bundle. Confirm WhatsApp charges, calendar integration, follow-up scope, taxes, telephony and plan inclusions before treating them as a quote.</p>
+          <p class="small pricing-note">Taxes, telephony and WhatsApp charges are confirmed in your quote.</p>
         </div>
       </section>
 
@@ -537,11 +618,11 @@
             <p>Talk. Text. Follow up. Slot booking. One managed service.</p>
             <p class="contact-line">
               <a data-phone-link href="tel:+917428497033">Call us</a>
-              <a data-whatsapp-link href="https://wa.me/917428497033" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a data-whatsapp-link href="https://wa.me/917428497033?text=Hi%20Aigenetic%2C%20I%20would%20like%20a%20demo%20of%20the%20AI%20front%20desk." target="_blank" rel="noopener noreferrer">WhatsApp</a>
               <a data-email-link href="mailto:connect@aigenetic.in">connect@aigenetic.in</a>
             </p>
           </div>
-          <a class="btn" href="#calendar-booking" data-open-calendar>Try the autopilot <span aria-hidden="true">↗</span></a>
+          <a class="btn" href="#calendar-booking" data-open-calendar>Book a demo <span aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
@@ -550,11 +631,11 @@
       <div class="wrap">
         <div class="footer-row">
           <a href="#top" class="brand" aria-label="Aigenetic home">
-            <img src="logo/logoMedium.png" alt="" class="original-logo" width="759" height="704" decoding="async">
+            <img src="logo/logo.png" alt="Aigenetic logo" class="original-logo" width="133" height="123" decoding="async">
             Aigenetic
           </a>
           <span>Front Desk as a Service for Indian businesses.</span>
-          <span>Aigenetic (OPC) Pvt Ltd · Pune, India</span>
+          <span>Aigenetic (OPC) Pvt Ltd · Rajiv Gandhi Infotech Park, Pune, India</span>
         </div>
         <nav class="footer-nav footer-links" aria-label="Policies">
           <a href="privacy-policy.html">Privacy Policy</a>
@@ -563,6 +644,12 @@
         </nav>
       </div>
     </footer>
+
+    <nav class="sticky-cta" aria-label="Quick contact">
+      <a class="btn secondary" data-phone-link href="tel:+917428497033">Call</a>
+      <a class="btn secondary" data-whatsapp-link href="https://wa.me/917428497033?text=Hi%20Aigenetic%2C%20I%20would%20like%20a%20demo%20of%20the%20AI%20front%20desk." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a class="btn" href="#calendar-booking" data-open-calendar>Book a demo</a>
+    </nav>
   </div>
 
   <!-- Calendar Booking Modal for Main Site. Same Google Calendar appointment

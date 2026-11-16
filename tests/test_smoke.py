@@ -101,7 +101,7 @@ class TestSmoke(WebsiteTestCase):
         with self.subTest("hero and branding"):
             expect(page.locator("h1.hero-title")).to_contain_text("Appointments on autopilot.")
             expect(page.get_by_text("FRONT DESK AS A SERVICE", exact=True)).to_be_visible()
-            expect(page.get_by_text("Try the autopilot").first).to_be_visible()
+            expect(page.get_by_text("Book a demo").first).to_be_visible()
 
         with self.subTest("locked hero copy"):
             expect(page.locator(".autopilot-tagline")).to_have_attribute(

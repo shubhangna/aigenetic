@@ -281,6 +281,79 @@
     });
   }
 
+  /* Hero journey card: Clinic / Salon / Real estate / Coaching tabs swap the
+     sample journey's copy and replay the step-by-step timeline. */
+  var journeys = {
+    clinic: {
+      label: "Clinic appointment",
+      booked: "Calendar · Appointment booked",
+      steps: [
+        "Caller asks for tomorrow’s consultation.",
+        "Chosen slot and visit details shared in chat.",
+        "Tomorrow, 11:30 AM · Added to the team calendar.",
+        "WhatsApp reminder before the appointment."
+      ]
+    },
+    salon: {
+      label: "Salon booking",
+      booked: "Calendar · Appointment booked",
+      steps: [
+        "Caller asks for a haircut and colour this Saturday.",
+        "Stylist, price range and slot confirmed in chat.",
+        "Saturday, 4:00 PM · Added to the stylist’s calendar.",
+        "WhatsApp reminder on the morning of the visit."
+      ]
+    },
+    realestate: {
+      label: "Property site visit",
+      booked: "Calendar · Site visit booked",
+      steps: [
+        "Buyer enquires about a 2 BHK and asks to see it.",
+        "Brochure, location and visit time shared in chat.",
+        "Sunday, 11:00 AM · Added to the sales calendar.",
+        "WhatsApp reminder before the visit, follow-up after."
+      ]
+    },
+    coaching: {
+      label: "Coaching demo class",
+      booked: "Calendar · Demo class booked",
+      steps: [
+        "Parent asks about Class 10 maths batches.",
+        "Batch timings and fee details shared in chat.",
+        "Thursday, 5:30 PM · Demo class added to the calendar.",
+        "WhatsApp reminder before the demo class."
+      ]
+    }
+  };
+  var desk = root.querySelector(".desk");
+  var verticalTabs = desk ? desk.querySelectorAll("[data-vertical]") : [];
+  if (verticalTabs.length) {
+    var journeyLabel = desk.querySelector("[data-journey-label]");
+    var journeyBooked = desk.querySelector("[data-journey-booked]");
+    var journeySteps = desk.querySelectorAll("[data-journey-step]");
+    var timeline = desk.querySelector(".timeline");
+    verticalTabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var journey = journeys[tab.getAttribute("data-vertical")];
+        if (!journey || tab.getAttribute("aria-pressed") === "true") return;
+        verticalTabs.forEach(function (other) {
+          other.setAttribute("aria-pressed", other === tab ? "true" : "false");
+        });
+        if (journeyLabel) journeyLabel.textContent = journey.label;
+        if (journeyBooked) journeyBooked.textContent = journey.booked;
+        journeySteps.forEach(function (step, i) {
+          if (journey.steps[i]) step.textContent = journey.steps[i];
+        });
+        if (timeline) {
+          timeline.classList.add("swap");
+          void timeline.offsetWidth; /* restart the step-by-step animation */
+          timeline.classList.remove("swap");
+          timeline.classList.add("quick");
+        }
+      });
+    });
+  }
+
   /* Policy pages: "On this page" feedback. A click always flashes the target
      heading and moves focus to it, even when the section is already on screen
      and the page can't scroll. The link is marked current (.active +
