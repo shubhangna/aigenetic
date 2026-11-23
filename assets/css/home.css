@@ -824,6 +824,24 @@ footer { padding: 12px 0 40px; }
   border-top: 1px solid var(--line);
   font-size: 14px;
 }
+.footer-social { gap: 0; }
+.footer-social a {
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  color: var(--muted);
+}
+.footer-social a:hover { color: #fff; }
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .prototype { margin: 16px 0 0; color: var(--muted); font-size: 12px; }
 
 #calendar-modal-main {
