@@ -39,6 +39,35 @@ POLICIES = [
     ("/terms-of-service.html", "Terms of Service"),
     ("/refund-policy.html", "Refund Policy"),
 ]
+SOCIAL = [
+    (
+        "https://www.facebook.com/profile.php?id=61593292055918",
+        "Aigenetic on Facebook",
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V9a1 1 0 0 1 1-1z"/></svg>',
+    ),
+    (
+        "https://www.instagram.com/aigenetic.in/",
+        "Aigenetic on Instagram",
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>',
+    ),
+    (
+        "https://www.youtube.com/@aigenetic4Clinics",
+        "Aigenetic on YouTube",
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="10" rx="2.5"/><path d="M11 10.5v3l3-1.5z"/></svg>',
+    ),
+]
+
+
+def social_nav(indent: str = "        ") -> str:
+    links = "\n".join(
+        f'{indent}  <a href="{esc(href)}" target="_blank" rel="noopener me" aria-label="{esc(label)}">{icon}</a>'
+        for href, label, icon in SOCIAL
+    )
+    return (
+        f'{indent}<nav class="footer-nav footer-links footer-social" aria-label="Social">\n'
+        f"{links}\n"
+        f"{indent}</nav>"
+    )
 
 
 def esc(value: str) -> str:
@@ -285,6 +314,7 @@ def footer(current: str | None = None) -> str:
         <nav class="footer-nav footer-links" aria-label="Policies">
           {''.join(policies)}
         </nav>
+{social_nav()}
       </div>
     </footer>
     <nav class="sticky-cta" aria-label="Quick contact">
@@ -643,6 +673,9 @@ def main() -> None:
               <div><dt>Address</dt><dd>Rajiv Gandhi Infotech Park, Pune, India</dd></div>
               <div><dt>Email</dt><dd><a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a></dd></div>
               <div><dt>Phone</dt><dd><a href="tel:+917428497033">+91 742849 7033</a></dd></div>
+              <div><dt>Facebook</dt><dd><a href="https://www.facebook.com/profile.php?id=61593292055918" target="_blank" rel="noopener me">Facebook page</a></dd></div>
+              <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/aigenetic.in/" target="_blank" rel="noopener me">@aigenetic.in</a></dd></div>
+              <div><dt>YouTube</dt><dd><a href="https://www.youtube.com/@aigenetic4Clinics" target="_blank" rel="noopener me">@aigenetic4Clinics</a></dd></div>
             </dl>
           </article>
         </div>
@@ -669,6 +702,9 @@ def main() -> None:
               <div><dt>Phone</dt><dd><a href="tel:+917428497033">+91 742849 7033</a></dd></div>
               <div><dt>WhatsApp</dt><dd><a href="https://wa.me/917428497033?text=Hi%20Aigenetic%2C%20I%20would%20like%20a%20demo%20of%20the%20AI%20front%20desk." target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></dd></div>
               <div><dt>Email</dt><dd><a href="mailto:connect@aigenetic.in">connect@aigenetic.in</a></dd></div>
+              <div><dt>Facebook</dt><dd><a href="https://www.facebook.com/profile.php?id=61593292055918" target="_blank" rel="noopener me">Facebook page</a></dd></div>
+              <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/aigenetic.in/" target="_blank" rel="noopener me">@aigenetic.in</a></dd></div>
+              <div><dt>YouTube</dt><dd><a href="https://www.youtube.com/@aigenetic4Clinics" target="_blank" rel="noopener me">@aigenetic4Clinics</a></dd></div>
             </dl>
             <div class="actions">
               <a class="btn" href="#calendar-booking" data-open-calendar>Book a demo <span aria-hidden="true">↗</span></a>
@@ -933,6 +969,7 @@ def main() -> None:
         "",
         "Contact: connect@aigenetic.in, +91 742849 7033, https://wa.me/917428497033",
         "Address published on the site: Rajiv Gandhi Infotech Park, Pune, India",
+        "Official profiles: Facebook https://www.facebook.com/profile.php?id=61593292055918, Instagram https://www.instagram.com/aigenetic.in/, YouTube https://www.youtube.com/@aigenetic4Clinics",
         "",
         "## Pages",
     ]
@@ -941,7 +978,6 @@ def main() -> None:
     lines += [
         "",
         "## Not confirmed on the public site",
-        "- Social profile URLs",
         "- A full street address, PIN code, or Google Business Profile",
         "- Transcripts of the sample calls",
         "- Which calendar, CRM or telephony products are already connected",
@@ -1040,6 +1076,7 @@ def patch_legal() -> None:
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
         </nav>
+""" + social_nav() + """
 """
         text = text.replace(
             '<nav class="footer-nav footer-links" aria-label="Contact and policies">',
