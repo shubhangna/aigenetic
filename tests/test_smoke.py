@@ -62,8 +62,13 @@ class TestSmoke(WebsiteTestCase):
             self.assertFalse(parts.query or parts.fragment, f"{loc}: sitemaps should not list ?query or #anchor URLs")
             paths.append(parts.path.lstrip("/"))
 
-        # Every root-level HTML page except the 404 page should be listed, and nothing else.
-        expected = {"" if p.name == "index.html" else p.name for p in PROJECT_ROOT.glob("*.html") if p.name != "404.html"}
+        # Every public HTML page should be listed, and nothing else.
+        # 404 and the internal SEO tracker are noindex and stay out of the sitemap.
+        skip = {"404.html", "seo-tracker.html"}
+        expected = {"" if p.name == "index.html" else p.name for p in PROJECT_ROOT.glob("*.html") if p.name not in skip}
+        use_cases = PROJECT_ROOT / "use-cases"
+        if use_cases.is_dir():
+            expected.update(p.relative_to(PROJECT_ROOT).as_posix() for p in use_cases.glob("*.html"))
         self.assertEqual(sorted(paths), sorted(expected))
 
         for path in paths:

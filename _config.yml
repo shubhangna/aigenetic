@@ -4,10 +4,16 @@
 #
 # Everything below is kept in the repo but must not be reachable on
 # aigenetic.in. Names starting with "_" or "." (___Archive/, .vscode/,
-# .playwright-mcp/, ...) are already skipped by Jekyll.
+# .playwright-mcp/, ...) are already skipped by Jekyll, except the
+# directories listed under include.
+include:
+  - .well-known
 exclude:
   - CODED-Thers/     # internal notes, TODOs, WhatsApp template drafts
   - newSite/         # design-time template system, not a deployed page
   - tests/           # Playwright suites
+  - scripts/         # local generators, not part of the site
+  - seo-audit.md     # audit notes, not a public page
+  - seo-tracker.html # internal checklist, noindex
   - localServer.bat
   - testsNpush.bat

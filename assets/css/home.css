@@ -1053,6 +1053,62 @@ html.no-glass .btn, html.no-glass .play-btn { background: #1c2744; }
   .has-contact .brand { gap: 0; font-size: 0; }
 }
 
+/* Inner pages. These classes are not used on the homepage hero. */
+.page-hero { padding: 56px 0 8px; }
+.page-hero h1 {
+  max-width: 18ch;
+  margin: 0 0 16px;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.02;
+}
+.crumbs { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.crumbs li { display: inline-flex; align-items: center; gap: 6px; }
+.crumbs li + li::before { content: "/"; color: var(--muted); }
+#root .crumbs a { color: var(--muted); }
+#root .crumbs a:hover,
+.who h3 a:hover,
+.player-copy h3 a:hover { color: #fff; }
+.crumbs [aria-current="page"] { color: var(--ink); }
+.page-section { padding-top: 20px; }
+.copy-card { border-radius: 24px; padding: 22px; }
+.copy-card p { margin: 0 0 12px; color: var(--muted); }
+.copy-card p:last-child { margin-bottom: 0; }
+.copy-card h2, .copy-card h3 { margin-top: 0; }
+.copy-card ul, .copy-card ol { margin: 0; padding-left: 1.2em; color: var(--muted); }
+.copy-card li + li { margin-top: 6px; }
+.related-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; padding: 0; list-style: none; }
+.related-links a { min-height: 44px; display: inline-flex; align-items: center; }
+.nap { display: grid; gap: 0; margin: 0; }
+.nap div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.nap dt { color: var(--muted); }
+.nap dd { margin: 0; text-align: right; }
+.use-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.use-grid article { border-radius: 24px; padding: 22px; min-width: 0; }
+.use-grid h2 { font-size: 22px; max-width: none; margin: 0 0 8px; }
+.use-grid p { margin: 0; color: var(--muted); font-size: 14px; }
+.use-grid a { display: inline-flex; min-height: 44px; align-items: center; }
+
+@media (max-width: 760px) {
+  .use-grid { grid-template-columns: 1fr; }
+  .nap div { display: block; }
+  .nap dd { text-align: left; margin-top: 4px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   html.motion [data-reveal],

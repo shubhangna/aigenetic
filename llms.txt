@@ -1,0 +1,45 @@
+# Aigenetic
+
+> Aigenetic is an AI front desk for Indian businesses. It answers calls, replies on WhatsApp, books appointments and follows up, 24×7.
+
+Aigenetic (OPC) Pvt Ltd provides Front Desk as a Service. The published service handles AI calls, WhatsApp chat and updates, calendar booking and follow-ups. Languages named on the site: Hindi, English and Hinglish. It is fully managed: the team maps the journey, configures and tests, and the client approves before go-live.
+
+24×7 means always-on AI handling of calls, WhatsApp enquiries, bookings and follow-ups. It does not mean round-the-clock human staffing.
+
+Calling plans published on the homepage (WhatsApp, calendar booking and follow-ups are scoped to the workflow and added to the quote):
+- Flex: ₹2,999 per month, 500 call minutes included, then ₹6 per minute
+- Pro: ₹7,999 per month, 1,500 call minutes included, then ₹6 per minute
+- Enterprise: volume-based pricing, discussed with the team
+
+The Terms of Service and Refund Policy also state a setup fee and a different monthly range. Those pages were not rewritten in the SEO pass. Confirm current pricing with Aigenetic before quoting it.
+
+Contact: connect@aigenetic.in, +91 742849 7033, https://wa.me/917428497033
+Address published on the site: Rajiv Gandhi Infotech Park, Pune, India
+
+## Pages
+- https://aigenetic.in/
+- https://aigenetic.in/how-it-works.html
+- https://aigenetic.in/features.html
+- https://aigenetic.in/pricing.html
+- https://aigenetic.in/faq.html
+- https://aigenetic.in/about.html
+- https://aigenetic.in/contact.html
+- https://aigenetic.in/use-cases/healthcare-support.html
+- https://aigenetic.in/use-cases/salons.html
+- https://aigenetic.in/use-cases/real-estate.html
+- https://aigenetic.in/use-cases/coaching.html
+- https://aigenetic.in/use-cases/hospitality.html
+- https://aigenetic.in/use-cases/lead-qualification.html
+- https://aigenetic.in/use-cases/ecommerce.html
+- https://aigenetic.in/use-cases/payment-reminders.html
+- https://aigenetic.in/use-cases/recruitment.html
+- https://aigenetic.in/use-cases.html
+- https://aigenetic.in/privacy-policy.html
+- https://aigenetic.in/terms-of-service.html
+- https://aigenetic.in/refund-policy.html
+
+## Not confirmed on the public site
+- Social profile URLs
+- A full street address, PIN code, or Google Business Profile
+- Transcripts of the sample calls
+- Which calendar, CRM or telephony products are already connected
