@@ -64,11 +64,18 @@ class TestSmoke(WebsiteTestCase):
 
         # Every public HTML page should be listed, and nothing else.
         # 404 and the internal SEO tracker are noindex and stay out of the sitemap.
+        # use-cases/index.html is a noindex client redirect to /use-cases.html.
         skip = {"404.html", "seo-tracker.html"}
         expected = {"" if p.name == "index.html" else p.name for p in PROJECT_ROOT.glob("*.html") if p.name not in skip}
         use_cases = PROJECT_ROOT / "use-cases"
         if use_cases.is_dir():
-            expected.update(p.relative_to(PROJECT_ROOT).as_posix() for p in use_cases.glob("*.html"))
+            expected.update(
+                p.relative_to(PROJECT_ROOT).as_posix()
+                for p in use_cases.glob("*.html")
+                if p.name != "index.html"
+            )
+        self.assertNotIn("use-cases/index.html", paths)
+        self.assertNotIn("use-cases/", paths)
         self.assertEqual(sorted(paths), sorted(expected))
 
         for path in paths:

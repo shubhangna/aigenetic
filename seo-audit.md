@@ -63,7 +63,7 @@ Titles and headings use the lines that are actually published. “AI voice agent
 
 **H4. Crawl files and icons were missing.** Status: done. `robots.txt` points at the sitemap and disallows internal paths. `sitemap.xml` lists the indexable URLs with `lastmod` 2026-11-23. Added `llms.txt`, `/.well-known/security.txt` (Jekyll `include: .well-known`, because Jekyll otherwise skips dot paths), `site.webmanifest`, `favicon.ico`, and 180/192/512 icons. `security.txt` expires 2027-11-23 and contacts `connect@aigenetic.in`.
 
-**H5. Structured data was only Organization plus FAQ.** Status: done, with a deliberate omission. Home now has Organization (`@id`), WebSite, Service and the existing FAQPage. Inner pages have BreadcrumbList and WebPage (AboutPage or ContactPage where that is the type). Demo pages add AudioObject with the published description and the mp3 URL. No `sameAs` (no social URLs on the site). No `Offer` (see C1). No `LocalBusiness` (the published address is “Rajiv Gandhi Infotech Park, Pune, India”, with no street, PIN or opening hours). No `SearchAction` (there is no site search).
+**H5. Structured data was only Organization plus FAQ.** Status: done, with a deliberate omission. Home now has Organization (`@id`), WebSite, Service and the existing FAQPage. Inner pages have BreadcrumbList and WebPage (AboutPage or ContactPage where that is the type). Demo pages add AudioObject with the published description and the mp3 URL. Organization `sameAs` lists the official Facebook page, Instagram, and YouTube channel. No personal profile was added. No `Offer` (see C1). No `LocalBusiness` (the published address is “Rajiv Gandhi Infotech Park, Pune, India”, with no street, PIN or opening hours). No `SearchAction` (there is no site search).
 
 **H6. Calendar iframe loaded Google on every page view.** Status: done for the cookie hit, booking URL unchanged. `loading="lazy"` plus the hidden dialog. Opening the dialog still requests the same schedule. Focus moves to Close, Escape and the backdrop still close it, and Tab cycles inside the dialog.
 
@@ -91,7 +91,7 @@ Titles and headings use the lines that are actually published. “AI voice agent
 
 **L4. Security headers.** Status: open, TODO(owner). GitHub Pages does not set HSTS, CSP or `X-Frame-Options`. The playbook’s optional Cloudflare step is the practical place to add them.
 
-**L5. Social profiles, Google Business Profile, CIN, GSTIN.** Status: open, TODO(owner). Not on the site. An internal note already says not to publish GST or CIN until the real numbers are confirmed. They were not invented.
+**L5. Social profiles, Google Business Profile, CIN, GSTIN.** Social profiles are done. Organization `sameAs`, the footer, about, contact, and `llms.txt` list the official Facebook page (`https://www.facebook.com/profile.php?id=61593292055918`), Instagram (`https://www.instagram.com/aigenetic.in/`), and YouTube (`https://www.youtube.com/@aigenetic4Clinics`). No personal Facebook profile was added. Google Business Profile, CIN, and GSTIN stay open, TODO(owner). They are not on the site. An internal note already says not to publish GST or CIN until the real numbers are confirmed. They were not invented.
 
 ## What is indexable after this pass
 
@@ -141,21 +141,20 @@ Keep the four A records that are already correct. Keep the `www` CNAME to `shubh
 
 ### Profiles
 
-No social URL is published on the site, so none were added to Organization `sameAs`. When they exist, add them to the homepage JSON-LD and to:
+Organization `sameAs`, the footer, about, contact, and `llms.txt` use the official profiles:
 
-- LinkedIn company page → Website `https://aigenetic.in`
-- The founder’s LinkedIn contact info, Featured, and About
-- GitHub profile website field (the repo About website as well)
-- X, YouTube, Product Hunt, Crunchbase, G2 or Capterra, only where a real listing is created
+- Facebook page: `https://www.facebook.com/profile.php?id=61593292055918`
+- Instagram: `https://www.instagram.com/aigenetic.in/`
+- YouTube: `https://www.youtube.com/@aigenetic4Clinics`
 
-Google Business Profile waits on a precise public address. Do not buy links.
+Set each profile’s website to `https://aigenetic.in`. Also set the GitHub profile website field and the repo About website. LinkedIn, X, Product Hunt, Crunchbase, G2, and Capterra were not supplied, so they are not linked. Google Business Profile waits on a precise public address. Do not buy links.
 
 ### Content the owner still has to supply
 
 - Which price list is current (homepage ₹2,999 / ₹7,999 versus terms ₹10,000 setup and ₹4,999–₹9,999), then align the terms, the refund policy and the homepage.
 - Whether “31+ Indian languages” in the terms is still true. The marketing pages only say Hindi, English and Hinglish.
 - Transcripts of the six mp3 demos, if those pages should rank for more than the one-line blurb.
-- Social profile URLs, a full street address and PIN, opening hours, CIN, GSTIN.
+- A full street address and PIN, opening hours, CIN, GSTIN.
 - Whether to add analytics (the privacy policy already mentions analytics cookies) or to edit that section so it matches the site.
 - Confirmed calendar, telephony and WhatsApp products. The FAQ says no calendar is assumed until setup, so no integration logos were added.
 
